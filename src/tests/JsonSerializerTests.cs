@@ -9,20 +9,20 @@ namespace SmartyStreets
 	[TestFixture]
 	public class JsonSerializerTests
 	{
-		[Test]
-		public void TestSerializationOfNullValues() {
-			var serializer = new JsonSerializer();
+		private readonly ISerializer serializer = new JsonSerializer();
 
-			var results = serializer.Serialize(null);
+		[Test]
+		public void TestSerializationOfNullValues()
+		{
+			var results = this.serializer.Serialize(null);
 
 			Assert.IsNull(results);
 		}
 
 		[Test]
-		public void TestSerializationOfKnownType() {
-			var serializer = new JsonSerializer();
-
-			var results = serializer.Serialize(new JsonSerializerTestObject() {
+		public void TestSerializationOfKnownType()
+		{
+			var results = this.serializer.Serialize(new JsonSerializerTestObject() {
 				Property1 = "Name",
 				Property2 = 42,
 				Property3 = true,
@@ -32,8 +32,16 @@ namespace SmartyStreets
 		}
 
 		[Test]
-		public void TestDeserializationOfKnownType() {
-			var serializer = new JsonSerializer();
+		public void TestDeserializationOfNullStream()
+		{
+			var result = this.serializer.Deserialize<JsonSerializerTestObject>(null);
+
+			Assert.IsNull(result);
+		}
+
+		[Test]
+		public void TestDeserializationOfKnownType()
+		{
 			var expected = new JsonSerializerTestObject() {
 				Property1 = "Name",
 				Property2 = 42,
@@ -41,7 +49,7 @@ namespace SmartyStreets
 			};
 
 			var stream = new MemoryStream(Encoding.UTF8.GetBytes("{'Property2':42,'Property3':true,'property_1':'Name'}".Replace("'", "\"")));
-			var actual = serializer.Deserialize<JsonSerializerTestObject>(stream);
+			var actual = this.serializer.Deserialize<JsonSerializerTestObject>(stream);
 
 			Assert.AreEqual(expected.Property1, actual.Property1);
 			Assert.AreEqual(expected.Property2, actual.Property2);

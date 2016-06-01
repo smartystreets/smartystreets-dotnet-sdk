@@ -20,6 +20,9 @@ namespace SmartyStreets
 
 		public T Deserialize<T>(Stream source) where T : class
 		{
+			if (source == null)
+				return null;
+
 			var serializer = new DataContractJsonSerializer(typeof(T));
 			return (T)serializer.ReadObject(source);
 		}
