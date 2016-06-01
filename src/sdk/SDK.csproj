@@ -34,5 +34,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="USStreetApi\Client.cs" />
+    <Compile Include="ISender.cs" />
+    <Compile Include="FrameworkSender.cs" />
+    <Compile Include="ISerializer.cs" />
+    <Compile Include="JsonSerializer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
 </Project>

@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="USStreetApi\ClientTests.cs" />
+    <Compile Include="JsonSerializerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">
