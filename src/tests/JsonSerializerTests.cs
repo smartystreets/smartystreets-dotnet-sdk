@@ -57,7 +57,6 @@ namespace SmartyStreets
 		}
 	}
 
-
 	[DataContract]
 	public class JsonSerializerTestObject {
 

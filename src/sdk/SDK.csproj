@@ -38,6 +38,9 @@
     <Compile Include="FrameworkSender.cs" />
     <Compile Include="ISerializer.cs" />
     <Compile Include="JsonSerializer.cs" />
+    <Compile Include="ICredentials.cs" />
+    <Compile Include="StaticCredentials.cs" />
+    <Compile Include="Request.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
