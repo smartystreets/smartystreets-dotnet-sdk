@@ -14,13 +14,10 @@ namespace SmartyStreets
 			this.authToken = authToken;
 		}
 
-		public void Sign(HttpWebRequest request)
+		public void Sign(Request request)
 		{
-
-
-//
-//			request.RequestUri.Query.Insert(0, this.authId);
-//			request.RequestUri.Query.Insert(0, this.authToken);
+			request.AddParameter("auth-id", this.authId);
+			request.AddParameter("auth-token", this.authToken);
 		}
 	}
 }

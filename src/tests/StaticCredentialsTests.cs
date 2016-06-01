@@ -23,12 +23,12 @@ namespace SmartyStreets
 
 		private static void AssertSignedRequest(string id, string secret, string expected)
 		{
-//			var credentials = new StaticCredentials(id, secret);
-//			var request = new Request("https://api.smartystreets.com/street-address");
-//
-//			credentials.Sign(request);
-//
-//			Assert.AreEqual(expected, request.RequestUri.ToString());
+			var credentials = new StaticCredentials(id, secret);
+			var request = new Request("https://api.smartystreets.com/street-address");
+
+			credentials.Sign(request);
+
+			Assert.AreEqual(expected, request.GetUrl());
 		}
 	}
 }

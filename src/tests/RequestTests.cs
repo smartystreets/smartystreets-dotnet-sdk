@@ -32,16 +32,83 @@ namespace SmartyStreets
 
 		private void AssertQueryStringParameters(string name, string value, string expected)
 		{
-			var request = new Request("http://localhost/");
+			var request = new Request("http://localhost/?");
 
-			request.PutParameter(name, value);
+			request.AddParameter(name, value);
 
 			Assert.AreEqual(expected, request.GetUrl());
 		}
 
 		[Test]
+		public void AssertMultipleQueryStringParametersAreAdded()
+		{
+			var request = new Request("http://localhost/?");
 
-	
+			request.AddParameter("name1", "value1");
+			request.AddParameter("name2", "value2");
+			request.AddParameter("name3", "value3");
+
+			var expected = "http://localhost/?name1=value1&name2=value2&name3=value3";
+
+			Assert.AreEqual(expected, request.GetUrl());
+		}
+
+		[Test]
+		public void AssertUrlEncodingOfQueryStringParameters()
+		{
+			var request = new Request("http://localhost/?");
+
+			request.AddParameter("name&", "value");
+			request.AddParameter("name1", "other !value$");
+
+			string expected = "http://localhost/?name%26=value&name1=other+!value%24";
+
+			Assert.AreEqual(expected, request.GetUrl());
+		}
+
+		[Test]
+		public void TestUrlWithoutTrailingQuestionMark()
+		{
+			var request = new Request("http://localhost/");
+
+			string expected = "http://localhost/?";
+
+			Assert.AreEqual(expected, request.GetUrl());
+		}
+
+		[Test]
+		public void TestHeadersAddedToRequest()
+		{
+			var request = new Request("http://localhost/");
+
+			request.AddHeader("header1", "value1");
+			request.AddHeader("header2", "value2");
+
+			Assert.AreEqual("value1", request.Headers["header1"]);
+			Assert.AreEqual("value2", request.Headers["header2"]);
+		}
+
+//		TODO: Get these working
+		[Test]
+		public void TestGet()
+		{
+			var request = new Request("http://localhost/");
+
+			Assert.AreEqual("GET", request.Method);
+			Assert.IsNull(request.Payload);
+		}
+
+		[Test]
+		public void TestPost()
+		{
+			var request = new Request("http://localhost/");
+
+			request.Payload = new byte[]{0,1,2};
+			byte[] actualPayload = request.Payload;
+
+			Assert.AreEqual("POST", request.Method);
+			Assert.AreEqual(new byte[]{0,1,2}, actualPayload);
+		}
 	}
 }
 

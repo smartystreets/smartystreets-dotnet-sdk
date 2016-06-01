@@ -6,6 +6,6 @@ namespace SmartyStreets
 {
 	public interface ICredentials
 	{
-		void Sign(HttpWebRequest request);
+		void Sign(Request request);
 	}
 }

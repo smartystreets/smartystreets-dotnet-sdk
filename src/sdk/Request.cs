@@ -2,17 +2,38 @@
 using SmartyStreets;
 using System.Collections.Generic;
 using System.Security.Policy;
+using System.Text;
+using System.Net;
+using System.Runtime.Serialization.Formatters;
+using System.Configuration;
 
 namespace SmartyStreets
 {
 	public class Request
 	{
-
-		private Dictionary<string, string> parameters;
 		private string urlPrefix;
+		private byte[] payload;
+		private readonly Dictionary<string, string> headers;
+		private readonly Dictionary<string, string> parameters;
+
+		public Dictionary<string, string> Headers { get {return this.headers;} }
+
+		public string Method { get; private set; }
+
+		public byte[] Payload
+		{
+			get { return this.payload; }
+			set
+			{
+				this.payload = value;
+				this.Method = "POST";
+			}
+		}
 
 		public Request()
 		{
+			this.Method = "GET";
+			this.headers = new Dictionary<string, string>();
 			this.parameters = new Dictionary<string, string>();
 		}
 
@@ -21,12 +42,26 @@ namespace SmartyStreets
 			this.urlPrefix = urlPrefix;
 		}
 
-		public void PutParameter(string name, string value)
+		public void AddHeader(string header, string value)
+		{
+			this.headers.Add(header, value);
+		}
+
+		public void AddParameter(string name, string value)
 		{
 			if (name == null || value == null || name.Length == 0)
 				return;
 
 			this.parameters.Add(name, value);
+		}
+
+		private string UrlEncode(string value)
+		{
+			try {
+				return WebUtility.UrlEncode(value);
+			} catch {
+				return "";
+			}
 		}
 
 		public string GetUrl()
@@ -36,12 +71,14 @@ namespace SmartyStreets
 			if (!url.Contains("?"))
 				url += "?";
 
-			foreach (string key in parameters.Keys)
+			foreach (var pair in parameters)
 			{
 				if (!url.EndsWith("?"))
 					url += "&";
 
-				url += key + "=";
+				string encodedName = this.UrlEncode(pair.Key);
+				string encodedValue = this.UrlEncode(pair.Value);
+				url += encodedName + "=" + encodedValue;
 			}
 
 			return url;
