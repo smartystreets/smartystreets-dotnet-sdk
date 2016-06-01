@@ -7,6 +7,6 @@ namespace SmartyStreets
 	{
 		byte[] Serialize(object graph);
 
-		T Deserialize<T>(Stream source);
+		T Deserialize<T>(Stream source) where T : class;
 	}
 }
