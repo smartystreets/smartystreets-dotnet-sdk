@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{3B3C4EEC-1F49-47F1-A531-6799BC5B66F8}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>smartystreets</RootNamespace>
+    <RootNamespace>SmartyStreets</RootNamespace>
     <AssemblyName>smartystreets-csharp-sdk</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -29,4 +29,10 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="USStreetApi\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="USStreetApi\Client.cs" />
+  </ItemGroup>
 </Project>
