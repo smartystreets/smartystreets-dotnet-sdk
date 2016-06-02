@@ -37,12 +37,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="USStreetApi\" />
+    <Folder Include="Mocks\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="USStreetApi\ClientTests.cs" />
     <Compile Include="JsonSerializerTests.cs" />
     <Compile Include="StaticCredentialsTests.cs" />
     <Compile Include="RequestTests.cs" />
+    <Compile Include="StatusCodeSenderTests.cs" />
+    <Compile Include="Mocks\MockStatusCodeSender.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">

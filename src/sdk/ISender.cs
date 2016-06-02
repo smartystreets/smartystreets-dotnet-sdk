@@ -5,6 +5,6 @@ namespace SmartyStreets
 {
 	public interface ISender
 	{
-		HttpWebResponse Send(HttpWebRequest request);
+		Response Send(Request request);
 	}
 }

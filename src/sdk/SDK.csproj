@@ -51,6 +51,8 @@
     <Compile Include="Exceptions\RequestEntityTooLargeException.cs" />
     <Compile Include="Exceptions\ServiceUnavailableException.cs" />
     <Compile Include="Exceptions\TooManyRequestsException.cs" />
+    <Compile Include="StatusCodeSender.cs" />
+    <Compile Include="Response.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

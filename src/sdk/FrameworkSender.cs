@@ -5,7 +5,7 @@ namespace SmartyStreets
 {
 	public class FrameworkSender : ISender
 	{
-		public HttpWebResponse Send(HttpWebRequest request) {
+		public Response Send(Request request) {
 			throw new NotImplementedException();
 		}
 	}
