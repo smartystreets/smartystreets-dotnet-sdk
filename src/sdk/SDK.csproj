@@ -54,6 +54,7 @@
     <Compile Include="StatusCodeSender.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="SigningSender.cs" />
+    <Compile Include="RetrySender.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
