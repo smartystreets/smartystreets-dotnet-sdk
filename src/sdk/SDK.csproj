@@ -31,6 +31,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="USStreetApi\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="USStreetApi\Client.cs" />
@@ -41,6 +42,15 @@
     <Compile Include="ICredentials.cs" />
     <Compile Include="StaticCredentials.cs" />
     <Compile Include="Request.cs" />
+    <Compile Include="Exceptions\BadCredentialsException.cs" />
+    <Compile Include="Exceptions\SmartyException.cs" />
+    <Compile Include="Exceptions\BadRequestException.cs" />
+    <Compile Include="Exceptions\BatchFullException.cs" />
+    <Compile Include="Exceptions\InternalServerErrorException.cs" />
+    <Compile Include="Exceptions\PaymentRequiredException.cs" />
+    <Compile Include="Exceptions\RequestEntityTooLargeException.cs" />
+    <Compile Include="Exceptions\ServiceUnavailableException.cs" />
+    <Compile Include="Exceptions\TooManyRequestsException.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
