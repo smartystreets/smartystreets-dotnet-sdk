@@ -53,6 +53,7 @@
     <Compile Include="Exceptions\TooManyRequestsException.cs" />
     <Compile Include="StatusCodeSender.cs" />
     <Compile Include="Response.cs" />
+    <Compile Include="SigningSender.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

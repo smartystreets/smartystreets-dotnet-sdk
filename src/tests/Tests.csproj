@@ -46,6 +46,8 @@
     <Compile Include="RequestTests.cs" />
     <Compile Include="StatusCodeSenderTests.cs" />
     <Compile Include="Mocks\MockStatusCodeSender.cs" />
+    <Compile Include="SigningSenderTests.cs" />
+    <Compile Include="Mocks\MockSender.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">
