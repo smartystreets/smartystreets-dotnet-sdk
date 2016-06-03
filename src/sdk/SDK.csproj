@@ -55,6 +55,10 @@
     <Compile Include="Response.cs" />
     <Compile Include="SigningSender.cs" />
     <Compile Include="RetrySender.cs" />
+    <Compile Include="USStreetApi\Candidate.cs" />
+    <Compile Include="USStreetApi\Components.cs" />
+    <Compile Include="USStreetApi\Metadata.cs" />
+    <Compile Include="USStreetApi\Analysis.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
