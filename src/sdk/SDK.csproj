@@ -59,6 +59,7 @@
     <Compile Include="USStreetApi\Components.cs" />
     <Compile Include="USStreetApi\Metadata.cs" />
     <Compile Include="USStreetApi\Analysis.cs" />
+    <Compile Include="USStreetApi\AddressLookup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
