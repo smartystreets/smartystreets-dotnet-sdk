@@ -9,34 +9,34 @@ namespace SmartyStreets
 		#region [ Fields ]
 
 		[DataMember(Name = "input_index")]
-		public string InputIndex { get; private set; }
+		public int InputIndex { get; private set; }
 
 		[DataMember(Name = "candidate_index")]
-		private int CandidateIndex { get; private set; }
+		public int CandidateIndex { get; private set; }
 
 		[DataMember(Name = "addressee")]
-		private string Addressee { get; private set; }
+		public string Addressee { get; private set; }
 
 		[DataMember(Name = "delivery_line_1")]
-		private string DeliveryLine1 { get; private set; }
+		public string DeliveryLine1 { get; private set; }
 
 		[DataMember(Name = "delivery_line_2")]
-		private string DeliveryLine2 { get; private set; }
+		public string DeliveryLine2 { get; private set; }
 
 		[DataMember(Name = "last_line")]
-		private string LastLine { get; private set; }
+		public string LastLine { get; private set; }
 
 		[DataMember(Name = "delivery_point_barcode")]
-		private string DeliveryPointBarcode { get; private set; }
+		public string DeliveryPointBarcode { get; private set; }
 
 		[DataMember(Name = "components")]
-		private Components Components { get; private set; }
+		public Components Components { get; private set; }
 
 		[DataMember(Name = "metadata")]
-		private Metadata Metadata { get; private set; }
+		public Metadata Metadata { get; private set; }
 
 		[DataMember(Name = "analysis")]
-		private Analysis Analysis { get; private set; }
+		public Analysis Analysis { get; private set; }
 
 		#endregion
 
