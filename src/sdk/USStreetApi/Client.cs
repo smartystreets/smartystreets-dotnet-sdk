@@ -48,7 +48,10 @@ namespace SmartyStreets
 
 		private void putHeaders(Batch batch, Request request)
 		{
-
+			if (batch.IncludeInvalid)
+				request.AddHeader("X-Include-Invalid", "true");
+			else if (batch.StandardizeOnly)
+				request.AddHeader("X-Standardize-Only", "true");
 		}
 
 		private void PopulateQueryString(Lookup address, Request request)
