@@ -1,10 +1,30 @@
 ﻿using System;
-namespace SmartyStreets
+using System.Runtime.Serialization.Json;
+using NUnit.Framework;
+using SmartyStreets.USZipCodeApi;
+using System.IO;
+using System.Text;
+
+namespace SmartyStreets.USZipCodeApi
 {
+	[TestFixture]
 	public class ResultTests
 	{
-		public ResultTests()
+		[Test]
+		public void TestIsValidReturnsTrueWhenInputIsValid()
 		{
+			Assert.IsTrue(new Result().IsValid());
+		}
+
+		[Test]
+		public void TestIsValidReturnsFalseWhenInputIsNotValid()
+		{
+			string invalidJson = "{\"status\": \"invalid_zipcode\", \"reason\": \"invalid_reason\"}";
+			Stream source = new MemoryStream(Encoding.ASCII.GetBytes(invalidJson));
+			var serializer = new DataContractJsonSerializer(typeof(Result));
+			var result = (Result)serializer.ReadObject(source);
+
+			Assert.IsFalse(result.IsValid());
 		}
 	}
 }
