@@ -53,6 +53,7 @@
     <Compile Include="USStreetApi\BatchTests.cs" />
     <Compile Include="Mocks\RequestCapturingSender.cs" />
     <Compile Include="Mocks\FakeSerializer.cs" />
+    <Compile Include="Mocks\FakeDeserializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">

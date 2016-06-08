@@ -73,7 +73,7 @@ namespace SmartyStreets
 
 		#endregion
 
-		public void addToResult(Candidate newCandidate) {
+		public void AddToResult(Candidate newCandidate) {
 			this.Result.Add(newCandidate);
 		}
 	}

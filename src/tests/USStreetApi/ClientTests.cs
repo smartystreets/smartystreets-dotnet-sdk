@@ -143,13 +143,36 @@ namespace SmartyStreets
 		[Test]
 		public void testDeserializeCalledWithResponseBody()
 		{
+			var response = new Response(0, Encoding.ASCII.GetBytes("Hello, world!"));
+			var sender = new MockSender(response);
+			var deserializer = new FakeDeserializer(null);
+			var client = new Client("/", sender, deserializer);
 
+			client.Send(new Lookup());
+
+			Assert.AreEqual(response.Payload, deserializer.Payload);
 		}
 
 		[Test]
 		public void testCandidatesCorrectlyAssignedToCorrespondingLookup()
 		{
+			Candidate[] expectedCandidates = new Candidate[3];
+			expectedCandidates[0] = new Candidate(0);
+			expectedCandidates[1] = new Candidate(1);
+			expectedCandidates[2] = new Candidate(1);
+			var batch = new Batch();
+			batch.Add(new Lookup());
+			batch.Add(new Lookup());
 
+			var sender = new MockSender(new Response(0, new Byte[0]));
+			var deserializer = new FakeDeserializer(expectedCandidates);
+			var client = new Client("/", sender, deserializer);
+
+			client.Send(batch);
+
+			Assert.AreEqual(expectedCandidates[0], batch.Get(0).Result[0]);
+			Assert.AreEqual(expectedCandidates[1], batch.Get(1).Result[0]);
+			Assert.AreEqual(expectedCandidates[2], batch.Get(1).Result[1]);
 		}
 
 		#endregion

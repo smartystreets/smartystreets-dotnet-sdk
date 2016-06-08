@@ -72,7 +72,16 @@ namespace SmartyStreets
 
 		private void AssignCandidatesToLookups(Batch batch, Candidate[] candidates)
 		{
-
+			for (int i = 0; i < batch.Size(); i++)
+			{
+				foreach (Candidate candidate in candidates)
+				{
+					if (candidate.InputIndex == i)
+					{
+						batch.Get(i).AddToResult(candidate);
+					}
+				}
+			}
 		}
 	}
 }
