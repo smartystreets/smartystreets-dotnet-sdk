@@ -4,7 +4,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SmartyStreets
+namespace SmartyStreets.USStreetApi
 {
 	[TestFixture]
 	public class ClientTests

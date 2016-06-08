@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace SmartyStreets
+namespace SmartyStreets.USStreetApi
 {
 	[TestFixture]
 	public class BatchTests

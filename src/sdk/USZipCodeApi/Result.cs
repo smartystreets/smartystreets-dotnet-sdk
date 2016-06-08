@@ -21,7 +21,7 @@ namespace SmartyStreets.USZipCodeApi
 		public CityState[] CityStates { get; private set; }
 
 		[DataMember(Name = "zipcodes")]
-		public ZipCode[] ZipCodes { get; private set; }
+		public ZipCodeEntry[] ZipCodes { get; private set; }
 
 		#endregion
 
@@ -35,7 +35,7 @@ namespace SmartyStreets.USZipCodeApi
 			return this.CityStates[index];
 		}
 
-		public ZipCode GetZipCode(int index)
+		public ZipCodeEntry GetZipCode(int index)
 		{
 			return this.ZipCodes[index];
 		}

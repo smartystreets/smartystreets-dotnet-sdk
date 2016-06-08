@@ -38,6 +38,7 @@
   <ItemGroup>
     <Folder Include="USStreetApi\" />
     <Folder Include="Mocks\" />
+    <Folder Include="USZipCodeApi\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="USStreetApi\ClientTests.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Mocks\RequestCapturingSender.cs" />
     <Compile Include="Mocks\FakeSerializer.cs" />
     <Compile Include="Mocks\FakeDeserializer.cs" />
+    <Compile Include="USZipCodeApi\ResultTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">
@@ -61,6 +63,7 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
