@@ -1,11 +1,5 @@
-﻿using System;
-using SmartyStreets;
-using System.Collections.Generic;
-using System.Security.Policy;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Runtime.Serialization.Formatters;
-using System.Configuration;
 
 namespace SmartyStreets
 {

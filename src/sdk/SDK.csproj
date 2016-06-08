@@ -32,6 +32,7 @@
   <ItemGroup>
     <Folder Include="USStreetApi\" />
     <Folder Include="Exceptions\" />
+    <Folder Include="USZipCodeApi\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="USStreetApi\Client.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="USStreetApi\Analysis.cs" />
     <Compile Include="USStreetApi\Batch.cs" />
     <Compile Include="USStreetApi\Lookup.cs" />
+    <Compile Include="USStreetApi\ClientBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
