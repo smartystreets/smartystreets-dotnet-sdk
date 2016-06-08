@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SmartyStreets
+namespace SmartyStreets.USStreetApi
 {
 	public class Batch
 	{

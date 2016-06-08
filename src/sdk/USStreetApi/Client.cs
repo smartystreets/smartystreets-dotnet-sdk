@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace SmartyStreets
+namespace SmartyStreets.USStreetApi
 {
 	public class Client
 	{

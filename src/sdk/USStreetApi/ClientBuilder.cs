@@ -1,5 +1,5 @@
 ﻿using System;
-namespace SmartyStreets
+namespace SmartyStreets.USStreetApi
 {
 	public class ClientBuilder
 	{

@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using System.Collections;
 
-namespace SmartyStreets
+namespace SmartyStreets.USStreetApi
 {
 	[DataContract]
 	public class Lookup
