@@ -27,7 +27,9 @@ namespace SmartyStreets.USZipCodeApi
 			if (key == null)
 				return;
 
-			this.NamedLookups.Add(key, lookup);
+			//TODO: what way should we do it?
+			//this.NamedLookups.Add(key, lookup); - old way of doing it
+			this.NamedLookups[key] = lookup;
 		}
 
 		public void Clear()

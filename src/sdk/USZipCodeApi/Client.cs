@@ -45,10 +45,10 @@ namespace SmartyStreets.USZipCodeApi
 
 		private void PopulateQueryString(Lookup lookup, Request request)
 		{
-			request.AddParameter("input_id", lookup.InputId);
-			request.AddParameter("city", lookup.City);
-			request.AddParameter("state", lookup.State);
-			request.AddParameter("zipcode", lookup.ZipCode);
+			request.SetParameter("input_id", lookup.InputId);
+			request.SetParameter("city", lookup.City);
+			request.SetParameter("state", lookup.State);
+			request.SetParameter("zipcode", lookup.ZipCode);
 		}
 
 		private void AssignResultsToLookups(Batch batch, Result[] results)

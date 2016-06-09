@@ -33,7 +33,7 @@ namespace SmartyStreets
 		{
 			var request = new Request("http://localhost/?");
 
-			request.AddParameter(name, value);
+			request.SetParameter(name, value);
 
 			Assert.AreEqual(expected, request.GetUrl());
 		}
@@ -43,9 +43,9 @@ namespace SmartyStreets
 		{
 			var request = new Request("http://localhost/?");
 
-			request.AddParameter("name1", "value1");
-			request.AddParameter("name2", "value2");
-			request.AddParameter("name3", "value3");
+			request.SetParameter("name1", "value1");
+			request.SetParameter("name2", "value2");
+			request.SetParameter("name3", "value3");
 
 			var expected = "http://localhost/?name1=value1&name2=value2&name3=value3";
 
@@ -57,8 +57,8 @@ namespace SmartyStreets
 		{
 			var request = new Request("http://localhost/?");
 
-			request.AddParameter("name&", "value");
-			request.AddParameter("name1", "other !value$");
+			request.SetParameter("name&", "value");
+			request.SetParameter("name1", "other !value$");
 
 			string expected = "http://localhost/?name%26=value&name1=other+!value%24";
 
@@ -80,8 +80,8 @@ namespace SmartyStreets
 		{
 			var request = new Request("http://localhost/");
 
-			request.AddHeader("header1", "value1");
-			request.AddHeader("header2", "value2");
+			request.SetHeader("header1", "value1");
+			request.SetHeader("header2", "value2");
 
 			Assert.AreEqual("value1", request.Headers["header1"]);
 			Assert.AreEqual("value2", request.Headers["header2"]);

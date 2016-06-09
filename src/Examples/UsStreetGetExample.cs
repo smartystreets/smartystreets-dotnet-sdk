@@ -1,14 +1,13 @@
 ﻿using System;
-using SmartyStreets.USStreetApi;
-using SmartyStreets;
 using System.IO;
-using System.Collections;
+using SmartyStreets;
+using SmartyStreets.USStreetApi;
 
-namespace UsStreetGetExample
+namespace Examples
 {
-	class MainClass
+	public class UsStreetGetExample
 	{
-		public static void Main(string[] args)
+		public static void Run()
 		{
 			var client = new ClientBuilder("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE").Build();
 
@@ -31,7 +30,7 @@ namespace UsStreetGetExample
 				Console.WriteLine(ex.StackTrace);
 			}
 
-			ArrayList candidates = lookup.Result;
+			var candidates = lookup.Result;
 
 			if (candidates.Count == 0)
 			{
@@ -39,7 +38,7 @@ namespace UsStreetGetExample
 				return;
 			}
 
-			Candidate firstCandidate = (Candidate)candidates[0];
+			var firstCandidate = candidates[0];
 
 			Console.WriteLine("Address is valid. (There is at least one candidate)\n");
 			Console.WriteLine("ZIP Code: " + firstCandidate.Components.ZipCode);
@@ -49,3 +48,4 @@ namespace UsStreetGetExample
 		}
 	}
 }
+

@@ -36,17 +36,17 @@ namespace SmartyStreets
 			this.urlPrefix = urlPrefix;
 		}
 
-		public void AddHeader(string header, string value)
+		public void SetHeader(string header, string value)
 		{
-			this.headers.Add(header, value);
+			this.headers[header] = value;
 		}
 
-		public void AddParameter(string name, string value)
+		public void SetParameter(string name, string value)
 		{
 			if (name == null || value == null || name.Length == 0)
 				return;
 
-			this.parameters.Add(name, value);
+			this.parameters[name] = value;
 		}
 
 		private string UrlEncode(string value)

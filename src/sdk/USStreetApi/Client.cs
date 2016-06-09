@@ -48,25 +48,25 @@ namespace SmartyStreets.USStreetApi
 		private void putHeaders(Batch batch, Request request)
 		{
 			if (batch.IncludeInvalid)
-				request.AddHeader("X-Include-Invalid", "true");
+				request.SetHeader("X-Include-Invalid", "true");
 			else if (batch.StandardizeOnly)
-				request.AddHeader("X-Standardize-Only", "true");
+				request.SetHeader("X-Standardize-Only", "true");
 		}
 
 		private void PopulateQueryString(Lookup address, Request request)
 		{
-			request.AddParameter("street", address.Street);
-			request.AddParameter("street2", address.Street2);
-			request.AddParameter("secondary", address.Secondary);
-			request.AddParameter("city", address.City);
-			request.AddParameter("state", address.State);
-			request.AddParameter("zipcode", address.ZipCode);
-			request.AddParameter("lastline", address.Lastline);
-			request.AddParameter("addressee", address.Addressee);
-			request.AddParameter("urbanization", address.Urbanization);
+			request.SetParameter("street", address.Street);
+			request.SetParameter("street2", address.Street2);
+			request.SetParameter("secondary", address.Secondary);
+			request.SetParameter("city", address.City);
+			request.SetParameter("state", address.State);
+			request.SetParameter("zipcode", address.ZipCode);
+			request.SetParameter("lastline", address.Lastline);
+			request.SetParameter("addressee", address.Addressee);
+			request.SetParameter("urbanization", address.Urbanization);
 
 			if (address.MaxCandidates != 1)
-				request.AddParameter("candidates", address.MaxCandidates.ToString());
+				request.SetParameter("candidates", address.MaxCandidates.ToString());
 		}
 
 		private void AssignCandidatesToLookups(Batch batch, Candidate[] candidates)

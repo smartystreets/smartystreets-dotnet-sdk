@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace SmartyStreets.USStreetApi
 {
@@ -9,7 +9,7 @@ namespace SmartyStreets.USStreetApi
 	{
 		#region [ Fields ]
 
-		public ArrayList Result { get; set; }
+		public List<Candidate> Result { get; private set; }
 
 		public string InputId { get; set; }
 
@@ -51,9 +51,8 @@ namespace SmartyStreets.USStreetApi
 				if (value > 0)
 					this.maxCandidates = value;
 				else
-					throw new ArgumentException("Max candidates must be a positive integer.");
+					throw new ArgumentOutOfRangeException("Max candidates must be a positive integer.");
 			}
-				
 		}
 
 		#endregion
@@ -63,7 +62,7 @@ namespace SmartyStreets.USStreetApi
 		public Lookup()
 		{
 			this.maxCandidates = 1;
-			this.Result = new ArrayList();
+			this.Result = new List<Candidate>();
 		}
 
 		public Lookup(String freeformAddress) : this()

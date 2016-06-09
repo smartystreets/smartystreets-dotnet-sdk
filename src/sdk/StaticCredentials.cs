@@ -13,8 +13,8 @@
 
 		public void Sign(Request request)
 		{
-			request.AddParameter("auth-id", this.authId);
-			request.AddParameter("auth-token", this.authToken);
+			request.SetParameter("auth-id", this.authId);
+			request.SetParameter("auth-token", this.authToken);
 		}
 	}
 }
