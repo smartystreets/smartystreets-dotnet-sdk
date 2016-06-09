@@ -6,10 +6,6 @@ namespace SmartyStreets
 	{
 		public Request Request { get; private set; }
 
-		public RequestCapturingSender()
-		{
-		}
-
 		public Response Send(Request request)
 		{
 			this.Request = request;

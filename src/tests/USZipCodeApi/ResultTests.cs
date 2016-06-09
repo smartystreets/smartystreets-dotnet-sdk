@@ -1,7 +1,5 @@
-﻿using System;
-using System.Runtime.Serialization.Json;
+﻿using System.Runtime.Serialization.Json;
 using NUnit.Framework;
-using SmartyStreets.USZipCodeApi;
 using System.IO;
 using System.Text;
 

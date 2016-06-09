@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using System.Text;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SmartyStreets.USStreetApi
 {

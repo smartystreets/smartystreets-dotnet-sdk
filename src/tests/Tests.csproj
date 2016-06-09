@@ -57,6 +57,7 @@
     <Compile Include="Mocks\FakeDeserializer.cs" />
     <Compile Include="USZipCodeApi\ResultTests.cs" />
     <Compile Include="USZipCodeApi\BatchTests.cs" />
+    <Compile Include="USZipCodeApi\ClientTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">

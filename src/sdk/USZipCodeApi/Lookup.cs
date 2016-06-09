@@ -19,7 +19,7 @@ namespace SmartyStreets.USZipCodeApi
 		public string State { get; set; }
 
 		[DataMember(Name = "zipcode")]
-		public string Zipcode { get; set; }
+		public string ZipCode { get; set; }
 
 		#endregion
 
@@ -32,7 +32,7 @@ namespace SmartyStreets.USZipCodeApi
 
 		public Lookup(string zipcode) : this()
 		{
-			this.Zipcode = zipcode;
+			this.ZipCode = zipcode;
 		}
 
 		public Lookup(string city, string state) : this()
@@ -45,7 +45,7 @@ namespace SmartyStreets.USZipCodeApi
 		{
 			this.City = city;
 			this.State = state;
-			this.Zipcode = zipcode;
+			this.ZipCode = zipcode;
 		}
 
 		#endregion
