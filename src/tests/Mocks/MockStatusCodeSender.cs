@@ -1,7 +1,4 @@
-﻿using System;
-using System.Net;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
 	public class MockStatusCodeSender : ISender
 	{

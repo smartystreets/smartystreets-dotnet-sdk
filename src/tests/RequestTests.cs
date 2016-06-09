@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace SmartyStreets
 {
@@ -88,7 +87,6 @@ namespace SmartyStreets
 			Assert.AreEqual("value2", request.Headers["header2"]);
 		}
 
-//		TODO: Get these working
 		[Test]
 		public void TestGet()
 		{

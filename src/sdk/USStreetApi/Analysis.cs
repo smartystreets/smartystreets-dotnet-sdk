@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace SmartyStreets.USStreetApi
 {
@@ -39,10 +38,6 @@ namespace SmartyStreets.USStreetApi
 		public bool IsSuiteLinkMatch { get; private set; }
 
 		#endregion
-
-		public Analysis()
-		{
-		}
 	}
 }
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Net.Cache;
-using System.Net;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
 	public interface ICredentials
 	{

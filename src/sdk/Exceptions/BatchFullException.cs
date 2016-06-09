@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
 	public class BatchFullException : SmartyException
 	{

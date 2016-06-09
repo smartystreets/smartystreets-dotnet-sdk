@@ -1,6 +1,4 @@
-﻿using System;
-using NUnit.Framework;
-using System.Configuration;
+﻿using NUnit.Framework;
 
 namespace SmartyStreets
 {

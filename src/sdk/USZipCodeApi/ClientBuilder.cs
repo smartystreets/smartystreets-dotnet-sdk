@@ -1,5 +1,5 @@
 ﻿using System;
-namespace SmartyStreets.USStreetApi
+namespace SmartyStreets.USZipCodeApi
 {
 	public class ClientBuilder
 	{
@@ -14,7 +14,7 @@ namespace SmartyStreets.USStreetApi
 		{
 			this.maxRetries = 5;
 			this.maxTimeout = TimeSpan.FromSeconds(10);
-			this.urlPrefix = "https://api.smartystreets.com/street-address";
+			this.urlPrefix = "https://us-zipcode.api.smartystreets.com/lookup";
 			this.serializer = new JsonSerializer();
 		}
 

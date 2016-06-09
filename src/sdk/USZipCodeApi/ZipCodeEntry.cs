@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace SmartyStreets.USZipCodeApi
 {
@@ -8,7 +7,6 @@ namespace SmartyStreets.USZipCodeApi
 	{
 		#region [ fields ]
 
-		//TODO: rename ZipCodez field (was same as the class
 		[DataMember(Name = "zipcode")]
 		public string ZipCode { get; private set; }
 

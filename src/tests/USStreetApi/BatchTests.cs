@@ -85,7 +85,6 @@ namespace SmartyStreets.USStreetApi
 			Assert.AreEqual(0, batch.AllLookups.Count);
 			Assert.AreEqual(0, batch.NamedLookups.Count);
 		}
-
 	}
 }
 

@@ -1,7 +1,4 @@
-﻿using System;
-using NUnit.Framework;
-using System.Runtime.InteropServices;
-using System.Net;
+﻿using NUnit.Framework;
 
 namespace SmartyStreets
 {

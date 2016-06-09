@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace SmartyStreets.USStreetApi
 {
@@ -66,10 +65,6 @@ namespace SmartyStreets.USStreetApi
 		public string DeliveryPointCheckDigit { get; private set; }
 
 		#endregion
-
-		public Components()
-		{
-		}
 	}
 }
 

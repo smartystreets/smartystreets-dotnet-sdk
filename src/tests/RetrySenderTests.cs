@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.IO;
 
 namespace SmartyStreets
@@ -45,7 +44,6 @@ namespace SmartyStreets
 
 			retrySender.Send(request);
 		}
-
 	}
 }
 
