@@ -67,6 +67,7 @@
     <Compile Include="USZipCodeApi\Lookup.cs" />
     <Compile Include="USZipCodeApi\Result.cs" />
     <Compile Include="USZipCodeApi\CityState.cs" />
+    <Compile Include="USZipCodeApi\Batch.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
