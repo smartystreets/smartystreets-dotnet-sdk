@@ -37,6 +37,7 @@
     <Compile Include="UsStreetGetExample.cs" />
     <Compile Include="UsStreetPostExample.cs" />
     <Compile Include="UsZipCodeGetExample.cs" />
+    <Compile Include="UsZipCodePostExample.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\sdk\SDK.csproj">

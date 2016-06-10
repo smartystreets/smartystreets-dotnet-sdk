@@ -6,7 +6,8 @@
 		{
 			//UsStreetGetExample.Run();
 			//UsStreetPostExample.Run();
-			UsZipCodeGetExample.Run();
+			//UsZipCodeGetExample.Run();
+			UsZipCodePostExample.Run();
 		}
 	}
 }

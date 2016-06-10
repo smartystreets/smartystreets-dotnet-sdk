@@ -36,7 +36,7 @@ namespace Examples
 			}
 			catch (BatchFullException)
 			{
-				Console.WriteLine("Error. Batch is already full.");
+				Console.WriteLine("Error. The batch is already full.");
 			}
 			catch (SmartyException ex)
 			{
