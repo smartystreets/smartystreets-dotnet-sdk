@@ -5,8 +5,8 @@
 		public static void Main(string[] args)
 		{
 			//UsStreetGetExample.Run();
-			UsStreetPostExample.Run();
-
+			//UsStreetPostExample.Run();
+			UsZipCodeGetExample.Run();
 		}
 	}
 }
