@@ -30,8 +30,6 @@ namespace SmartyStreets.USStreetApi
 			if (key == null)
 				return;
 
-			//TODO: what way should we do it?
-			//this.NamedLookups.Add(key, newAddress); - old way of doing it
 			this.NamedLookups[key] = newAddress;
 		}
 
