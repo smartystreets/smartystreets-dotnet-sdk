@@ -8,7 +8,9 @@ namespace Examples
 	{
 		public static void Run()
 		{
-			var client = new ClientBuilder("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE").Build();
+			var authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
+			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
+			var client = new ClientBuilder(authID, authToken).Build();
 
 			var lookup1 = new Lookup();
 			lookup1.ZipCode = "12345";   // A Lookup may have a ZIP Code, city and state, or city, state, and ZIP Code
