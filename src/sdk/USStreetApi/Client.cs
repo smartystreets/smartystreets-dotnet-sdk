@@ -37,12 +37,14 @@ namespace SmartyStreets.USStreetApi
 				request.Payload = this.serializer.Serialize(batch.AllLookups);
 
 			var response = this.sender.Send(request);
-			var payloadStream = new MemoryStream(response.Payload);
 
-			Candidate[] candidates = this.serializer.Deserialize<Candidate[]>(payloadStream);
-			if (candidates == null)
-				candidates = new Candidate[0];
-			this.AssignCandidatesToLookups(batch, candidates);
+			using (var payloadStream = new MemoryStream(response.Payload))
+			{
+				var candidates = this.serializer.Deserialize<Candidate[]>(payloadStream);
+				if (candidates == null)
+					candidates = new Candidate[0];
+				this.AssignCandidatesToLookups(batch, candidates);
+			}
 		}
 
 		private void putHeaders(Batch batch, Request request)
