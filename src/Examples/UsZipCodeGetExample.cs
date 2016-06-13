@@ -32,14 +32,14 @@ namespace Examples
 			}
 
 			var result = lookup.Result;
-			var cityStates = result.CityStates;
+			var cities = result.CityStates;
 			var zipCodes = result.ZipCodes;
 
-			foreach (CityState cityState in cityStates)
+			foreach (CityEntry city in cities)
 			{
-				Console.WriteLine("\nCity: " + cityState.City);
-				Console.WriteLine("State: " + cityState.State);
-				Console.WriteLine("Mailable City: " + cityState.MailableCity);
+				Console.WriteLine("\nCity: " + city.City);
+				Console.WriteLine("State: " + city.State);
+				Console.WriteLine("Mailable City: " + city.MailableCity);
 			}
 
 			foreach (ZipCodeEntry zipCode in zipCodes)

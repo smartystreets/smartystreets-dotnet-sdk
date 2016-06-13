@@ -17,7 +17,7 @@ namespace SmartyStreets.USZipCodeApi
 		public int InputIndex { get; private set; }
 
 		[DataMember(Name = "city_states")]
-		public CityState[] CityStates { get; private set; }
+		public CityEntry[] CityStates { get; private set; }
 
 		[DataMember(Name = "zipcodes")]
 		public ZipCodeEntry[] ZipCodes { get; private set; }
@@ -29,7 +29,7 @@ namespace SmartyStreets.USZipCodeApi
 			return (this.Status == null && this.Reason == null);
 		}
 
-		public CityState GetCityState(int index)
+		public CityEntry GetCityState(int index)
 		{
 			return this.CityStates[index];
 		}

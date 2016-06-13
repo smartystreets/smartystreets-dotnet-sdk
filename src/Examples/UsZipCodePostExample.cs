@@ -60,7 +60,7 @@ namespace Examples
 				var cityStates = result.CityStates;
 				Console.WriteLine(cityStates.Length + " City and State match" + ((cityStates.Length == 1) ? ":" : "es:"));
 
-				foreach (CityState cityState in cityStates)
+				foreach (CityEntry cityState in cityStates)
 				{
 					Console.WriteLine("City: " + cityState.City);
 					Console.WriteLine("State: " + cityState.State);

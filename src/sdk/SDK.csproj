@@ -66,7 +66,7 @@
     <Compile Include="USZipCodeApi\ZipCodeEntry.cs" />
     <Compile Include="USZipCodeApi\Lookup.cs" />
     <Compile Include="USZipCodeApi\Result.cs" />
-    <Compile Include="USZipCodeApi\CityState.cs" />
+    <Compile Include="USZipCodeApi\CityEntry.cs" />
     <Compile Include="USZipCodeApi\Batch.cs" />
     <Compile Include="USZipCodeApi\Client.cs" />
     <Compile Include="USZipCodeApi\ClientBuilder.cs" />

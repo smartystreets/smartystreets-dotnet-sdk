@@ -3,7 +3,7 @@
 namespace SmartyStreets.USZipCodeApi
 {
 	[DataContract]
-	public class CityState
+	public class CityEntry
 	{
 		#region [ Fields ]
 
