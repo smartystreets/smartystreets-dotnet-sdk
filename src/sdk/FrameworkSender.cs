@@ -35,24 +35,15 @@ namespace SmartyStreets
 		{
 			var frameworkRequest = (HttpWebRequest)WebRequest.Create(request.GetUrl());
 			frameworkRequest.Timeout = (int)this.timeout.TotalMilliseconds;
+			frameworkRequest.Method = request.Method;
 			return frameworkRequest;
 		}
 
 		private static void TryWritePayload(Request request, HttpWebRequest frameworkRequest)
 		{
-			//TODO: revert to original code.
-			//if (request.Method == "POST")
-			//	using (var sourceStream = new MemoryStream(request.Payload))
-			//		CopyStream(sourceStream, GetRequestStream(frameworkRequest));
-
-			if (request.Method == "POST")
-			{
-				frameworkRequest.Method = "POST";
-
+			if (request.Method == "POST" && request.Payload != null)
 				using (var sourceStream = new MemoryStream(request.Payload))
 					CopyStream(sourceStream, GetRequestStream(frameworkRequest));
-			}
-				
 		}
 
 		private static void CopyStream(Stream source, Stream target)
@@ -97,10 +88,9 @@ namespace SmartyStreets
 
 		private static byte[] GetResponseBody(HttpWebResponse response)
 		{
-			if (response.ContentLength <= 0)
-				return null;
+			var length = response.ContentLength >= 0 ? (int)response.ContentLength : 0;
 
-			using (var targetStream = new MemoryStream((int)response.ContentLength))
+			using (var targetStream = new MemoryStream(length))
 			using (var responseStream = response.GetResponseStream())
 			{
 				CopyStream(responseStream, targetStream);
