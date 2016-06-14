@@ -5,3 +5,4 @@ Release
 bin
 obj
 
+*.nupkg
