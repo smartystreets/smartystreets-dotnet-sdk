@@ -64,9 +64,7 @@
 			this.maxCandidates = 1;
 			this.Result = new List<Candidate>();
 		}
-
-		public Lookup(String freeformAddress)
-			: this()
+		public Lookup(String freeformAddress) : this()
 		{
 			this.Street = freeformAddress;
 		}

@@ -43,9 +43,7 @@
 
 			client.Send(lookup);
 
-			Assert.AreEqual(
-				"http://localhost/?street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0&urbanization=4&candidates=9",
-				sender.Request.GetUrl());
+			Assert.AreEqual("http://localhost/?street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0&urbanization=4&candidates=9", sender.Request.GetUrl());
 		}
 
 		#endregion

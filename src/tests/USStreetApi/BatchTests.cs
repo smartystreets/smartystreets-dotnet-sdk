@@ -9,8 +9,10 @@
 		public void TestGetsLookupByInputId()
 		{
 			var batch = new Batch();
-			var lookup = new Lookup();
-			lookup.InputId = "hasInputId";
+			var lookup = new Lookup
+			{
+				InputId = "hasInputId"
+			};
 
 			batch.Add(lookup);
 

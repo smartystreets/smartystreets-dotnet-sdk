@@ -31,8 +31,7 @@
 			this.headers = new Dictionary<string, string>();
 			this.parameters = new Dictionary<string, string>();
 		}
-		public Request(string urlPrefix)
-			: this()
+		public Request(string urlPrefix) : this()
 		{
 			this.urlPrefix = urlPrefix;
 		}

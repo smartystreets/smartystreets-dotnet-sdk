@@ -18,13 +18,11 @@
 			this.urlPrefix = "https://us-zipcode.api.smartystreets.com/lookup";
 			this.serializer = new JsonSerializer();
 		}
-		public ClientBuilder(ICredentials signer)
-			: this()
+		public ClientBuilder(ICredentials signer) : this()
 		{
 			this.signer = signer;
 		}
-		public ClientBuilder(string authId, string authToken)
-			: this(new StaticCredentials(authId, authToken))
+		public ClientBuilder(string authId, string authToken) : this(new StaticCredentials(authId, authToken))
 		{
 		}
 
