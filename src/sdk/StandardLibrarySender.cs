@@ -4,15 +4,15 @@
 	using System.IO;
 	using System.Net;
 
-	public class FrameworkSender : ISender
+	public class StandardLibrarySender : ISender
 	{
 		private TimeSpan timeout;
 
-		public FrameworkSender()
+		public StandardLibrarySender()
 		{
 			this.timeout = TimeSpan.FromSeconds(10);
 		}
-		public FrameworkSender(TimeSpan timeout)
+		public StandardLibrarySender(TimeSpan timeout)
 		{
 			this.timeout = timeout;
 		}

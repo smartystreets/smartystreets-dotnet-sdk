@@ -46,9 +46,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="USStreetApi\Client.cs" />
     <Compile Include="ISender.cs" />
-    <Compile Include="FrameworkSender.cs" />
+    <Compile Include="StandardLibrarySender.cs" />
     <Compile Include="ISerializer.cs" />
-    <Compile Include="JsonSerializer.cs" />
+    <Compile Include="StandardLibraryJsonSerializer.cs" />
     <Compile Include="ICredentials.cs" />
     <Compile Include="StaticCredentials.cs" />
     <Compile Include="Request.cs" />
