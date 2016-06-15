@@ -5,7 +5,7 @@
 	using SmartyStreets;
 	using SmartyStreets.USZipCodeApi;
 
-	public class UsZipCodeGetExample
+	public class USZipCodeGetExample
 	{
 		public static void Run()
 		{
@@ -53,4 +53,3 @@
 		}
 	}
 }
-

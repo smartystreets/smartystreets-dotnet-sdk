@@ -35,10 +35,10 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UsStreetGetExample.cs" />
-    <Compile Include="UsStreetPostExample.cs" />
-    <Compile Include="UsZipCodeGetExample.cs" />
-    <Compile Include="UsZipCodePostExample.cs" />
+    <Compile Include="USStreetGetExample.cs" />
+    <Compile Include="USStreetPostExample.cs" />
+    <Compile Include="USZipCodeGetExample.cs" />
+    <Compile Include="USZipCodePostExample.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\sdk\SDK.csproj">
