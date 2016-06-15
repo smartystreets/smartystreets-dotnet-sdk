@@ -18,12 +18,10 @@
 			this.urlPrefix = "https://us-zipcode.api.smartystreets.com/lookup";
 			this.serializer = new JsonSerializer();
 		}
-
 		public ClientBuilder(ICredentials signer) : this()
 		{
 			this.signer = signer;
 		}
-
 		public ClientBuilder(string authId, string authToken) : this(new StaticCredentials(authId, authToken)) { }
 
 		public ClientBuilder RetryAtMost(int retries)
@@ -31,25 +29,21 @@
 			this.maxRetries = retries;
 			return this;
 		}
-
 		public ClientBuilder WithMaxTimeout(TimeSpan timeout)
 		{
 			this.maxTimeout = timeout;
 			return this;
 		}
-
 		public ClientBuilder WithUrl(string prefix)
 		{
 			this.urlPrefix = prefix;
 			return this;
 		}
-
 		public ClientBuilder WithSerializer(ISerializer value)
 		{
 			this.serializer = value;
 			return this;
 		}
-
 		public ClientBuilder WithSender(ISender sender)
 		{
 			this.httpSender = sender;
@@ -60,8 +54,7 @@
 		{
 			return new Client(this.urlPrefix, this.BuildSender(), this.serializer);
 		}
-
-		public ISender BuildSender()
+		private ISender BuildSender()
 		{
 			if (this.httpSender != null)
 				return this.httpSender;

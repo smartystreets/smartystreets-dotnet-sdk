@@ -11,9 +11,7 @@
 		private byte[] payload;
 
 		public Dictionary<string, string> Headers { get {return this.headers;} }
-
 		public string Method { get; private set; }
-
 		public byte[] Payload
 		{
 			get { return this.payload; }
@@ -30,7 +28,6 @@
 			this.headers = new Dictionary<string, string>();
 			this.parameters = new Dictionary<string, string>();
 		}
-
 		public Request(string urlPrefix) : this()
 		{
 			this.urlPrefix = urlPrefix;
@@ -40,24 +37,12 @@
 		{
 			this.headers[header] = value;
 		}
-
 		public void SetParameter(string name, string value)
 		{
 			if (name == null || value == null || name.Length == 0)
 				return;
 
 			this.parameters[name] = value;
-		}
-
-		private static string UrlEncode(string value)
-		{
-			try {
-				return HttpUtility.UrlEncode(value);
-			}
-			catch
-			{
-				return string.Empty;
-			}
 		}
 
 		public string GetUrl()
@@ -78,6 +63,17 @@
 			}
 
 			return url;
+		}
+		private static string UrlEncode(string value)
+		{
+			try
+			{
+				return HttpUtility.UrlEncode(value);
+			}
+			catch
+			{
+				return string.Empty;
+			}
 		}
 	}
 }

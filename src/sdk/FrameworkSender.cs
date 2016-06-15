@@ -12,7 +12,6 @@
 		{
 			this.timeout = TimeSpan.FromSeconds(10);
 		}
-
 		public FrameworkSender(TimeSpan timeout)
 		{
 			this.timeout = timeout;
@@ -30,7 +29,6 @@
 
 			return new Response(statusCode, payload);
 		}
-
 		private HttpWebRequest BuildRequest(Request request)
 		{
 			var frameworkRequest = (HttpWebRequest)WebRequest.Create(request.GetUrl());
@@ -38,14 +36,12 @@
 			frameworkRequest.Method = request.Method;
 			return frameworkRequest;
 		}
-
 		private static void TryWritePayload(Request request, HttpWebRequest frameworkRequest)
 		{
 			if (request.Method == "POST" && request.Payload != null)
 				using (var sourceStream = new MemoryStream(request.Payload))
 					CopyStream(sourceStream, GetRequestStream(frameworkRequest));
 		}
-
 		private static void CopyStream(Stream source, Stream target)
 		{
 			try
@@ -57,8 +53,7 @@
 				throw new SmartyException();
 			}
 		}
-
-		private static Stream GetRequestStream(HttpWebRequest request)
+		private static Stream GetRequestStream(WebRequest request)
 		{
 			try
 			{
@@ -70,8 +65,7 @@
 				throw new SmartyException();
 			}
 		}
-
-		private static HttpWebResponse GetResponse(HttpWebRequest request)
+		private static HttpWebResponse GetResponse(WebRequest request)
 		{
 			try
 			{
@@ -85,8 +79,7 @@
 				return (HttpWebResponse)e.Response;
 			}
 		}
-
-		private static byte[] GetResponseBody(HttpWebResponse response)
+		private static byte[] GetResponseBody(WebResponse response)
 		{
 			var length = response.ContentLength >= 0 ? (int)response.ContentLength : 0;
 

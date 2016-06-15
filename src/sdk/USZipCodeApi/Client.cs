@@ -1,5 +1,6 @@
 ﻿namespace SmartyStreets.USZipCodeApi
 {
+	using System.Collections.Generic;
 	using System.IO;
 
 	public class Client
@@ -21,7 +22,6 @@
 			batch.Add(lookup);
 			this.Send(batch);
 		}
-
 		public void Send(Batch batch)
 		{
 			var request = new Request(this.urlPrefix);
@@ -41,7 +41,6 @@
 
 			AssignResultsToLookups(batch, results);
 		}
-
 		private static void PopulateQueryString(Lookup lookup, Request request)
 		{
 			request.SetParameter("input_id", lookup.InputId);
@@ -49,10 +48,9 @@
 			request.SetParameter("state", lookup.State);
 			request.SetParameter("zipcode", lookup.ZipCode);
 		}
-
-		private static void AssignResultsToLookups(Batch batch, Result[] results)
+		private static void AssignResultsToLookups(Batch batch, IList<Result> results)
 		{
-			for (var i = 0; i < results.Length; i++)
+			for (var i = 0; i < results.Count; i++)
 				batch.Get(i).Result = results[i];
 		}
 	}

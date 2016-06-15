@@ -24,7 +24,6 @@
 
 			return null;
 		}
-
 		private Response TrySend(Request request, int attempt)
 		{
 			try

@@ -51,7 +51,7 @@
 				if (value > 0)
 					this.maxCandidates = value;
 				else
-					throw new ArgumentOutOfRangeException("Max candidates must be a positive integer.");
+					throw new ArgumentOutOfRangeException("value", "Max candidates must be a positive integer.");
 			}
 		}
 
