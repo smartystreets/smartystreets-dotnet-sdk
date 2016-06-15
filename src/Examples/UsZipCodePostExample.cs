@@ -1,23 +1,28 @@
-﻿using System;
-using SmartyStreets.USZipCodeApi;
-using SmartyStreets;
-using System.IO;
-namespace Examples
+﻿namespace Examples
 {
+	using System;
+	using System.IO;
+	using SmartyStreets;
+	using SmartyStreets.USZipCodeApi;
+
 	public class UsZipCodePostExample
 	{
 		public static void Run()
 		{
-			var authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
+			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			var client = new ClientBuilder(authID, authToken).Build();
+			var client = new ClientBuilder(authId, authToken).Build();
 
-			var lookup1 = new Lookup();
-			lookup1.ZipCode = "12345";   // A Lookup may have a ZIP Code, city and state, or city, state, and ZIP Code
+			var lookup1 = new Lookup
+			{
+				ZipCode = "12345"
+			};
 
-			var lookup2 = new Lookup();
-			lookup2.City = "Phoenix";
-			lookup2.State = "Arizona";
+			var lookup2 = new Lookup
+			{
+				City = "Phoenix",
+				State = "Arizona"
+			};
 
 			var lookup3 = new Lookup("cupertino", "CA", "95014"); // You can also set these with arguments
 
@@ -45,7 +50,7 @@ namespace Examples
 				Console.WriteLine(ex.StackTrace);
 			}
 
-			for (int i = 0; i < batch.Size(); i++)
+			for (var i = 0; i < batch.Size(); i++)
 			{
 				var result = batch.Get(i).Result;
 				Console.WriteLine("Lookup " + i + ":\n");
@@ -60,7 +65,7 @@ namespace Examples
 				var cityStates = result.CityStates;
 				Console.WriteLine(cityStates.Length + " City and State match" + ((cityStates.Length == 1) ? ":" : "es:"));
 
-				foreach (CityEntry cityState in cityStates)
+				foreach (var cityState in cityStates)
 				{
 					Console.WriteLine("City: " + cityState.City);
 					Console.WriteLine("State: " + cityState.State);
@@ -71,7 +76,7 @@ namespace Examples
 				var zipCodes = result.ZipCodes;
 				Console.WriteLine(zipCodes.Length + " ZIP Code match" + ((cityStates.Length == 1) ? ":" : "es:"));
 
-				foreach (ZipCodeEntry zipCode in zipCodes)
+				foreach (var zipCode in zipCodes)
 				{
 					Console.WriteLine("ZIP Code: " + zipCode.ZipCode);
 					Console.WriteLine("County: " + zipCode.CountyName);
@@ -84,4 +89,3 @@ namespace Examples
 		}
 	}
 }
-

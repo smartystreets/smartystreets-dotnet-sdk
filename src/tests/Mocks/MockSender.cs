@@ -13,8 +13,7 @@
 		public Response Send(Request request)
 		{
 			this.Request = request;
-			return response;
+			return this.response;
 		}
 	}
 }
-

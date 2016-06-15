@@ -1,7 +1,7 @@
-﻿using System.Runtime.Serialization;
-
-namespace SmartyStreets.USZipCodeApi
+﻿namespace SmartyStreets.USZipCodeApi
 {
+	using System.Runtime.Serialization;
+
 	[DataContract]
 	public class Result
 	{
@@ -40,4 +40,3 @@ namespace SmartyStreets.USZipCodeApi
 		}
 	}
 }
-

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SmartyStreets.USStreetApi
+﻿namespace SmartyStreets.USStreetApi
 {
+	using System;
+	using System.Collections.Generic;
+
 	public class Batch
 	{
-		public const int MAX_BATCH_SIZE = 100;
+		public const int MaxBatchSize = 100;
 		public Dictionary<string, Lookup> NamedLookups { get; private set; }
 		public List<Lookup> AllLookups { get; private set; }
 		public bool StandardizeOnly { get; set; }
@@ -21,12 +21,12 @@ namespace SmartyStreets.USStreetApi
 
 		public void Add(Lookup newAddress)
 		{
-			if (this.AllLookups.Count >= MAX_BATCH_SIZE)
-				throw new BatchFullException("Batch size cannot exceed " + MAX_BATCH_SIZE);
+			if (this.AllLookups.Count >= MaxBatchSize)
+				throw new BatchFullException("Batch size cannot exceed " + MaxBatchSize);
 
 			this.AllLookups.Add(newAddress);
 
-			string key = newAddress.InputId;
+			var key = newAddress.InputId;
 			if (key == null)
 				return;
 
@@ -35,7 +35,7 @@ namespace SmartyStreets.USStreetApi
 
 		public void Reset()
 		{
-			Clear();
+			this.Clear();
 			this.StandardizeOnly = false;
 			this.IncludeInvalid = false;
 		}
@@ -55,4 +55,3 @@ namespace SmartyStreets.USStreetApi
 		public Lookup Get(int inputIndex) { return this.AllLookups[inputIndex]; }
 	}
 }
-

@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-namespace SmartyStreets.USZipCodeApi
+﻿namespace SmartyStreets.USZipCodeApi
 {
+	using System;
+	using System.Collections.Generic;
+
 	public class Batch
 	{
-		public const int MAX_BATCH_SIZE = 100;
+		public const int MaxBatchSize = 100;
 		public Dictionary<string, Lookup> NamedLookups { get; private set; }
 		public List<Lookup> AllLookups { get; private set; }
 
@@ -16,14 +17,12 @@ namespace SmartyStreets.USZipCodeApi
 
 		public void Add(Lookup lookup)
 		{
-			if (this.AllLookups.Count >= MAX_BATCH_SIZE)
-			{
-				throw new BatchFullException("Batch size cannot exceed " + MAX_BATCH_SIZE);
-			}
+			if (this.AllLookups.Count >= MaxBatchSize)
+				throw new BatchFullException("Batch size cannot exceed " + MaxBatchSize);
 
 			this.AllLookups.Add(lookup);
 
-			string key = lookup.InputId;
+			var key = lookup.InputId;
 			if (key == null)
 				return;
 
@@ -45,4 +44,3 @@ namespace SmartyStreets.USZipCodeApi
 		public Lookup Get(int inputIndex) { return this.AllLookups[inputIndex]; }
 	}
 }
-

@@ -1,22 +1,24 @@
-﻿using System;
-using System.IO;
-using SmartyStreets;
-using SmartyStreets.USStreetApi;
-
-namespace Examples
+﻿namespace Examples
 {
+	using System;
+	using System.IO;
+	using SmartyStreets;
+	using SmartyStreets.USStreetApi;
+
 	public class UsStreetGetExample
 	{
 		public static void Run()
 		{
-			var authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
+			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			var client = new ClientBuilder(authID, authToken).Build();
+			var client = new ClientBuilder(authId, authToken).Build();
 
-			var lookup = new Lookup();
-			lookup.Street = "1600 Amphitheatre Pkwy";
-			lookup.City = "Mountain View";
-			lookup.State = "CA";
+			var lookup = new Lookup
+			{
+				Street = "1600 Amphitheatre Pkwy",
+				City = "Mountain View",
+				State = "CA"
+			};
 
 			try
 			{
@@ -50,4 +52,3 @@ namespace Examples
 		}
 	}
 }
-

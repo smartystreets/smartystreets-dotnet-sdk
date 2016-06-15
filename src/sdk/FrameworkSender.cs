@@ -1,9 +1,9 @@
-﻿using System;
-using System.Net;
-using System.IO;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
+	using System;
+	using System.IO;
+	using System.Net;
+
 	public class FrameworkSender : ISender
 	{
 		private TimeSpan timeout;

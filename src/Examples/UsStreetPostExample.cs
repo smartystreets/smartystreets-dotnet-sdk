@@ -1,31 +1,38 @@
-﻿using SmartyStreets;
-using SmartyStreets.USStreetApi;
-using System;
-using System.IO;
-namespace Examples
+﻿namespace Examples
 {
+	using System;
+	using System.IO;
+	using SmartyStreets;
+	using SmartyStreets.USStreetApi;
+
 	public class UsStreetPostExample
 	{
 		public static void Run()
 		{
-			 var authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
-			 var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			var client = new ClientBuilder(authID, authToken).Build();
+			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
+			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
+			var client = new ClientBuilder(authId, authToken).Build();
 			var batch = new Batch();
 
-			var address1 = new Lookup();
-			address1.Street = "1600 amphitheatre parkway";
-			address1.City = "Mountain view";
-			address1.State = "california";
+			var address1 = new Lookup
+			{
+				Street = "1600 amphitheatre parkway",
+				City = "Mountain view",
+				State = "california"
+			};
 
-			var address2 = new Lookup("1 Rosedale, Baltimore, Maryland"); // Freeform addresses work too.
-			address2.MaxCandidates = 10; // Allows up to ten possible matches to be returned (default is 1).
+			var address2 = new Lookup("1 Rosedale, Baltimore, Maryland")
+			{
+				MaxCandidates = 10
+			}; // Freeform addresses work too.
 
 			var address3 = new Lookup("123 Bogus Street, Pretend Lake, Oklahoma");
 
-			var address4 = new Lookup();
-			address4.Street = "1 Infinite Loop";
-			address4.ZipCode = "95014"; // You can just input the street and ZIP if you want.
+			var address4 = new Lookup
+			{
+				Street = "1 Infinite Loop",
+				ZipCode = "95014"
+			};
 
 			try
 			{
@@ -52,7 +59,7 @@ namespace Examples
 
 			var lookups = batch.AllLookups;
 
-			for (int i = 0; i < batch.Size(); i++)
+			for (var i = 0; i < batch.Size(); i++)
 			{
 				var candidates = lookups[i].Result;
 
@@ -64,7 +71,7 @@ namespace Examples
 
 				Console.WriteLine("Address " + i + " is valid. (There is at least one candidate)");
 
-				foreach (Candidate candidate in candidates)
+				foreach (var candidate in candidates)
 				{
 					var components = candidate.Components;
 					var metadata = candidate.Metadata;

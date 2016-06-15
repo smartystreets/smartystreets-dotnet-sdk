@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
-using System.IO;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
+	using System.IO;
+	using NUnit.Framework;
+
 	[TestFixture]
 	public class RetrySenderTests
 	{
@@ -17,7 +17,7 @@ namespace SmartyStreets
 		[Test]
 		public void TestSuccessDoesNotRetry()
 		{
-			this.SendRequest(MockCrashingSender.DO_NOT_RETRY);
+			this.SendRequest(MockCrashingSender.DoNotRetry);
 
 			Assert.AreEqual(1, this.mockCrashingSender.SendCount);
 		}
@@ -25,7 +25,7 @@ namespace SmartyStreets
 		[Test]
 		public void TestRetryUntilSuccess()
 		{
-			this.SendRequest(MockCrashingSender.RETRY_THREE_TIMES);
+			this.SendRequest(MockCrashingSender.RetryThreeTimes);
 
 			Assert.AreEqual(4, this.mockCrashingSender.SendCount);
 		}
@@ -34,7 +34,7 @@ namespace SmartyStreets
 		[ExpectedException(typeof(IOException))]
 		public void TestRetryUntilMaxAttemps()
 		{
-			this.SendRequest(MockCrashingSender.RETRY_MAX_TIMES);
+			this.SendRequest(MockCrashingSender.RetryMaxTimes);
 		}
 
 		private void SendRequest(string requestBehavior)
@@ -46,4 +46,3 @@ namespace SmartyStreets
 		}
 	}
 }
-

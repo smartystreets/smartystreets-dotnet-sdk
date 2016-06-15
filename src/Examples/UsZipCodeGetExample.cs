@@ -1,21 +1,23 @@
-﻿using System;
-using SmartyStreets.USZipCodeApi;
-using SmartyStreets;
-using System.IO;
-
-namespace Examples
+﻿namespace Examples
 {
+	using System;
+	using System.IO;
+	using SmartyStreets;
+	using SmartyStreets.USZipCodeApi;
+
 	public class UsZipCodeGetExample
 	{
 		public static void Run()
 		{
-			var authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
+			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			var client = new ClientBuilder(authID, authToken).Build();
+			var client = new ClientBuilder(authId, authToken).Build();
 
-			var lookup = new Lookup();
-			lookup.City = "Mountain View";
-			lookup.State = "California";
+			var lookup = new Lookup
+			{
+				City = "Mountain View",
+				State = "California"
+			};
 
 			try
 			{
@@ -35,14 +37,14 @@ namespace Examples
 			var cities = result.CityStates;
 			var zipCodes = result.ZipCodes;
 
-			foreach (CityEntry city in cities)
+			foreach (var city in cities)
 			{
 				Console.WriteLine("\nCity: " + city.City);
 				Console.WriteLine("State: " + city.State);
 				Console.WriteLine("Mailable City: " + city.MailableCity);
 			}
 
-			foreach (ZipCodeEntry zipCode in zipCodes)
+			foreach (var zipCode in zipCodes)
 			{
 				Console.WriteLine("\nZIP Code: " + zipCode.ZipCode);
 				Console.WriteLine("Latitude: " + zipCode.Latitude);

@@ -1,11 +1,11 @@
-﻿using System.Runtime.Serialization;
-
-namespace SmartyStreets.USZipCodeApi
+﻿namespace SmartyStreets.USZipCodeApi
 {
+	using System.Runtime.Serialization;
+
 	[DataContract]
 	public class ZipCodeEntry
 	{
-		#region [ fields ]
+		#region [ Fields ]
 
 		[DataMember(Name = "zipcode")]
 		public string ZipCode { get; private set; }
@@ -34,4 +34,3 @@ namespace SmartyStreets.USZipCodeApi
 		#endregion
 	}
 }
-

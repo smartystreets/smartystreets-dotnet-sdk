@@ -1,35 +1,35 @@
-﻿using NUnit.Framework;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
+	using NUnit.Framework;
+
 	[TestFixture]
 	public class RequestTests
 	{
 		[Test]
 		public void TestNullNameQueryStringParameterNotAdded()
 		{
-			this.AssertQueryStringParameters(null, "value", "http://localhost/?");
+			AssertQueryStringParameters(null, "value", "http://localhost/?");
 		}
 
 		[Test]
 		public void TestEmptyNameQueryStringParameterNotAdded()
 		{
-			this.AssertQueryStringParameters("", "value", "http://localhost/?");
+			AssertQueryStringParameters(string.Empty, "value", "http://localhost/?");
 		}
 
 		[Test]
 		public void TestNullValueQueryStringParameterNotAdded()
 		{
-			this.AssertQueryStringParameters("name", null, "http://localhost/?");
+			AssertQueryStringParameters("name", null, "http://localhost/?");
 		}
 
 		[Test]
 		public void TestEmptyValueQueryStringParameterIsAdded()
 		{
-			this.AssertQueryStringParameters("name", "", "http://localhost/?name=");
+			AssertQueryStringParameters("name", string.Empty, "http://localhost/?name=");
 		}
 
-		private void AssertQueryStringParameters(string name, string value, string expected)
+		private static void AssertQueryStringParameters(string name, string value, string expected)
 		{
 			var request = new Request("http://localhost/?");
 
@@ -47,9 +47,8 @@ namespace SmartyStreets
 			request.SetParameter("name2", "value2");
 			request.SetParameter("name3", "value3");
 
-			var expected = "http://localhost/?name1=value1&name2=value2&name3=value3";
-
-			Assert.AreEqual(expected, request.GetUrl());
+			const string Expected = "http://localhost/?name1=value1&name2=value2&name3=value3";
+			Assert.AreEqual(Expected, request.GetUrl());
 		}
 
 		[Test]
@@ -60,9 +59,8 @@ namespace SmartyStreets
 			request.SetParameter("name&", "value");
 			request.SetParameter("name1", "other !value$");
 
-			string expected = "http://localhost/?name%26=value&name1=other+!value%24";
-
-			Assert.AreEqual(expected, request.GetUrl());
+			const string Expected = "http://localhost/?name%26=value&name1=other+!value%24";
+			Assert.AreEqual(Expected, request.GetUrl());
 		}
 
 		[Test]
@@ -70,9 +68,8 @@ namespace SmartyStreets
 		{
 			var request = new Request("http://localhost/");
 
-			string expected = "http://localhost/?";
-
-			Assert.AreEqual(expected, request.GetUrl());
+			const string Expected = "http://localhost/?";
+			Assert.AreEqual(Expected, request.GetUrl());
 		}
 
 		[Test]
@@ -99,14 +96,15 @@ namespace SmartyStreets
 		[Test]
 		public void TestPost()
 		{
-			var request = new Request("http://localhost/");
+			var request = new Request("http://localhost/")
+			{
+				Payload = new byte[] { 0, 1, 2 }
+			};
 
-			request.Payload = new byte[]{0,1,2};
-			byte[] actualPayload = request.Payload;
+			var actualPayload = request.Payload;
 
 			Assert.AreEqual("POST", request.Method);
 			Assert.AreEqual(new byte[]{0,1,2}, actualPayload);
 		}
 	}
 }
-

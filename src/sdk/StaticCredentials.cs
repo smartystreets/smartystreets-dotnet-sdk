@@ -2,8 +2,8 @@
 {
 	public class StaticCredentials : ICredentials
 	{
-		private string authId;
-		private string authToken;
+		private readonly string authId;
+		private readonly string authToken;
 
 		public StaticCredentials(string authId, string authToken)
 		{

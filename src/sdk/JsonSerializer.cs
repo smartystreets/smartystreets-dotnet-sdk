@@ -1,8 +1,8 @@
-﻿using System.Runtime.Serialization.Json;
-using System.IO;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
+	using System.IO;
+	using System.Runtime.Serialization.Json;
+
 	public class JsonSerializer : ISerializer
 	{
 		public byte[] Serialize(object graph)
@@ -11,7 +11,8 @@ namespace SmartyStreets
 				return null;
 
 			var serializer = new DataContractJsonSerializer(graph.GetType());
-			using (var stream = new MemoryStream()) {
+			using (var stream = new MemoryStream())
+			{
 				serializer.WriteObject(stream, graph);
 				return stream.ToArray();
 			}

@@ -1,10 +1,9 @@
-﻿using System;
-using NUnit.Framework;
-using System.Text;
-using System.Collections.Generic;
-
-namespace SmartyStreets.USStreetApi
+﻿namespace SmartyStreets.USStreetApi
 {
+	using System;
+	using System.Text;
+	using NUnit.Framework;
+
 	[TestFixture]
 	public class ClientTests
 	{
@@ -25,20 +24,22 @@ namespace SmartyStreets.USStreetApi
 		[Test]
 		public void TestSendingSingleFullyPopulatedLookup()
 		{
-			RequestCapturingSender sender = new RequestCapturingSender();
-			FakeSerializer serializer = new FakeSerializer(null);
-			Client client = new Client("http://localhost/", sender, serializer);
-			Lookup lookup = new Lookup();
-			lookup.Addressee = "0";
-			lookup.Street = "1";
-			lookup.Secondary = "2";
-			lookup.Street2 = "3";
-			lookup.Urbanization = "4";
-			lookup.City = "5";
-			lookup.State = "6";
-			lookup.ZipCode = "7";
-			lookup.Lastline = "8";
-			lookup.MaxCandidates = 9;
+			var sender = new RequestCapturingSender();
+			var serializer = new FakeSerializer(null);
+			var client = new Client("http://localhost/", sender, serializer);
+			var lookup = new Lookup
+			{
+				Addressee = "0",
+				Street = "1",
+				Secondary = "2",
+				Street2 = "3",
+				Urbanization = "4",
+				City = "5",
+				State = "6",
+				ZipCode = "7",
+				Lastline = "8",
+				MaxCandidates = 9
+			};
 
 			client.Send(lookup);
 
@@ -83,28 +84,28 @@ namespace SmartyStreets.USStreetApi
 		[Test]
 		public void TestNoHeadersAddedToRequest()
 		{
-			this.AssertHeadersSetCorrectly(false, false);
+			AssertHeadersSetCorrectly(false, false);
 		}
 
 		[Test]
 		public void TestIncludeInvalidHeaderCorrectlyAddedToRequest()
 		{
-			this.AssertHeadersSetCorrectly(true, false);
+			AssertHeadersSetCorrectly(true, false);
 		}
 
 		[Test]
 		public void TestStandardizeOnlyHeaderCorrectlyAddedToRequest()
 		{
-			this.AssertHeadersSetCorrectly(false, true);
+			AssertHeadersSetCorrectly(false, true);
 		}
 
 		[Test]
 		public void TestIncludeInvalidHeaderCorrectlyAddedToRequestWhenBothBatchOptionsAreSet()
 		{
-			this.AssertHeadersSetCorrectly(true, true);
+			AssertHeadersSetCorrectly(true, true);
 		}
 
-		private void AssertHeadersSetCorrectly(bool includeInvalid, bool standardizeOnly)
+		private static void AssertHeadersSetCorrectly(bool includeInvalid, bool standardizeOnly)
 		{
 			var sender = new RequestCapturingSender();
 			var client = new Client("http://localhost/", sender, new FakeSerializer(new byte[0]));
@@ -116,7 +117,7 @@ namespace SmartyStreets.USStreetApi
 			client.Send(batch);
 
 			var request = sender.Request;
-			Dictionary<string, string> headers = request.Headers;
+			var headers = request.Headers;
 
 			if (includeInvalid)
 			{
@@ -140,7 +141,7 @@ namespace SmartyStreets.USStreetApi
 		#region [ Response Handling ]
 
 		[Test]
-		public void testDeserializeCalledWithResponseBody()
+		public void TestDeserializeCalledWithResponseBody()
 		{
 			var response = new Response(0, Encoding.ASCII.GetBytes("Hello, world!"));
 			var sender = new MockSender(response);
@@ -153,9 +154,9 @@ namespace SmartyStreets.USStreetApi
 		}
 
 		[Test]
-		public void testCandidatesCorrectlyAssignedToCorrespondingLookup()
+		public void TestCandidatesCorrectlyAssignedToCorrespondingLookup()
 		{
-			Candidate[] expectedCandidates = new Candidate[3];
+			var expectedCandidates = new Candidate[3];
 			expectedCandidates[0] = new Candidate(0);
 			expectedCandidates[1] = new Candidate(1);
 			expectedCandidates[2] = new Candidate(1);

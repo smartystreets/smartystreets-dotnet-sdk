@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
-using System.Text;
-
-namespace SmartyStreets.USZipCodeApi
+﻿namespace SmartyStreets.USZipCodeApi
 {
+	using System.Text;
+	using NUnit.Framework;
+
 	[TestFixture]
 	public class ClientTests
 	{
@@ -58,7 +58,7 @@ namespace SmartyStreets.USZipCodeApi
 		public void TestSuccessfullySendsBatchOfLookups()
 		{
 			var sender = new RequestCapturingSender();
-			byte[] expectedPayload = Encoding.ASCII.GetBytes("Hello, world!");
+			var expectedPayload = Encoding.ASCII.GetBytes("Hello, world!");
 			var serializer = new FakeSerializer(expectedPayload);
 			var client = new Client("http://localhost/", sender, serializer);
 			var batch = new Batch();
@@ -90,7 +90,7 @@ namespace SmartyStreets.USZipCodeApi
 		[Test]
 		public void TestCandidatesCorrectlyAssignedToCorrespondingLookup()
 		{
-			Result[] expectedResults = new Result[2];
+			var expectedResults = new Result[2];
 			expectedResults[0] = new Result();
 			expectedResults[1] = new Result();
 			var batch = new Batch();
@@ -110,4 +110,3 @@ namespace SmartyStreets.USZipCodeApi
 		#endregion
 	}
 }
-

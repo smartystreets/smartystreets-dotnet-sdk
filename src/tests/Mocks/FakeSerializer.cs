@@ -1,7 +1,7 @@
-﻿using System.IO;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
+	using System.IO;
+
 	public class FakeSerializer : ISerializer
 	{
 		private readonly byte[] bytes;
@@ -13,4 +13,3 @@ namespace SmartyStreets
 		public T Deserialize<T>(Stream source) where T : class { return null; }
 	}
 }
-

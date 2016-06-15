@@ -1,9 +1,9 @@
-﻿using System;
-using System.Runtime.Serialization;
-using System.Collections.Generic;
-
-namespace SmartyStreets.USStreetApi
+﻿namespace SmartyStreets.USStreetApi
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Runtime.Serialization;
+
 	[DataContract]
 	public class Lookup
 	{
@@ -77,4 +77,3 @@ namespace SmartyStreets.USStreetApi
 		}
 	}
 }
-

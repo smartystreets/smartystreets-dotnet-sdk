@@ -1,11 +1,11 @@
-﻿using System;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
+	using System;
+
 	public class RetrySender : ISender
 	{
-		private int maxRetries;
-		private ISender inner;
+		private readonly int maxRetries;
+		private readonly ISender inner;
 
 		public RetrySender(int maxRetries, ISender inner)
 		{
@@ -15,13 +15,13 @@ namespace SmartyStreets
 
 		public Response Send(Request request)
 		{
-			for (int i = 0; i <= this.maxRetries; i++) 
+			for (var i = 0; i <= this.maxRetries; i++) 
 			{
 				var response = this.TrySend(request, i);
-
 				if (response != null)
 					return response;
 			}
+
 			return null;
 		}
 
@@ -31,13 +31,13 @@ namespace SmartyStreets
 			{
 				return this.inner.Send(request);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				if (attempt >= this.maxRetries)
-					throw ex;
+					throw;
 			}
+
 			return null;
 		}
 	}
 }
-

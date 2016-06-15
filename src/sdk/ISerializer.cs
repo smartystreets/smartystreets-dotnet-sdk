@@ -1,7 +1,7 @@
-﻿using System.IO;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
+	using System.IO;
+
 	public interface ISerializer
 	{
 		byte[] Serialize(object graph);

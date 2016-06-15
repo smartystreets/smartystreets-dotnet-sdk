@@ -2,7 +2,7 @@
 {
 	public class StatusCodeSender : ISender
 	{
-		private ISender inner;
+		private readonly ISender inner;
 
 		public StatusCodeSender(ISender inner)
 		{
@@ -37,4 +37,3 @@
 		}
 	}
 }
-

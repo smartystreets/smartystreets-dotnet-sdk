@@ -1,12 +1,13 @@
-﻿using System;
-namespace SmartyStreets.USStreetApi
+﻿namespace SmartyStreets.USStreetApi
 {
+	using System;
+
 	public class ClientBuilder
 	{
 		private int maxRetries;
 		private TimeSpan maxTimeout;
 		private string urlPrefix;
-		private ICredentials signer;
+		private readonly ICredentials signer;
 		private ISerializer serializer;
 		private ISender httpSender;
 
@@ -25,27 +26,27 @@ namespace SmartyStreets.USStreetApi
 
 		public ClientBuilder(string authId, string authToken) : this(new StaticCredentials(authId, authToken)) { }
 
-		public ClientBuilder RetryAtMost(int maxRetries)
+		public ClientBuilder RetryAtMost(int retries)
 		{
-			this.maxRetries = maxRetries;
+			this.maxRetries = retries;
 			return this;
 		}
 
-		public ClientBuilder WithMaxTimeout(TimeSpan maxTimeout)
+		public ClientBuilder WithMaxTimeout(TimeSpan timeout)
 		{
-			this.maxTimeout = maxTimeout;
+			this.maxTimeout = timeout;
 			return this;
 		}
 
-		public ClientBuilder WithUrl(string urlPrefix)
+		public ClientBuilder WithUrl(string prefix)
 		{
-			this.urlPrefix = urlPrefix;
+			this.urlPrefix = prefix;
 			return this;
 		}
 
-		public ClientBuilder WithSerializer(ISerializer serializer)
+		public ClientBuilder WithSerializer(ISerializer value)
 		{
-			this.serializer = serializer;
+			this.serializer = value;
 			return this;
 		}
 
@@ -66,7 +67,6 @@ namespace SmartyStreets.USStreetApi
 				return this.httpSender;
 
 			ISender sender = new FrameworkSender(this.maxTimeout);
-
 			sender = new StatusCodeSender(sender);
 
 			if (this.signer != null)
@@ -79,4 +79,3 @@ namespace SmartyStreets.USStreetApi
 		}
 	}
 }
-

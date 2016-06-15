@@ -1,7 +1,7 @@
-﻿using System.IO;
-
-namespace SmartyStreets.USZipCodeApi
+﻿namespace SmartyStreets.USZipCodeApi
 {
+	using System.IO;
+
 	public class Client
 	{
 		private readonly string urlPrefix;
@@ -30,20 +30,19 @@ namespace SmartyStreets.USZipCodeApi
 				return;
 
 			if (batch.Size() == 1)
-				this.PopulateQueryString(batch.Get(0), request);
+				PopulateQueryString(batch.Get(0), request);
 			else
 				request.Payload = this.serializer.Serialize(batch.AllLookups);
 
-			var response = sender.Send(request);
+			var response = this.sender.Send(request);
 			var payloadStream = new MemoryStream(response.Payload);
 
-			Result[] results = this.serializer.Deserialize<Result[]>(payloadStream);
-			if (results == null)
-				results = new Result[0];
-			this.AssignResultsToLookups(batch, results);
+			var results = this.serializer.Deserialize<Result[]>(payloadStream) ?? new Result[0];
+
+			AssignResultsToLookups(batch, results);
 		}
 
-		private void PopulateQueryString(Lookup lookup, Request request)
+		private static void PopulateQueryString(Lookup lookup, Request request)
 		{
 			request.SetParameter("input_id", lookup.InputId);
 			request.SetParameter("city", lookup.City);
@@ -51,11 +50,10 @@ namespace SmartyStreets.USZipCodeApi
 			request.SetParameter("zipcode", lookup.ZipCode);
 		}
 
-		private void AssignResultsToLookups(Batch batch, Result[] results)
+		private static void AssignResultsToLookups(Batch batch, Result[] results)
 		{
-			for (int i = 0; i < results.Length; i++)
+			for (var i = 0; i < results.Length; i++)
 				batch.Get(i).Result = results[i];
 		}
 	}
 }
-

@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-
-namespace SmartyStreets.USStreetApi
+﻿namespace SmartyStreets.USStreetApi
 {
+	using NUnit.Framework;
+
 	[TestFixture]
 	public class BatchTests
 	{
@@ -9,12 +9,15 @@ namespace SmartyStreets.USStreetApi
 		public void TestGetsLookupByInputId()
 		{
 			var batch = new Batch();
-			var lookup = new Lookup();
-			lookup.InputId = "hasInputId";
+			batch.Add(new Lookup
+			{
+				InputId = "hasInputId"
+			});
 
-			batch.Add(lookup);
-
-			Assert.AreEqual(lookup, batch.Get("hasInputId"));
+			Assert.AreEqual(new Lookup
+			{
+				InputId = "hasInputId"
+			}, batch.Get("hasInputId"));
 		}
 
 		[Test]
@@ -48,7 +51,7 @@ namespace SmartyStreets.USStreetApi
 			var batch = new Batch();
 			var lookup = new Lookup();
 
-			for (int i = 0; i <= Batch.MAX_BATCH_SIZE; i++)
+			for (var i = 0; i <= Batch.MaxBatchSize; i++)
 			{
 				batch.Add(lookup);
 			}
@@ -57,9 +60,11 @@ namespace SmartyStreets.USStreetApi
 		[Test]
 		public void TestClearMethodClearsBothLookupCollectionsButNotHeaders()
 		{
-			var batch = new Batch();
-			batch.IncludeInvalid = true;
-			batch.StandardizeOnly = true;
+			var batch = new Batch
+			{
+				IncludeInvalid = true,
+				StandardizeOnly = true
+			};
 			batch.Add(new Lookup());
 
 			batch.Clear();
@@ -73,9 +78,11 @@ namespace SmartyStreets.USStreetApi
 		[Test]
 		public void TestResetMethodResetsHeadersAndLookups()
 		{
-			var batch = new Batch();
-			batch.IncludeInvalid = true;
-			batch.StandardizeOnly = true;
+			var batch = new Batch
+			{
+				IncludeInvalid = true,
+				StandardizeOnly = true
+			};
 			batch.Add(new Lookup());
 
 			batch.Reset();
@@ -87,4 +94,3 @@ namespace SmartyStreets.USStreetApi
 		}
 	}
 }
-

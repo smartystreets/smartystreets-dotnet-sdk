@@ -1,7 +1,8 @@
-﻿using System.IO;
-
-namespace SmartyStreets.USStreetApi
+﻿namespace SmartyStreets.USStreetApi
 {
+	using System.Globalization;
+	using System.IO;
+
 	public class Client
 	{
 		private readonly string urlPrefix;
@@ -29,10 +30,10 @@ namespace SmartyStreets.USStreetApi
 			if (batch.Size() == 0)
 				return;
 
-			this.putHeaders(batch, request);
+			PutHeaders(batch, request);
 
 			if (batch.Size() == 1)
-				this.PopulateQueryString(batch.Get(0), request);
+				PopulateQueryString(batch.Get(0), request);
 			else
 				request.Payload = this.serializer.Serialize(batch.AllLookups);
 
@@ -40,14 +41,12 @@ namespace SmartyStreets.USStreetApi
 
 			using (var payloadStream = new MemoryStream(response.Payload))
 			{
-				var candidates = this.serializer.Deserialize<Candidate[]>(payloadStream);
-				if (candidates == null)
-					candidates = new Candidate[0];
-				this.AssignCandidatesToLookups(batch, candidates);
+				var candidates = this.serializer.Deserialize<Candidate[]>(payloadStream) ?? new Candidate[0];
+				AssignCandidatesToLookups(batch, candidates);
 			}
 		}
 
-		private void putHeaders(Batch batch, Request request)
+		private static void PutHeaders(Batch batch, Request request)
 		{
 			if (batch.IncludeInvalid)
 				request.SetHeader("X-Include-Invalid", "true");
@@ -55,7 +54,7 @@ namespace SmartyStreets.USStreetApi
 				request.SetHeader("X-Standardize-Only", "true");
 		}
 
-		private void PopulateQueryString(Lookup address, Request request)
+		private static void PopulateQueryString(Lookup address, Request request)
 		{
 			request.SetParameter("street", address.Street);
 			request.SetParameter("street2", address.Street2);
@@ -68,14 +67,14 @@ namespace SmartyStreets.USStreetApi
 			request.SetParameter("urbanization", address.Urbanization);
 
 			if (address.MaxCandidates != 1)
-				request.SetParameter("candidates", address.MaxCandidates.ToString());
+				request.SetParameter("candidates", address.MaxCandidates.ToString(CultureInfo.InvariantCulture));
 		}
 
-		private void AssignCandidatesToLookups(Batch batch, Candidate[] candidates)
+		private static void AssignCandidatesToLookups(Batch batch, Candidate[] candidates)
 		{
-			for (int i = 0; i < batch.Size(); i++)
+			for (var i = 0; i < batch.Size(); i++)
 			{
-				foreach (Candidate candidate in candidates)
+				foreach (var candidate in candidates)
 				{
 					if (candidate.InputIndex == i)
 					{

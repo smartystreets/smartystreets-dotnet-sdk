@@ -1,8 +1,8 @@
-﻿using System;
-using System.IO;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
+	using System;
+	using System.IO;
+
 	public class FakeDeserializer : ISerializer
 	{
 		private readonly Object deserialized;
@@ -21,10 +21,10 @@ namespace SmartyStreets
 		public T Deserialize<T>(Stream source) where T : class
 		{
 			this.Payload = StreamToByteArray(source);
-			return (T)deserialized;
+			return (T)this.deserialized;
 		}
 
-		byte[] StreamToByteArray(Stream source)
+		private static byte[] StreamToByteArray(Stream source)
 		{
 			using (var memoryStream = new MemoryStream())
 			{
@@ -32,6 +32,5 @@ namespace SmartyStreets
 				return memoryStream.ToArray();
 			}
 		}
+	}
 }
-}
-

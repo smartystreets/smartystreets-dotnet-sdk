@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
+	using System.Collections.Generic;
 	using System.Web;
 
 	public class Request
 	{
-		private string urlPrefix;
-		private byte[] payload;
+		private readonly string urlPrefix;
 		private readonly Dictionary<string, string> headers;
 		private readonly Dictionary<string, string> parameters;
+		private byte[] payload;
 
 		public Dictionary<string, string> Headers { get {return this.headers;} }
 
@@ -50,29 +49,31 @@ namespace SmartyStreets
 			this.parameters[name] = value;
 		}
 
-		private string UrlEncode(string value)
+		private static string UrlEncode(string value)
 		{
 			try {
 				return HttpUtility.UrlEncode(value);
-			} catch {
-				return "";
+			}
+			catch
+			{
+				return string.Empty;
 			}
 		}
 
 		public string GetUrl()
 		{
-			string url = this.urlPrefix;
+			var url = this.urlPrefix;
 
 			if (!url.Contains("?"))
 				url += "?";
 
-			foreach (var pair in parameters)
+			foreach (var pair in this.parameters)
 			{
 				if (!url.EndsWith("?"))
 					url += "&";
 
-				string encodedName = this.UrlEncode(pair.Key);
-				string encodedValue = this.UrlEncode(pair.Value);
+				var encodedName = UrlEncode(pair.Key);
+				var encodedValue = UrlEncode(pair.Value);
 				url += encodedName + "=" + encodedValue;
 			}
 
@@ -80,4 +81,3 @@ namespace SmartyStreets
 		}
 	}
 }
-

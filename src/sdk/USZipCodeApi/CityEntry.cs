@@ -1,7 +1,7 @@
-﻿using System.Runtime.Serialization;
-
-namespace SmartyStreets.USZipCodeApi
+﻿namespace SmartyStreets.USZipCodeApi
 {
+	using System.Runtime.Serialization;
+
 	[DataContract]
 	public class CityEntry
 	{
@@ -22,4 +22,3 @@ namespace SmartyStreets.USZipCodeApi
 		#endregion
 	}
 }
-

@@ -1,7 +1,7 @@
-﻿using System.Runtime.Serialization;
-
-namespace SmartyStreets.USStreetApi
+﻿namespace SmartyStreets.USStreetApi
 {
+	using System.Runtime.Serialization;
+
 	[DataContract]
 	public class Candidate
 	{

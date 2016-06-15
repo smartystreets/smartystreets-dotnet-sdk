@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
+	using System;
+
 	public class SmartyException : Exception
 	{
 		public SmartyException()
@@ -13,4 +13,3 @@ namespace SmartyStreets
 		}
 	}
 }
-

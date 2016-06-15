@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
+	using NUnit.Framework;
+
 	[TestFixture]
 	public class SigningSenderTests
 	{
@@ -14,7 +14,7 @@ namespace SmartyStreets
 
 			sender.Send(new Request("http://localhost/"));
 
-			string url = mockSender.Request.GetUrl();
+			var url = mockSender.Request.GetUrl();
 
 			Assert.AreEqual("http://localhost/?auth-id=id&auth-token=secret", url);
 		}
@@ -27,51 +27,10 @@ namespace SmartyStreets
 			var mockSender = new MockSender(expectedResponse);
 			var sender = new SigningSender(signer, mockSender);
 
-			Response actualResponse = sender.Send(new Request("http://localhost/"));
+			var actualResponse = sender.Send(new Request("http://localhost/"));
 
 			Assert.AreEqual(expectedResponse, actualResponse);
 				
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

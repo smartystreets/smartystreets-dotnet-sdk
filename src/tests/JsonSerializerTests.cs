@@ -1,10 +1,10 @@
-﻿using System.Runtime.Serialization;
-using NUnit.Framework;
-using System.Text;
-using System.IO;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
+	using System.IO;
+	using System.Runtime.Serialization;
+	using System.Text;
+	using NUnit.Framework;
+
 	[TestFixture]
 	public class JsonSerializerTests
 	{
@@ -21,7 +21,8 @@ namespace SmartyStreets
 		[Test]
 		public void TestSerializationOfKnownType()
 		{
-			var results = this.serializer.Serialize(new JsonSerializerTestObject() {
+			var results = this.serializer.Serialize(new JsonSerializerTestObject
+			{
 				Property1 = "Name",
 				Property2 = 42,
 				Property3 = true,
@@ -41,7 +42,8 @@ namespace SmartyStreets
 		[Test]
 		public void TestDeserializationOfKnownType()
 		{
-			var expected = new JsonSerializerTestObject() {
+			var expected = new JsonSerializerTestObject
+			{
 				Property1 = "Name",
 				Property2 = 42,
 				Property3 = true,

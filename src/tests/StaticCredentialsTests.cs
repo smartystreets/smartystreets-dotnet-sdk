@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
+	using NUnit.Framework;
+
 	[TestFixture]
 	public class StaticCredentialsTests
 	{

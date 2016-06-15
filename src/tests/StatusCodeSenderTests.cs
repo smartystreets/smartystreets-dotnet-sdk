@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
+	using NUnit.Framework;
+
 	[TestFixture]
 	public class StatusCodeSenderTests
 	{
@@ -19,51 +19,49 @@ namespace SmartyStreets
 		[ExpectedException(typeof(BadCredentialsException))]
 		public void Test401ResponseThrowsBadCredentialsException()
 		{
-			this.AssertSend(401);
+			AssertSend(401);
 		}
 
 		[Test]
 		[ExpectedException(typeof(PaymentRequiredException))]
 		public void Test402ResponsePThrowsPaymentRequiredException() {
-			this.AssertSend(402);
+			AssertSend(402);
 		}
 
 		[Test]
 		[ExpectedException(typeof(RequestEntityTooLargeException))]
 		public void Test413ResponseThrowsRequestEntityTooLargeException() {
-			this.AssertSend(413);
+			AssertSend(413);
 		}
 
 		[Test]
 		[ExpectedException(typeof(BadRequestException))]
 		public void Test400ResponseThrowsBadRequestException() {
-			this.AssertSend(400);
+			AssertSend(400);
 		}
 
 		[Test]
 		[ExpectedException(typeof(TooManyRequestsException))]
 		public void Test429ResponseThrowsTooManyRequestsException() {
-			this.AssertSend(429);
+			AssertSend(429);
 		}
 
 		[Test]
 		[ExpectedException(typeof(InternalServerErrorException))]
 		public void Test500ResponseThrowsInternalServerErrorException() {
-			this.AssertSend(500);
+			AssertSend(500);
 		}
 
 		[Test]
 		[ExpectedException(typeof(ServiceUnavailableException))]
 		public void Test503ResponseThrowsServiceUnavailableException() {
-			this.AssertSend(503);
+			AssertSend(503);
 		}
 
-		private void AssertSend(int statusCode)
+		private static void AssertSend(int statusCode)
 		{
-			StatusCodeSender sender = new StatusCodeSender(new MockStatusCodeSender(statusCode));
-
+			var sender = new StatusCodeSender(new MockStatusCodeSender(statusCode));
 			sender.Send(new Request());
 		}
 	}
 }
-

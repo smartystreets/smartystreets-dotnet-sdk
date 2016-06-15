@@ -1,18 +1,18 @@
-﻿using NUnit.Framework;
-
-namespace SmartyStreets.USZipCodeApi
+﻿namespace SmartyStreets.USZipCodeApi
 {
+	using NUnit.Framework;
+
 	[TestFixture]
 	public class BatchTests
 	{
 		[Test]
 		public void TestGetsLookupById()
 		{
-			var lookup = new Lookup();
-			lookup.InputId = "hasInputId";
 			var batch = new Batch();
-
-			batch.Add(lookup);
+			batch.Add(new Lookup
+			{
+				InputId = "hasInputId"
+			});
 
 			Assert.NotNull(batch.Get("hasInputId"));
 		}
@@ -20,10 +20,8 @@ namespace SmartyStreets.USZipCodeApi
 		[Test]
 		public void TestGetsLookupByIndex()
 		{
-			var lookup = new Lookup();
 			var batch = new Batch();
-
-			batch.Add(lookup);
+			batch.Add(new Lookup());
 		
 			Assert.NotNull(batch.Get(0));
 		}
@@ -32,10 +30,10 @@ namespace SmartyStreets.USZipCodeApi
 		public void TestReturnsCorrectSize()
 		{
 			var batch = new Batch();
-			var lookupWithId = new Lookup();
-			lookupWithId.InputId = "hasInputId";
-
-			batch.Add(lookupWithId);
+			batch.Add(new Lookup
+			{
+				InputId = "hasInputId"
+			});
 			batch.Add(new Lookup());
 			batch.Add(new Lookup());
 
@@ -47,21 +45,18 @@ namespace SmartyStreets.USZipCodeApi
 		public void TestAddingALookupBatchIsFullThrowsException()
 		{
 			var batch = new Batch();
-
-			for (int i = 0; i <= Batch.MAX_BATCH_SIZE; i++)
-			{
+			for (var i = 0; i <= Batch.MaxBatchSize; i++)
 				batch.Add(new Lookup());
-			}
 		}
 
 		[Test]
 		public void TestClearMethodClearsBothLookupCollections()
 		{
 			var batch = new Batch();
-			var lookupWithId = new Lookup();
-			lookupWithId.InputId = "hasInputId";
-
-			batch.Add(lookupWithId);
+			batch.Add(new Lookup
+			{
+				InputId = "hasInputId"
+			});
 			batch.Add(new Lookup());
 			batch.Add(new Lookup());
 			batch.Clear();
@@ -71,4 +66,3 @@ namespace SmartyStreets.USZipCodeApi
 		}
 	}
 }
-
