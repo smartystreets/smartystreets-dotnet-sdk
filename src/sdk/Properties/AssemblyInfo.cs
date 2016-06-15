@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Examples")]
+[assembly: AssemblyTitle("SDK")]
 [assembly: AssemblyDescription("")]
-[assembly: Guid("F6DA55CB-6963-4586-B1E0-CE24DC420113")]
+[assembly: Guid("9BD88098-60D6-4869-B2D5-E34B5965727D")]
