@@ -3,7 +3,8 @@
 	using System.Collections;
 	using System.Collections.Generic;
 
-	public class Batch<T> : ICollection<T> where T : class, ILookup
+	public class Batch<T> : ICollection<T>
+		where T : class, ILookup
 	{
 		private readonly int maxSize;
 		private readonly Dictionary<string, T> named;
