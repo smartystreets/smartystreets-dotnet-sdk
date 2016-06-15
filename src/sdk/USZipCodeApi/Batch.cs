@@ -6,8 +6,8 @@
 	public class Batch : ICollection<Lookup>
 	{
 		public const int MaxBatchSize = 100;
-		private Dictionary<string, Lookup> namedLookups;
-		private List<Lookup> allLookups;
+		private readonly Dictionary<string, Lookup> namedLookups;
+		private readonly List<Lookup> allLookups;
 
 		public Batch()
 		{
@@ -33,7 +33,7 @@
 		{
 			return serializer.Serialize(this.allLookups);
 		}
-		
+
 		public void Clear()
 		{
 			this.namedLookups.Clear();
@@ -70,7 +70,7 @@
 		{
 			get { return this.allLookups[index]; }
 		}
-		
+
 		public Lookup this[string value]
 		{
 			get { return this.namedLookups[value]; }

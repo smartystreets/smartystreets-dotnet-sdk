@@ -57,7 +57,6 @@
 				Console.WriteLine(ex.StackTrace);
 			}
 
-
 			for (var i = 0; i < batch.Count; i++)
 			{
 				var candidates = batch[i].Result;
