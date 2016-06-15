@@ -21,10 +21,8 @@
 			this.SendCount++;
 
 			if (request.GetUrl().Contains(RetryThreeTimes))
-			{
 				if (this.SendCount <= 3)
 					throw new IOException("You need to retry");
-			}
 
 			if (request.GetUrl().Contains(RetryMaxTimes))
 				throw new IOException("Retrying won't help");

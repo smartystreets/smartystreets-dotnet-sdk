@@ -73,13 +73,9 @@
 		private static void AssignCandidatesToLookups(Batch batch, Candidate[] candidates)
 		{
 			for (var i = 0; i < batch.Size(); i++)
-			{
 				foreach (var candidate in candidates)
-				{
 					if (candidate.InputIndex == i)
 						batch.Get(i).AddToResult(candidate);
-				}
-			}
 		}
 	}
 }
