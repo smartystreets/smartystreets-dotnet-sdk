@@ -5,7 +5,7 @@
 	using SmartyStreets;
 	using SmartyStreets.USStreetApi;
 
-	public class USStreetGetExample
+	public class USStreetSingleAddressExample
 	{
 		public static void Run()
 		{

@@ -4,10 +4,10 @@
 	{
 		public static void Main(string[] args)
 		{
-			USStreetGetExample.Run();
-			//USStreetPostExample.Run();
-			//USZipCodeGetExample.Run();
-			//USZipCodePostExample.Run();
+			USStreetSingleAddressExample.Run();
+			//USStreetMultipleAddressesExample.Run();
+			//USZipCodeSingleLookupExample.Run();
+			//USZipCodeMultipleLookupsExample.Run();
 		}
 	}
 }

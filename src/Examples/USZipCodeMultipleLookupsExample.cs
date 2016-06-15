@@ -5,7 +5,7 @@
 	using SmartyStreets;
 	using SmartyStreets.USZipCodeApi;
 
-	public class USZipCodePostExample
+	public class USZipCodeMultipleLookupsExample
 	{
 		public static void Run()
 		{

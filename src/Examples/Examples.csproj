@@ -41,10 +41,10 @@
     </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="USStreetGetExample.cs" />
-    <Compile Include="USStreetPostExample.cs" />
-    <Compile Include="USZipCodeGetExample.cs" />
-    <Compile Include="USZipCodePostExample.cs" />
+    <Compile Include="USStreetSingleAddressExample.cs" />
+    <Compile Include="USStreetMultipleAddressesExample.cs" />
+    <Compile Include="USZipCodeSingleLookupExample.cs" />
+    <Compile Include="USZipCodeMultipleLookupsExample.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\sdk\SDK.csproj">
