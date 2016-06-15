@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Net;
 
 namespace SmartyStreets
 {
+	using System.Web;
+
 	public class Request
 	{
 		private string urlPrefix;
@@ -52,7 +53,7 @@ namespace SmartyStreets
 		private string UrlEncode(string value)
 		{
 			try {
-				return WebUtility.UrlEncode(value);
+				return HttpUtility.UrlEncode(value);
 			} catch {
 				return "";
 			}
