@@ -9,15 +9,12 @@
 		public void TestGetsLookupByInputId()
 		{
 			var batch = new Batch();
-			batch.Add(new Lookup
-			{
-				InputId = "hasInputId"
-			});
+			var lookup = new Lookup();
+			lookup.InputId = "hasInputId";
 
-			Assert.AreEqual(new Lookup
-			{
-				InputId = "hasInputId"
-			}, batch.Get("hasInputId"));
+			batch.Add(lookup);
+
+			Assert.AreEqual(lookup, batch.Get("hasInputId"));
 		}
 
 		[Test]

@@ -15,7 +15,7 @@
 		[Test]
 		public void TestUrlEncoding() {
 			AssertSignedRequest("as3$d8+56d9", "d8j#ds'dfe2",
-				"https://api.smartystreets.com/street-address?auth-id=as3%24d8%2B56d9&auth-token=d8j%23ds%27dfe2");
+				"https://api.smartystreets.com/street-address?auth-id=as3%24d8%2b56d9&auth-token=d8j%23ds%27dfe2");
 		}
 
 		private static void AssertSignedRequest(string id, string secret, string expected)
