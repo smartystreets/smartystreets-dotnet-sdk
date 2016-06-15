@@ -170,9 +170,9 @@
 
 			client.Send(batch);
 
-			Assert.AreEqual(expectedCandidates[0], batch.Get(0).Result[0]);
-			Assert.AreEqual(expectedCandidates[1], batch.Get(1).Result[0]);
-			Assert.AreEqual(expectedCandidates[2], batch.Get(1).Result[1]);
+			Assert.AreEqual(expectedCandidates[0], batch[0].Result[0]);
+			Assert.AreEqual(expectedCandidates[1], batch[1].Result[0]);
+			Assert.AreEqual(expectedCandidates[2], batch[1].Result[1]);
 		}
 
 		#endregion

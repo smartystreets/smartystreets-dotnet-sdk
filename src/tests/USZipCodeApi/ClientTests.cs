@@ -103,8 +103,8 @@
 
 			client.Send(batch);
 
-			Assert.AreEqual(expectedResults[0], batch.Get(0).Result);
-			Assert.AreEqual(expectedResults[1], batch.Get(1).Result);
+			Assert.AreEqual(expectedResults[0], batch[0].Result);
+			Assert.AreEqual(expectedResults[1], batch[1].Result);
 		}
 
 		#endregion

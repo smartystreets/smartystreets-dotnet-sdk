@@ -26,13 +26,13 @@
 		{
 			var request = new Request(this.urlPrefix);
 
-			if (batch.Size() == 0)
+			if (batch.Count == 0)
 				return;
 
-			if (batch.Size() == 1)
-				PopulateQueryString(batch.Get(0), request);
+			if (batch.Count == 1)
+				PopulateQueryString(batch[0], request);
 			else
-				request.Payload = this.serializer.Serialize(batch.AllLookups);
+				request.Payload = batch.Serialize(this.serializer);
 
 			var response = this.sender.Send(request);
 			var payloadStream = new MemoryStream(response.Payload);
@@ -51,7 +51,7 @@
 		private static void AssignResultsToLookups(Batch batch, IList<Result> results)
 		{
 			for (var i = 0; i < results.Count; i++)
-				batch.Get(i).Result = results[i];
+				batch[i].Result = results[i];
 		}
 	}
 }

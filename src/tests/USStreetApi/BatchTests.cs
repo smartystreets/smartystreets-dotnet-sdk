@@ -16,7 +16,7 @@
 
 			batch.Add(lookup);
 
-			Assert.AreEqual(lookup, batch.Get("hasInputId"));
+			Assert.AreEqual(lookup, batch["hasInputId"]);
 		}
 
 		[Test]
@@ -27,7 +27,7 @@
 
 			batch.Add(lookup);
 
-			Assert.AreEqual(lookup, batch.Get(0));
+			Assert.AreEqual(lookup, batch[0]);
 		}
 
 		[Test]
@@ -40,7 +40,7 @@
 			batch.Add(lookup);
 			batch.Add(lookup);
 
-			Assert.AreEqual(3, batch.Size());
+			Assert.AreEqual(3, batch.Count);
 		}
 
 		[Test]
@@ -68,8 +68,7 @@
 
 			Assert.AreEqual(true, batch.IncludeInvalid);
 			Assert.AreEqual(true, batch.StandardizeOnly);
-			Assert.AreEqual(0, batch.AllLookups.Count);
-			Assert.AreEqual(0, batch.NamedLookups.Count);
+			Assert.AreEqual(0, batch.Count);
 		}
 
 		[Test]
@@ -86,8 +85,7 @@
 
 			Assert.AreEqual(false, batch.IncludeInvalid);
 			Assert.AreEqual(false, batch.StandardizeOnly);
-			Assert.AreEqual(0, batch.AllLookups.Count);
-			Assert.AreEqual(0, batch.NamedLookups.Count);
+			Assert.AreEqual(0, batch.Count);
 		}
 	}
 }

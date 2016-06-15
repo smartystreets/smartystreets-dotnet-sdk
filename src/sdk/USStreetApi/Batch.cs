@@ -1,13 +1,13 @@
 ﻿namespace SmartyStreets.USStreetApi
 {
-	using System;
+	using System.Collections;
 	using System.Collections.Generic;
 
-	public class Batch
+	public class Batch : ICollection<Lookup>
 	{
 		public const int MaxBatchSize = 100;
-		public Dictionary<string, Lookup> NamedLookups { get; private set; }
-		public List<Lookup> AllLookups { get; private set; }
+		private readonly Dictionary<string, Lookup> namedLookups;
+		private readonly List<Lookup> allLookups;
 		public bool StandardizeOnly { get; set; }
 		public bool IncludeInvalid { get; set; }
 
@@ -15,22 +15,27 @@
 		{
 			this.StandardizeOnly = false;
 			this.IncludeInvalid = false;
-			this.NamedLookups = new Dictionary<string, Lookup>();
-			this.AllLookups = new List<Lookup>();
+			this.namedLookups = new Dictionary<string, Lookup>();
+			this.allLookups = new List<Lookup>();
+		}
+
+		internal byte[] Serialize(ISerializer serializer)
+		{
+			return serializer.Serialize(this.allLookups);
 		}
 
 		public void Add(Lookup newAddress)
 		{
-			if (this.AllLookups.Count >= MaxBatchSize)
+			if (this.allLookups.Count >= MaxBatchSize)
 				throw new BatchFullException("Batch size cannot exceed " + MaxBatchSize);
 
-			this.AllLookups.Add(newAddress);
+			this.allLookups.Add(newAddress);
 
 			var key = newAddress.InputId;
 			if (key == null)
 				return;
 
-			this.NamedLookups[key] = newAddress;
+			this.namedLookups[key] = newAddress;
 		}
 
 		public void Reset()
@@ -42,28 +47,54 @@
 
 		public void Clear()
 		{
-			this.NamedLookups.Clear();
-			this.AllLookups.Clear();
+			this.namedLookups.Clear();
+			this.allLookups.Clear();
 		}
 
-		public int Size()
+		public bool Contains(Lookup item)
 		{
-			return this.AllLookups.Count;
+			return this.allLookups.Contains(item);
 		}
 
-		public List<Lookup>.Enumerator Enumerator()
+		public void CopyTo(Lookup[] array, int arrayIndex)
 		{
-			return this.AllLookups.GetEnumerator();
+			this.allLookups.CopyTo(array, arrayIndex);
 		}
 
-		public Lookup Get(String inputId)
+		public bool Remove(Lookup item)
 		{
-			return this.NamedLookups[inputId];
+			this.namedLookups.Remove(item.InputId);
+			return this.allLookups.Remove(item);
 		}
 
-		public Lookup Get(int inputIndex)
+		public IEnumerator<Lookup> GetEnumerator()
 		{
-			return this.AllLookups[inputIndex];
+			return this.allLookups.GetEnumerator();
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return this.GetEnumerator();
+		}
+
+		public Lookup this[string value]
+		{
+			get { return this.namedLookups[value]; }
+		}
+
+		public Lookup this[int index]
+		{
+			get { return this.allLookups[index]; }
+		}
+
+		public int Count
+		{
+			get { return this.allLookups.Count; }
+		}
+
+		public bool IsReadOnly
+		{
+			get { return false; }
 		}
 	}
 }

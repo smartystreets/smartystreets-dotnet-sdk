@@ -27,15 +27,15 @@
 		{
 			var request = new Request(this.urlPrefix);
 
-			if (batch.Size() == 0)
+			if (batch.Count == 0)
 				return;
 
 			PutHeaders(batch, request);
 
-			if (batch.Size() == 1)
-				PopulateQueryString(batch.Get(0), request);
+			if (batch.Count == 1)
+				PopulateQueryString(batch[0], request);
 			else
-				request.Payload = this.serializer.Serialize(batch.AllLookups);
+				request.Payload = batch.Serialize(this.serializer);
 
 			var response = this.sender.Send(request);
 
@@ -72,10 +72,10 @@
 
 		private static void AssignCandidatesToLookups(Batch batch, Candidate[] candidates)
 		{
-			for (var i = 0; i < batch.Size(); i++)
+			for (var i = 0; i < batch.Count; i++)
 				foreach (var candidate in candidates)
 					if (candidate.InputIndex == i)
-						batch.Get(i).AddToResult(candidate);
+						batch[i].AddToResult(candidate);
 		}
 	}
 }

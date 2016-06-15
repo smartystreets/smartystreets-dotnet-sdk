@@ -50,9 +50,9 @@
 				Console.WriteLine(ex.StackTrace);
 			}
 
-			for (var i = 0; i < batch.Size(); i++)
+			for (var i = 0; i < batch.Count; i++)
 			{
-				var result = batch.Get(i).Result;
+				var result = batch[i].Result;
 				Console.WriteLine("Lookup " + i + ":\n");
 
 				if (result.Status != null)

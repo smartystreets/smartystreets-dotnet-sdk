@@ -57,13 +57,12 @@
 				Console.WriteLine(ex.StackTrace);
 			}
 
-			var lookups = batch.AllLookups;
 
-			for (var i = 0; i < batch.Size(); i++)
+			for (var i = 0; i < batch.Count; i++)
 			{
-				var candidates = lookups[i].Result;
+				var candidates = batch[i].Result;
 
-				if (batch.Get(i).Result.Count == 0)
+				if (candidates.Count == 0)
 				{
 					Console.WriteLine("Address " + i + " is invalid.\n");
 					continue;

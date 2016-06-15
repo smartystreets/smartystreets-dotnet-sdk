@@ -14,7 +14,7 @@
 				InputId = "hasInputId"
 			});
 
-			Assert.NotNull(batch.Get("hasInputId"));
+			Assert.NotNull(batch["hasInputId"]);
 		}
 
 		[Test]
@@ -23,7 +23,7 @@
 			var batch = new Batch();
 			batch.Add(new Lookup());
 
-			Assert.NotNull(batch.Get(0));
+			Assert.NotNull(batch[0]);
 		}
 
 		[Test]
@@ -37,7 +37,7 @@
 			batch.Add(new Lookup());
 			batch.Add(new Lookup());
 
-			Assert.AreEqual(3, batch.Size());
+			Assert.AreEqual(3, batch.Count);
 		}
 
 		[Test]
@@ -61,8 +61,7 @@
 			batch.Add(new Lookup());
 			batch.Clear();
 
-			Assert.IsEmpty(batch.AllLookups);
-			Assert.IsEmpty(batch.NamedLookups);
+			Assert.AreEqual(0, batch.Count);
 		}
 	}
 }
