@@ -6,7 +6,8 @@
 		{
 		}
 
-		public RequestEntityTooLargeException(string message) : base(message)
+		public RequestEntityTooLargeException(string message)
+			: base(message)
 		{
 		}
 	}

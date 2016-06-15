@@ -6,10 +6,19 @@
 	{
 		private readonly byte[] bytes;
 
-		public FakeSerializer(byte[] bytes) { this.bytes = bytes; }
+		public FakeSerializer(byte[] bytes)
+		{
+			this.bytes = bytes;
+		}
 
-		public byte[] Serialize(object graph) { return this.bytes; }
+		public byte[] Serialize(object graph)
+		{
+			return this.bytes;
+		}
 
-		public T Deserialize<T>(Stream source) where T : class { return null; }
+		public T Deserialize<T>(Stream source) where T : class
+		{
+			return null;
+		}
 	}
 }

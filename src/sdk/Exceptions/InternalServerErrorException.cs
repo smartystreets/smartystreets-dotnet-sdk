@@ -6,7 +6,8 @@
 		{
 		}
 
-		public InternalServerErrorException(string message) : base(message)
+		public InternalServerErrorException(string message)
+			: base(message)
 		{
 		}
 	}

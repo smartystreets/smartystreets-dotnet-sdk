@@ -46,12 +46,24 @@
 			this.AllLookups.Clear();
 		}
 
-		public int Size() { return this.AllLookups.Count; }
+		public int Size()
+		{
+			return this.AllLookups.Count;
+		}
 
-		public List<Lookup>.Enumerator Enumerator() { return this.AllLookups.GetEnumerator(); }
+		public List<Lookup>.Enumerator Enumerator()
+		{
+			return this.AllLookups.GetEnumerator();
+		}
 
-		public Lookup Get(String inputId) { return this.NamedLookups[inputId]; } 
+		public Lookup Get(String inputId)
+		{
+			return this.NamedLookups[inputId];
+		}
 
-		public Lookup Get(int inputIndex) { return this.AllLookups[inputIndex]; }
+		public Lookup Get(int inputIndex)
+		{
+			return this.AllLookups[inputIndex];
+		}
 	}
 }

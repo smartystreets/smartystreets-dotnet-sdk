@@ -6,7 +6,8 @@
 		{
 		}
 
-		public BatchFullException(string message) : base(message)
+		public BatchFullException(string message)
+			: base(message)
 		{
 		}
 	}

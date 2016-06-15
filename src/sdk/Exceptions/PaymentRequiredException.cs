@@ -6,7 +6,8 @@
 		{
 		}
 
-		public PaymentRequiredException(string message) : base(message)
+		public PaymentRequiredException(string message)
+			: base(message)
 		{
 		}
 	}

@@ -22,7 +22,7 @@
 		{
 			var batch = new Batch();
 			batch.Add(new Lookup());
-		
+
 			Assert.NotNull(batch.Get(0));
 		}
 

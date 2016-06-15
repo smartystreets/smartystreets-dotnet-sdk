@@ -77,9 +77,7 @@
 				foreach (var candidate in candidates)
 				{
 					if (candidate.InputIndex == i)
-					{
 						batch.Get(i).AddToResult(candidate);
-					}
 				}
 			}
 		}

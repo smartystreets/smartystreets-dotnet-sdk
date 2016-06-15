@@ -49,9 +49,7 @@
 			var lookup = new Lookup();
 
 			for (var i = 0; i <= Batch.MaxBatchSize; i++)
-			{
 				batch.Add(lookup);
-			}
 		}
 
 		[Test]

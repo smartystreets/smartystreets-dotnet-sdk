@@ -104,7 +104,7 @@
 			var actualPayload = request.Payload;
 
 			Assert.AreEqual("POST", request.Method);
-			Assert.AreEqual(new byte[]{0,1,2}, actualPayload);
+			Assert.AreEqual(new byte[] { 0, 1, 2 }, actualPayload);
 		}
 	}
 }

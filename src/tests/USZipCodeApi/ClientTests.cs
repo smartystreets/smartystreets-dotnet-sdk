@@ -33,7 +33,7 @@
 
 			client.Send(lookup);
 
-			Assert.AreEqual("http://localhost/?city=1&state=2&zipcode=3", sender.Request.GetUrl());			
+			Assert.AreEqual("http://localhost/?city=1&state=2&zipcode=3", sender.Request.GetUrl());
 		}
 
 		#endregion

@@ -28,7 +28,8 @@
 				Property3 = true,
 			});
 
-			Assert.AreEqual(Encoding.UTF8.GetString(results), "{'Property2':42,'Property3':true,'property_1':'Name'}".Replace("'", "\""));
+			Assert.AreEqual(Encoding.UTF8.GetString(results),
+				"{'Property2':42,'Property3':true,'property_1':'Name'}".Replace("'", "\""));
 		}
 
 		[Test]
@@ -49,7 +50,8 @@
 				Property3 = true,
 			};
 
-			var stream = new MemoryStream(Encoding.UTF8.GetBytes("{'Property2':42,'Property3':true,'property_1':'Name'}".Replace("'", "\"")));
+			var stream =
+				new MemoryStream(Encoding.UTF8.GetBytes("{'Property2':42,'Property3':true,'property_1':'Name'}".Replace("'", "\"")));
 			var actual = this.serializer.Deserialize<JsonSerializerTestObject>(stream);
 
 			Assert.AreEqual(expected.Property1, actual.Property1);
@@ -59,8 +61,8 @@
 	}
 
 	[DataContract]
-	public class JsonSerializerTestObject {
-
+	public class JsonSerializerTestObject
+	{
 		[DataMember(Name = "property_1")]
 		public string Property1 { get; set; }
 

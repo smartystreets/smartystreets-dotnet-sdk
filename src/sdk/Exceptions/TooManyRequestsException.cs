@@ -6,7 +6,8 @@
 		{
 		}
 
-		public TooManyRequestsException(string message) : base(message)
+		public TooManyRequestsException(string message)
+			: base(message)
 		{
 		}
 	}

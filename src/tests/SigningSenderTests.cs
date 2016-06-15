@@ -30,7 +30,6 @@
 			var actualResponse = sender.Send(new Request("http://localhost/"));
 
 			Assert.AreEqual(expectedResponse, actualResponse);
-				
 		}
 	}
 }

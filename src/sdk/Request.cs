@@ -10,7 +10,10 @@
 		private readonly Dictionary<string, string> parameters;
 		private byte[] payload;
 
-		public Dictionary<string, string> Headers { get {return this.headers;} }
+		public Dictionary<string, string> Headers
+		{
+			get { return this.headers; }
+		}
 		public string Method { get; private set; }
 		public byte[] Payload
 		{
@@ -28,7 +31,8 @@
 			this.headers = new Dictionary<string, string>();
 			this.parameters = new Dictionary<string, string>();
 		}
-		public Request(string urlPrefix) : this()
+		public Request(string urlPrefix)
+			: this()
 		{
 			this.urlPrefix = urlPrefix;
 		}

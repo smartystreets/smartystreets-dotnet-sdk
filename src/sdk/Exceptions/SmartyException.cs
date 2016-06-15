@@ -8,7 +8,8 @@
 		{
 		}
 
-		public SmartyException(string message) : base(message)
+		public SmartyException(string message)
+			: base(message)
 		{
 		}
 	}

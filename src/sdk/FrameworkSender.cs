@@ -39,8 +39,10 @@
 		private static void TryWritePayload(Request request, HttpWebRequest frameworkRequest)
 		{
 			if (request.Method == "POST" && request.Payload != null)
+			{
 				using (var sourceStream = new MemoryStream(request.Payload))
 					CopyStream(sourceStream, GetRequestStream(frameworkRequest));
+			}
 		}
 		private static void CopyStream(Stream source, Stream target)
 		{
@@ -58,7 +60,6 @@
 			try
 			{
 				return request.GetRequestStream();
-				
 			}
 			catch (WebException)
 			{

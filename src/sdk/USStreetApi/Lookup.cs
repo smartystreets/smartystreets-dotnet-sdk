@@ -44,9 +44,9 @@
 		private int maxCandidates;
 
 		public int MaxCandidates
-		{ 
+		{
 			get { return this.maxCandidates; }
-			set 
+			set
 			{
 				if (value > 0)
 					this.maxCandidates = value;
@@ -65,14 +65,16 @@
 			this.Result = new List<Candidate>();
 		}
 
-		public Lookup(String freeformAddress) : this()
+		public Lookup(String freeformAddress)
+			: this()
 		{
 			this.Street = freeformAddress;
 		}
 
 		#endregion
 
-		public void AddToResult(Candidate newCandidate) {
+		public void AddToResult(Candidate newCandidate)
+		{
 			this.Result.Add(newCandidate);
 		}
 	}

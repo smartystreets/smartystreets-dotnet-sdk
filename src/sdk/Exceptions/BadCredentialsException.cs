@@ -6,7 +6,8 @@
 		{
 		}
 
-		public BadCredentialsException(string message) : base(message)
+		public BadCredentialsException(string message)
+			: base(message)
 		{
 		}
 	}

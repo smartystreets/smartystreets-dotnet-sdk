@@ -15,7 +15,7 @@
 
 		public Response Send(Request request)
 		{
-			for (var i = 0; i <= this.maxRetries; i++) 
+			for (var i = 0; i <= this.maxRetries; i++)
 			{
 				var response = this.TrySend(request, i);
 				if (response != null)

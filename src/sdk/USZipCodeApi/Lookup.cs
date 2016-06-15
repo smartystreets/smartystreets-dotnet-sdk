@@ -26,21 +26,24 @@
 
 		public Lookup()
 		{
-			this.Result = new Result();			
+			this.Result = new Result();
 		}
 
-		public Lookup(string zipcode) : this()
+		public Lookup(string zipcode)
+			: this()
 		{
 			this.ZipCode = zipcode;
 		}
 
-		public Lookup(string city, string state) : this()
+		public Lookup(string city, string state)
+			: this()
 		{
 			this.City = city;
 			this.State = state;
 		}
 
-		public Lookup(string city, string state, string zipcode) : this()
+		public Lookup(string city, string state, string zipcode)
+			: this()
 		{
 			this.City = city;
 			this.State = state;

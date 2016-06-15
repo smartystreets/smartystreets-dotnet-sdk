@@ -24,37 +24,43 @@
 
 		[Test]
 		[ExpectedException(typeof(PaymentRequiredException))]
-		public void Test402ResponsePThrowsPaymentRequiredException() {
+		public void Test402ResponsePThrowsPaymentRequiredException()
+		{
 			AssertSend(402);
 		}
 
 		[Test]
 		[ExpectedException(typeof(RequestEntityTooLargeException))]
-		public void Test413ResponseThrowsRequestEntityTooLargeException() {
+		public void Test413ResponseThrowsRequestEntityTooLargeException()
+		{
 			AssertSend(413);
 		}
 
 		[Test]
 		[ExpectedException(typeof(BadRequestException))]
-		public void Test400ResponseThrowsBadRequestException() {
+		public void Test400ResponseThrowsBadRequestException()
+		{
 			AssertSend(400);
 		}
 
 		[Test]
 		[ExpectedException(typeof(TooManyRequestsException))]
-		public void Test429ResponseThrowsTooManyRequestsException() {
+		public void Test429ResponseThrowsTooManyRequestsException()
+		{
 			AssertSend(429);
 		}
 
 		[Test]
 		[ExpectedException(typeof(InternalServerErrorException))]
-		public void Test500ResponseThrowsInternalServerErrorException() {
+		public void Test500ResponseThrowsInternalServerErrorException()
+		{
 			AssertSend(500);
 		}
 
 		[Test]
 		[ExpectedException(typeof(ServiceUnavailableException))]
-		public void Test503ResponseThrowsServiceUnavailableException() {
+		public void Test503ResponseThrowsServiceUnavailableException()
+		{
 			AssertSend(503);
 		}
 
