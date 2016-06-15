@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDK", "sdk\SDK.csproj", "{3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "tests\Tests.csproj", "{22940782-EF8C-45F7-BA51-D8947B5A98B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples", "Examples\Examples.csproj", "{3CDF3376-8FA4-4E86-B968-CBD88250FDF8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples", "examples\Examples.csproj", "{3CDF3376-8FA4-4E86-B968-CBD88250FDF8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{486BA538-5D62-4384-84B1-599B2BC5BBFC}"
 	ProjectSection(SolutionItems) = preProject
