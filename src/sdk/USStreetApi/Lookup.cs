@@ -5,7 +5,7 @@
 	using System.Runtime.Serialization;
 
 	[DataContract]
-	public class Lookup
+	public class Lookup : ILookup
 	{
 		#region [ Fields ]
 

@@ -41,6 +41,8 @@
     <Compile Include="..\VersionAssemblyInfo.cs">
       <Link>Properties\VersionAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Batch.cs" />
+    <Compile Include="ILookup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="USStreetApi\Client.cs" />
     <Compile Include="ISender.cs" />
