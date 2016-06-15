@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>smartystreets-csharp-sdk</id>
-    <version>1.0.0</version>
+    <version>0.0.0</version>
     <authors>SmartyStreets SDK Team</authors>
     <owners>SmartyStreets</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.txt</licenseUrl>
@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A library to help C Sharp developers easily access the SmartyStreets APIs.</description>
     <releaseNotes></releaseNotes>
-    <copyright>Copyright 2016 SmartyStreets LLC</copyright>
+    <copyright>Copyright SmartyStreets</copyright>
     <tags>SmartyStreets smarty streets street address verification validation SDK</tags>
   </metadata>
   <files>
