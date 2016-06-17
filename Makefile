@@ -3,7 +3,7 @@
 SOURCE_VERSION := 1.0
 
 build:
-	xbuild /p:Configuration=Release src/smartystreets-csharp-sdk.sln
+	xbuild /p:Configuration=Release /t:Rebuild src/smartystreets-csharp-sdk.sln
 	git checkout src/VersionAssemblyInfo.cs
 
 test:
