@@ -13,7 +13,7 @@ package: build
 	@nuget pack src/sdk/SDK.nuspec -o src/sdk
 	git checkout src/sdk/SDK.nuspec
 
-publish: version package
+publish: version tag package
 	@nuget push src/sdk/smartystreets-csharp-sdk.*.nupkg
 
 tag:
