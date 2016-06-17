@@ -13,7 +13,7 @@ package: build
 	git checkout src/sdk/SDK.nuspec
 
 publish: version package
-	#@nuget push ...
+	@nuget push src/sdk/smartystreets-csharp-sdk.*.nupkg
 
 tag:
 	@sed -i "" "s/0\.0\.0/$(shell git describe)/" src/sdk/SDK.nuspec
