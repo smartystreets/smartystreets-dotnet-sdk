@@ -16,8 +16,8 @@ publish: version package
 	@nuget push src/sdk/smartystreets-csharp-sdk.*.nupkg
 
 tag:
-	@sed -i "" "s/0\.0\.0/$(shell git describe)/" src/sdk/SDK.nuspec
-	@sed -i "" "s/0\.0\.0/$(shell git describe)/" src/VersionAssemblyInfo.cs
+	@sed -i -r "s/0\.0\.0/$(shell git describe)/g" src/sdk/SDK.nuspec
+	@sed -i -r "s/0\.0\.0/$(shell git describe)/g" src/VersionAssemblyInfo.cs
 
 version:
 	$(eval PREFIX := $(SOURCE_VERSION).)
