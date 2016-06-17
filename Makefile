@@ -2,18 +2,20 @@
 
 SOURCE_VERSION := 1.0
 
-build:
+build: tag
 	xbuild /p:Configuration=Release src/smartystreets-csharp-sdk.sln
+	git checkout src/VersionAssemblyInfo.cs
 
 test:
 
-package:
+package: build
 	@nuget pack src/sdk/SDK.nuspec
+	git checkout src/sdk/SDK.nuspec
 
-publish: tag package
+publish: version package
 	#@nuget push ...
 
-tag: version
+tag:
 	@sed -i "" "s/0\.0\.0/$(shell git describe)/" src/sdk/SDK.nuspec
 	@sed -i "" "s/0\.0\.0/$(shell git describe)/" src/VersionAssemblyInfo.cs
 
