@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <Title>SmartyStreets C# SDK</Title>
+    <title>SmartyStreets C# SDK</title>
     <id>smartystreets-csharp-sdk</id>
     <version>0.0.0</version>
     <authors>SmartyStreets SDK Team</authors>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/smartystreets/smartystreets-csharp-sdk</projectUrl>
     <iconUrl>https://smartystreets.com/resources/images/smartystreets-s.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A library to help C# developers easily access the SmartyStreets APIs. Targets .NET 4.0</description>
+    <description>A library to help C# developers easily access the SmartyStreets APIs. Targets .NET 4.0.</description>
     <summary>A library to help C# developers easily access the SmartyStreets APIs.</summary>
     <releaseNotes></releaseNotes>
     <copyright>Copyright SmartyStreets</copyright>
