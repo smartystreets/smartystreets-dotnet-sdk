@@ -14,5 +14,6 @@ $provision = <<-EOF
   echo "deb http://download.mono-project.com/repo/debian wheezy main" > /etc/apt/sources.list.d/mono-xamarin.list
   apt-get update
   apt-get install -y mono-devel nuget
+  nuget update -self
   nuget setApiKey "${NUGET_KEY}"
 EOF
