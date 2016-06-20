@@ -15,5 +15,4 @@ $provision = <<-EOF
   apt-get update
   apt-get install -y mono-devel nuget
   nuget update -self
-  nuget setApiKey "${NUGET_KEY}"
 EOF
