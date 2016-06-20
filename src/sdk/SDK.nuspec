@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/smartystreets/smartystreets-csharp-sdk</projectUrl>
     <iconUrl>https://smartystreets.com/resources/images/smartystreets-s.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A library to help C Sharp developers easily access the SmartyStreets APIs.</description>
+    <description>A library to help C# developers easily access the SmartyStreets APIs.</description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright SmartyStreets</copyright>
     <tags>SmartyStreets smarty streets street address verification validation SDK</tags>
