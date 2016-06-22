@@ -4,4 +4,4 @@ The official client libraries for accessing SmartyStreets APIs from C# (and othe
 
 You may have noticed this page is curiously sparse. Don't panic, there are [examples](src/examples) and documentation (coming soon).
 
-[Apache 2.0 License](LICENSE.txt)
+[Apache 2.0 License](LICENSE.md)
