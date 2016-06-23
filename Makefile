@@ -19,6 +19,7 @@ package: clean build
 
 publish: clean version tag package
 	@nuget push src/sdk/smartystreets-csharp-sdk.*.nupkg "${NUGET_KEY}" -source https://www.nuget.org
+	@git push origin --tags
 
 tag:
 	@sed -i -r "s/0\.0\.0/$(shell git describe)/g" src/sdk/SDK.nuspec
