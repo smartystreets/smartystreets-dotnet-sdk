@@ -12,12 +12,12 @@ build: clean
 
 test:
 
-package: build
+package: clean build
 	@rm -f src/sdk/*.nupkg
 	@nuget pack src/sdk/SDK.nuspec -o src/sdk
 	@git checkout src/sdk/SDK.nuspec
 
-publish: version tag package
+publish: clean version tag package
 	@nuget push src/sdk/smartystreets-csharp-sdk.*.nupkg "${NUGET_KEY}" -source https://www.nuget.org
 
 tag:
