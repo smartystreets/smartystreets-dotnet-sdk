@@ -2,16 +2,20 @@
 
 SOURCE_VERSION := 1.0
 
-build:
-	xbuild /p:Configuration=Release /t:Rebuild src/smartystreets-csharp-sdk.sln
-	git checkout src/VersionAssemblyInfo.cs
+clean:
+	@git checkout src/VersionAssemblyInfo.cs
+	@git checkout src/sdk/SDK.nuspec
+
+build: clean
+	@xbuild /p:Configuration=Release /t:Rebuild src/smartystreets-csharp-sdk.sln
+	@git checkout src/VersionAssemblyInfo.cs
 
 test:
 
 package: build
 	@rm -f src/sdk/*.nupkg
 	@nuget pack src/sdk/SDK.nuspec -o src/sdk
-	git checkout src/sdk/SDK.nuspec
+	@git checkout src/sdk/SDK.nuspec
 
 publish: version tag package
 	@nuget push src/sdk/smartystreets-csharp-sdk.*.nupkg "${NUGET_KEY}" -source https://www.nuget.org
