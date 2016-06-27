@@ -79,6 +79,7 @@
     <Compile Include="USZipCodeApi\Batch.cs" />
     <Compile Include="USZipCodeApi\Client.cs" />
     <Compile Include="USZipCodeApi\ClientBuilder.cs" />
+    <Compile Include="SharedCredentials.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
