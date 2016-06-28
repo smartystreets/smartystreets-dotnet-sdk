@@ -20,6 +20,7 @@
 		public Response Send(Request request)
 		{
 			var frameworkRequest = this.BuildRequest(request);
+			this.CopyHeaders(request, frameworkRequest);
 
 			TryWritePayload(request, frameworkRequest);
 
@@ -35,6 +36,16 @@
 			frameworkRequest.Timeout = (int)this.timeout.TotalMilliseconds;
 			frameworkRequest.Method = request.Method;
 			return frameworkRequest;
+		}
+		void CopyHeaders(Request request, HttpWebRequest frameworkRequest)
+		{
+			foreach (var item in request.Headers)
+			{
+				if (item.Key == "Referer")
+					frameworkRequest.Referer = item.Value;
+				else
+					frameworkRequest.Headers.Add(item.Key, item.Value);
+			}
 		}
 		private static void TryWritePayload(Request request, HttpWebRequest frameworkRequest)
 		{

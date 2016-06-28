@@ -61,6 +61,7 @@
     <Compile Include="USZipCodeApi\ResultTests.cs" />
     <Compile Include="USZipCodeApi\BatchTests.cs" />
     <Compile Include="USZipCodeApi\ClientTests.cs" />
+    <Compile Include="SharedCredentialsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">

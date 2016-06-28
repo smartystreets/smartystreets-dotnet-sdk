@@ -14,7 +14,6 @@
 		{
 			get { return this.headers; }
 		}
-		public string Hostname { get; private set; }
 		public string Method { get; set; }
 		public byte[] Payload
 		{

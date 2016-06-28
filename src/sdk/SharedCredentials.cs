@@ -1,5 +1,4 @@
-﻿using System;
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
 	public class SharedCredentials : ICredentials
 	{
@@ -14,7 +13,8 @@ namespace SmartyStreets
 
 		public void Sign(Request request)
 		{
-			throw new NotImplementedException();
+			request.SetParameter("auth-id", this.id);
+			request.SetHeader("Referer", "https://" + this.hostname);
 		}
 	}
 }
