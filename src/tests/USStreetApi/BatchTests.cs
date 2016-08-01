@@ -44,14 +44,15 @@
 		}
 
 		[Test]
-		[ExpectedException(typeof(BatchFullException))]
 		public void TestAddingALookupWhenBatchIsFullThrowsException()
 		{
 			var batch = new Batch();
 			var lookup = new Lookup();
 
-			for (var i = 0; i <= Batch.MaxBatchSize; i++)
+			for (var i = 0; i < Batch.MaxBatchSize; i++)
 				batch.Add(lookup);
+
+			Assert.Throws<BatchFullException>(() => batch.Add(new Lookup()));
 		}
 
 		[Test]

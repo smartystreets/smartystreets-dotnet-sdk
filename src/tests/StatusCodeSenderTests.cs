@@ -16,52 +16,45 @@
 		}
 
 		[Test]
-		[ExpectedException(typeof(BadCredentialsException))]
 		public void Test401ResponseThrowsBadCredentialsException()
 		{
-			AssertSend(401);
+			Assert.Throws<BadCredentialsException>(() => AssertSend(401));
 		}
 
 		[Test]
-		[ExpectedException(typeof(PaymentRequiredException))]
 		public void Test402ResponsePThrowsPaymentRequiredException()
 		{
-			AssertSend(402);
+			Assert.Throws<PaymentRequiredException>(() => AssertSend(402));
 		}
 
 		[Test]
-		[ExpectedException(typeof(RequestEntityTooLargeException))]
 		public void Test413ResponseThrowsRequestEntityTooLargeException()
 		{
-			AssertSend(413);
+			Assert.Throws<RequestEntityTooLargeException>(() => AssertSend(413));
 		}
 
 		[Test]
-		[ExpectedException(typeof(BadRequestException))]
 		public void Test400ResponseThrowsBadRequestException()
 		{
-			AssertSend(400);
+			Assert.Throws<BadRequestException>(() => AssertSend(400));
 		}
 
 		[Test]
-		[ExpectedException(typeof(TooManyRequestsException))]
 		public void Test429ResponseThrowsTooManyRequestsException()
 		{
-			AssertSend(429);
+			Assert.Throws<TooManyRequestsException>(() => AssertSend(429));
 		}
 
 		[Test]
-		[ExpectedException(typeof(InternalServerErrorException))]
 		public void Test500ResponseThrowsInternalServerErrorException()
 		{
-			AssertSend(500);
+			Assert.Throws<InternalServerErrorException>(() => AssertSend(500));
 		}
 
 		[Test]
-		[ExpectedException(typeof(ServiceUnavailableException))]
 		public void Test503ResponseThrowsServiceUnavailableException()
 		{
-			AssertSend(503);
+			Assert.Throws<ServiceUnavailableException>(() => AssertSend(503));
 		}
 
 		private static void AssertSend(int statusCode)

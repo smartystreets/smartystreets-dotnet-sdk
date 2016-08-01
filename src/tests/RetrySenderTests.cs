@@ -31,10 +31,9 @@
 		}
 
 		[Test]
-		[ExpectedException(typeof(IOException))]
 		public void TestRetryUntilMaxAttemps()
 		{
-			this.SendRequest(MockCrashingSender.RetryMaxTimes);
+			Assert.Throws<IOException>(() => this.SendRequest(MockCrashingSender.RetryMaxTimes));
 		}
 
 		private void SendRequest(string requestBehavior)
