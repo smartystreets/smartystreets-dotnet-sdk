@@ -30,7 +30,7 @@
 			{
 				return this.inner.Send(request);
 			}
-			catch (Exception)
+			catch (Exception) // TODO: catch HTTP 400, 413, 422 and just throw.
 			{
 				if (attempt >= this.maxRetries)
 					throw;
