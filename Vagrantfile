@@ -1,7 +1,7 @@
 VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.forward_agent = true
-  config.vm.box = "boxcutter/ubuntu1404"
+  config.vm.box = "boxcutter/ubuntu1604"
   config.vm.synced_folder "~/.identity", "/home/vagrant/.identity", create: true
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--nictype1", "Am79C973"]
