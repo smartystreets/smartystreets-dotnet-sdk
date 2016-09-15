@@ -15,7 +15,7 @@
 		{
 			this.maxRetries = 5;
 			this.maxTimeout = TimeSpan.FromSeconds(10);
-			this.urlPrefix = "https://api.smartystreets.com/street-address";
+			this.urlPrefix = "https://us-street.api.smartystreets.com/street-address";
 			this.serializer = new StandardLibraryJsonSerializer();
 		}
 		public ClientBuilder(ICredentials signer) : this()

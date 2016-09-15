@@ -9,7 +9,7 @@ namespace SmartyStreets
 		public void assertSignedRequest()
 		{
 			Request request = this.createSignedRequest();
-			String expected = "https://api.smartystreets.com/street-address?auth-id=3516378604772256";
+			String expected = "https://us-street.api.smartystreets.com/street-address?auth-id=3516378604772256";
 
 			Assert.AreEqual(expected, request.GetUrl());
 		}
@@ -25,7 +25,7 @@ namespace SmartyStreets
 		private Request createSignedRequest()
 		{
 			var mobile = new SharedCredentials("3516378604772256", "example.com");
-			Request request = new Request("https://api.smartystreets.com/street-address?");
+			Request request = new Request("https://us-street.api.smartystreets.com/street-address?");
 			mobile.Sign(request);
 			return request;
 		}
