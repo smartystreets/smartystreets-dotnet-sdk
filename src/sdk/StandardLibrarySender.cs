@@ -37,6 +37,7 @@
 			var frameworkRequest = (HttpWebRequest)WebRequest.Create(request.GetUrl());
 			frameworkRequest.Timeout = (int)this.timeout.TotalMilliseconds;
 			frameworkRequest.Method = request.Method;
+			frameworkRequest.Proxy = null;
 			return frameworkRequest;
 		}
 		void CopyHeaders(Request request, HttpWebRequest frameworkRequest)
