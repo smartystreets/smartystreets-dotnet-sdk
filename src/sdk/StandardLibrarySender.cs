@@ -49,7 +49,7 @@
 					frameworkRequest.Headers.Add(item.Key, item.Value);
 			}
 
-			frameworkRequest.Headers.Add("User-Agent", UserAgent);
+			frameworkRequest.UserAgent = UserAgent;
 		}
 		private static void TryWritePayload(Request request, HttpWebRequest frameworkRequest)
 		{
