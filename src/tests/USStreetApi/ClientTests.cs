@@ -23,7 +23,19 @@ namespace SmartyStreets.USStreetApi
 			Assert.AreEqual("http://localhost/?street=freeform", sender.Request.GetUrl());
 		}
 
-		[Test]
+        [Test]
+        public async Task TestSendingSingleFreeformLookupAsync()
+        {
+            var sender = new RequestCapturingSender();
+            var serializer = new FakeSerializer(null);
+            var client = new Client("http://localhost/", sender, serializer);
+
+            await client.SendAsync(new Lookup("freeform"));
+
+            Assert.AreEqual("http://localhost/?street=freeform", sender.Request.GetUrl());
+        }
+
+        [Test]
 		public void TestSendingSingleFullyPopulatedLookup()
 		{
 			var sender = new RequestCapturingSender();

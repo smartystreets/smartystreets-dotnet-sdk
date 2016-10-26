@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets.USZipCodeApi
+﻿using System.Threading.Tasks;
+
+namespace SmartyStreets.USZipCodeApi
 {
 	using System.Collections.Generic;
 	using System.IO;
@@ -18,30 +20,61 @@
 
 		public void Send(Lookup lookup)
 		{
-			var batch = new Batch();
-			batch.Add(lookup);
-			this.Send(batch);
-		}
-		public void Send(Batch batch)
-		{
-			var request = new Request(this.urlPrefix);
+		    var batch = new Batch {lookup};
+		    this.Send(batch);
+        }
 
-			if (batch.Count == 0)
-				return;
+        public Task SendAsync(Lookup lookup)
+        {
+            var batch = new Batch {lookup};
+            return this.SendAsync(batch);
+        }
 
-			if (batch.Count == 1)
-				PopulateQueryString(batch[0], request);
-			else
-				request.Payload = batch.Serialize(this.serializer);
+        public void Send(Batch batch)
+        {
+            if (batch.Count == 0)
+                return;
 
-			var response = this.sender.Send(request);
-			var payloadStream = new MemoryStream(response.Payload);
+            var request = CreateRequest(batch);
 
-			var results = this.serializer.Deserialize<Result[]>(payloadStream) ?? new Result[0];
+            var response = this.sender.Send(request);
 
-			AssignResultsToLookups(batch, results);
-		}
-		private static void PopulateQueryString(Lookup lookup, Request request)
+            HandleResponse(batch, response);
+        }
+
+        public async Task SendAsync(Batch batch)
+        {
+            if (batch.Count == 0)
+                return;
+
+            var request = CreateRequest(batch);
+
+            var response = await this.sender.SendAsync(request).ConfigureAwait(false);
+
+            HandleResponse(batch, response);
+        }
+
+	    private void HandleResponse(Batch batch, Response response)
+	    {
+	        using (var payloadStream = new MemoryStream(response.Payload))
+	        {
+	            var results = this.serializer.Deserialize<Result[]>(payloadStream) ?? new Result[0];
+	            AssignResultsToLookups(batch, results);
+	        }
+	    }
+
+	    private Request CreateRequest(Batch batch)
+	    {
+	        var request = new Request(this.urlPrefix);
+
+	        if (batch.Count == 1)
+	            PopulateQueryString(batch[0], request);
+	        else
+	            request.Payload = batch.Serialize(this.serializer);
+	        return request;
+	    }
+
+	    private static void PopulateQueryString(Lookup lookup, Request request)
 		{
 			request.SetParameter("input_id", lookup.InputId);
 			request.SetParameter("city", lookup.City);
