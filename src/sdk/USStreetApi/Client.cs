@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets.USStreetApi
+﻿using System.Threading.Tasks;
+
+namespace SmartyStreets.USStreetApi
 {
 	using System.Globalization;
 	using System.IO;
@@ -18,35 +20,64 @@
 
 		public void Send(Lookup lookup)
 		{
-			var batch = new Batch();
-			batch.Add(lookup);
-			this.Send(batch);
-		}
+		    var batch = new Batch {lookup};
+		    this.Send(batch);
+        }
 
-		public void Send(Batch batch)
-		{
-			var request = new Request(this.urlPrefix);
+        public Task SendAsync(Lookup lookup)
+        {
+            var batch = new Batch {lookup};
+            return this.SendAsync(batch);
+        }
 
-			if (batch.Count == 0)
-				return;
+        public void Send(Batch batch)
+        {
+            if (batch.Count == 0)
+                return;
 
-			PutHeaders(batch, request);
+            var request = CreateRequest(batch);
 
-			if (batch.Count == 1)
-				PopulateQueryString(batch[0], request);
-			else
-				request.Payload = batch.Serialize(this.serializer);
+            var response = this.sender.Send(request);
 
-			var response = this.sender.Send(request);
+			HandleResponse(batch, response);
+        }
 
-			using (var payloadStream = new MemoryStream(response.Payload))
-			{
-				var candidates = this.serializer.Deserialize<Candidate[]>(payloadStream) ?? new Candidate[0];
-				AssignCandidatesToLookups(batch, candidates);
-			}
-		}
+        public async Task SendAsync(Batch batch)
+        {
+            if (batch.Count == 0)
+                return;
 
-		private static void PutHeaders(Batch batch, Request request)
+            var request = CreateRequest(batch);
+
+            var response = await this.sender.SendAsync(request).ConfigureAwait(false);
+
+            HandleResponse(batch, response);
+        }
+
+
+        private void HandleResponse(Batch batch, Response response)
+	    {
+	        using (var payloadStream = new MemoryStream(response.Payload))
+	        {
+	            var candidates = this.serializer.Deserialize<Candidate[]>(payloadStream) ?? new Candidate[0];
+	            AssignCandidatesToLookups(batch, candidates);
+	        }
+	    }
+
+	    private Request CreateRequest(Batch batch)
+	    {
+	        var request = new Request(this.urlPrefix);
+
+	        PutHeaders(batch, request);
+
+	        if (batch.Count == 1)
+	            PopulateQueryString(batch[0], request);
+	        else
+	            request.Payload = batch.Serialize(this.serializer);
+	        return request;
+	    }
+
+	    private static void PutHeaders(Batch batch, Request request)
 		{
 			if (batch.IncludeInvalid)
 				request.SetHeader("X-Include-Invalid", "true");

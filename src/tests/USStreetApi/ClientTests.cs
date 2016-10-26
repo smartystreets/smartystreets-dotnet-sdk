@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets.USStreetApi
+﻿using System.Threading.Tasks;
+
+namespace SmartyStreets.USStreetApi
 {
 	using System;
 	using System.Text;
@@ -44,13 +46,38 @@
 			client.Send(lookup);
 
 			Assert.AreEqual("http://localhost/?street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0&urbanization=4&candidates=9", sender.Request.GetUrl());
-		}
+        }
 
-		#endregion
+        [Test]
+        public async Task TestSendingSingleFullyPopulatedLookupAsync()
+        {
+            var sender = new RequestCapturingSender();
+            var serializer = new FakeSerializer(null);
+            var client = new Client("http://localhost/", sender, serializer);
+            var lookup = new Lookup
+            {
+                Addressee = "0",
+                Street = "1",
+                Secondary = "2",
+                Street2 = "3",
+                Urbanization = "4",
+                City = "5",
+                State = "6",
+                ZipCode = "7",
+                Lastline = "8",
+                MaxCandidates = 9
+            };
 
-		#region [ Batch Lookup ]
+            await client.SendAsync(lookup);
 
-		[Test]
+            Assert.AreEqual("http://localhost/?street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0&urbanization=4&candidates=9", sender.Request.GetUrl());
+        }
+
+        #endregion
+
+        #region [ Batch Lookup ]
+
+        [Test]
 		public void TestEmptyBatchNotSent()
 		{
 			var sender = new RequestCapturingSender();
@@ -75,13 +102,27 @@
 			client.Send(batch);
 
 			Assert.AreEqual(expectedPayload, sender.Request.Payload);
-		}
+        }
 
-		#endregion
+        [Test]
+        public async Task TestSuccessfullySendsBatchOfAddressLookupsAsync()
+        {
+            var sender = new RequestCapturingSender();
+            var expectedPayload = Encoding.ASCII.GetBytes("Hello World!");
+            var serializer = new FakeSerializer(expectedPayload);
+            var client = new Client("http://localhost/", sender, serializer);
+            var batch = new Batch {new Lookup(), new Lookup()};
 
-		#region [ Request Headers ]
+            await client.SendAsync(batch);
 
-		[Test]
+            Assert.AreEqual(expectedPayload, sender.Request.Payload);
+        }
+
+        #endregion
+
+        #region [ Request Headers ]
+
+        [Test]
 		public void TestNoHeadersAddedToRequest()
 		{
 			AssertHeadersSetCorrectly(false, false);
