@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets
+﻿using System.Threading.Tasks;
+
+namespace SmartyStreets
 {
 	public class MockStatusCodeSender : ISender
 	{
@@ -16,5 +18,10 @@
 
 			return new Response(this.statusCode, null);
 		}
+
+	    public async Task<Response> SendAsync(Request request)
+	    {
+	        return Send(request);
+	    }
 	}
 }

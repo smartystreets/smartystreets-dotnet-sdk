@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets
+﻿using System.Threading.Tasks;
+
+namespace SmartyStreets
 {
 	public class SigningSender : ISender
 	{
@@ -16,5 +18,11 @@
 			this.signer.Sign(request);
 			return this.inner.Send(request);
 		}
+
+	    public Task<Response> SendAsync(Request request)
+	    {
+            this.signer.Sign(request);
+            return this.inner.SendAsync(request);
+        }
 	}
 }

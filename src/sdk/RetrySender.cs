@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets
+﻿using System.Threading.Tasks;
+
+namespace SmartyStreets
 {
 	using System;
 
@@ -24,7 +26,20 @@
 
 			return null;
 		}
-		private Response TrySend(Request request, int attempt)
+
+	    public async Task<Response> SendAsync(Request request)
+        {
+            for (var i = 0; i <= this.maxRetries; i++)
+            {
+                var response = await this.TrySendAsync(request, i).ConfigureAwait(false);
+                if (response != null)
+                    return response;
+            }
+
+            return null;
+        }
+
+	    private Response TrySend(Request request, int attempt)
 		{
 			try
 			{
@@ -37,6 +52,21 @@
 			}
 
 			return null;
-		}
-	}
+        }
+
+        private async Task<Response> TrySendAsync(Request request, int attempt)
+        {
+            try
+            {
+                return await this.inner.SendAsync(request);
+            }
+            catch (Exception) // TODO: catch HTTP 400, 413, 422 and just throw.
+            {
+                if (attempt >= this.maxRetries)
+                    throw;
+            }
+
+            return null;
+        }
+    }
 }
