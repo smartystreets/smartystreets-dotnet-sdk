@@ -20,10 +20,38 @@ namespace SmartyStreets.USZipCodeApi
 			client.Send(new Lookup("1"));
 
 			Assert.AreEqual("http://localhost/?zipcode=1", sender.Request.GetUrl());
-		}
+        }
 
-		[Test]
-		public void TestSendingSingleFullyPopulatedLookup()
+        [Test]
+        public async Task TestSendingSingleZipOnlyLookupAsync()
+        {
+            var sender = new RequestCapturingSender();
+            var serializer = new FakeSerializer(null);
+            var client = new Client("http://localhost/", sender, serializer);
+
+            await client.SendAsync(new Lookup("1"));
+
+            Assert.AreEqual("http://localhost/?zipcode=1", sender.Request.GetUrl());
+        }
+
+        [Test]
+        public void TestSendingSingleFullyPopulatedLookup()
+        {
+            var sender = new RequestCapturingSender();
+            var serializer = new FakeSerializer(null);
+            var client = new Client("http://localhost/", sender, serializer);
+            var lookup = new Lookup();
+            lookup.City = "1";
+            lookup.State = "2";
+            lookup.ZipCode = "3";
+
+            client.Send(lookup);
+
+            Assert.AreEqual("http://localhost/?city=1&state=2&zipcode=3", sender.Request.GetUrl());
+        }
+
+        [Test]
+		public async Task TestSendingSingleFullyPopulatedLookupAsync()
 		{
 			var sender = new RequestCapturingSender();
 			var serializer = new FakeSerializer(null);
@@ -33,7 +61,7 @@ namespace SmartyStreets.USZipCodeApi
 			lookup.State = "2";
 			lookup.ZipCode = "3";
 
-			client.Send(lookup);
+			await client.SendAsync(lookup);
 
 			Assert.AreEqual("http://localhost/?city=1&state=2&zipcode=3", sender.Request.GetUrl());
 		}

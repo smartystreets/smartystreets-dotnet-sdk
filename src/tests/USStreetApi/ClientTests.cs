@@ -98,9 +98,20 @@ namespace SmartyStreets.USStreetApi
 			client.Send(new Batch());
 
 			Assert.Null(sender.Request);
-		}
+        }
 
-		[Test]
+        [Test]
+        public async Task TestEmptyBatchNotSentAsync()
+        {
+            var sender = new RequestCapturingSender();
+            var client = new Client("/", sender, null);
+
+            await client.SendAsync(new Batch());
+
+            Assert.Null(sender.Request);
+        }
+
+        [Test]
 		public void TestSuccessfullySendsBatchOfAddressLookups()
 		{
 			var sender = new RequestCapturingSender();
@@ -206,8 +217,43 @@ namespace SmartyStreets.USStreetApi
 			Assert.AreEqual(response.Payload, deserializer.Payload);
 		}
 
-		[Test]
-		public void TestCandidatesCorrectlyAssignedToCorrespondingLookup()
+        [Test]
+        public async Task TestDeserializeCalledWithResponseBodyAsync()
+        {
+            var response = new Response(0, Encoding.ASCII.GetBytes("Hello, world!"));
+            var sender = new MockSender(response);
+            var deserializer = new FakeDeserializer(null);
+            var client = new Client("/", sender, deserializer);
+
+            await client.SendAsync(new Lookup());
+
+            Assert.AreEqual(response.Payload, deserializer.Payload);
+        }
+
+        [Test]
+        public void TestCandidatesCorrectlyAssignedToCorrespondingLookup()
+        {
+            var expectedCandidates = new Candidate[3];
+            expectedCandidates[0] = new Candidate(0);
+            expectedCandidates[1] = new Candidate(1);
+            expectedCandidates[2] = new Candidate(1);
+            var batch = new Batch();
+            batch.Add(new Lookup());
+            batch.Add(new Lookup());
+
+            var sender = new MockSender(new Response(0, new Byte[0]));
+            var deserializer = new FakeDeserializer(expectedCandidates);
+            var client = new Client("/", sender, deserializer);
+
+            client.Send(batch);
+
+            Assert.AreEqual(expectedCandidates[0], batch[0].Result[0]);
+            Assert.AreEqual(expectedCandidates[1], batch[1].Result[0]);
+            Assert.AreEqual(expectedCandidates[2], batch[1].Result[1]);
+        }
+
+        [Test]
+		public async Task TestCandidatesCorrectlyAssignedToCorrespondingLookupAsync()
 		{
 			var expectedCandidates = new Candidate[3];
 			expectedCandidates[0] = new Candidate(0);
@@ -221,7 +267,7 @@ namespace SmartyStreets.USStreetApi
 			var deserializer = new FakeDeserializer(expectedCandidates);
 			var client = new Client("/", sender, deserializer);
 
-			client.Send(batch);
+			await client.SendAsync(batch);
 
 			Assert.AreEqual(expectedCandidates[0], batch[0].Result[0]);
 			Assert.AreEqual(expectedCandidates[1], batch[1].Result[0]);
