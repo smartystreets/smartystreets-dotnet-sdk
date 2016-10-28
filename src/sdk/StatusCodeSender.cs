@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
-	public class StatusCodeSender : ISender
+    using System.Threading.Tasks;
+
+    public class StatusCodeSender : ISender
 	{
 		private readonly ISender inner;
 

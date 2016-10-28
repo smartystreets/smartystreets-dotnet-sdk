@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
-
-namespace SmartyStreets.USZipCodeApi
+﻿namespace SmartyStreets.USZipCodeApi
 {
 	using System.Text;
-	using NUnit.Framework;
+    using System.Threading.Tasks;
+    using NUnit.Framework;
 
 	[TestFixture]
 	public class ClientTests

@@ -1,10 +1,9 @@
-﻿using System.Threading.Tasks;
-
-namespace SmartyStreets.USStreetApi
+﻿namespace SmartyStreets.USStreetApi
 {
 	using System;
 	using System.Text;
-	using NUnit.Framework;
+    using System.Threading.Tasks;
+    using NUnit.Framework;
 
 	[TestFixture]
 	public class ClientTests

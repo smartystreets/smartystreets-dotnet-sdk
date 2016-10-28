@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
-	public interface ISender
+    using System.Threading.Tasks;
+
+    public interface ISender
 	{
 		Response Send(Request request);
         Task<Response> SendAsync(Request request);

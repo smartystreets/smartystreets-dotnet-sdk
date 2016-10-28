@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
 	using System.IO;
-	using NUnit.Framework;
+    using System.Threading.Tasks;
+    using NUnit.Framework;
 
 	[TestFixture]
 	public class RetrySenderTests

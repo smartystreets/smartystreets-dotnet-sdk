@@ -1,8 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
-	using System;
+    using System.Threading.Tasks;
+    using System;
 
 	public class RetrySender : ISender
 	{

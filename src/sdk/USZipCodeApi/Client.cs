@@ -1,11 +1,10 @@
-﻿using System.Threading.Tasks;
-
-namespace SmartyStreets.USZipCodeApi
+﻿namespace SmartyStreets.USZipCodeApi
 {
 	using System.Collections.Generic;
 	using System.IO;
+    using System.Threading.Tasks;
 
-	public class Client
+    public class Client
 	{
 		private readonly string urlPrefix;
 		private readonly ISender sender;

@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
-	public class SigningSender : ISender
+    using System.Threading.Tasks;
+
+    public class SigningSender : ISender
 	{
 		private readonly ICredentials signer;
 		private readonly ISender inner;

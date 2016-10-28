@@ -1,12 +1,11 @@
-﻿using System.Threading.Tasks;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
 	using System;
 	using System.IO;
 	using System.Net;
+    using System.Threading.Tasks;
 
-	public class StandardLibrarySender : ISender
+    public class StandardLibrarySender : ISender
 	{
 		private static readonly Version AssemblyVersion = typeof(StandardLibrarySender).Assembly.GetName().Version;
 		private static readonly string UserAgent = string.Format("smartystreets (sdk:csharp@{0}.{1}.{2})", AssemblyVersion.Major, AssemblyVersion.Minor, AssemblyVersion.Build);

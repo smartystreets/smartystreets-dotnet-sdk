@@ -1,8 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace SmartyStreets.USStreetApi
+﻿namespace SmartyStreets.USStreetApi
 {
-	using System.Globalization;
+    using System.Threading.Tasks;
+    using System.Globalization;
 	using System.IO;
 
 	public class Client
