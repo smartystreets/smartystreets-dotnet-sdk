@@ -10,7 +10,7 @@
 		private readonly Dictionary<string, T> named;
 		private readonly List<T> all;
 
-		public Batch(int maxSize)
+		internal Batch(int maxSize)
 		{
 			this.maxSize = maxSize;
 			this.named = new Dictionary<string, T>();
