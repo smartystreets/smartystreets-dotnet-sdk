@@ -9,6 +9,10 @@
 	{
 		#region [ Fields ]
 
+		public const string STRICT = "strict";
+		public const string RANGE = "range";
+		public const string INVALID = "invalid";
+
 		public List<Candidate> Result { get; private set; }
 
 		public string InputId { get; set; }
@@ -42,6 +46,9 @@
 
 		[DataMember(Name = "candidates")]
 		private int maxCandidates;
+
+		[DataMember(Name = "match")]
+		public string MatchStrategy { get; set; }
 
 		public int MaxCandidates
 		{

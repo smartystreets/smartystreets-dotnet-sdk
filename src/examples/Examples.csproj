@@ -45,6 +45,7 @@
     <Compile Include="USStreetMultipleAddressesExample.cs" />
     <Compile Include="USZipCodeSingleLookupExample.cs" />
     <Compile Include="USZipCodeMultipleLookupsExample.cs" />
+    <Compile Include="USStreetLookupsWithMatchStrategyExamples.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\sdk\SDK.csproj">
