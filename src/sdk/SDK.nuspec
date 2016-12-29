@@ -8,7 +8,7 @@
     <owners>SmartyStreets</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.txt</licenseUrl>
     <projectUrl>https://github.com/smartystreets/smartystreets-csharp-sdk</projectUrl>
-    <iconUrl>https://smartystreets.com/resources/images/smartystreets-s.png</iconUrl>
+    <iconUrl>https://d79i1fxsrar4t.cloudfront.net/logo-icon--5947a570062834a126dca7bb91a6407b.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A library to help C# developers easily access the SmartyStreets APIs. Targets .NET 4.0.</description>
     <summary>A library to help C# developers easily access the SmartyStreets APIs.</summary>
