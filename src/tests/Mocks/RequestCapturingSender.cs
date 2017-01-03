@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets
+﻿using System.Threading.Tasks;
+
+namespace SmartyStreets
 {
 	public class RequestCapturingSender : ISender
 	{
@@ -10,5 +12,10 @@
 
 			return new Response(200, new byte[0]);
 		}
+
+	    public async Task<Response> SendAsync(Request request)
+	    {
+	        return Send(request);
+	    }
 	}
 }

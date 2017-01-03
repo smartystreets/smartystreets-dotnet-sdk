@@ -1,8 +1,9 @@
-﻿using System;
-using NUnit.Framework;
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
-	[TestFixture]
+    using System;
+    using NUnit.Framework;
+
+    [TestFixture]
 	public class SharedCredentialsTests
 	{
 		[Test]

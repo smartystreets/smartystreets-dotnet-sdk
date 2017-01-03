@@ -1,7 +1,8 @@
 ﻿namespace SmartyStreets
 {
 	using System.IO;
-	using NUnit.Framework;
+    using System.Threading.Tasks;
+    using NUnit.Framework;
 
 	[TestFixture]
 	public class RetrySenderTests
@@ -34,14 +35,44 @@
 		public void TestRetryUntilMaxAttemps()
 		{
 			Assert.Throws<IOException>(() => this.SendRequest(MockCrashingSender.RetryMaxTimes));
-		}
+        }
 
-		private void SendRequest(string requestBehavior)
+        [Test]
+        public async Task TestSuccessDoesNotRetryAsync()
+        {
+            await this.SendRequestAsync(MockCrashingSender.DoNotRetry);
+
+            Assert.AreEqual(1, this.mockCrashingSender.SendCount);
+        }
+
+        [Test]
+        public async Task TestRetryUntilSuccessAsync()
+        {
+           await this.SendRequestAsync(MockCrashingSender.RetryThreeTimes);
+
+            Assert.AreEqual(4, this.mockCrashingSender.SendCount);
+        }
+
+        [Test]
+        public async Task TestRetryUntilMaxAttempsAsync()
+        {
+            Assert.Throws<IOException>(async () => await this.SendRequestAsync(MockCrashingSender.RetryMaxTimes));
+        }
+
+        private void SendRequest(string requestBehavior)
 		{
 			var request = new Request(requestBehavior);
 			var retrySender = new RetrySender(5, this.mockCrashingSender);
 
 			retrySender.Send(request);
-		}
-	}
+        }
+
+        private Task SendRequestAsync(string requestBehavior)
+        {
+            var request = new Request(requestBehavior);
+            var retrySender = new RetrySender(5, this.mockCrashingSender);
+
+            return retrySender.SendAsync(request);
+        }
+    }
 }

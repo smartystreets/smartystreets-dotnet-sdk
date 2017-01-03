@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets
+﻿using System.Threading.Tasks;
+
+namespace SmartyStreets
 {
 	using System.IO;
 
@@ -29,5 +31,10 @@
 
 			return new Response(StatusCode, new byte[] { });
 		}
+
+	    public async Task<Response> SendAsync(Request request)
+	    {
+	        return Send(request);
+	    }
 	}
 }
