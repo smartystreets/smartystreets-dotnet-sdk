@@ -6,7 +6,7 @@
     <ProjectGuid>{3B3C4EEC-1F49-47F1-A531-6799BC5B66F8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>SmartyStreets</RootNamespace>
-    <AssemblyName>smartystreets-csharp-sdk</AssemblyName>
+    <AssemblyName>smartystreets-dotnet-sdk</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>

@@ -7,7 +7,7 @@
 	public class StandardLibrarySender : ISender
 	{
 		private static readonly Version AssemblyVersion = typeof(StandardLibrarySender).Assembly.GetName().Version;
-		private static readonly string UserAgent = string.Format("smartystreets (sdk:csharp@{0}.{1}.{2})", AssemblyVersion.Major, AssemblyVersion.Minor, AssemblyVersion.Build);
+		private static readonly string UserAgent = string.Format("smartystreets (sdk:dotnet@{0}.{1}.{2})", AssemblyVersion.Major, AssemblyVersion.Minor, AssemblyVersion.Build);
 		private TimeSpan timeout;
 
 		public StandardLibrarySender()

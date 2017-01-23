@@ -4,7 +4,7 @@ using System.Resources;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyCompany("SmartyStreets")]
-[assembly: AssemblyProduct("SmartyStreets C# SDK")]
+[assembly: AssemblyProduct("SmartyStreets .NET SDK")]
 [assembly: AssemblyCopyright("Copyright © SmartyStreets")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyConfiguration("")]

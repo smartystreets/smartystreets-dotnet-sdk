@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <title>SmartyStreets C# SDK</title>
-    <id>smartystreets-csharp-sdk</id>
+    <title>SmartyStreets .NET SDK</title>
+    <id>smartystreets-dotnet-sdk</id>
     <version>0.0.0</version>
     <authors>SmartyStreets SDK Team</authors>
     <owners>SmartyStreets</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.txt</licenseUrl>
-    <projectUrl>https://github.com/smartystreets/smartystreets-csharp-sdk</projectUrl>
+    <projectUrl>https://github.com/smartystreets/smartystreets-dotnet-sdk</projectUrl>
     <iconUrl>https://d79i1fxsrar4t.cloudfront.net/logo-icon--5947a570062834a126dca7bb91a6407b.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A library to help C# developers easily access the SmartyStreets APIs. Targets .NET 4.0.</description>
-    <summary>A library to help C# developers easily access the SmartyStreets APIs.</summary>
+    <description>A library to help .NET developers easily access the SmartyStreets APIs. Targets .NET 4.0.</description>
+    <summary>A library to help .NET developers easily access the SmartyStreets APIs.</summary>
     <releaseNotes></releaseNotes>
     <copyright>Copyright SmartyStreets</copyright>
     <tags>SmartyStreets smarty streets street address verification validation SDK</tags>
   </metadata>
   <files>
-  	<file src="bin/Release/smartystreets-csharp-sdk.dll" target="lib/net40" />
+  	<file src="bin/Release/smartystreets-dotnet-sdk.dll" target="lib/net40" />
   </files>
 </package>

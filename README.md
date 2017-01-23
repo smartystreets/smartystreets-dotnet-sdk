@@ -1,6 +1,6 @@
-# smartystreets-csharp-sdk
+# smartystreets-dotnet-sdk
 
-The official client libraries for accessing SmartyStreets APIs from C# (and other CLR-based languages).
+The official client libraries for accessing SmartyStreets APIs from C#, F#, Visual Basic, and other CLR-based languages.
 
 You may have noticed this page is curiously sparse. Don't panic, there are [examples](src/examples) and documentation (coming soon).
 
