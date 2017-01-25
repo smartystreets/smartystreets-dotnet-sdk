@@ -7,7 +7,7 @@ clean:
 	@git checkout src/sdk/SDK.nuspec
 
 build: clean
-	@xbuild /p:Configuration=Release /t:Rebuild src/smartystreets-csharp-sdk.sln
+	@xbuild /p:Configuration=Release /t:Rebuild src/smartystreets-dotnet-sdk.sln
 	@git checkout src/VersionAssemblyInfo.cs
 
 test:
@@ -18,7 +18,7 @@ package: clean build
 	@git checkout src/sdk/SDK.nuspec
 
 publish: clean version tag package
-	@nuget push src/sdk/smartystreets-csharp-sdk.*.nupkg "${NUGET_KEY}" -source https://www.nuget.org
+	@nuget push src/sdk/smartystreets-dotnet-sdk.*.nupkg "${NUGET_KEY}" -source https://www.nuget.org
 	@git push origin --tags
 
 tag:

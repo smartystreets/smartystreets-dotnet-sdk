@@ -6,7 +6,7 @@
     <ProjectGuid>{22940782-EF8C-45F7-BA51-D8947B5A98B0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>SmartyStreets</RootNamespace>
-    <AssemblyName>smartystreets-csharp-sdk-tests</AssemblyName>
+    <AssemblyName>smartystreets-dotnet-sdk-tests</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
