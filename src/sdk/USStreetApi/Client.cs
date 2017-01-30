@@ -65,6 +65,7 @@
 			request.SetParameter("lastline", address.Lastline);
 			request.SetParameter("addressee", address.Addressee);
 			request.SetParameter("urbanization", address.Urbanization);
+			request.SetParameter("match", address.MatchStrategy);
 
 			if (address.MaxCandidates != 1)
 				request.SetParameter("candidates", address.MaxCandidates.ToString(CultureInfo.InvariantCulture));
