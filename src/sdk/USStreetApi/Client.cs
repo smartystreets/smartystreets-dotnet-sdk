@@ -30,8 +30,6 @@
 			if (batch.Count == 0)
 				return;
 
-			PutHeaders(batch, request);
-
 			if (batch.Count == 1)
 				PopulateQueryString(batch[0], request);
 			else
@@ -44,14 +42,6 @@
 				var candidates = this.serializer.Deserialize<Candidate[]>(payloadStream) ?? new Candidate[0];
 				AssignCandidatesToLookups(batch, candidates);
 			}
-		}
-
-		private static void PutHeaders(Batch batch, Request request)
-		{
-			if (batch.IncludeInvalid)
-				request.SetHeader("X-Include-Invalid", "true");
-			else if (batch.StandardizeOnly)
-				request.SetHeader("X-Standardize-Only", "true");
 		}
 
 		private static void PopulateQueryString(Lookup address, Request request)

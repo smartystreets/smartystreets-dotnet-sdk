@@ -1,4 +1,5 @@
-﻿namespace SmartyStreets.USStreetApi
+﻿using System.Linq;
+namespace SmartyStreets.USStreetApi
 {
 	using NUnit.Framework;
 
@@ -56,37 +57,15 @@
 		}
 
 		[Test]
-		public void TestClearMethodClearsBothLookupCollectionsButNotHeaders()
+		public void TestClearMethodClearsBothLookupCollections()
 		{
-			var batch = new Batch
-			{
-				IncludeInvalid = true,
-				StandardizeOnly = true
-			};
+			var batch = new Batch();
+			batch.Add(new Lookup());
 			batch.Add(new Lookup());
 
 			batch.Clear();
 
-			Assert.AreEqual(true, batch.IncludeInvalid);
-			Assert.AreEqual(true, batch.StandardizeOnly);
-			Assert.AreEqual(0, batch.Count);
-		}
-
-		[Test]
-		public void TestResetMethodResetsHeadersAndLookups()
-		{
-			var batch = new Batch
-			{
-				IncludeInvalid = true,
-				StandardizeOnly = true
-			};
-			batch.Add(new Lookup());
-
-			batch.Reset();
-
-			Assert.AreEqual(false, batch.IncludeInvalid);
-			Assert.AreEqual(false, batch.StandardizeOnly);
-			Assert.AreEqual(0, batch.Count);
+			Assert.AreEqual(0, batch.Count());
 		}
 	}
 }

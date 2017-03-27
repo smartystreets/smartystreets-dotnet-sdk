@@ -80,65 +80,6 @@
 
 		#endregion
 
-		#region [ Request Headers ]
-
-		[Test]
-		public void TestNoHeadersAddedToRequest()
-		{
-			AssertHeadersSetCorrectly(false, false);
-		}
-
-		[Test]
-		public void TestIncludeInvalidHeaderCorrectlyAddedToRequest()
-		{
-			AssertHeadersSetCorrectly(true, false);
-		}
-
-		[Test]
-		public void TestStandardizeOnlyHeaderCorrectlyAddedToRequest()
-		{
-			AssertHeadersSetCorrectly(false, true);
-		}
-
-		[Test]
-		public void TestIncludeInvalidHeaderCorrectlyAddedToRequestWhenBothBatchOptionsAreSet()
-		{
-			AssertHeadersSetCorrectly(true, true);
-		}
-
-		private static void AssertHeadersSetCorrectly(bool includeInvalid, bool standardizeOnly)
-		{
-			var sender = new RequestCapturingSender();
-			var client = new Client("http://localhost/", sender, new FakeSerializer(new byte[0]));
-			var batch = new Batch();
-			batch.Add(new Lookup());
-
-			batch.StandardizeOnly = standardizeOnly;
-			batch.IncludeInvalid = includeInvalid;
-			client.Send(batch);
-
-			var request = sender.Request;
-			var headers = request.Headers;
-
-			if (includeInvalid)
-			{
-				Assert.AreEqual("true", headers["X-Include-Invalid"]);
-				Assert.IsFalse(headers.ContainsKey("X-Standardize-Only"));
-			}
-			else if (standardizeOnly)
-			{
-				Assert.AreEqual("true", headers["X-Standardize-Only"]);
-				Assert.IsFalse(headers.ContainsKey("X-Include-Invalid"));
-			}
-			else
-			{
-				Assert.IsFalse(headers.ContainsKey("X-Standardize-Only"));
-				Assert.IsFalse(headers.ContainsKey("X-Include-Invalid"));
-			}
-		}
-
-		#endregion
-
 		#region [ Response Handling ]
 
 		[Test]
