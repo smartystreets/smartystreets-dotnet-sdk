@@ -3,7 +3,7 @@
   <metadata>
     <title>SmartyStreets .NET SDK</title>
     <id>smartystreets-dotnet-sdk</id>
-    <version>0.0.0</version>
+    <version>0.0.0</version> <!-- DO NOT EDIT (this is updated by a build job when a new release is published) -->
     <authors>SmartyStreets SDK Team</authors>
     <owners>SmartyStreets</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.txt</licenseUrl>
