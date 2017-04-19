@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets.USZipCodeApi
+﻿using System.Net;
+
+namespace SmartyStreets.USZipCodeApi
 {
 	using System;
 
@@ -10,8 +12,8 @@
 		private readonly ICredentials signer;
 		private ISerializer serializer;
 		private ISender httpSender;
-
-		public ClientBuilder()
+        private WebProxy webProxy;
+        public ClientBuilder()
 		{
 			this.maxRetries = 5;
 			this.maxTimeout = TimeSpan.FromSeconds(10);
@@ -22,9 +24,10 @@
 		{
 			this.signer = signer;
 		}
-		public ClientBuilder(string authId, string authToken) : this(new StaticCredentials(authId, authToken))
+		public ClientBuilder(string authId, string authToken, WebProxy proxy = null) : this(new StaticCredentials(authId, authToken))
 		{
-		}
+            webProxy = proxy;
+        }
 
 		public ClientBuilder RetryAtMost(int retries)
 		{
@@ -61,7 +64,7 @@
 			if (this.httpSender != null)
 				return this.httpSender;
 
-			ISender sender = new StandardLibrarySender(this.maxTimeout);
+			ISender sender = new StandardLibrarySender(this.maxTimeout, webProxy);
 
 			sender = new StatusCodeSender(sender);
 

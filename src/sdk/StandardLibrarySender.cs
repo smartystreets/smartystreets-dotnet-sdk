@@ -9,14 +9,15 @@
 		private static readonly Version AssemblyVersion = typeof(StandardLibrarySender).Assembly.GetName().Version;
 		private static readonly string UserAgent = string.Format("smartystreets (sdk:dotnet@{0}.{1}.{2})", AssemblyVersion.Major, AssemblyVersion.Minor, AssemblyVersion.Build);
 		private TimeSpan timeout;
-
+	    private readonly WebProxy webProxy;
 		public StandardLibrarySender()
 		{
 			this.timeout = TimeSpan.FromSeconds(10);
 		}
-		public StandardLibrarySender(TimeSpan timeout)
+		public StandardLibrarySender(TimeSpan timeout, WebProxy proxy = null)
 		{
 			this.timeout = timeout;
+		    this.webProxy = proxy;
 		}
 
 		public Response Send(Request request)
@@ -37,7 +38,7 @@
 			var frameworkRequest = (HttpWebRequest)WebRequest.Create(request.GetUrl());
 			frameworkRequest.Timeout = (int)this.timeout.TotalMilliseconds;
 			frameworkRequest.Method = request.Method;
-			frameworkRequest.Proxy = null;
+			frameworkRequest.Proxy = webProxy;
 			return frameworkRequest;
 		}
 		void CopyHeaders(Request request, HttpWebRequest frameworkRequest)
