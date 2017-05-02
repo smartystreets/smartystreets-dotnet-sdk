@@ -80,6 +80,8 @@
     <Compile Include="USZipCodeApi\Client.cs" />
     <Compile Include="USZipCodeApi\ClientBuilder.cs" />
     <Compile Include="SharedCredentials.cs" />
+    <Compile Include="USExtractApi\Lookup.cs" />
+    <Compile Include="USExtractApi\Result.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -87,5 +89,8 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="USExtractApi\" />
   </ItemGroup>
 </Project>
