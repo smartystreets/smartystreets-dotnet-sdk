@@ -29,9 +29,5 @@
 		public int characterCount { get; private set; }
 
 		#endregion
-
-		public Metadata()
-		{
-		}
 	}
 }

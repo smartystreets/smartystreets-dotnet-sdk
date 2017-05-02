@@ -83,6 +83,7 @@
     <Compile Include="USExtractApi\Lookup.cs" />
     <Compile Include="USExtractApi\Result.cs" />
     <Compile Include="USExtractApi\Metadata.cs" />
+    <Compile Include="USExtractApi\Address.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
