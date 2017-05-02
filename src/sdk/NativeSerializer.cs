@@ -3,7 +3,7 @@
 	using System.IO;
 	using System.Runtime.Serialization.Json;
 
-	public class StandardLibraryJsonSerializer : ISerializer
+	public class NativeSerializer : ISerializer
 	{
 		public byte[] Serialize(object graph)
 		{

@@ -16,7 +16,7 @@
 			this.maxRetries = 5;
 			this.maxTimeout = TimeSpan.FromSeconds(10);
 			this.urlPrefix = "https://us-street.api.smartystreets.com/street-address";
-			this.serializer = new StandardLibraryJsonSerializer();
+			this.serializer = new NativeSerializer();
 		}
 		public ClientBuilder(ICredentials signer) : this()
 		{
@@ -61,7 +61,7 @@
 			if (this.httpSender != null)
 				return this.httpSender;
 
-			ISender sender = new StandardLibrarySender(this.maxTimeout);
+			ISender sender = new NativeSender(this.maxTimeout);
 			sender = new StatusCodeSender(sender);
 
 			if (this.signer != null)

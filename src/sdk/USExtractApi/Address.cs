@@ -12,22 +12,22 @@
 		#region [ Fields ]
 
 		[DataMember(Name = "text")]
-		public string text { get; private set; }
+		public string Text { get; private set; }
 
 		[DataMember(Name = "verified")]
-		public bool verified { get; private set; }
+		public bool Verified { get; private set; }
 
 		[DataMember(Name = "line")]
-		public int line { get; private set; }
+		public int Line { get; private set; }
 
 		[DataMember(Name = "start")]
-		public int start { get; private set; }
+		public int Start { get; private set; }
 
 		[DataMember(Name = "end")]
-		public int end { get; private set; }
+		public int End { get; private set; }
 
 		[DataMember(Name = "api_output")]
-		public Candidate[] candidates { get; private set; }
+		public Candidate[] Candidates { get; private set; }
 
 		#endregion
 	}

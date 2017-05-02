@@ -4,17 +4,17 @@
 	using System.IO;
 	using System.Net;
 
-	public class StandardLibrarySender : ISender
+	public class NativeSender : ISender
 	{
-		private static readonly Version AssemblyVersion = typeof(StandardLibrarySender).Assembly.GetName().Version;
+		private static readonly Version AssemblyVersion = typeof(NativeSender).Assembly.GetName().Version;
 		private static readonly string UserAgent = string.Format("smartystreets (sdk:dotnet@{0}.{1}.{2})", AssemblyVersion.Major, AssemblyVersion.Minor, AssemblyVersion.Build);
 		private TimeSpan timeout;
 
-		public StandardLibrarySender()
+		public NativeSender()
 		{
 			this.timeout = TimeSpan.FromSeconds(10);
 		}
-		public StandardLibrarySender(TimeSpan timeout)
+		public NativeSender(TimeSpan timeout)
 		{
 			this.timeout = timeout;
 		}

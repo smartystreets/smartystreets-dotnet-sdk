@@ -6,9 +6,9 @@
 	using NUnit.Framework;
 
 	[TestFixture]
-	public class StandardLibraryJsonSerializerTests
+	public class NativeSerializerTests
 	{
-		private readonly ISerializer serializer = new StandardLibraryJsonSerializer();
+		private readonly ISerializer serializer = new NativeSerializer();
 
 		[Test]
 		public void TestSerializationOfNullValues()
@@ -21,7 +21,7 @@
 		[Test]
 		public void TestSerializationOfKnownType()
 		{
-			var results = this.serializer.Serialize(new StandardLibraryJsonSerializerTestObject
+			var results = this.serializer.Serialize(new NativeSerializerTestObject
 			{
 				Property1 = "Name",
 				Property2 = 42,
@@ -34,7 +34,7 @@
 		[Test]
 		public void TestDeserializationOfNullStream()
 		{
-			var result = this.serializer.Deserialize<StandardLibraryJsonSerializerTestObject>(null);
+			var result = this.serializer.Deserialize<NativeSerializerTestObject>(null);
 
 			Assert.IsNull(result);
 		}
@@ -42,7 +42,7 @@
 		[Test]
 		public void TestDeserializationOfKnownType()
 		{
-			var expected = new StandardLibraryJsonSerializerTestObject
+			var expected = new NativeSerializerTestObject
 			{
 				Property1 = "Name",
 				Property2 = 42,
@@ -50,7 +50,7 @@
 			};
 
 			var stream = new MemoryStream(Encoding.UTF8.GetBytes("{'Property2':42,'Property3':true,'property_1':'Name'}".Replace("'", "\"")));
-			var actual = this.serializer.Deserialize<StandardLibraryJsonSerializerTestObject>(stream);
+			var actual = this.serializer.Deserialize<NativeSerializerTestObject>(stream);
 
 			Assert.AreEqual(expected.Property1, actual.Property1);
 			Assert.AreEqual(expected.Property2, actual.Property2);
@@ -59,7 +59,7 @@
 	}
 
 	[DataContract]
-	public class StandardLibraryJsonSerializerTestObject
+	public class NativeSerializerTestObject
 	{
 		[DataMember(Name = "property_1")]
 		public string Property1 { get; set; }
