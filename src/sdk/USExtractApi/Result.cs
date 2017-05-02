@@ -1,10 +1,17 @@
-﻿using System;
-namespace SmartyStreets.USExtractApi
+﻿namespace SmartyStreets.USExtractApi
 {
+	using System.Runtime.Serialization;
+
+	/// <summary>
+	/// See "https://smartystreets.com/docs/cloud/us-extract-api#http-response-status"
+	/// </summary>
+	[DataContract]
 	public class Result
 	{
-		public Result()
-		{
-		}
+		[DataMember(Name = "meta")]
+		public Metadata metadata { get; private set; }
+
+		[DataMember(Name = "addresses")]
+		public Address[] addresses { get; private set; }
 	}
 }
