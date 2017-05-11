@@ -6,13 +6,21 @@ namespace SmartyStreets.USExtractApi
     [TestFixture]
     public class ClientTests
     {
+        private RequestCapturingSender capturingSender;
+        private URLPrefixSender urlSender;
+
+        [SetUp]
+        public void Setup()
+        {
+            this.capturingSender = new RequestCapturingSender();
+            this.urlSender = new URLPrefixSender("http://localhost/", this.capturingSender);
+        }
+
         [Test]
         public void TestSendingBodyOnlyLookup()
         {
-            var capturingSender = new RequestCapturingSender();
-            var sender = new URLPrefixSender("http://localhost/", capturingSender);
             var serializer = new FakeSerializer(null);
-            var client = new Client(sender, serializer);
+            var client = new Client(this.urlSender, serializer);
             const string expectedUrl = "http://localhost/?aggressive=false&addr_line_breaks=true&addr_per_line=0";
             var expectedPayload = Encoding.ASCII.GetBytes("Hello, World!");
 
@@ -20,6 +28,72 @@ namespace SmartyStreets.USExtractApi
 
             Assert.AreEqual(expectedUrl, capturingSender.Request.GetUrl());
             Assert.AreEqual(expectedPayload, capturingSender.Request.Payload);
+        }
+
+        [Test]
+        public void TestSendingFullyPopulatedLookup()
+        {
+            var serializer = new FakeSerializer(null);
+            var client = new Client(this.urlSender, serializer);
+            const string expectedUrl = "http://localhost/?html=true&aggressive=true&addr_line_breaks=false&addr_per_line=2";
+            var lookup = new Lookup("1");
+            lookup.SpecifyHtmlInput(true);
+            lookup.IsAggressive = true;
+            lookup.AddressesHaveLineBreaks = false;
+            lookup.AddressesPerLine = 2;
+
+            client.Send(lookup);
+
+            Assert.AreEqual(expectedUrl, capturingSender.Request.GetUrl());
+        }
+        
+        [Test]
+        public void TestRejectNullLookup()
+        {
+            var serializer = new FakeSerializer(null);
+            var client = new Client(this.urlSender, serializer);
+
+            Assert.Throws<SmartyException>(() => client.Send(null));
+        }
+
+        [Test]
+        public void TestDeserializeCalledWithResponseBody()
+        {
+            var response = new Response(0, Encoding.ASCII.GetBytes("Hello, World!"));
+            var sender = new MockSender(response);
+            var deserializer = new FakeDeserializer(null);
+            var client = new Client(sender, deserializer);
+
+            client.Send(new Lookup("Hello, World!"));
+
+            Assert.AreEqual(response.Payload, deserializer.Payload);
+        }
+
+        [Test]
+        public void TestResultCorrectlyAssignedToCorrespondingLookup()
+        {
+            var expectedResult = new Result();
+            var lookup = new Lookup("Hello, World!");
+
+            var sender = new MockSender(new Response(0, Encoding.ASCII.GetBytes("[]")));
+            var deserializer = new FakeDeserializer(expectedResult);
+            var client = new Client(sender, deserializer);
+
+            client.Send(lookup);
+
+            Assert.AreEqual(expectedResult, lookup.Result);
+        }
+
+        [Test]
+        public void TestContentTypeSetCorrectly()
+        {
+            var serializer = new FakeSerializer(null);
+            var client = new Client(this.urlSender, serializer);
+            var lookup = new Lookup("Hello, World!");
+
+            client.Send(lookup);
+
+            Assert.AreEqual("text/plain", this.capturingSender.Request.ContentType);
         }
     }
 }

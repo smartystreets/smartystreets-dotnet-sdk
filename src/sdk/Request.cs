@@ -41,9 +41,6 @@ namespace SmartyStreets
 			if (name == null || value == null || name.Length == 0 || value.Length == 0)
 				return;
 
-			var valueLength = "value length: " + value.Length;
-			var valueLength2 = "value length2: " + value.Length;
-
 			this.parameters[name] = value;
 		}
 

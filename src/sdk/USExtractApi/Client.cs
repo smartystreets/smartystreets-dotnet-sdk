@@ -1,8 +1,12 @@
-﻿using System;
+﻿using System.IO;
 using System.Text;
 
 namespace SmartyStreets.USExtractApi
 {
+    /// <summary>
+    /// This client sends lookups to the SmartyStreets US Extract API,
+    ///     and attaches the results to the Lookup objects.
+    /// </summary>
     public class Client
     {
         private readonly ISender sender;
@@ -15,10 +19,18 @@ namespace SmartyStreets.USExtractApi
 
         public Result Send(Lookup lookup)
         {
-            var request = BuildRequest(lookup);
-            this.sender.Send(request);
+            if (string.IsNullOrEmpty(lookup?.Text))
+                throw new SmartyException("Client.send() requires a Lookup with the 'text' field set");
 
-            return new Result();
+            var request = BuildRequest(lookup);
+            var response = this.sender.Send(request);
+
+            using (var payloadStream = new MemoryStream(response.Payload))
+            {
+                var result = this.serializer.Deserialize<Result>(payloadStream) ?? new Result();
+                lookup.Result = result;
+                return result;
+            }
         }
 
         private static Request BuildRequest(Lookup lookup)
