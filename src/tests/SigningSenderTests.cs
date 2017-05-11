@@ -10,9 +10,10 @@
 		{
 			var signer = new StaticCredentials("id", "secret");
 			var mockSender = new MockSender(null);
-			var sender = new SigningSender(signer, mockSender);
+			var urlPrefixSender = new URLPrefixSender("http://localhost/", mockSender);
+			var sender = new SigningSender(signer, urlPrefixSender);
 
-			sender.Send(new Request("http://localhost/"));
+			sender.Send(new Request());
 
 			var url = mockSender.Request.GetUrl();
 
@@ -27,7 +28,7 @@
 			var mockSender = new MockSender(expectedResponse);
 			var sender = new SigningSender(signer, mockSender);
 
-			var actualResponse = sender.Send(new Request("http://localhost/"));
+			var actualResponse = sender.Send(new Request());
 
 			Assert.AreEqual(expectedResponse, actualResponse);
 		}

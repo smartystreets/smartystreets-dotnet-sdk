@@ -9,9 +9,8 @@
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
 
-		public Client(string urlPrefix, ISender sender, ISerializer serializer)
+		public Client(ISender sender, ISerializer serializer)
 		{
-			this.urlPrefix = urlPrefix;
 			this.sender = sender;
 			this.serializer = serializer;
 		}
@@ -24,7 +23,7 @@
 		}
 		public void Send(Batch batch)
 		{
-			var request = new Request(this.urlPrefix);
+			var request = new Request();
 
 			if (batch.Count == 0)
 				return;

@@ -13,11 +13,11 @@
 		{
 			var sender = new RequestCapturingSender();
 			var serializer = new FakeSerializer(null);
-			var client = new Client("http://localhost/", sender, serializer);
+			var client = new Client(sender, serializer);
 
 			client.Send(new Lookup("1"));
 
-			Assert.AreEqual("http://localhost/?zipcode=1", sender.Request.GetUrl());
+			Assert.AreEqual("?zipcode=1", sender.Request.GetUrl());
 		}
 
 		[Test]
@@ -25,7 +25,7 @@
 		{
 			var sender = new RequestCapturingSender();
 			var serializer = new FakeSerializer(null);
-			var client = new Client("http://localhost/", sender, serializer);
+			var client = new Client(sender, serializer);
 			var lookup = new Lookup();
 			lookup.City = "1";
 			lookup.State = "2";
@@ -33,7 +33,7 @@
 
 			client.Send(lookup);
 
-			Assert.AreEqual("http://localhost/?city=1&state=2&zipcode=3", sender.Request.GetUrl());
+			Assert.AreEqual("?city=1&state=2&zipcode=3", sender.Request.GetUrl());
 		}
 
 		#endregion
@@ -45,7 +45,7 @@
 		{
 			var sender = new RequestCapturingSender();
 			var serializer = new FakeSerializer(null);
-			var client = new Client("http://localhost/", sender, serializer);
+			var client = new Client(sender, serializer);
 
 			var batch = new Batch();
 
@@ -60,7 +60,7 @@
 			var sender = new RequestCapturingSender();
 			var expectedPayload = Encoding.ASCII.GetBytes("Hello, world!");
 			var serializer = new FakeSerializer(expectedPayload);
-			var client = new Client("http://localhost/", sender, serializer);
+			var client = new Client(sender, serializer);
 			var batch = new Batch();
 			batch.Add(new Lookup());
 			batch.Add(new Lookup());
@@ -80,7 +80,7 @@
 			var response = new Response(0, Encoding.ASCII.GetBytes("Hello, world!"));
 			var sender = new MockSender(response);
 			var deserializer = new FakeDeserializer(null);
-			var client = new Client("/", sender, deserializer);
+			var client = new Client(sender, deserializer);
 
 			client.Send(new Lookup());
 
@@ -99,7 +99,7 @@
 
 			var sender = new MockSender(new Response(0, new byte[0]));
 			var deserializer = new FakeDeserializer(expectedResults);
-			var client = new Client("/", sender, deserializer);
+			var client = new Client(sender, deserializer);
 
 			client.Send(batch);
 

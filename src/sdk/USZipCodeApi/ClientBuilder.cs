@@ -54,7 +54,7 @@
 
 		public Client Build()
 		{
-			return new Client(this.urlPrefix, this.BuildSender(), this.serializer);
+			return new Client(this.BuildSender(), this.serializer);
 		}
 		private ISender BuildSender()
 		{
@@ -67,6 +67,8 @@
 
 			if (this.signer != null)
 				sender = new SigningSender(this.signer, sender);
+
+			sender = new URLPrefixSender(this.urlPrefix, sender);
 
 			if (this.maxRetries > 0)
 				sender = new RetrySender(this.maxRetries, sender);

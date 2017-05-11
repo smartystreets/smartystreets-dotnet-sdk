@@ -25,7 +25,8 @@ namespace SmartyStreets
 		private Request createSignedRequest()
 		{
 			var mobile = new SharedCredentials("3516378604772256", "example.com");
-			Request request = new Request("https://us-street.api.smartystreets.com/street-address?");
+			Request request = new Request();
+			request.SetUrlPrefix("https://us-street.api.smartystreets.com/street-address?");
 			mobile.Sign(request);
 			return request;
 		}

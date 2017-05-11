@@ -38,7 +38,8 @@
 
 		private void SendRequest(string requestBehavior)
 		{
-			var request = new Request(requestBehavior);
+			var request = new Request();
+			request.SetUrlPrefix(requestBehavior);
 			var retrySender = new RetrySender(5, this.mockCrashingSender);
 
 			retrySender.Send(request);

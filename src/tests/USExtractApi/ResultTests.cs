@@ -3,7 +3,7 @@
 	using NUnit.Framework;
 	using System.IO;
 	using System.Text;
-	using SmartyStreets.USStreetApi;
+	using USStreetApi;
 
 	[TestFixture]
 	public class ResultTests
@@ -17,12 +17,12 @@
 		public void TestAllFieldsFilledCorrectly()
 		{
 			Stream Source = new MemoryStream(Encoding.ASCII.GetBytes(ResponsePayload));
-			Result Result = this.NativeSerializer.Deserialize<Result>(Source);
+			Result Result = NativeSerializer.Deserialize<Result>(Source);
 
 			Metadata Metadata = Result.Metadata;
 			Assert.IsNotNull(Metadata);
 			Assert.AreEqual(1, Metadata.Lines);
-			Assert.True(Metadata.Unicode);
+			Assert.IsTrue(Metadata.Unicode);
 			Assert.AreEqual(2, Metadata.AddressCount);
 			Assert.AreEqual(3, Metadata.VerifiedCount);
 			Assert.AreEqual(4, Metadata.Bytes);
@@ -32,7 +32,7 @@
 
 			Assert.IsNotNull(Address);
 			Assert.AreEqual("6", Address.Text);
-			Assert.True(Address.Verified);
+			Assert.IsTrue(Address.Verified);
 			Assert.AreEqual(7, Address.Line);
 			Assert.AreEqual(8, Address.Start);
 			Assert.AreEqual(9, Address.End);

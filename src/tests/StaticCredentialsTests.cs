@@ -20,7 +20,8 @@
 		private static void AssertSignedRequest(string id, string secret, string expected)
 		{
 			var credentials = new StaticCredentials(id, secret);
-			var request = new Request("https://us-street.api.smartystreets.com/street-address");
+			var request = new Request();
+			request.SetUrlPrefix("https://us-street.api.smartystreets.com/street-address?");
 
 			credentials.Sign(request);
 

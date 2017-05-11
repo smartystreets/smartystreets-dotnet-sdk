@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets
+﻿using System;
+
+namespace SmartyStreets
 {
 	using System.Collections.Generic;
 	using System.Web;
@@ -6,14 +8,11 @@
 	public class Request
 	{
 		private string urlPrefix;
-		private readonly Dictionary<string, string> headers;
 		private readonly Dictionary<string, string> parameters;
 		private byte[] payload;
 
-		public Dictionary<string, string> Headers
-		{
-			get { return this.headers; }
-		}
+		public string ContentType { get; set; }
+		public Dictionary<string, string> Headers { get; }
 		public string Method { get; set; }
 		public byte[] Payload
 		{
@@ -28,18 +27,22 @@
 		public Request()
 		{
 			this.Method = "GET";
-			this.headers = new Dictionary<string, string>();
+			this.Headers = new Dictionary<string, string>();
 			this.parameters = new Dictionary<string, string>();
+			this.urlPrefix = "";
 		}
 
 		public void SetHeader(string header, string value)
 		{
-			this.headers[header] = value;
+			this.Headers[header] = value;
 		}
 		public void SetParameter(string name, string value)
 		{
-			if (name == null || value == null || name.Length == 0)
+			if (name == null || value == null || name.Length == 0 || value.Length == 0)
 				return;
+
+			var valueLength = "value length: " + value.Length;
+			var valueLength2 = "value length2: " + value.Length;
 
 			this.parameters[name] = value;
 		}

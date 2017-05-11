@@ -18,7 +18,7 @@
 
 			client.Send(new Lookup("freeform"));
 
-			Assert.AreEqual("http://localhost/?street=freeform", sender.Request.GetUrl());
+			Assert.AreEqual("?street=freeform", sender.Request.GetUrl());
 		}
 
 		[Test]
@@ -44,7 +44,7 @@
 
 			client.Send(lookup);
 
-			Assert.AreEqual("http://localhost/?street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0&urbanization=4&match=10&candidates=9", sender.Request.GetUrl());
+			Assert.AreEqual("?street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0&urbanization=4&match=10&candidates=9", sender.Request.GetUrl());
 		}
 
 		#endregion

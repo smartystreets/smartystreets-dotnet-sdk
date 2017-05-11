@@ -10,12 +10,12 @@
 	{
 		#region [ Fields ]
 
-		private Result Result { get; set; }
-		private string Html { get; set; }
-		private bool Aggressive { get; set; }
-		private bool AddressesHaveLineBreaks { get; set; }
-		private int AddressesPerLine { get; set; }
-		private string Text { get; set; }
+		public Result Result { get; set; }
+		private string html;
+		public bool IsAggressive { get; set; }
+		public bool AddressesHaveLineBreaks { get; set; }
+		public int AddressesPerLine { get; set; }
+		public string Text { get; set; }
 
 		#endregion
 
@@ -36,5 +36,13 @@
 		}
 
 		#endregion
+
+		public string IsHtml() {
+			return html;
+		}
+
+		public void SpecifyHtmlInput(bool html) {
+			this.html = html.ToString().ToLower();
+		}
 	}
 }
