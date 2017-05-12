@@ -64,9 +64,9 @@
 			{
 				source.CopyTo(target);
 			}
-			catch (IOException)
+			catch (IOException ex)
 			{
-				throw new SmartyException();
+				throw new SmartyException("Unable to write to request stream.", ex);
 			}
 		}
 		private static Stream GetRequestStream(WebRequest request)
@@ -75,9 +75,9 @@
 			{
 				return request.GetRequestStream();
 			}
-			catch (WebException)
+			catch (WebException ex)
 			{
-				throw new SmartyException();
+				throw new SmartyException("Failed to make request.", ex);
 			}
 		}
 		private static HttpWebResponse GetResponse(WebRequest request)

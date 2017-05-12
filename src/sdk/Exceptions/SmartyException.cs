@@ -12,5 +12,10 @@
 			: base(message)
 		{
 		}
+
+		public SmartyException(string message, Exception innerException)
+			: base(message, innerException)
+		{
+		}
 	}
 }
