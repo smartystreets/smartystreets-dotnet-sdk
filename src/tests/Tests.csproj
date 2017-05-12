@@ -44,6 +44,7 @@
       <Link>Properties\VersionAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="USAutocomplete\SuggestionTests.cs" />
     <Compile Include="USExtractApi\ClientTests.cs" />
     <Compile Include="USStreetApi\ClientTests.cs" />
     <Compile Include="NativeSerializerTests.cs" />

@@ -9,15 +9,15 @@ namespace SmartyStreets.USAutocompleteApi
     public class Suggestion
     {
         [DataMember(Name = "text")]
-        public string Text { get; }
+        public string Text { get; private set; }
 
         [DataMember(Name = "street_line")]
-        public string StreetLine { get; }
+        public string StreetLine { get; private set;}
 
         [DataMember(Name = "city")]
-        public string City { get; }
+        public string City { get; private set;}
 
         [DataMember(Name = "state")]
-        public string State { get; }
+        public string State { get; private set;}
     }
 }
