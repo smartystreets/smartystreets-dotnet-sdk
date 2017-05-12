@@ -42,6 +42,7 @@
       <Link>Properties\VersionAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Batch.cs" />
+    <Compile Include="ClientBuilder.cs" />
     <Compile Include="ILookup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="URLPrefixSender.cs" />
@@ -73,14 +74,12 @@
     <Compile Include="USStreetApi\Analysis.cs" />
     <Compile Include="USStreetApi\Batch.cs" />
     <Compile Include="USStreetApi\Lookup.cs" />
-    <Compile Include="USStreetApi\ClientBuilder.cs" />
     <Compile Include="USZipCodeApi\ZipCodeEntry.cs" />
     <Compile Include="USZipCodeApi\Lookup.cs" />
     <Compile Include="USZipCodeApi\Result.cs" />
     <Compile Include="USZipCodeApi\CityEntry.cs" />
     <Compile Include="USZipCodeApi\Batch.cs" />
     <Compile Include="USZipCodeApi\Client.cs" />
-    <Compile Include="USZipCodeApi\ClientBuilder.cs" />
     <Compile Include="SharedCredentials.cs" />
     <Compile Include="USExtractApi\Lookup.cs" />
     <Compile Include="USExtractApi\Result.cs" />
