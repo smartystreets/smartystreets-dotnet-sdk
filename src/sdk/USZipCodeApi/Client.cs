@@ -5,7 +5,6 @@
 
 	public class Client
 	{
-		private readonly string urlPrefix;
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
 
