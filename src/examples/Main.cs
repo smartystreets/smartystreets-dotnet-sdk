@@ -4,11 +4,12 @@
 	{
 		public static void Main(string[] args)
 		{
-			USStreetLookupsWithMatchStrategyExamples.Run();
-			USStreetSingleAddressExample.Run();
-			USStreetMultipleAddressesExample.Run();
+			//USStreetLookupsWithMatchStrategyExamples.Run();
+			//USStreetSingleAddressExample.Run();
+			//USStreetMultipleAddressesExample.Run();
 			//USZipCodeSingleLookupExample.Run();
 			//USZipCodeMultipleLookupsExample.Run();
+			USExtractExample.Run();
 		}
 	}
 }

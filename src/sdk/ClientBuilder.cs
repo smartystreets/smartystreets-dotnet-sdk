@@ -1,8 +1,6 @@
 ﻿namespace SmartyStreets
 {
 	using System;
-	using USStreetApi;
-	using USZipCodeApi;
 
 	/// <summary>
 	/// The ClientBuilder class helps you build a client object for one of the supported SmartyStreets APIs.
@@ -84,17 +82,17 @@
 			return this;
 		}
 
-//		public InternationalStreetApi.Client buildInternationalStreetApiClient() {
+//		public InternationalStreetApi.Client BuildInternationalStreetAPIClient() {
 //			EnsureURLPrefixNotNull(this.INTERNATIONAL_STREET_API_URL);
 //			return new InternationalStreetApi.Client(BuildSender(), this.serializer);
 //		}
 
-//		public USAutocompleteApi.Client buildUsAutocompleteApiClient() {
+//		public USAutocompleteApi.Client BuildUSAutocompleteAPIClient() {
 //			EnsureURLPrefixNotNull(this.US_AUTOCOMPLETE_API_URL);
 //			return new USAutocompleteApi.Client(BuildSender(), this.serializer);
 //		}
 
-		public USExtractApi.Client buildUsExtractApiClient() {
+		public USExtractApi.Client BuildUSExtractAPIClient() {
 			this.EnsureURLPrefixNotNull(this.US_EXTRACT_API_URL);
 			return new USExtractApi.Client(BuildSender(), this.serializer);
 		}

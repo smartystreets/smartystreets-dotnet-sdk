@@ -1,8 +1,7 @@
 ﻿namespace SmartyStreets.USExtractApi
 {
-	using System;
 	/// <summary>
-	/// In addition to holding all of the input data for this lookup, this class also<br>
+	/// In addition to holding all of the input data for this lookup, this class also
 	/// will contain the result of the lookup after it comes back from the API.
 	/// </summary>
 	/// <remarks>See "https://smartystreets.com/docs/cloud/us-extract-api#http-request-input-fields"</remarks>
@@ -10,8 +9,8 @@
 	{
 		#region [ Fields ]
 
-		public Result Result { get; set; }
 		private string html;
+		public Result Result { get; set; }
 		public bool IsAggressive { get; set; }
 		public bool AddressesHaveLineBreaks { get; set; }
 		public int AddressesPerLine { get; set; }
