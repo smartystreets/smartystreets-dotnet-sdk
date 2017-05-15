@@ -45,6 +45,7 @@
     <Compile Include="ILookup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="URLPrefixSender.cs" />
+    <Compile Include="USAutocompleteApi\Client.cs" />
     <Compile Include="USAutocompleteApi\GeolocateType.cs" />
     <Compile Include="USAutocompleteApi\Lookup.cs" />
     <Compile Include="USAutocompleteApi\Result.cs" />
