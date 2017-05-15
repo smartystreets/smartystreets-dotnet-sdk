@@ -87,10 +87,10 @@
 //			return new InternationalStreetApi.Client(BuildSender(), this.serializer);
 //		}
 
-//		public USAutocompleteApi.Client BuildUSAutocompleteAPIClient() {
-//			EnsureURLPrefixNotNull(this.US_AUTOCOMPLETE_API_URL);
-//			return new USAutocompleteApi.Client(BuildSender(), this.serializer);
-//		}
+		public USAutocompleteApi.Client BuildUSAutocompleteAPIClient() {
+			EnsureURLPrefixNotNull(this.US_AUTOCOMPLETE_API_URL);
+			return new USAutocompleteApi.Client(BuildSender(), this.serializer);
+		}
 
 		public USExtractApi.Client BuildUSExtractAPIClient() {
 			this.EnsureURLPrefixNotNull(this.US_EXTRACT_API_URL);
