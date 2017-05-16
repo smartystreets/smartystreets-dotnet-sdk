@@ -45,6 +45,7 @@
     <Compile Include="ILookup.cs" />
     <Compile Include="InternationalStreetApi\Analysis.cs" />
     <Compile Include="InternationalStreetApi\Candidate.cs" />
+    <Compile Include="InternationalStreetApi\Components.cs" />
     <Compile Include="InternationalStreetApi\LanguageMode.cs" />
     <Compile Include="InternationalStreetApi\Lookup.cs" />
     <Compile Include="InternationalStreetApi\Metadata.cs" />
