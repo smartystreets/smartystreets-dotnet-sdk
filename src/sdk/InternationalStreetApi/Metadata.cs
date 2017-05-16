@@ -11,16 +11,16 @@ namespace SmartyStreets.InternationalStreetApi
         #region [ Fields ]
 
         [DataMember(Name = "latitude")]
-        public double Latitude;
+        public double Latitude { get; private set; }
 
         [DataMember(Name = "longitude")]
-        public double Longitude;
+        public double Longitude { get; private set; }
 
         [DataMember(Name = "geocode_precision")]
-        public string GeocodePrecision;
+        public string GeocodePrecision { get; private set; }
 
         [DataMember(Name = "max_geocode_precision")]
-        public string MaxGeocodePrecision;
+        public string MaxGeocodePrecision { get; private set; }
 
         #endregion
     }

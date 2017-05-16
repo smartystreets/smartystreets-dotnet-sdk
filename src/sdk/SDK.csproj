@@ -43,6 +43,7 @@
     <Compile Include="Batch.cs" />
     <Compile Include="ClientBuilder.cs" />
     <Compile Include="ILookup.cs" />
+    <Compile Include="InternationalStreetApi\Analysis.cs" />
     <Compile Include="InternationalStreetApi\Candidate.cs" />
     <Compile Include="InternationalStreetApi\LanguageMode.cs" />
     <Compile Include="InternationalStreetApi\Lookup.cs" />
