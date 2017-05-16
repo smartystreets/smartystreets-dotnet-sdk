@@ -9,7 +9,8 @@
 			//USStreetMultipleAddressesExample.Run();
 			//USZipCodeSingleLookupExample.Run();
 			//USZipCodeMultipleLookupsExample.Run();
-			USExtractExample.Run();
+			//USExtractExample.Run();
+			USAutocompleteExample.Run();
 		}
 	}
 }
