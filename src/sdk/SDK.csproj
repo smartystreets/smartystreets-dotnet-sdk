@@ -46,6 +46,7 @@
     <Compile Include="InternationalStreetApi\Candidate.cs" />
     <Compile Include="InternationalStreetApi\LanguageMode.cs" />
     <Compile Include="InternationalStreetApi\Lookup.cs" />
+    <Compile Include="InternationalStreetApi\Metadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="URLPrefixSender.cs" />
     <Compile Include="USAutocompleteApi\Client.cs" />
