@@ -1,6 +1,5 @@
 ﻿namespace SmartyStreets
 {
-	using System;
 	using System.IO;
 
 	public class FakeDeserializer : ISerializer

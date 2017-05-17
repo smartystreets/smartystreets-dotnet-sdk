@@ -1,5 +1,4 @@
-﻿using System.Linq;
-namespace SmartyStreets.USStreetApi
+﻿namespace SmartyStreets.USStreetApi
 {
 	using NUnit.Framework;
 

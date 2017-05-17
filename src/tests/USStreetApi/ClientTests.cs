@@ -1,6 +1,5 @@
 ﻿namespace SmartyStreets.USStreetApi
 {
-	using System;
 	using System.Text;
 	using NUnit.Framework;
 
