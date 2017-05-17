@@ -8,11 +8,13 @@
 		[Test]
 		public void TestGetsLookupById()
 		{
-			var batch = new Batch();
-			batch.Add(new Lookup
+			var batch = new Batch
 			{
-				InputId = "hasInputId"
-			});
+				new Lookup
+				{
+					InputId = "hasInputId"
+				}
+			};
 
 			Assert.NotNull(batch["hasInputId"]);
 		}
@@ -20,8 +22,7 @@
 		[Test]
 		public void TestGetsLookupByIndex()
 		{
-			var batch = new Batch();
-			batch.Add(new Lookup());
+			var batch = new Batch {new Lookup()};
 
 			Assert.NotNull(batch[0]);
 		}
@@ -29,13 +30,15 @@
 		[Test]
 		public void TestReturnsCorrectSize()
 		{
-			var batch = new Batch();
-			batch.Add(new Lookup
+			var batch = new Batch
 			{
-				InputId = "hasInputId"
-			});
-			batch.Add(new Lookup());
-			batch.Add(new Lookup());
+				new Lookup
+				{
+					InputId = "hasInputId"
+				},
+				new Lookup(),
+				new Lookup()
+			};
 
 			Assert.AreEqual(3, batch.Count);
 		}
@@ -53,13 +56,15 @@
 		[Test]
 		public void TestClearMethodClearsBothLookupCollections()
 		{
-			var batch = new Batch();
-			batch.Add(new Lookup
+			var batch = new Batch
 			{
-				InputId = "hasInputId"
-			});
-			batch.Add(new Lookup());
-			batch.Add(new Lookup());
+				new Lookup
+				{
+					InputId = "hasInputId"
+				},
+				new Lookup(),
+				new Lookup()
+			};
 			batch.Clear();
 
 			Assert.AreEqual(0, batch.Count);

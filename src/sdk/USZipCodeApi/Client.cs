@@ -16,9 +16,7 @@
 
 		public void Send(Lookup lookup)
 		{
-			var batch = new Batch();
-			batch.Add(lookup);
-			this.Send(batch);
+			this.Send(new Batch {lookup});
 		}
 		public void Send(Batch batch)
 		{

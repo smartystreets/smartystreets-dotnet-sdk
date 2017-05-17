@@ -1,5 +1,4 @@
-﻿using System.Linq;
-namespace SmartyStreets.USStreetApi
+﻿namespace SmartyStreets.USStreetApi
 {
 	using NUnit.Framework;
 
@@ -48,10 +47,9 @@ namespace SmartyStreets.USStreetApi
 		public void TestAddingALookupWhenBatchIsFullThrowsException()
 		{
 			var batch = new Batch();
-			var lookup = new Lookup();
 
 			for (var i = 0; i < Batch.MaxBatchSize; i++)
-				batch.Add(lookup);
+				batch.Add(new Lookup());
 
 			Assert.Throws<BatchFullException>(() => batch.Add(new Lookup()));
 		}
@@ -59,13 +57,11 @@ namespace SmartyStreets.USStreetApi
 		[Test]
 		public void TestClearMethodClearsBothLookupCollections()
 		{
-			var batch = new Batch();
-			batch.Add(new Lookup());
-			batch.Add(new Lookup());
+			var batch = new Batch {new Lookup(), new Lookup()};
 
 			batch.Clear();
 
-			Assert.AreEqual(0, batch.Count());
+			Assert.AreEqual(0, batch.Count);
 		}
 	}
 }

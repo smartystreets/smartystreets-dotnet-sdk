@@ -34,10 +34,12 @@ namespace SmartyStreets.USAutocompleteApi
         {
             var serializer = new FakeSerializer(new byte[0]);
             var client = new Client(this.urlSender, serializer);
-            var expectedURL = "http://localhost/?prefix=1&suggestions=2&city_filter=3&state_filter=4&prefer=5&geolocate=true&geolocate_precision=state";
-            var lookup = new Lookup();
-            lookup.Prefix = "1";
-            lookup.MaxSuggestions = 2;
+            const string expectedURL = "http://localhost/?prefix=1&suggestions=2&city_filter=3&state_filter=4&prefer=5&geolocate=true&geolocate_precision=state";
+            var lookup = new Lookup
+            {
+                Prefix = "1",
+                MaxSuggestions = 2
+            };
             lookup.AddCityFilter("3");
             lookup.AddStateFilter("4");
             lookup.AddPrefer("5");

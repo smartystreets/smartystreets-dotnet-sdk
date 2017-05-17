@@ -1,14 +1,13 @@
 ﻿namespace SmartyStreets
 {
-	using System;
 	using System.IO;
 
 	public class FakeDeserializer : ISerializer
 	{
-		private readonly Object deserialized;
+		private readonly object deserialized;
 		public byte[] Payload { get; private set; }
 
-		public FakeDeserializer(Object deserialized)
+		public FakeDeserializer(object deserialized)
 		{
 			this.deserialized = deserialized;
 		}

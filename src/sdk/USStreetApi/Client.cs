@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets.USStreetApi
+﻿using System.Collections.Generic;
+
+namespace SmartyStreets.USStreetApi
 {
 	using System.Globalization;
 	using System.IO;
@@ -16,9 +18,7 @@
 
 		public void Send(Lookup lookup)
 		{
-			var batch = new Batch();
-			batch.Add(lookup);
-			this.Send(batch);
+			this.Send(new Batch {lookup});
 		}
 
 		public void Send(Batch batch)
@@ -59,7 +59,7 @@
 				request.SetParameter("candidates", address.MaxCandidates.ToString(CultureInfo.InvariantCulture));
 		}
 
-		private static void AssignCandidatesToLookups(Batch batch, Candidate[] candidates)
+		private static void AssignCandidatesToLookups(Batch batch, IEnumerable<Candidate> candidates)
 		{
 			foreach (var candidate in candidates)
 				batch[candidate.InputIndex].AddToResult(candidate);
