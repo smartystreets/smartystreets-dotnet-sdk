@@ -5,32 +5,38 @@
 	[TestFixture]
 	public class SigningSenderTests
 	{
+		private StaticCredentials signer;
+
+		[SetUp]
+		public void SetUp()
+		{
+			signer = new StaticCredentials("id", "secret");
+		}
+
 		[Test]
 		public void TestSigningOfRequest()
 		{
-			var signer = new StaticCredentials("id", "secret");
 			var mockSender = new MockSender(null);
 			var urlPrefixSender = new URLPrefixSender("http://localhost/", mockSender);
-			var sender = new SigningSender(signer, urlPrefixSender);
+			var sender = new SigningSender(this.signer, urlPrefixSender);
 
 			sender.Send(new Request());
 
-			var url = mockSender.Request.GetUrl();
-
-			Assert.AreEqual("http://localhost/?auth-id=id&auth-token=secret", url);
+			Assert.AreEqual(
+				"http://localhost/?auth-id=id&auth-token=secret",
+				mockSender.Request.GetUrl());
 		}
 
 		[Test]
 		public void TestResponseReturnedCorrectly()
 		{
-			var signer = new StaticCredentials("id", "secret");
 			var expectedResponse = new Response(200, null);
 			var mockSender = new MockSender(expectedResponse);
-			var sender = new SigningSender(signer, mockSender);
+			var sender = new SigningSender(this.signer, mockSender);
 
-			var actualResponse = sender.Send(new Request());
-
-			Assert.AreEqual(expectedResponse, actualResponse);
+			Assert.AreEqual(
+				expectedResponse,
+				sender.Send(new Request()));
 		}
 	}
 }
