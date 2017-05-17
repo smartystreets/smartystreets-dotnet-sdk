@@ -67,5 +67,42 @@
         }
 
         #endregion
+
+        #region [ Query Methods ]
+
+        public bool MissingCountry()
+        {
+            return FieldIsMissing(this.Country);
+        }
+
+        public bool HasFreeform()
+        {
+            return FieldIsSet(this.Freeform);
+        }
+
+        public bool MissingAddress1()
+        {
+            return FieldIsMissing(this.Address1);
+        }
+
+        public bool HasPostalCode()
+        {
+            return FieldIsSet(this.PostalCode);
+        }
+
+        public bool MissingLocalityOrAdministrativeArea()
+        {
+            return FieldIsMissing(this.Locality) || FieldIsMissing(this.AdministrativeArea);
+        }
+
+        private bool FieldIsSet(string field) {
+            return !FieldIsMissing(field);
+        }
+
+        private bool FieldIsMissing(string field) {
+            return string.IsNullOrEmpty(field);
+        }
+
+        #endregion
     }
 }

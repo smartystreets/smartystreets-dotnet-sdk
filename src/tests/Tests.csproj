@@ -44,6 +44,7 @@
       <Link>Properties\VersionAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="InternationalStreet\CandidateTest.cs" />
+    <Compile Include="InternationalStreet\ClientTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="USAutocompleteApi\ClientTests.cs" />
     <Compile Include="USAutocompleteApi\SuggestionTests.cs" />
