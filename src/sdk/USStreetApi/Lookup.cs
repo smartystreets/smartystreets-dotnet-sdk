@@ -13,7 +13,7 @@
 		public const string RANGE = "range";
 		public const string INVALID = "invalid";
 
-		public List<Candidate> Result { get; private set; }
+		public List<Candidate> Result { get; private set;  }
 
 		public string InputId { get; set; }
 
@@ -71,7 +71,7 @@
 			this.maxCandidates = 1;
 			this.Result = new List<Candidate>();
 		}
-		public Lookup(String freeformAddress) : this()
+		public Lookup(string freeformAddress) : this()
 		{
 			this.Street = freeformAddress;
 		}

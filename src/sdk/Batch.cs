@@ -22,18 +22,18 @@
 			return serializer.Serialize(this.all);
 		}
 
-		public void Add(T newAddress)
+		public void Add(T item)
 		{
 			if (this.all.Count >= this.maxSize)
 				throw new BatchFullException("Batch size cannot exceed " + this.maxSize);
 
-			this.all.Add(newAddress);
+			this.all.Add(item);
 
-			var key = newAddress.InputId;
+			var key = item.InputId;
 			if (key == null)
 				return;
 
-			this.named[key] = newAddress;
+			this.named[key] = item;
 		}
 		public bool Contains(T item)
 		{

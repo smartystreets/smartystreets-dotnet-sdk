@@ -22,7 +22,7 @@
 		public Response Send(Request request)
 		{
 			var frameworkRequest = this.BuildRequest(request);
-			this.CopyHeaders(request, frameworkRequest);
+			CopyHeaders(request, frameworkRequest);
 
 			TryWritePayload(request, frameworkRequest);
 
@@ -40,7 +40,8 @@
 			frameworkRequest.Proxy = null;
 			return frameworkRequest;
 		}
-		void CopyHeaders(Request request, HttpWebRequest frameworkRequest)
+
+		private static void CopyHeaders(Request request, HttpWebRequest frameworkRequest)
 		{
 			foreach (var item in request.Headers)
 			{

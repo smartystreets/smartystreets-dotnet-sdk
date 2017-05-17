@@ -15,11 +15,11 @@
 		private readonly ICredentials signer;
 		private ISerializer serializer;
 		private ISender httpSender;
-		private string INTERNATIONAL_STREET_API_URL = "https://international-street.api.smartystreets.com/verify";
-		private string US_AUTOCOMPLETE_API_URL = "https://us-autocomplete.api.smartystreets.com/suggest";
-		private string US_EXTRACT_API_URL = "https://us-extract.api.smartystreets.com/";
-		private string US_STREET_API_URL = "https://us-street.api.smartystreets.com/street-address";
-		private string US_ZIP_CODE_API_URL = "https://us-zipcode.api.smartystreets.com/lookup";
+		private const string INTERNATIONAL_STREET_API_URL = "https://international-street.api.smartystreets.com/verify";
+		private const string US_AUTOCOMPLETE_API_URL = "https://us-autocomplete.api.smartystreets.com/suggest";
+		private const string US_EXTRACT_API_URL = "https://us-extract.api.smartystreets.com/";
+		private const string US_STREET_API_URL = "https://us-street.api.smartystreets.com/street-address";
+		private const string US_ZIP_CODE_API_URL = "https://us-zipcode.api.smartystreets.com/lookup";
 
 		public ClientBuilder()
 		{
@@ -83,29 +83,29 @@
 		}
 
 //		public InternationalStreetApi.Client BuildInternationalStreetAPIClient() {
-//			EnsureURLPrefixNotNull(this.INTERNATIONAL_STREET_API_URL);
+//			EnsureURLPrefixNotNull(INTERNATIONAL_STREET_API_URL);
 //			return new InternationalStreetApi.Client(BuildSender(), this.serializer);
 //		}
 
 		public USAutocompleteApi.Client BuildUSAutocompleteAPIClient() {
-			EnsureURLPrefixNotNull(this.US_AUTOCOMPLETE_API_URL);
+			EnsureURLPrefixNotNull(US_AUTOCOMPLETE_API_URL);
 			return new USAutocompleteApi.Client(BuildSender(), this.serializer);
 		}
 
 		public USExtractApi.Client BuildUSExtractAPIClient() {
-			this.EnsureURLPrefixNotNull(this.US_EXTRACT_API_URL);
+			this.EnsureURLPrefixNotNull(US_EXTRACT_API_URL);
 			return new USExtractApi.Client(BuildSender(), this.serializer);
 		}
 
 		public USStreetApi.Client BuildUSStreetAPIClient()
 		{
-			EnsureURLPrefixNotNull(this.US_STREET_API_URL);
+			EnsureURLPrefixNotNull(US_STREET_API_URL);
 			return new USStreetApi.Client(this.BuildSender(), this.serializer);
 		}
 
 		public USZipCodeApi.Client BuildUSZipCodeAPIClient()
 		{
-			EnsureURLPrefixNotNull(this.US_ZIP_CODE_API_URL);
+			EnsureURLPrefixNotNull(US_ZIP_CODE_API_URL);
 			return new USZipCodeApi.Client(this.BuildSender(), this.serializer);
 		}
 

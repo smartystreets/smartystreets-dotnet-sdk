@@ -26,10 +26,12 @@
 			var sender = new RequestCapturingSender();
 			var serializer = new FakeSerializer(null);
 			var client = new Client(sender, serializer);
-			var lookup = new Lookup();
-			lookup.City = "1";
-			lookup.State = "2";
-			lookup.ZipCode = "3";
+			var lookup = new Lookup
+			{
+				City = "1",
+				State = "2",
+				ZipCode = "3"
+			};
 
 			client.Send(lookup);
 
@@ -61,9 +63,7 @@
 			var expectedPayload = Encoding.ASCII.GetBytes("Hello, world!");
 			var serializer = new FakeSerializer(expectedPayload);
 			var client = new Client(sender, serializer);
-			var batch = new Batch();
-			batch.Add(new Lookup());
-			batch.Add(new Lookup());
+			var batch = new Batch {new Lookup(), new Lookup()};
 
 			client.Send(batch);
 
@@ -93,9 +93,7 @@
 			var expectedResults = new Result[2];
 			expectedResults[0] = new Result();
 			expectedResults[1] = new Result();
-			var batch = new Batch();
-			batch.Add(new Lookup());
-			batch.Add(new Lookup());
+			var batch = new Batch {new Lookup(), new Lookup()};
 
 			var sender = new MockSender(new Response(0, new byte[0]));
 			var deserializer = new FakeDeserializer(expectedResults);

@@ -70,9 +70,7 @@
 			var expectedPayload = Encoding.ASCII.GetBytes("Hello World!");
 			var serializer = new FakeSerializer(expectedPayload);
 			var client = new Client(sender, serializer);
-			var batch = new Batch();
-			batch.Add(new Lookup());
-			batch.Add(new Lookup());
+			var batch = new Batch {new Lookup(), new Lookup()};
 
 			client.Send(batch);
 
@@ -103,11 +101,9 @@
 			expectedCandidates[0] = new Candidate(0);
 			expectedCandidates[1] = new Candidate(1);
 			expectedCandidates[2] = new Candidate(1);
-			var batch = new Batch();
-			batch.Add(new Lookup());
-			batch.Add(new Lookup());
+			var batch = new Batch {new Lookup(), new Lookup()};
 
-			var sender = new MockSender(new Response(0, new Byte[0]));
+			var sender = new MockSender(new Response(0, new byte[0]));
 			var deserializer = new FakeDeserializer(expectedCandidates);
 			var client = new Client(sender, deserializer);
 

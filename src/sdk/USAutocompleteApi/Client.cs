@@ -36,7 +36,7 @@ namespace SmartyStreets.USAutocompleteApi
             }
         }
 
-        private Request BuildRequest(Lookup lookup)
+        private static Request BuildRequest(Lookup lookup)
         {
             var request = new Request();
 
@@ -56,7 +56,7 @@ namespace SmartyStreets.USAutocompleteApi
             return request;
         }
 
-        private string BuildFilterString(ArrayList list)
+        private static string BuildFilterString(ICollection list)
         {
             if (list.Count == 0)
                 return null;
@@ -64,7 +64,7 @@ namespace SmartyStreets.USAutocompleteApi
             var filterList = "";
 
             foreach (string item in list)
-                filterList += (item + ",");
+                filterList += item + ",";
 
             if (filterList.EndsWith(","))
                 filterList = filterList.Substring(0, filterList.Length - 1);
