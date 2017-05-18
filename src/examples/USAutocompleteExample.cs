@@ -11,7 +11,7 @@ namespace Examples
             // We recommend storing your secret keys in environment variables.
             var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
             var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-            var client = new ClientBuilder(authId, authToken).BuildUSAutocompleteAPIClient();
+            var client = new ClientBuilder(authId, authToken).BuildUsAutocompleteApiClient();
             var lookup = new Lookup("4770 Lincoln Ave O");
 
             client.Send(lookup);

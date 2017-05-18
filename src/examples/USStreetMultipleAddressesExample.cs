@@ -11,7 +11,7 @@
 		{
 			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			var client = new ClientBuilder(authId, authToken).BuildUSStreetAPIClient();
+			var client = new ClientBuilder(authId, authToken).BuildUsStreetApiClient();
 			var batch = new Batch();
 
 			var address1 = new Lookup

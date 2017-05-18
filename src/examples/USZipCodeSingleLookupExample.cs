@@ -11,7 +11,7 @@
 		{
 			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			var client = new ClientBuilder(authId, authToken).BuildUSZipCodeAPIClient();
+			var client = new ClientBuilder(authId, authToken).BuildUsZipCodeApiClient();
 
 			var lookup = new Lookup
 			{

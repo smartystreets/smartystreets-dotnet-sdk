@@ -11,7 +11,7 @@ namespace Examples
             // We recommend storing your secret keys in environment variables.
             var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
             var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-            var client = new ClientBuilder(authId, authToken).BuildUSExtractAPIClient();
+            var client = new ClientBuilder(authId, authToken).BuildUsExtractApiClient();
             var text = "Here is some text.\r\nMy address is 3785 Las Vegs Av." +
                           "\r\nLos Vegas, Nevada." +
                           "\r\nMeet me at 1 Rosedale Baltimore Maryland, not at 123 Phony Street, Boise Idaho.";

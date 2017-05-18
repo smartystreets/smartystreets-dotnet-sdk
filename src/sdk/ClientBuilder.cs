@@ -82,28 +82,28 @@
 			return this;
 		}
 
-//		public InternationalStreetApi.Client BuildInternationalStreetAPIClient() {
-//			EnsureURLPrefixNotNull(INTERNATIONAL_STREET_API_URL);
-//			return new InternationalStreetApi.Client(BuildSender(), this.serializer);
-//		}
+		public InternationalStreetApi.Client BuildInternationalStreetApiClient() {
+			EnsureURLPrefixNotNull(INTERNATIONAL_STREET_API_URL);
+			return new InternationalStreetApi.Client(BuildSender(), this.serializer);
+		}
 
-		public USAutocompleteApi.Client BuildUSAutocompleteAPIClient() {
+		public USAutocompleteApi.Client BuildUsAutocompleteApiClient() {
 			EnsureURLPrefixNotNull(US_AUTOCOMPLETE_API_URL);
 			return new USAutocompleteApi.Client(BuildSender(), this.serializer);
 		}
 
-		public USExtractApi.Client BuildUSExtractAPIClient() {
+		public USExtractApi.Client BuildUsExtractApiClient() {
 			this.EnsureURLPrefixNotNull(US_EXTRACT_API_URL);
 			return new USExtractApi.Client(BuildSender(), this.serializer);
 		}
 
-		public USStreetApi.Client BuildUSStreetAPIClient()
+		public USStreetApi.Client BuildUsStreetApiClient()
 		{
 			EnsureURLPrefixNotNull(US_STREET_API_URL);
 			return new USStreetApi.Client(this.BuildSender(), this.serializer);
 		}
 
-		public USZipCodeApi.Client BuildUSZipCodeAPIClient()
+		public USZipCodeApi.Client BuildUsZipCodeApiClient()
 		{
 			EnsureURLPrefixNotNull(US_ZIP_CODE_API_URL);
 			return new USZipCodeApi.Client(this.BuildSender(), this.serializer);
