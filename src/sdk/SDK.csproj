@@ -88,6 +88,7 @@
     <Compile Include="USStreetApi\Analysis.cs" />
     <Compile Include="USStreetApi\Batch.cs" />
     <Compile Include="USStreetApi\Lookup.cs" />
+    <Compile Include="USZipCodeApi\AlternateCounty.cs" />
     <Compile Include="USZipCodeApi\ZipCodeEntry.cs" />
     <Compile Include="USZipCodeApi\Lookup.cs" />
     <Compile Include="USZipCodeApi\Result.cs" />
