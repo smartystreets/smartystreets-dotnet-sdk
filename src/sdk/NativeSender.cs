@@ -8,15 +8,21 @@
 	{
 		private static readonly Version AssemblyVersion = typeof(NativeSender).Assembly.GetName().Version;
 		private static readonly string UserAgent = string.Format("smartystreets (sdk:dotnet@{0}.{1}.{2})", AssemblyVersion.Major, AssemblyVersion.Minor, AssemblyVersion.Build);
+        private static string ProxyAddress;
+        private static string ProxyUsername;
+        private static string ProxyPassword;
 		private TimeSpan timeout;
 
 		public NativeSender()
 		{
 			this.timeout = TimeSpan.FromSeconds(10);
 		}
-		public NativeSender(TimeSpan timeout)
+		public NativeSender(TimeSpan timeout, string proxyAddress, string proxyUsername, string proxyPassword)
 		{
 			this.timeout = timeout;
+			ProxyAddress = proxyAddress;
+			ProxyUsername = proxyUsername;
+			ProxyPassword = proxyPassword;
 		}
 
 		public Response Send(Request request)
@@ -37,8 +43,23 @@
 			var frameworkRequest = (HttpWebRequest)WebRequest.Create(request.GetUrl());
 			frameworkRequest.Timeout = (int)this.timeout.TotalMilliseconds;
 			frameworkRequest.Method = request.Method;
-			frameworkRequest.Proxy = null;
+
+            if (ProxyAddress != null)
+                SetProxy(frameworkRequest);
+
 			return frameworkRequest;
+		}
+
+        private static void SetProxy(HttpWebRequest frameworkRequest)
+        {
+            WebProxy proxy = new WebProxy();
+            Uri proxyUri = new Uri(ProxyAddress);
+            proxy.Address = proxyUri;
+
+            if (ProxyUsername != null && ProxyPassword != null)
+                proxy.Credentials = new NetworkCredential(ProxyUsername, ProxyPassword);
+    
+            frameworkRequest.Proxy = proxy;
 		}
 
 		private static void CopyHeaders(Request request, HttpWebRequest frameworkRequest)

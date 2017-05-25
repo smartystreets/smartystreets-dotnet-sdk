@@ -20,6 +20,9 @@
 		private const string US_EXTRACT_API_URL = "https://us-extract.api.smartystreets.com/";
 		private const string US_STREET_API_URL = "https://us-street.api.smartystreets.com/street-address";
 		private const string US_ZIP_CODE_API_URL = "https://us-zipcode.api.smartystreets.com/lookup";
+        private string proxyAddress;
+        private string proxyUsername;
+        private string proxyPassword;
 
 		public ClientBuilder()
 		{
@@ -60,8 +63,20 @@
 		public ClientBuilder WithCustomBaseUrl(string baseUrl)
 		{
 			this.urlPrefix = baseUrl;
-			return this;
+            return this;
 		}
+
+        //TODO: add documentation to function
+        public ClientBuilder WithProxy(string proxyAddress, string proxyUsername, string proxyPassword) 
+        {
+            if (proxyAddress == null)
+				throw new UnprocessableEntityException("ProxyUrl is required");
+
+            this.proxyAddress = proxyAddress;
+            this.proxyUsername = proxyUsername;
+            this.proxyPassword = proxyPassword;
+            return this;
+        }
 
 		/// <summary>
 		/// Changes the Serializer from the default NativeSerializer.
@@ -114,7 +129,7 @@
 			if (this.httpSender != null)
 				return this.httpSender;
 
-			ISender sender = new NativeSender(this.maxTimeout);
+            ISender sender = new NativeSender(this.maxTimeout, this.proxyAddress, this.proxyUsername, this.proxyPassword);
 			sender = new StatusCodeSender(sender);
 
 			if (this.signer != null)
