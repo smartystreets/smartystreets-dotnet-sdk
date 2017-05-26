@@ -6,7 +6,7 @@ You may have noticed this page is curiously sparse. Don't panic, there are [exam
 
 ---
 
-[![youtube](https://img.youtube.com/vi/wdBi019I9Yc/0.jpg)](https://www.youtube.com/watch?v=wdBi019I9Yc)
+[![YouTube](https://img.youtube.com/vi/wdBi019I9Yc/0.jpg)](https://www.youtube.com/watch?v=wdBi019I9Yc "Click to play on YouTube.com")
 
 ---
 
