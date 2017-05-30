@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{486BA5
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{0280AF79-44C7-4CD8-AE4C-385D8B434ED3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -30,6 +32,10 @@ Global
 		{3CDF3376-8FA4-4E86-B968-CBD88250FDF8}.Debug|x86.Build.0 = Debug|x86
 		{3CDF3376-8FA4-4E86-B968-CBD88250FDF8}.Release|x86.ActiveCfg = Release|x86
 		{3CDF3376-8FA4-4E86-B968-CBD88250FDF8}.Release|x86.Build.0 = Release|x86
+		{0280AF79-44C7-4CD8-AE4C-385D8B434ED3}.Debug|x86.ActiveCfg = Debug|x86
+		{0280AF79-44C7-4CD8-AE4C-385D8B434ED3}.Debug|x86.Build.0 = Debug|x86
+		{0280AF79-44C7-4CD8-AE4C-385D8B434ED3}.Release|x86.ActiveCfg = Release|x86
+		{0280AF79-44C7-4CD8-AE4C-385D8B434ED3}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

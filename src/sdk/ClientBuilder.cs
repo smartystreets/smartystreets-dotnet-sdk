@@ -66,8 +66,7 @@
             return this;
 		}
 
-        //TODO: add documentation to function
-        public ClientBuilder WithProxy(string proxyAddress, string proxyUsername, string proxyPassword) 
+        public ClientBuilder ViaProxy(string proxyAddress, string proxyUsername, string proxyPassword) 
         {
             if (proxyAddress == null)
 				throw new UnprocessableEntityException("ProxyUrl is required");
