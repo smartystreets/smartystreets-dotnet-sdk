@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-SOURCE_VERSION := 5.0
+SOURCE_VERSION := 5.1
 
 clean:
 	@git checkout src/VersionAssemblyInfo.cs
