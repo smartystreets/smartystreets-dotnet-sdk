@@ -117,7 +117,7 @@
 
         public static void TestReturnsCorrectNumberOfResultsViaProxy(StaticCredentials credentials)
         {
-            var client = new ClientBuilder(credentials).ViaProxy("http://localhost:8080", null, null).BuildUsZipCodeApiClient();
+            var client = new ClientBuilder(credentials).ViaProxy("http://localhost:8080", "username", "password").BuildUsZipCodeApiClient();
             var lookup = new SmartyStreets.USZipCodeApi.Lookup(null, null, "38852");
 
 			try
