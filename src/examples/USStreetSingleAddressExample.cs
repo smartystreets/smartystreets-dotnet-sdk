@@ -11,7 +11,9 @@
 		{
 			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			var client = new ClientBuilder(authId, authToken).BuildUsStreetApiClient();
+			var client = new ClientBuilder(authId, authToken)
+                                .ViaProxy("http://localhost:8080", "username", "password") // uncomment this line to point to the specified proxy.
+                                .BuildUsStreetApiClient();
 
 			var lookup = new Lookup
 			{

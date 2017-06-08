@@ -66,7 +66,12 @@
             return this;
 		}
 
-        public ClientBuilder ViaProxy(string proxyAddress, string proxyUsername, string proxyPassword) 
+		///<remarks>ViaProxy saves the address of your proxy server through which to send all requests.</remarks>
+		/// <param name="proxyAddress">Proxy address of your proxy server</param>
+		/// <param name="proxyUsername">Username for proxy authentication</param>
+		/// <param name="proxyPassword">Password for proxy authentication</param>
+		/// <returns>Returns 'this' to accommodate method chaining.</returns>
+		public ClientBuilder ViaProxy(string proxyAddress, string proxyUsername, string proxyPassword) 
         {
             if (proxyAddress == null)
 				throw new UnprocessableEntityException("ProxyUrl is required");
