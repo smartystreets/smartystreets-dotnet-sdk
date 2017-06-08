@@ -26,7 +26,8 @@ namespace Examples
             Console.WriteLine("Second Line: " + firstCandidate.Address2);
             Console.WriteLine("Third Line: " + firstCandidate.Address3);
             Console.WriteLine("Fourth Line: " + firstCandidate.Address4);
-            Console.WriteLine("Latitude: " + firstCandidate.Metadata.Latitude);
+            Console.WriteLine("Address Format: " + firstCandidate.Metadata.AddressFormat);
+			Console.WriteLine("Latitude: " + firstCandidate.Metadata.Latitude);
             Console.WriteLine("Longitude: " + firstCandidate.Metadata.Longitude);
         }
     }

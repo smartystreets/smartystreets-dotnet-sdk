@@ -28,8 +28,8 @@ namespace SmartyStreets.InternationalStreet
                                            "\"building_trailing_type\":\"44\",\"sub_building_type\":\"45\",\"sub_building_number\":\"46\"," +
                                            "\"sub_building_name\":\"47\",\"sub_building\":\"48\",\"post_box\":\"49\",\"post_box_type\":\"50\"," +
                                            "\"post_box_number\":\"51\"},\"metadata\":{\"latitude\":52.0,\"longitude\":53.0," +
-                                           "\"geocode_precision\":\"54\",\"max_geocode_precision\":\"55\"}," +
-                                           "\"analysis\":{\"verification_status\":\"56\",\"address_precision\":\"57\",\"max_address_precision\":\"58\"}}]";
+                                           "\"geocode_precision\":\"54\",\"max_geocode_precision\":\"55\",\"address_format\":\"56\"}," +
+                                           "\"analysis\":{\"verification_status\":\"57\",\"address_precision\":\"58\",\"max_address_precision\":\"59\"}}]";
 
             var nativeSerializer = new NativeSerializer();
             Candidate candidate;
@@ -105,14 +105,15 @@ namespace SmartyStreets.InternationalStreet
             Assert.AreEqual(53, metadata.Longitude, 0.001);
             Assert.AreEqual("54", metadata.GeocodePrecision);
             Assert.AreEqual("55", metadata.MaxGeocodePrecision);
+            Assert.AreEqual("56", metadata.AddressFormat);
             #endregion
             
             #region [ Analysis ]
             var analysis = candidate.Analysis;
             Assert.IsNotNull(analysis);
-            Assert.AreEqual("56", analysis.VerificationStatus);
-            Assert.AreEqual("57", analysis.AddressPrecision);
-            Assert.AreEqual("58", analysis.MaxAddressPrecision);
+            Assert.AreEqual("57", analysis.VerificationStatus);
+            Assert.AreEqual("58", analysis.AddressPrecision);
+            Assert.AreEqual("59", analysis.MaxAddressPrecision);
             #endregion
         }
 
