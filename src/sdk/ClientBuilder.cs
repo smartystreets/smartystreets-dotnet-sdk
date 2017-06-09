@@ -20,9 +20,7 @@
 		private const string US_EXTRACT_API_URL = "https://us-extract.api.smartystreets.com/";
 		private const string US_STREET_API_URL = "https://us-street.api.smartystreets.com/street-address";
 		private const string US_ZIP_CODE_API_URL = "https://us-zipcode.api.smartystreets.com/lookup";
-        private string proxyAddress;
-        private string proxyUsername;
-        private string proxyPassword;
+        private Proxy proxy;
 
 		public ClientBuilder()
 		{
@@ -76,9 +74,7 @@
             if (proxyAddress == null)
 				throw new UnprocessableEntityException("ProxyUrl is required");
 
-            this.proxyAddress = proxyAddress;
-            this.proxyUsername = proxyUsername;
-            this.proxyPassword = proxyPassword;
+            this.proxy = new Proxy(proxyAddress, proxyUsername, proxyPassword);
             return this;
         }
 
@@ -133,7 +129,7 @@
 			if (this.httpSender != null)
 				return this.httpSender;
 
-            ISender sender = new NativeSender(this.maxTimeout, this.proxyAddress, this.proxyUsername, this.proxyPassword);
+            ISender sender = new NativeSender(this.maxTimeout, this.proxy);
 			sender = new StatusCodeSender(sender);
 
 			if (this.signer != null)

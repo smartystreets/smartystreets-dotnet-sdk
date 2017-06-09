@@ -100,6 +100,7 @@
     <Compile Include="USExtractApi\Result.cs" />
     <Compile Include="USExtractApi\Metadata.cs" />
     <Compile Include="USExtractApi\Address.cs" />
+    <Compile Include="Proxy.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
