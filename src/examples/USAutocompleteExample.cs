@@ -26,7 +26,9 @@ namespace Examples
             lookup.AddStateFilter("IL");
             lookup.MaxSuggestions = 5;
 
-            var suggestions = client.Send(lookup); // The client will also return the suggestions directly
+            client.Send(lookup);
+
+            var suggestions = lookup.Result;
 
             Console.WriteLine();
             Console.WriteLine("*** Result with some filters ***");

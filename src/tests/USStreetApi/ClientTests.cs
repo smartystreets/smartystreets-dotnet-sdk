@@ -2,6 +2,7 @@
 {
 	using System.Text;
 	using NUnit.Framework;
+    using System.Collections.Generic;
 
 	[TestFixture]
 	public class ClientTests
@@ -96,10 +97,10 @@
 		[Test]
 		public void TestCandidatesCorrectlyAssignedToCorrespondingLookup()
 		{
-			var expectedCandidates = new Candidate[3];
-			expectedCandidates[0] = new Candidate(0);
-			expectedCandidates[1] = new Candidate(1);
-			expectedCandidates[2] = new Candidate(1);
+			var expectedCandidates = new List<Candidate>();
+			expectedCandidates.Add(new Candidate(0));
+			expectedCandidates.Add(new Candidate(1));
+			expectedCandidates.Add(new Candidate(1));
 			var batch = new Batch {new Lookup(), new Lookup()};
 
 			var sender = new MockSender(new Response(0, new byte[0]));

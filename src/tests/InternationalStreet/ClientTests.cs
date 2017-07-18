@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using NUnit.Framework;
 using SmartyStreets.InternationalStreetApi;
+using System.Collections.Generic;
 
 namespace SmartyStreets.InternationalStreet
 {
@@ -161,9 +162,9 @@ namespace SmartyStreets.InternationalStreet
         [Test]
         public void TestCandidatesCorrectlyAssignedToLookup()
         {
-            var expectedCandidates = new Candidate[2];
-            expectedCandidates[0] = new Candidate();
-            expectedCandidates[1] = new Candidate();
+            var expectedCandidates = new List<Candidate>();
+			expectedCandidates.Add(new Candidate());
+			expectedCandidates.Add(new Candidate());
             var lookup = new Lookup("1", "2");
 
             var mockSender = new MockSender(new Response(0, Encoding.ASCII.GetBytes("[]")));

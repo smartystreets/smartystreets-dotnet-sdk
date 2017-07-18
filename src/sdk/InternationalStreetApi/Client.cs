@@ -1,7 +1,8 @@
-﻿using System.IO;
-
-namespace SmartyStreets.InternationalStreetApi
+﻿namespace SmartyStreets.InternationalStreetApi
 {
+    using System.IO;
+    using System.Collections.Generic;
+
     public class Client
     {
         private ISender sender;
@@ -13,7 +14,7 @@ namespace SmartyStreets.InternationalStreetApi
             this.serializer = serializer;
         }
 
-        public Candidate[] Send(Lookup lookup)
+        public void Send(Lookup lookup)
         {
             EnsureEnoughInfo(lookup);
             var request = BuildRequest(lookup);
@@ -22,11 +23,16 @@ namespace SmartyStreets.InternationalStreetApi
 
             using (var payloadStream = new MemoryStream(response.Payload))
             {
-                var candidates = this.serializer.Deserialize<Candidate[]>(payloadStream) ?? new Candidate[0];
-                lookup.Result = candidates;
-                return candidates;
+                var candidates = this.serializer.Deserialize<List<Candidate>>(payloadStream) ?? new List<Candidate>();
+                AssignCandidatesToLookups(candidates, lookup);
             }
         }
+
+        private static void AssignCandidatesToLookups(IEnumerable<Candidate> candidates, Lookup lookup)
+		{
+			foreach (var candidate in candidates)
+                lookup.AddToResult(candidate);
+		}
 
         private Request BuildRequest(Lookup lookup)
         {

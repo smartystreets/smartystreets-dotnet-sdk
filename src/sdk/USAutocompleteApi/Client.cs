@@ -18,7 +18,7 @@ namespace SmartyStreets.USAutocompleteApi
             this.serializer = serializer;
         }
 
-        public Suggestion[] Send(Lookup lookup)
+        public void Send(Lookup lookup)
         {
             if (string.IsNullOrEmpty(lookup?.Prefix))
                 throw new SmartyException("Send() must be passed a Lookup with the prefix field set.");
@@ -32,7 +32,6 @@ namespace SmartyStreets.USAutocompleteApi
                 var result = this.serializer.Deserialize<Result>(payloadStream) ?? new Result();
                 var suggestions = result.Suggestions;
                 lookup.Result = suggestions;
-                return suggestions;
             }
         }
 

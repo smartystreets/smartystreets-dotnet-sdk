@@ -17,8 +17,9 @@ namespace Examples
                           "\r\nMeet me at 1 Rosedale Baltimore Maryland, not at 123 Phony Street, Boise Idaho.";
             var lookup = new Lookup(text);
 
-            var result = client.Send(lookup);
+            client.Send(lookup);
 
+            var result = lookup.Result;
             var metadata = result.Metadata;
             Console.WriteLine("Found " + metadata.AddressCount + " addresses.");
             Console.WriteLine(metadata.VerifiedCount + " of them were valid.");

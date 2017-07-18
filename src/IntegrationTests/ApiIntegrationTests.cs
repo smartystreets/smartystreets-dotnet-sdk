@@ -32,7 +32,7 @@
 
             int candidates = 0;
             if (lookup.Result != null)
-                candidates = lookup.Result.Length;
+                candidates = lookup.Result.Count;
 
             AssertResults("International_Street", candidates, 1);
         }

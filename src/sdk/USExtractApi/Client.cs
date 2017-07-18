@@ -17,7 +17,7 @@ namespace SmartyStreets.USExtractApi
             this.serializer = serializer;
         }
 
-        public Result Send(Lookup lookup)
+        public void Send(Lookup lookup)
         {
             if (string.IsNullOrEmpty(lookup?.Text))
                 throw new SmartyException("Client.send() requires a Lookup with the 'text' field set");
@@ -29,7 +29,6 @@ namespace SmartyStreets.USExtractApi
             {
                 var result = this.serializer.Deserialize<Result>(payloadStream) ?? new Result();
                 lookup.Result = result;
-                return result;
             }
         }
 

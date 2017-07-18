@@ -1,5 +1,7 @@
 ﻿namespace SmartyStreets.InternationalStreetApi
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// In addition to holding all of the input data for this lookup, this class also
     /// will contain the result of the lookup after it comes back from the API.
@@ -11,7 +13,7 @@
     public class Lookup
     {
         #region [ Fields ]
-        public Candidate[] Result;
+        public List<Candidate> Result { get; private set; }
 
         /// <remarks>
         /// Disabled by default. Set to true to enable.
@@ -42,7 +44,7 @@
 
         public Lookup()
         {
-            this.Result = new Candidate[0];
+            this.Result = new List<Candidate>();
         }
 
         public Lookup(string freeform, string country) : this()
@@ -103,6 +105,11 @@
             return string.IsNullOrEmpty(field);
         }
 
-        #endregion
+		#endregion
+
+		public void AddToResult(Candidate newCandidate)
+		{
+			this.Result.Add(newCandidate);
+		}
     }
 }

@@ -16,8 +16,9 @@ namespace Examples
             var lookup = new Lookup("Rua Padre Antonio D'Angelo 121 Casa Verde, Sao Paulo", "Brazil");
             lookup.Geocode = true; // Must be expressly set to get latitude and longitude.
 
-            var candidates = client.Send(lookup); // The candidates are also stored in the lookup's 'result' field.
+            client.Send(lookup);
 
+            var candidates = lookup.Result;
             var firstCandidate = candidates[0];
             Console.WriteLine("Address is " + firstCandidate.Analysis.VerificationStatus);
             Console.WriteLine("Address precision: " + firstCandidate.Analysis.AddressPrecision + "\n");
