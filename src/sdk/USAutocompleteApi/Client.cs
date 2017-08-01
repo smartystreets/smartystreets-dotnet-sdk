@@ -40,10 +40,11 @@ namespace SmartyStreets.USAutocompleteApi
             var request = new Request();
 
             request.SetParameter("prefix", lookup.Prefix);
-            request.SetParameter("suggestions", lookup.MaxSuggestions.ToString());
+            request.SetParameter("suggestions", lookup.GetMaxSuggestionsStringIfSet());
             request.SetParameter("city_filter", BuildFilterString(lookup.CityFilter));
             request.SetParameter("state_filter", BuildFilterString(lookup.StateFilter));
             request.SetParameter("prefer", BuildFilterString(lookup.Prefer));
+            request.SetParameter("prefer_ratio", lookup.GetPreferRatioStringIfSet());
 
             if (lookup.GeolocateType != GeolocateType.NONE)
             {

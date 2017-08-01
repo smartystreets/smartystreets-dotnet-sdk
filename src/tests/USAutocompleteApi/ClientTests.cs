@@ -26,7 +26,7 @@ namespace SmartyStreets.USAutocompleteApi
 
             client.Send(new Lookup("1"));
 
-            Assert.AreEqual("http://localhost/?prefix=1&suggestions=10&geolocate=true&geolocate_precision=city", capturingSender.Request.GetUrl());
+            Assert.AreEqual("http://localhost/?prefix=1&geolocate=true&geolocate_precision=city", capturingSender.Request.GetUrl());
         }
 
         [Test]
@@ -34,16 +34,17 @@ namespace SmartyStreets.USAutocompleteApi
         {
             var serializer = new FakeSerializer(new byte[0]);
             var client = new Client(this.urlSender, serializer);
-            const string expectedURL = "http://localhost/?prefix=1&suggestions=2&city_filter=3&state_filter=4&prefer=5&geolocate=true&geolocate_precision=state";
+            const string expectedURL = "http://localhost/?prefix=1&suggestions=2&city_filter=3&state_filter=4&prefer=5&prefer_ratio=0.6&geolocate=true&geolocate_precision=state";
             var lookup = new Lookup
             {
-                Prefix = "1",
+                Prefix = "1",   
                 MaxSuggestions = 2
             };
             lookup.AddCityFilter("3");
             lookup.AddStateFilter("4");
             lookup.AddPrefer("5");
             lookup.GeolocateType = GeolocateType.STATE;
+            lookup.PreferRatio = .6;
 
             client.Send(lookup);
 

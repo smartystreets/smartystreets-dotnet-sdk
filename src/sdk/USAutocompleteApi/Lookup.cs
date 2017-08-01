@@ -11,8 +11,10 @@ namespace SmartyStreets.USAutocompleteApi
     /// </remarks>
     public class Lookup
     {
-        #region [ Fields ]
+		#region [ Fields ]
 
+		private const double PREFER_RATIO_DEFAULT = 1 / 3.0;
+		private const int MAX_SUGGESTIONS_DEFAULT = 10;
         public Suggestion[] Result { get; set; }
         public string Prefix { get; set; }
         public int MaxSuggestions { get; set; }
@@ -20,6 +22,7 @@ namespace SmartyStreets.USAutocompleteApi
         public ArrayList StateFilter { get; set; }
         public ArrayList Prefer { get; set; }
         public string GeolocateType { get; set; }
+        public double PreferRatio { get; set; }
 
         #endregion
 
@@ -30,17 +33,30 @@ namespace SmartyStreets.USAutocompleteApi
         /// </remarks>>
         public Lookup()
         {
-            this.MaxSuggestions = 10;
+            this.MaxSuggestions = MAX_SUGGESTIONS_DEFAULT;
             this.GeolocateType = USAutocompleteApi.GeolocateType.CITY;
             this.CityFilter = new ArrayList();
             this.StateFilter = new ArrayList();
             this.Prefer = new ArrayList();
+            this.PreferRatio = PREFER_RATIO_DEFAULT;
         }
 
         /// <param name="prefix">The beginning of an address.</param>
         public Lookup(string prefix) : this()
         {
             this.Prefix = prefix;
+        }
+
+        internal string GetPreferRatioStringIfSet() {
+            if (this.PreferRatio.Equals(PREFER_RATIO_DEFAULT))
+                return null;
+            return this.PreferRatio.ToString();
+        }
+
+        internal string GetMaxSuggestionsStringIfSet() {
+            if (this.MaxSuggestions.Equals(MAX_SUGGESTIONS_DEFAULT))
+                return null;
+            return this.MaxSuggestions.ToString();
         }
 
         #endregion
