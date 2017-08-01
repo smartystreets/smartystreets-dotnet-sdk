@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-SOURCE_VERSION := 7.0
+SOURCE_VERSION := 7.1
 
 clean:
 	@git checkout src/VersionAssemblyInfo.cs
