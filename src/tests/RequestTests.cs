@@ -63,6 +63,18 @@
 			Assert.AreEqual(Expected, request.GetUrl());
 		}
 
+        [Test]
+        public void TestUrlEncodingOfUnicodeCharacters()
+        {
+            var request = new Request();
+
+			request.SetParameter("needs_encoding", "&foo=bar");
+			request.SetParameter("unicode", "Sjömadsvägen");
+
+			const string Expected = "?needs_encoding=%26foo%3dbar&unicode=Sj%c3%b6madsv%c3%a4gen";
+			Assert.AreEqual(Expected, request.GetUrl());
+        }
+
 		[Test]
 		public void TestUrlWithoutTrailingQuestionMark()
 		{
