@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>SmartyStreets</RootNamespace>
     <AssemblyName>smartystreets-dotnet-sdk</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
