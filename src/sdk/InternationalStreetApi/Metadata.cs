@@ -22,6 +22,9 @@ namespace SmartyStreets.InternationalStreetApi
         [DataMember(Name = "max_geocode_precision")]
         public string MaxGeocodePrecision { get; private set; }
 
-        #endregion
-    }
+		[DataMember(Name = "address_format")]
+		public string AddressFormat { get; private set; }
+
+		#endregion
+	}
 }
