@@ -9,6 +9,7 @@
 	{
 		public static void Run()
 		{
+			// You don't have to store your keys in environment variables, but we recommend it.
 			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			var client = new ClientBuilder(authId, authToken).BuildUsZipCodeApiClient();
