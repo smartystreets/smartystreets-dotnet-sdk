@@ -5,6 +5,7 @@ Debug
 Release
 bin
 obj
+.vs
 
 *.nupkg
 src/.idea/.idea.smartystreets-dotnet-sdk
