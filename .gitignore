@@ -8,3 +8,6 @@ obj
 
 *.nupkg
 src/.idea/.idea.smartystreets-dotnet-sdk
+/src/.vs/smartystreets-dotnet-sdk/v15
+/.vs
+/src/sdk/SDK.csproj.user

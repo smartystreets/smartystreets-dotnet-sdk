@@ -1,7 +1,10 @@
-﻿namespace SmartyStreets
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace SmartyStreets
 {
-	using System.Collections;
-	using System.Collections.Generic;
+
+
 
 	public class Batch<T> : ICollection<T>
 		where T : class, ILookup
@@ -54,7 +57,7 @@
 			this.all.CopyTo(array, arrayIndex);
 		}
 
-		public int Count
+        public int Count
 		{
 			get { return this.all.Count; }
 		}
@@ -63,16 +66,16 @@
 			get { return false; }
 		}
 
-		public IEnumerator<T> GetEnumerator()
-		{
-			return this.all.GetEnumerator();
-		}
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return this.GetEnumerator();
-		}
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this.all.GetEnumerator();
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
 
-		public T this[string value]
+        public T this[string value]
 		{
 			get { return this.named[value]; }
 		}
