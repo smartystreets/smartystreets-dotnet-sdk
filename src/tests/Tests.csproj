@@ -1,86 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{22940782-EF8C-45F7-BA51-D8947B5A98B0}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>SmartyStreets</RootNamespace>
-    <AssemblyName>smartystreets-dotnet-sdk-tests</AssemblyName>
+
+    <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\sdk\SDK.csproj">
-      <Project>{3B3C4EEC-1F49-47F1-A531-6799BC5B66F8}</Project>
-      <Name>SDK</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs">
-      <Link>Properties\GlobalAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\VersionAssemblyInfo.cs">
-      <Link>Properties\VersionAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="InternationalStreet\CandidateTest.cs" />
-    <Compile Include="InternationalStreet\ClientTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="USAutocompleteApi\ClientTests.cs" />
-    <Compile Include="USAutocompleteApi\SuggestionTests.cs" />
-    <Compile Include="USExtractApi\ClientTests.cs" />
-    <Compile Include="USStreetApi\ClientTests.cs" />
-    <Compile Include="NativeSerializerTests.cs" />
-    <Compile Include="StaticCredentialsTests.cs" />
-    <Compile Include="RequestTests.cs" />
-    <Compile Include="StatusCodeSenderTests.cs" />
-    <Compile Include="Mocks\MockStatusCodeSender.cs" />
-    <Compile Include="SigningSenderTests.cs" />
-    <Compile Include="Mocks\MockSender.cs" />
-    <Compile Include="Mocks\MockCrashingSender.cs" />
-    <Compile Include="RetrySenderTests.cs" />
-    <Compile Include="USStreetApi\BatchTests.cs" />
-    <Compile Include="Mocks\RequestCapturingSender.cs" />
-    <Compile Include="Mocks\FakeSerializer.cs" />
-    <Compile Include="Mocks\FakeDeserializer.cs" />
-    <Compile Include="USZipCodeApi\ResultTests.cs" />
-    <Compile Include="USZipCodeApi\BatchTests.cs" />
-    <Compile Include="USZipCodeApi\ClientTests.cs" />
-    <Compile Include="SharedCredentialsTests.cs" />
-    <Compile Include="USExtractApi\ResultTests.cs" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.0" />
+    <PackageReference Include="NUnit" Version="3.9.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="USExtractApi\" />
+    <ProjectReference Include="..\sdk\SDK.csproj" />
   </ItemGroup>
 </Project>
