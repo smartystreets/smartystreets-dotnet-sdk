@@ -4,9 +4,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sdk", "sdk\sdk.csproj", "{0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{8C4997AC-FA15-49F0-B6F0-35AE14DFE5C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{366C228F-8D22-4712-B5B8-A26B4F61AFBF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "integration", "integration\integration.csproj", "{366C228F-8D22-4712-B5B8-A26B4F61AFBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples", "examples\Examples.csproj", "{F92D4539-4EB1-4399-BB8C-CFE6EDEB06D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "examples", "examples\examples.csproj", "{F92D4539-4EB1-4399-BB8C-CFE6EDEB06D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
