@@ -15,16 +15,13 @@ compile: clean
 
 test:
 
-package:
-	@sed -i -r "s/0\.0\.0/$(shell git describe)/g" src/sdk/sdk.csproj
-
+package: clean
 	@mkdir -p "$(WORKSPACE_DIR)"
 	@dotnet pack "$(PROJECT_FILE)" --configuration "$(CONFIGURATION)" \
 		--include-source \
 		--include-symbols \
-		--output "../../$(WORKSPACE_DIR)"
-
-	@git checkout "src/sdk/sdk.csproj"
+		--output "../../$(WORKSPACE_DIR)" \
+		/p:CustomVersion=1.2.3
 
 publish: clean version package
 	@dotnet nuget push $(WORKSPACE_DIR)/* --source nuget.org
