@@ -10,6 +10,6 @@ The official client libraries for accessing SmartyStreets APIs from C#, F#, Visu
 
 ---
 
-You may have noticed this page is curiously sparse. Don't panic, there are [examples](src/examples) and documentation (coming soon).
+You may have noticed this page is curiously sparse. Don't panic, there are [examples](src/examples) and [documentation](https://smartystreets.com/docs/sdk/dotnet).
 
 [Apache 2.0 License](LICENSE.md)
