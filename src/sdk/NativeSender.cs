@@ -39,23 +39,25 @@
 			var frameworkRequest = (HttpWebRequest)WebRequest.Create(request.GetUrl());
 			frameworkRequest.Timeout = (int)this.timeout.TotalMilliseconds;
 			frameworkRequest.Method = request.Method;
-
-            if (this.smartyProxy != null)
-                this.SetProxy(frameworkRequest);
-
+			frameworkRequest.Proxy = this.BuildProxy();
 			return frameworkRequest;
 		}
 
-        private void SetProxy(WebRequest frameworkRequest)
+        private IWebProxy BuildProxy()
         {
-            var proxy = new WebProxy();
-            var proxyUri = new Uri(this.smartyProxy.Address);
-            proxy.Address = proxyUri;
+	        if (this.smartyProxy == null)
+		        return null;
 
-            if (this.smartyProxy.Username != null && this.smartyProxy.Password != null)
-                proxy.Credentials = new NetworkCredential(this.smartyProxy.Username, this.smartyProxy.Password);
+	        var address = new Uri(this.smartyProxy.Address);
 
-            frameworkRequest.Proxy = proxy;
+	        if (string.IsNullOrWhiteSpace(this.smartyProxy.Username) && string.IsNullOrWhiteSpace(this.smartyProxy.Password))
+		        return new WebProxy{ Address = address };
+
+	        return new WebProxy
+	        {
+		        Address = address,
+		        Credentials = new NetworkCredential(this.smartyProxy.Username, this.smartyProxy.Password),
+	        };
 		}
 
 		private static void CopyHeaders(Request request, HttpWebRequest frameworkRequest)
@@ -74,7 +76,9 @@
 				return;
 
 			using (var sourceStream = new MemoryStream(request.Payload))
+			{
 				CopyStream(sourceStream, GetRequestStream(frameworkRequest));
+			}
 		}
 		private static void CopyStream(Stream source, Stream target)
 		{
