@@ -5,6 +5,7 @@
     <RootNamespace>SmartyStreets</RootNamespace>
     <Company>SmartyStreets, LLC</Company>
     <Product>SmartyStreets .NET SDK</Product>
+    <Description>Official SDK for accessing various SmartyStreets APIs</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Copyright>Copyright © SmartyStreets, LLC</Copyright>
     <PackageLicenseUrl>https://github.com/smartystreets/smartystreets-dotnet-sdk/blob/master/LICENSE.md</PackageLicenseUrl>
