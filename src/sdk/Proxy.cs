@@ -1,32 +1,32 @@
-﻿using System;
-using System.Net;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
+    using System;
+    using System.Net;
+
     public class Proxy
     {
-        private readonly Uri address;
-        private readonly string username, password;
+        public IWebProxy NativeProxy { get; private set; }
 
         public Proxy() {}
-
-        public Proxy(string address, string username, string password) : this()
+        public Proxy(string proxyAddress, string username, string password)
+            : this(new Uri(proxyAddress), ParseCredentials(username, password))
         {
-            this.address = new Uri(address);
-            this.username = username;
-            this.password = password;
+        }
+        private Proxy(Uri address, System.Net.ICredentials credentials)
+        {
+            this.NativeProxy = new WebProxy
+            {
+                Address = address,
+                Credentials = credentials,
+            };
         }
 
-        public IWebProxy AsWebProxy()
+        private static System.Net.ICredentials ParseCredentials(string username, string password)
         {
-            if (string.IsNullOrWhiteSpace(this.username) && string.IsNullOrWhiteSpace(this.password))
-                return new WebProxy{ Address = this.address };
+            if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password))
+                return CredentialCache.DefaultCredentials;
 
-            return new WebProxy
-            {
-                Address = this.address,
-                Credentials = new NetworkCredential(this.username, this.password),
-            };
+            return new NetworkCredential(username, password);
         }
     }
 }

@@ -9,17 +9,16 @@
 		private static readonly Version AssemblyVersion = typeof(NativeSender).Assembly.GetName().Version;
 		private static readonly string UserAgent = string.Format("smartystreets (sdk:dotnet@{0}.{1}.{2})", AssemblyVersion.Major, AssemblyVersion.Minor, AssemblyVersion.Build);
 		private readonly TimeSpan timeout;
-        private readonly Proxy proxy;
+		private readonly IWebProxy proxy;
 
 		public NativeSender()
 		{
 			this.timeout = TimeSpan.FromSeconds(10);
-			this.proxy = new Proxy();
 		}
 		public NativeSender(TimeSpan timeout, Proxy proxy = null) : this()
 		{
 			this.timeout = timeout;
-			this.proxy = proxy ?? new Proxy();
+			this.proxy = (proxy ?? new Proxy()).NativeProxy;
 		}
 
 		public Response Send(Request request)
@@ -40,7 +39,7 @@
 			var frameworkRequest = (HttpWebRequest)WebRequest.Create(request.GetUrl());
 			frameworkRequest.Timeout = (int)this.timeout.TotalMilliseconds;
 			frameworkRequest.Method = request.Method;
-			frameworkRequest.Proxy = this.proxy.AsWebProxy();
+			frameworkRequest.Proxy = this.proxy;
 			return frameworkRequest;
 		}
 
