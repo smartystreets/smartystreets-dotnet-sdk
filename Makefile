@@ -23,7 +23,7 @@ package: clean
 		--include-source \
 		--include-symbols \
 		--output "../../$(WORKSPACE_DIR)" \
-		/p:CustomVersion="$(shell git describe 2>/dev/null))"
+		/p:CustomVersion="$(SOURCE_VERSION).$(shell git tag -l "$(SOURCE_VERSION).*" | wc -l | xargs expr 0 +)"
 
 publish: clean version package
 	@dotnet nuget push $(WORKSPACE_DIR)/* --source nuget.org
