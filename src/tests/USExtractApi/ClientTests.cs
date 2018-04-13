@@ -46,7 +46,7 @@ namespace SmartyStreets.USExtractApi
 
             Assert.AreEqual(expectedUrl, capturingSender.Request.GetUrl());
         }
-        
+
         [Test]
         public void TestRejectNullLookup()
         {

@@ -8,7 +8,7 @@ namespace SmartyStreets.USAutocomplete
     [TestFixture]
     public class SuggestionTests
     {
-        private NativeSerializer nativeSerializer = new NativeSerializer();
+        private readonly NativeSerializer nativeSerializer = new NativeSerializer();
         private const string responsePayload = "{\"suggestions\":[" +
                                                "{\"text\":\"1\",\"street_line\":\"2\",\"city\":\"3\",\"state\":\"4\"}]}";
 
