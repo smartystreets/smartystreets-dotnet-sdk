@@ -1,14 +1,23 @@
 #!/usr/bin/make -f
 
 SOURCE_VERSION := 8.0
+SOLUTION_FILE := src/smartystreets-dotnet-sdk.sln
+PROJECT_FILE := src/sdk/sdk.csproj
+CONFIGURATION := Release
 
 clean:
+	@dotnet clean "$(SOLUTION_FILE)"
 
-build: clean
+compile: clean
+	@dotnet build "$(SOLUTION_FILE)" --configuration "$(CONFIGURATION)"
 
 test:
 
-package: clean build
+package: clean
+	@dotnet pack "$(PROJECT_FILE)" --configuration "$(CONFIGURATION)" \
+		--include-source \
+		--include-symbols \
+		/p:PackageVersion=1.2.3
 
 publish: clean version tag package
 
