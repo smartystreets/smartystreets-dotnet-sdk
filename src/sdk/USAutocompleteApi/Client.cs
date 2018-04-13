@@ -1,16 +1,17 @@
-﻿using System.Collections;
-using System.IO;
-
-namespace SmartyStreets.USAutocompleteApi
+﻿namespace SmartyStreets.USAutocompleteApi
 {
+    using System;
+    using System.Collections;
+    using System.IO;
+
     /// <summary>
     /// This client sends lookups to the SmartyStreets US Autocomplete API,
     /// and attaches the results to the appropriate Lookup objects.
     /// </summary>
     public class Client
     {
-        private ISender sender;
-        private ISerializer serializer;
+        private readonly ISender sender;
+        private readonly ISerializer serializer;
 
         public Client(ISender sender, ISerializer serializer)
         {
@@ -20,6 +21,9 @@ namespace SmartyStreets.USAutocompleteApi
 
         public void Send(Lookup lookup)
         {
+            if (lookup == null)
+                throw new ArgumentNullException("lookup");
+
             if (string.IsNullOrEmpty(lookup?.Prefix))
                 throw new SmartyException("Send() must be passed a Lookup with the prefix field set.");
 

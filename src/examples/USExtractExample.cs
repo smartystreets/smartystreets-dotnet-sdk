@@ -4,7 +4,7 @@ using Lookup = SmartyStreets.USExtractApi.Lookup;
 
 namespace Examples
 {
-    public class USExtractExample
+    internal static class USExtractExample
     {
         public static void Run()
         {

@@ -34,8 +34,8 @@ namespace SmartyStreets.InternationalStreet
         [Test]
         public void TestSendingSingleFullyPopulatedLookup()
         {
-            var expectedUrl = "http://localhost/?country=0&geocode=true&language=native&freeform=1" +
-                              "&address1=2&address2=3&address3=4&address4=5&organization=6&locality=7&administrative_area=8&postal_code=9";
+            const string expectedUrl = "http://localhost/?country=0&geocode=true&language=native&freeform=1" +
+                                       "&address1=2&address2=3&address3=4&address4=5&organization=6&locality=7&administrative_area=8&postal_code=9";
             var serializer = new FakeSerializer(null);
             var client = new Client(sender, serializer);
             var lookup = new Lookup
@@ -126,13 +126,14 @@ namespace SmartyStreets.InternationalStreet
         [Test]
         public void TestAcceptsLookupsWithEnoughInfo()
         {
-            var capturingSender = new RequestCapturingSender();
             var serializer = new FakeSerializer(null);
-            var client = new Client(capturingSender, serializer);
-            var lookup = new Lookup();
+            var client = new Client(new RequestCapturingSender(), serializer);
+            var lookup = new Lookup
+            {
+                Country = "0",
+                Freeform = "1"
+            };
 
-            lookup.Country = "0";
-            lookup.Freeform = "1";
             client.Send(lookup);
 
             lookup.Freeform = null;
@@ -162,9 +163,7 @@ namespace SmartyStreets.InternationalStreet
         [Test]
         public void TestCandidatesCorrectlyAssignedToLookup()
         {
-            var expectedCandidates = new List<Candidate>();
-			expectedCandidates.Add(new Candidate());
-			expectedCandidates.Add(new Candidate());
+            var expectedCandidates = new List<Candidate> {new Candidate(), new Candidate()};
             var lookup = new Lookup("1", "2");
 
             var mockSender = new MockSender(new Response(0, Encoding.ASCII.GetBytes("[]")));

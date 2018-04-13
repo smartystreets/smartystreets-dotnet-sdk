@@ -2,8 +2,8 @@
 {
 	public class SharedCredentials : ICredentials
 	{
-		private string id;
-		private string hostname;
+		private readonly string id;
+		private readonly string hostname;
 
 		public SharedCredentials(string id, string hostname)
 		{

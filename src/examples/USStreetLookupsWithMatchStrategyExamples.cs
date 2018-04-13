@@ -5,7 +5,7 @@
 	using SmartyStreets;
 	using SmartyStreets.USStreetApi;
 
-	public class USStreetLookupsWithMatchStrategyExamples
+	internal static class USStreetLookupsWithMatchStrategyExamples
 	{
 		public static void Run()
 		{

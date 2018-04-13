@@ -1,12 +1,13 @@
 ﻿namespace SmartyStreets.InternationalStreetApi
 {
+    using System;
     using System.IO;
     using System.Collections.Generic;
 
     public class Client
     {
-        private ISender sender;
-        private ISerializer serializer;
+        private readonly ISender sender;
+        private readonly ISerializer serializer;
 
         public Client(ISender sender, ISerializer serializer)
         {
@@ -16,6 +17,9 @@
 
         public void Send(Lookup lookup)
         {
+            if (lookup == null)
+                throw new ArgumentNullException("lookup");
+
             EnsureEnoughInfo(lookup);
             var request = BuildRequest(lookup);
 
@@ -34,7 +38,7 @@
                 lookup.AddToResult(candidate);
 		}
 
-        private Request BuildRequest(Lookup lookup)
+        private static Request BuildRequest(Lookup lookup)
         {
             var request = new Request();
 
@@ -55,7 +59,7 @@
             return request;
         }
 
-        private void EnsureEnoughInfo(Lookup lookup)
+        private static void EnsureEnoughInfo(Lookup lookup)
         {
             if (lookup.MissingCountry())
                 throw new UnprocessableEntityException("Country field is required.");

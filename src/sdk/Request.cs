@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SmartyStreets
+﻿namespace SmartyStreets
 {
 	using System.Collections.Generic;
 	using System.Web;
@@ -13,10 +11,10 @@ namespace SmartyStreets
 
 		public string ContentType { get; set; }
 		public Dictionary<string, string> Headers { get; }
-		public string Method { get; set; }
+		public string Method { get; private set; }
 		public byte[] Payload
 		{
-			get { return this.payload; }
+			get => this.payload;
 			set
 			{
 				this.payload = value;
@@ -44,9 +42,9 @@ namespace SmartyStreets
 			this.parameters[name] = value;
 		}
 
-		public void SetUrlPrefix(string urlPrefix)
+		public void SetUrlPrefix(string value)
 		{
-			this.urlPrefix = urlPrefix;
+			this.urlPrefix = value;
 		}
 
 		public string GetUrl()

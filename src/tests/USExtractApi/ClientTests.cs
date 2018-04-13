@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using NUnit.Framework;
 
 namespace SmartyStreets.USExtractApi
@@ -46,14 +47,14 @@ namespace SmartyStreets.USExtractApi
 
             Assert.AreEqual(expectedUrl, capturingSender.Request.GetUrl());
         }
-        
+
         [Test]
         public void TestRejectNullLookup()
         {
             var serializer = new FakeSerializer(null);
             var client = new Client(this.urlSender, serializer);
 
-            Assert.Throws<SmartyException>(() => client.Send(null));
+            Assert.Throws<ArgumentNullException>(() => client.Send(null));
         }
 
         [Test]

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using NUnit.Framework;
 
 namespace SmartyStreets.USAutocompleteApi
@@ -37,7 +38,7 @@ namespace SmartyStreets.USAutocompleteApi
             const string expectedURL = "http://localhost/?prefix=1&suggestions=2&city_filter=3&state_filter=4&prefer=5&prefer_ratio=0.6&geolocate=true&geolocate_precision=state";
             var lookup = new Lookup
             {
-                Prefix = "1",   
+                Prefix = "1",
                 MaxSuggestions = 2
             };
             lookup.AddCityFilter("3");
@@ -75,7 +76,7 @@ namespace SmartyStreets.USAutocompleteApi
             var serializer = new FakeSerializer(null);
             var client = new Client(this.urlSender, serializer);
 
-            Assert.Throws<SmartyException>(() => client.Send(null));
+            Assert.Throws<ArgumentNullException>(() => client.Send(null));
         }
 
         [Test]

@@ -97,10 +97,7 @@
 		[Test]
 		public void TestCandidatesCorrectlyAssignedToCorrespondingLookup()
 		{
-			var expectedCandidates = new List<Candidate>();
-			expectedCandidates.Add(new Candidate(0));
-			expectedCandidates.Add(new Candidate(1));
-			expectedCandidates.Add(new Candidate(1));
+			var expectedCandidates = new List<Candidate> {new Candidate(0), new Candidate(1), new Candidate(1)};
 			var batch = new Batch {new Lookup(), new Lookup()};
 
 			var sender = new MockSender(new Response(0, new byte[0]));

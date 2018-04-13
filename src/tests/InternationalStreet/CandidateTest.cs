@@ -54,7 +54,7 @@ namespace SmartyStreets.InternationalStreet
             Assert.AreEqual("12", candidate.Address11);
             Assert.AreEqual("13", candidate.Address12);
             #endregion
-            
+
             #region [ Components ]
             var components = candidate.Components;
             Assert.IsNotNull(components);
@@ -107,7 +107,7 @@ namespace SmartyStreets.InternationalStreet
             Assert.AreEqual("55", metadata.MaxGeocodePrecision);
             Assert.AreEqual("56", metadata.AddressFormat);
             #endregion
-            
+
             #region [ Analysis ]
             var analysis = candidate.Analysis;
             Assert.IsNotNull(analysis);

@@ -7,4 +7,6 @@ bin
 obj
 
 *.nupkg
-src/.idea/.idea.smartystreets-dotnet-sdk
+src/.idea
+.DS_Store
+/workspace/

@@ -5,23 +5,23 @@ namespace SmartyStreets
 	public class SharedCredentialsTests
 	{
 		[Test]
-		public void assertSignedRequest()
+		public void AssertSignedRequest()
 		{
-			var request = createSignedRequest();
+			var request = CreateSignedRequest();
 			const string expected = "https://us-street.api.smartystreets.com/street-address?auth-id=3516378604772256";
 
 			Assert.AreEqual(expected, request.GetUrl());
 		}
 
 		[Test]
-		public void assertReferringHeader()
+		public void AssertReferringHeader()
 		{
-			var request = createSignedRequest();
+			var request = CreateSignedRequest();
 
 			Assert.AreEqual("https://example.com", request.Headers["Referer"]);
 		}
 
-		private static Request createSignedRequest()
+		private static Request CreateSignedRequest()
 		{
 			var mobile = new SharedCredentials("3516378604772256", "example.com");
 			var request = new Request();
