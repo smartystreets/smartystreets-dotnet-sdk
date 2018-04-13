@@ -9,3 +9,4 @@ obj
 *.nupkg
 src/.idea
 .DS_Store
+/workspace/
