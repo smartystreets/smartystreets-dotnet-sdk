@@ -74,7 +74,7 @@
             var addresses = 0;
             if (lookup.Result.Addresses != null)
                 addresses = lookup.Result.Addresses.Length;
-            
+
             AssertResults("US_Extract", addresses, 3);
         }
 
@@ -110,19 +110,19 @@
             var citiesAmount = 0;
             if (lookup.Result.CityStates != null)
                 citiesAmount = lookup.Result.CityStates.Length;
-            
+
             AssertResults("US_ZIPCode", citiesAmount, 7);
         }
 
         private static void TestReturnsCorrectNumberOfResultsViaProxy(ICredentials credentials)
         {
-            var client = new ClientBuilder(credentials).ViaProxy("http://localhost:8080", "username", "password").BuildUsZipCodeApiClient();
+            var client = new ClientBuilder(credentials).ViaProxy("http://proxy.api.smartystreets.com:80", "", "").BuildUsZipCodeApiClient();
             var lookup = new SmartyStreets.USZipCodeApi.Lookup(null, null, "38852");
 
-			try
-			{
+            try
+            {
                 client.Send(lookup);
-			}
+            }
             catch (Exception) { Console.Write(""); }
 
             var citiesAmount = 0;
