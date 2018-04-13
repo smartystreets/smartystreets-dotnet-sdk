@@ -4,7 +4,7 @@ using SmartyStreets.USAutocompleteApi;
 
 namespace Examples
 {
-    public class USAutocompleteExample
+    internal static class USAutocompleteExample
     {
         public static void Run()
         {

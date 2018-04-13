@@ -1,8 +1,8 @@
 ﻿namespace Examples
 {
-	class MainClass
+	internal static class Program
 	{
-		public static void Main(string[] args)
+		private static void Main()
 		{
 			USStreetSingleAddressExample.Run();
 			USStreetLookupsWithMatchStrategyExamples.Run();

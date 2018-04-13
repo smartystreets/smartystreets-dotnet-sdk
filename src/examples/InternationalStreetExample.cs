@@ -4,7 +4,7 @@ using SmartyStreets.InternationalStreetApi;
 
 namespace Examples
 {
-    public class InternationalStreetExample
+    internal static class InternationalStreetExample
     {
         public static void Run()
         {
@@ -13,8 +13,8 @@ namespace Examples
             var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
             var client = new ClientBuilder(authId, authToken).BuildInternationalStreetApiClient();
 
-            var lookup = new Lookup("Rua Padre Antonio D'Angelo 121 Casa Verde, Sao Paulo", "Brazil");
-            lookup.Geocode = true; // Must be expressly set to get latitude and longitude.
+            // Geocoding must be expressly set to get latitude and longitude.
+            var lookup = new Lookup("Rua Padre Antonio D'Angelo 121 Casa Verde, Sao Paulo", "Brazil") {Geocode = true};
 
             client.Send(lookup);
 
