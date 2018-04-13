@@ -19,9 +19,7 @@ namespace Examples
             Console.WriteLine("*** Result with no filter ***");
             Console.WriteLine();
             foreach (var suggestion in lookup.Result)
-            {
                 Console.WriteLine(suggestion.Text);
-            }
 
             lookup.AddStateFilter("IL");
             lookup.MaxSuggestions = 5;
@@ -33,9 +31,7 @@ namespace Examples
             Console.WriteLine();
             Console.WriteLine("*** Result with some filters ***");
             foreach (var suggestion in suggestions)
-            {
                 Console.WriteLine(suggestion.Text);
-            }
         }
     }
 }
