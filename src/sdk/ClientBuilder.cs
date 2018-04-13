@@ -15,11 +15,11 @@
 		private readonly ICredentials signer;
 		private ISerializer serializer;
 		private ISender httpSender;
-		private const string INTERNATIONAL_STREET_API_URL = "https://international-street.api.smartystreets.com/verify";
-		private const string US_AUTOCOMPLETE_API_URL = "https://us-autocomplete.api.smartystreets.com/suggest";
-		private const string US_EXTRACT_API_URL = "https://us-extract.api.smartystreets.com/";
-		private const string US_STREET_API_URL = "https://us-street.api.smartystreets.com/street-address";
-		private const string US_ZIP_CODE_API_URL = "https://us-zipcode.api.smartystreets.com/lookup";
+		private const string InternationalStreetApiUrl = "https://international-street.api.smartystreets.com/verify";
+		private const string UsAutocompleteApiUrl = "https://us-autocomplete.api.smartystreets.com/suggest";
+		private const string UsExtractApiUrl = "https://us-extract.api.smartystreets.com/";
+		private const string UsStreetApiUrl = "https://us-street.api.smartystreets.com/street-address";
+		private const string UsZipCodeApiUrl = "https://us-zipcode.api.smartystreets.com/lookup";
         private Proxy proxy;
 
 		public ClientBuilder()
@@ -69,7 +69,7 @@
 		/// <param name="proxyUsername">Username for proxy authentication</param>
 		/// <param name="proxyPassword">Password for proxy authentication</param>
 		/// <returns>Returns 'this' to accommodate method chaining.</returns>
-		public ClientBuilder ViaProxy(string proxyAddress, string proxyUsername, string proxyPassword) 
+		public ClientBuilder ViaProxy(string proxyAddress, string proxyUsername, string proxyPassword)
         {
             if (proxyAddress == null)
 				throw new UnprocessableEntityException("ProxyUrl is required");
@@ -98,29 +98,29 @@
 		}
 
 		public InternationalStreetApi.Client BuildInternationalStreetApiClient() {
-			EnsureURLPrefixNotNull(INTERNATIONAL_STREET_API_URL);
+			EnsureURLPrefixNotNull(InternationalStreetApiUrl);
 			return new InternationalStreetApi.Client(BuildSender(), this.serializer);
 		}
 
 		public USAutocompleteApi.Client BuildUsAutocompleteApiClient() {
-			EnsureURLPrefixNotNull(US_AUTOCOMPLETE_API_URL);
+			EnsureURLPrefixNotNull(UsAutocompleteApiUrl);
 			return new USAutocompleteApi.Client(BuildSender(), this.serializer);
 		}
 
 		public USExtractApi.Client BuildUsExtractApiClient() {
-			this.EnsureURLPrefixNotNull(US_EXTRACT_API_URL);
+			this.EnsureURLPrefixNotNull(UsExtractApiUrl);
 			return new USExtractApi.Client(BuildSender(), this.serializer);
 		}
 
 		public USStreetApi.Client BuildUsStreetApiClient()
 		{
-			EnsureURLPrefixNotNull(US_STREET_API_URL);
+			EnsureURLPrefixNotNull(UsStreetApiUrl);
 			return new USStreetApi.Client(this.BuildSender(), this.serializer);
 		}
 
 		public USZipCodeApi.Client BuildUsZipCodeApiClient()
 		{
-			EnsureURLPrefixNotNull(US_ZIP_CODE_API_URL);
+			EnsureURLPrefixNotNull(UsZipCodeApiUrl);
 			return new USZipCodeApi.Client(this.BuildSender(), this.serializer);
 		}
 

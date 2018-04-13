@@ -54,14 +54,9 @@
 			this.all.CopyTo(array, arrayIndex);
 		}
 
-		public int Count
-		{
-			get { return this.all.Count; }
-		}
-		public bool IsReadOnly
-		{
-			get { return false; }
-		}
+		public int Count => this.all.Count;
+
+		public bool IsReadOnly => false;
 
 		public IEnumerator<T> GetEnumerator()
 		{
@@ -72,13 +67,8 @@
 			return this.GetEnumerator();
 		}
 
-		public T this[string value]
-		{
-			get { return this.named[value]; }
-		}
-		public T this[int index]
-		{
-			get { return this.all[index]; }
-		}
+		public T this[string value] => this.named[value];
+
+		public T this[int index] => this.all[index];
 	}
 }
