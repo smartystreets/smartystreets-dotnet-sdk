@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using NUnit.Framework;
 
 namespace SmartyStreets.USExtractApi
@@ -53,7 +54,7 @@ namespace SmartyStreets.USExtractApi
             var serializer = new FakeSerializer(null);
             var client = new Client(this.urlSender, serializer);
 
-            Assert.Throws<SmartyException>(() => client.Send(null));
+            Assert.Throws<ArgumentNullException>(() => client.Send(null));
         }
 
         [Test]

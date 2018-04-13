@@ -46,35 +46,35 @@
 			return frameworkRequest;
 		}
 
-        private static void SetProxy(HttpWebRequest frameworkRequest)
+        private static void SetProxy(WebRequest frameworkRequest)
         {
-            WebProxy proxy = new WebProxy();
-            Uri proxyUri = new Uri(SmartyProxy.Address);
+            var proxy = new WebProxy();
+            var proxyUri = new Uri(SmartyProxy.Address);
             proxy.Address = proxyUri;
 
             if (SmartyProxy.Username != null && SmartyProxy.Password != null)
                 proxy.Credentials = new NetworkCredential(SmartyProxy.Username, SmartyProxy.Password);
-    
+
             frameworkRequest.Proxy = proxy;
 		}
 
 		private static void CopyHeaders(Request request, HttpWebRequest frameworkRequest)
 		{
 			foreach (var item in request.Headers)
-			{
 				if (item.Key == "Referer")
 					frameworkRequest.Referer = item.Value;
 				else
 					frameworkRequest.Headers.Add(item.Key, item.Value);
-			}
 
 			frameworkRequest.UserAgent = UserAgent;
 		}
-		private static void TryWritePayload(Request request, HttpWebRequest frameworkRequest)
+		private static void TryWritePayload(Request request, WebRequest frameworkRequest)
 		{
-			if (request.Method == "POST" && request.Payload != null)
-				using (var sourceStream = new MemoryStream(request.Payload))
-					CopyStream(sourceStream, GetRequestStream(frameworkRequest));
+			if (request.Method != "POST" || request.Payload == null)
+				return;
+
+			using (var sourceStream = new MemoryStream(request.Payload))
+				CopyStream(sourceStream, GetRequestStream(frameworkRequest));
 		}
 		private static void CopyStream(Stream source, Stream target)
 		{
