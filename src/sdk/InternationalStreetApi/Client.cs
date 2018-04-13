@@ -1,5 +1,6 @@
 ﻿namespace SmartyStreets.InternationalStreetApi
 {
+    using System;
     using System.IO;
     using System.Collections.Generic;
 
@@ -16,6 +17,9 @@
 
         public void Send(Lookup lookup)
         {
+            if (lookup == null)
+                throw new ArgumentNullException("lookup");
+
             EnsureEnoughInfo(lookup);
             var request = BuildRequest(lookup);
 
