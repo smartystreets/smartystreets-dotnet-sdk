@@ -26,7 +26,7 @@ package: clean
 		/p:CustomVersion="$(shell git describe 2>/dev/null)"
 
 publish: clean version package
-	@dotnet nuget push $(WORKSPACE_DIR)/* --source nuget.org
+	@dotnet nuget push $(WORKSPACE_DIR)/* --source nuget.org -k "$(NUGET_KEY)"
 	@git push origin --tags
 
 version:
