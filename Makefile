@@ -3,6 +3,7 @@
 SOURCE_VERSION := 8.0
 SOLUTION_FILE := src/smartystreets-dotnet-sdk.sln
 PROJECT_FILE := src/sdk/sdk.csproj
+TEST_FILE := src/tests/tests.csproj
 CONFIGURATION := Release
 WORKSPACE_DIR := workspace
 
@@ -14,6 +15,7 @@ compile: clean
 	@dotnet build "$(SOLUTION_FILE)" --configuration "$(CONFIGURATION)"
 
 test:
+	@dotnet test "$(TEST_FILE)"
 
 package: clean
 	@mkdir -p "$(WORKSPACE_DIR)"
@@ -21,7 +23,7 @@ package: clean
 		--include-source \
 		--include-symbols \
 		--output "../../$(WORKSPACE_DIR)" \
-		/p:CustomVersion=1.2.3
+		/p:CustomVersion="$(shell git describe 2>/dev/null))"
 
 publish: clean version package
 	@dotnet nuget push $(WORKSPACE_DIR)/* --source nuget.org
