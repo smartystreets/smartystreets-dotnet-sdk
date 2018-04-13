@@ -4,8 +4,10 @@ SOURCE_VERSION := 8.0
 SOLUTION_FILE := src/smartystreets-dotnet-sdk.sln
 PROJECT_FILE := src/sdk/sdk.csproj
 CONFIGURATION := Release
+WORKSPACE_DIR := workspace
 
 clean:
+	@rm -rf "$(WORKSPACE_DIR)"
 	@dotnet clean "$(SOLUTION_FILE)"
 
 compile: clean
@@ -13,17 +15,20 @@ compile: clean
 
 test:
 
-package: clean
+package:
+	@sed -i -r "s/0\.0\.0/$(shell git describe)/g" src/sdk/sdk.csproj
+
+	@mkdir -p "$(WORKSPACE_DIR)"
 	@dotnet pack "$(PROJECT_FILE)" --configuration "$(CONFIGURATION)" \
 		--include-source \
 		--include-symbols \
-		/p:PackageVersion=1.2.3
+		--output "../../$(WORKSPACE_DIR)"
 
-publish: clean version tag package
+	@git checkout "src/sdk/sdk.csproj"
 
-tag:
-	@sed -i -r "s/0\.0\.0/$(shell git describe)/g" src/sdk/SDK.nuspec
-	@sed -i -r "s/0\.0\.0/$(shell git describe)/g" src/VersionAssemblyInfo.cs
+publish: clean version package
+	@dotnet nuget push $(WORKSPACE_DIR)/* --source nuget.org
+	@git push origin --tags
 
 version:
 	$(eval PREFIX := $(SOURCE_VERSION).)
