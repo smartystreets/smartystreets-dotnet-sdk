@@ -8,8 +8,8 @@
 	{
 		private static readonly Version AssemblyVersion = typeof(NativeSender).Assembly.GetName().Version;
 		private static readonly string UserAgent = string.Format("smartystreets (sdk:dotnet@{0}.{1}.{2})", AssemblyVersion.Major, AssemblyVersion.Minor, AssemblyVersion.Build);
-		private TimeSpan timeout;
-        private static Proxy SmartyProxy;
+		private readonly TimeSpan timeout;
+        private readonly Proxy smartyProxy;
 
 		public NativeSender()
 		{
@@ -18,7 +18,7 @@
 		public NativeSender(TimeSpan timeout, Proxy proxy)
 		{
 			this.timeout = timeout;
-            SmartyProxy = proxy;
+            this.smartyProxy = proxy;
 		}
 
 		public Response Send(Request request)
@@ -40,20 +40,20 @@
 			frameworkRequest.Timeout = (int)this.timeout.TotalMilliseconds;
 			frameworkRequest.Method = request.Method;
 
-            if (SmartyProxy != null)
-                SetProxy(frameworkRequest);
+            if (this.smartyProxy != null)
+                this.SetProxy(frameworkRequest);
 
 			return frameworkRequest;
 		}
 
-        private static void SetProxy(WebRequest frameworkRequest)
+        private void SetProxy(WebRequest frameworkRequest)
         {
             var proxy = new WebProxy();
-            var proxyUri = new Uri(SmartyProxy.Address);
+            var proxyUri = new Uri(this.smartyProxy.Address);
             proxy.Address = proxyUri;
 
-            if (SmartyProxy.Username != null && SmartyProxy.Password != null)
-                proxy.Credentials = new NetworkCredential(SmartyProxy.Username, SmartyProxy.Password);
+            if (this.smartyProxy.Username != null && this.smartyProxy.Password != null)
+                proxy.Credentials = new NetworkCredential(this.smartyProxy.Username, this.smartyProxy.Password);
 
             frameworkRequest.Proxy = proxy;
 		}
