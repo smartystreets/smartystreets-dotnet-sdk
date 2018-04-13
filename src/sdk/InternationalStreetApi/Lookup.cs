@@ -97,11 +97,11 @@
             return FieldIsMissing(this.Locality) || FieldIsMissing(this.AdministrativeArea);
         }
 
-        private bool FieldIsSet(string field) {
+        private static bool FieldIsSet(string field) {
             return !FieldIsMissing(field);
         }
 
-        private bool FieldIsMissing(string field) {
+        private static bool FieldIsMissing(string field) {
             return string.IsNullOrEmpty(field);
         }
 
