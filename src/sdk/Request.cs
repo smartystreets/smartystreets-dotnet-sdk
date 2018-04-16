@@ -1,7 +1,7 @@
 ﻿namespace SmartyStreets
 {
 	using System.Collections.Generic;
-	using System.Web;
+	using System.Net;
 
 	public class Request
 	{
@@ -70,7 +70,7 @@
 		{
 			try
 			{
-				return HttpUtility.UrlEncode(value);
+				return WebUtility.UrlEncode(value);
 			}
 			catch
 			{

@@ -71,7 +71,7 @@
 			request.SetParameter("needs_encoding", "&foo=bar");
 			request.SetParameter("unicode", "Sjömadsvägen");
 
-			const string Expected = "?needs_encoding=%26foo%3dbar&unicode=Sj%c3%b6madsv%c3%a4gen";
+			const string Expected = "?needs_encoding=%26foo%3Dbar&unicode=Sj%C3%B6madsv%C3%A4gen";
 			Assert.AreEqual(Expected, request.GetUrl());
         }
 
