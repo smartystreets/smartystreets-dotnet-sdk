@@ -16,30 +16,30 @@
 		[Test]
 		public void TestAllFieldsFilledCorrectly()
 		{
-			Stream Source = new MemoryStream(Encoding.ASCII.GetBytes(ResponsePayload));
-			var Result = this.nativeSerializer.Deserialize<Result>(Source);
+			Stream source = new MemoryStream(Encoding.ASCII.GetBytes(ResponsePayload));
+			var result = this.nativeSerializer.Deserialize<Result>(source);
 
-			var Metadata = Result.Metadata;
-			Assert.IsNotNull(Metadata);
-			Assert.AreEqual(1, Metadata.Lines);
-			Assert.IsTrue(Metadata.Unicode);
-			Assert.AreEqual(2, Metadata.AddressCount);
-			Assert.AreEqual(3, Metadata.VerifiedCount);
-			Assert.AreEqual(4, Metadata.Bytes);
-			Assert.AreEqual(5, Metadata.CharacterCount);
+			var metadata = result.Metadata;
+			Assert.IsNotNull(metadata);
+			Assert.AreEqual(1, metadata.Lines);
+			Assert.IsTrue(metadata.Unicode);
+			Assert.AreEqual(2, metadata.AddressCount);
+			Assert.AreEqual(3, metadata.VerifiedCount);
+			Assert.AreEqual(4, metadata.Bytes);
+			Assert.AreEqual(5, metadata.CharacterCount);
 
-			var Address = Result.Addresses[0];
+			var address = result.Addresses[0];
 
-			Assert.IsNotNull(Address);
-			Assert.AreEqual("6", Address.Text);
-			Assert.IsTrue(Address.Verified);
-			Assert.AreEqual(7, Address.Line);
-			Assert.AreEqual(8, Address.Start);
-			Assert.AreEqual(9, Address.End);
-			Assert.AreEqual("10", Result.Addresses[1].Text);
+			Assert.IsNotNull(address);
+			Assert.AreEqual("6", address.Text);
+			Assert.IsTrue(address.Verified);
+			Assert.AreEqual(7, address.Line);
+			Assert.AreEqual(8, address.Start);
+			Assert.AreEqual(9, address.End);
+			Assert.AreEqual("10", result.Addresses[1].Text);
 
-			var Candidates = Address.Candidates;
-			Assert.IsNotNull(Candidates);
+			var candidates = address.Candidates;
+			Assert.IsNotNull(candidates);
 		}
 	}
 }

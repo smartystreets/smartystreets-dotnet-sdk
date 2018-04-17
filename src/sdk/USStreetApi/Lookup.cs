@@ -13,7 +13,7 @@
 		public const string RANGE = "range";
 		public const string INVALID = "invalid";
 
-		public List<Candidate> Result { get; }
+		public List<Candidate> Result { get; private set; }
 
 		public string InputId { get; set; }
 

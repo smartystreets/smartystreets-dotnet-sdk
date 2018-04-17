@@ -14,7 +14,7 @@
 	{
 		#region [ Fields ]
 
-		public List<Candidate> Result { get; }
+		public List<Candidate> Result { get; private set; }
 
 		/// <remarks>
 		///     Disabled by default. Set to true to enable.
