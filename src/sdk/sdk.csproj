@@ -11,6 +11,8 @@
     <PackageLicenseUrl>https://github.com/smartystreets/smartystreets-dotnet-sdk/blob/master/LICENSE.md</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/smartystreets/smartystreets-dotnet-sdk</PackageProjectUrl>
     <RepositoryUrl>https://github.com/smartystreets/smartystreets-dotnet-sdk</RepositoryUrl>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>sdk.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(CustomVersion)' != ''">
     <Version>$(CustomVersion)</Version>
