@@ -7,6 +7,7 @@ TEST_FILE := src/tests/tests.csproj
 CONFIGURATION := Release
 WORKSPACE_DIR := workspace
 
+# https://github.com/dotnet/sdk/issues/335
 export FrameworkPathOverride=$(shell dirname $(shell which mono))/../lib/mono/4.0-api/
 
 clean:
