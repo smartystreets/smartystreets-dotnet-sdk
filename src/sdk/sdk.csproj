@@ -10,7 +10,6 @@
     <Copyright>Copyright © SmartyStreets, LLC</Copyright>
     <PackageLicenseUrl>https://github.com/smartystreets/smartystreets-dotnet-sdk/blob/master/LICENSE.md</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/smartystreets/smartystreets-dotnet-sdk</PackageProjectUrl>
-    <PackageIconUrl>Icon URL</PackageIconUrl>
     <RepositoryUrl>https://github.com/smartystreets/smartystreets-dotnet-sdk</RepositoryUrl>
   </PropertyGroup>
   <PropertyGroup Condition="'$(CustomVersion)' != ''">
