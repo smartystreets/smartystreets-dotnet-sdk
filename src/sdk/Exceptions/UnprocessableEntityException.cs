@@ -1,14 +1,14 @@
 ﻿namespace SmartyStreets
 {
-    public class UnprocessableEntityException : SmartyException
-    {
-        public UnprocessableEntityException()
-        {
-        }
+	public class UnprocessableEntityException : SmartyException
+	{
+		public UnprocessableEntityException()
+		{
+		}
 
-        public UnprocessableEntityException(string message)
-            : base(message)
-        {
-        }
-    }
+		public UnprocessableEntityException(string message)
+			: base(message)
+		{
+		}
+	}
 }

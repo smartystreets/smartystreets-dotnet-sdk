@@ -3,7 +3,7 @@
 	using System.Runtime.Serialization;
 
 	/// <summary>
-	/// See "https://smartystreets.com/docs/cloud/us-extract-api#http-response-status"
+	///     See "https://smartystreets.com/docs/cloud/us-extract-api#http-response-status"
 	/// </summary>
 	[DataContract]
 	public class Result

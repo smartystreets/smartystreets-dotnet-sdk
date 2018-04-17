@@ -1,8 +1,8 @@
 ﻿namespace SmartyStreets.USStreetApi
 {
+	using System.Collections.Generic;
 	using System.Text;
 	using NUnit.Framework;
-    using System.Collections.Generic;
 
 	[TestFixture]
 	public class ClientTests

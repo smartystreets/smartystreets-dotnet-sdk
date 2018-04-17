@@ -7,7 +7,10 @@
 	public class NativeSender : ISender
 	{
 		private static readonly Version AssemblyVersion = typeof(NativeSender).Assembly.GetName().Version;
-		private static readonly string UserAgent = string.Format("smartystreets (sdk:dotnet@{0}.{1}.{2})", AssemblyVersion.Major, AssemblyVersion.Minor, AssemblyVersion.Build);
+
+		private static readonly string UserAgent = string.Format("smartystreets (sdk:dotnet@{0}.{1}.{2})",
+			AssemblyVersion.Major, AssemblyVersion.Minor, AssemblyVersion.Build);
+
 		private readonly TimeSpan timeout;
 		private readonly IWebProxy proxy;
 
@@ -15,6 +18,7 @@
 		{
 			this.timeout = TimeSpan.FromSeconds(10);
 		}
+
 		public NativeSender(TimeSpan timeout, Proxy proxy = null) : this()
 		{
 			this.timeout = timeout;
@@ -34,6 +38,7 @@
 
 			return new Response(statusCode, payload);
 		}
+
 		private HttpWebRequest BuildRequest(Request request)
 		{
 			var frameworkRequest = (HttpWebRequest)WebRequest.Create(request.GetUrl());
@@ -53,6 +58,7 @@
 
 			frameworkRequest.UserAgent = UserAgent;
 		}
+
 		private static void TryWritePayload(Request request, WebRequest frameworkRequest)
 		{
 			if (request.Method != "POST" || request.Payload == null)
@@ -63,6 +69,7 @@
 				CopyStream(sourceStream, GetRequestStream(frameworkRequest));
 			}
 		}
+
 		private static void CopyStream(Stream source, Stream target)
 		{
 			try
@@ -74,6 +81,7 @@
 				throw new SmartyException("Unable to write to request stream.", ex);
 			}
 		}
+
 		private static Stream GetRequestStream(WebRequest request)
 		{
 			try
@@ -85,6 +93,7 @@
 				throw new SmartyException("Failed to make request.", ex);
 			}
 		}
+
 		private static HttpWebResponse GetResponse(WebRequest request)
 		{
 			try
@@ -99,6 +108,7 @@
 				return (HttpWebResponse)e.Response;
 			}
 		}
+
 		private static byte[] GetResponseBody(WebResponse response)
 		{
 			var length = response.ContentLength >= 0 ? (int)response.ContentLength : 0;

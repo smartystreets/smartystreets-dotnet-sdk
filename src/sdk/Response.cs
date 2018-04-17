@@ -2,8 +2,8 @@
 {
 	public class Response
 	{
-		public int StatusCode { get; private set; }
-		public byte[] Payload { get; private set; }
+		public int StatusCode { get; }
+		public byte[] Payload { get; }
 
 		public Response(int statusCode, byte[] payload)
 		{

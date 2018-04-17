@@ -22,6 +22,7 @@
 
 			this.Send(new Batch {lookup});
 		}
+
 		public void Send(Batch batch)
 		{
 			if (batch == null)
@@ -44,6 +45,7 @@
 
 			AssignResultsToLookups(batch, results);
 		}
+
 		private static void PopulateQueryString(Lookup lookup, Request request)
 		{
 			request.SetParameter("input_id", lookup.InputId);
@@ -51,6 +53,7 @@
 			request.SetParameter("state", lookup.State);
 			request.SetParameter("zipcode", lookup.ZipCode);
 		}
+
 		private static void AssignResultsToLookups(Batch batch, IList<Result> results)
 		{
 			for (var i = 0; i < results.Count; i++)

@@ -1,100 +1,100 @@
-﻿using System;
-using System.Text;
-using NUnit.Framework;
-
-namespace SmartyStreets.USExtractApi
+﻿namespace SmartyStreets.USExtractApi
 {
-    [TestFixture]
-    public class ClientTests
-    {
-        private RequestCapturingSender capturingSender;
-        private URLPrefixSender urlSender;
+	using System;
+	using System.Text;
+	using NUnit.Framework;
 
-        [SetUp]
-        public void Setup()
-        {
-            this.capturingSender = new RequestCapturingSender();
-            this.urlSender = new URLPrefixSender("http://localhost/", this.capturingSender);
-        }
+	[TestFixture]
+	public class ClientTests
+	{
+		private RequestCapturingSender capturingSender;
+		private URLPrefixSender urlSender;
 
-        [Test]
-        public void TestSendingBodyOnlyLookup()
-        {
-            var serializer = new FakeSerializer(null);
-            var client = new Client(this.urlSender, serializer);
-            const string expectedUrl = "http://localhost/?aggressive=false&addr_line_breaks=true&addr_per_line=0";
-            var expectedPayload = Encoding.ASCII.GetBytes("Hello, World!");
+		[SetUp]
+		public void Setup()
+		{
+			this.capturingSender = new RequestCapturingSender();
+			this.urlSender = new URLPrefixSender("http://localhost/", this.capturingSender);
+		}
 
-            client.Send(new Lookup("Hello, World!"));
+		[Test]
+		public void TestSendingBodyOnlyLookup()
+		{
+			var serializer = new FakeSerializer(null);
+			var client = new Client(this.urlSender, serializer);
+			const string expectedUrl = "http://localhost/?aggressive=false&addr_line_breaks=true&addr_per_line=0";
+			var expectedPayload = Encoding.ASCII.GetBytes("Hello, World!");
 
-            Assert.AreEqual(expectedUrl, capturingSender.Request.GetUrl());
-            Assert.AreEqual(expectedPayload, capturingSender.Request.Payload);
-        }
+			client.Send(new Lookup("Hello, World!"));
 
-        [Test]
-        public void TestSendingFullyPopulatedLookup()
-        {
-            var serializer = new FakeSerializer(null);
-            var client = new Client(this.urlSender, serializer);
-            const string expectedUrl = "http://localhost/?html=true&aggressive=true&addr_line_breaks=false&addr_per_line=2";
-            var lookup = new Lookup("1");
-            lookup.SpecifyHtmlInput(true);
-            lookup.IsAggressive = true;
-            lookup.AddressesHaveLineBreaks = false;
-            lookup.AddressesPerLine = 2;
+			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
+			Assert.AreEqual(expectedPayload, this.capturingSender.Request.Payload);
+		}
 
-            client.Send(lookup);
+		[Test]
+		public void TestSendingFullyPopulatedLookup()
+		{
+			var serializer = new FakeSerializer(null);
+			var client = new Client(this.urlSender, serializer);
+			const string expectedUrl = "http://localhost/?html=true&aggressive=true&addr_line_breaks=false&addr_per_line=2";
+			var lookup = new Lookup("1");
+			lookup.SpecifyHtmlInput(true);
+			lookup.IsAggressive = true;
+			lookup.AddressesHaveLineBreaks = false;
+			lookup.AddressesPerLine = 2;
 
-            Assert.AreEqual(expectedUrl, capturingSender.Request.GetUrl());
-        }
+			client.Send(lookup);
 
-        [Test]
-        public void TestRejectNullLookup()
-        {
-            var serializer = new FakeSerializer(null);
-            var client = new Client(this.urlSender, serializer);
+			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
+		}
 
-            Assert.Throws<ArgumentNullException>(() => client.Send(null));
-        }
+		[Test]
+		public void TestRejectNullLookup()
+		{
+			var serializer = new FakeSerializer(null);
+			var client = new Client(this.urlSender, serializer);
 
-        [Test]
-        public void TestDeserializeCalledWithResponseBody()
-        {
-            var response = new Response(0, Encoding.ASCII.GetBytes("Hello, World!"));
-            var sender = new MockSender(response);
-            var deserializer = new FakeDeserializer(null);
-            var client = new Client(sender, deserializer);
+			Assert.Throws<ArgumentNullException>(() => client.Send(null));
+		}
 
-            client.Send(new Lookup("Hello, World!"));
+		[Test]
+		public void TestDeserializeCalledWithResponseBody()
+		{
+			var response = new Response(0, Encoding.ASCII.GetBytes("Hello, World!"));
+			var sender = new MockSender(response);
+			var deserializer = new FakeDeserializer(null);
+			var client = new Client(sender, deserializer);
 
-            Assert.AreEqual(response.Payload, deserializer.Payload);
-        }
+			client.Send(new Lookup("Hello, World!"));
 
-        [Test]
-        public void TestResultCorrectlyAssignedToCorrespondingLookup()
-        {
-            var expectedResult = new Result();
-            var lookup = new Lookup("Hello, World!");
+			Assert.AreEqual(response.Payload, deserializer.Payload);
+		}
 
-            var sender = new MockSender(new Response(0, Encoding.ASCII.GetBytes("[]")));
-            var deserializer = new FakeDeserializer(expectedResult);
-            var client = new Client(sender, deserializer);
+		[Test]
+		public void TestResultCorrectlyAssignedToCorrespondingLookup()
+		{
+			var expectedResult = new Result();
+			var lookup = new Lookup("Hello, World!");
 
-            client.Send(lookup);
+			var sender = new MockSender(new Response(0, Encoding.ASCII.GetBytes("[]")));
+			var deserializer = new FakeDeserializer(expectedResult);
+			var client = new Client(sender, deserializer);
 
-            Assert.AreEqual(expectedResult, lookup.Result);
-        }
+			client.Send(lookup);
 
-        [Test]
-        public void TestContentTypeSetCorrectly()
-        {
-            var serializer = new FakeSerializer(null);
-            var client = new Client(this.urlSender, serializer);
-            var lookup = new Lookup("Hello, World!");
+			Assert.AreEqual(expectedResult, lookup.Result);
+		}
 
-            client.Send(lookup);
+		[Test]
+		public void TestContentTypeSetCorrectly()
+		{
+			var serializer = new FakeSerializer(null);
+			var client = new Client(this.urlSender, serializer);
+			var lookup = new Lookup("Hello, World!");
 
-            Assert.AreEqual("text/plain", this.capturingSender.Request.ContentType);
-        }
-    }
+			client.Send(lookup);
+
+			Assert.AreEqual("text/plain", this.capturingSender.Request.ContentType);
+		}
+	}
 }

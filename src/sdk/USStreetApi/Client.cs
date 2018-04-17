@@ -1,7 +1,7 @@
 ﻿namespace SmartyStreets.USStreetApi
 {
 	using System;
-    using System.Collections.Generic;
+	using System.Collections.Generic;
 	using System.Globalization;
 	using System.IO;
 
@@ -43,7 +43,7 @@
 
 			using (var payloadStream = new MemoryStream(response.Payload))
 			{
-                var candidates = this.serializer.Deserialize<List<Candidate>>(payloadStream) ?? new List<Candidate>();
+				var candidates = this.serializer.Deserialize<List<Candidate>>(payloadStream) ?? new List<Candidate>();
 				AssignCandidatesToLookups(batch, candidates);
 			}
 		}

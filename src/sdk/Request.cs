@@ -12,6 +12,7 @@
 		public string ContentType { get; set; }
 		public Dictionary<string, string> Headers { get; }
 		public string Method { get; private set; }
+
 		public byte[] Payload
 		{
 			get => this.payload;
@@ -34,6 +35,7 @@
 		{
 			this.Headers[header] = value;
 		}
+
 		public void SetParameter(string name, string value)
 		{
 			if (name == null || value == null || name.Length == 0 || value.Length == 0)
@@ -66,6 +68,7 @@
 
 			return url;
 		}
+
 		private static string UrlEncode(string value)
 		{
 			try

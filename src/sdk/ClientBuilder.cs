@@ -1,11 +1,12 @@
 ﻿namespace SmartyStreets
 {
 	using System;
+	using InternationalStreetApi;
 
 	/// <summary>
-	/// The ClientBuilder class helps you build a client object for one of the supported SmartyStreets APIs.
-	/// You can use ClientBuilder's methods to customize settings like maximum retries or timeout duration. These methods
-	/// are chainable, so you can usually get set up with one line of code.
+	///     The ClientBuilder class helps you build a client object for one of the supported SmartyStreets APIs.
+	///     You can use ClientBuilder's methods to customize settings like maximum retries or timeout duration. These methods
+	///     are chainable, so you can usually get set up with one line of code.
 	/// </summary>
 	public class ClientBuilder
 	{
@@ -20,7 +21,7 @@
 		private const string UsExtractApiUrl = "https://us-extract.api.smartystreets.com/";
 		private const string UsStreetApiUrl = "https://us-street.api.smartystreets.com/street-address";
 		private const string UsZipCodeApiUrl = "https://us-zipcode.api.smartystreets.com/lookup";
-        private Proxy proxy;
+		private Proxy proxy;
 
 		public ClientBuilder()
 		{
@@ -28,10 +29,12 @@
 			this.maxTimeout = TimeSpan.FromSeconds(10);
 			this.serializer = new NativeSerializer();
 		}
+
 		public ClientBuilder(ICredentials signer) : this()
 		{
 			this.signer = signer;
 		}
+
 		public ClientBuilder(string authId, string authToken) : this(new StaticCredentials(authId, authToken))
 		{
 		}
@@ -45,8 +48,8 @@
 		}
 
 		/// <param name="timeout">
-		/// The maximum time (given as a TimeSpan) to wait for a connection, and also to wait for
-		/// the response to be read. (Default is 10 seconds)
+		///     The maximum time (given as a TimeSpan) to wait for a connection, and also to wait for
+		///     the response to be read. (Default is 10 seconds)
 		/// </param>
 		/// <returns>Returns 'this' to accommodate method chaining.</returns>
 		public ClientBuilder WithMaxTimeout(TimeSpan timeout)
@@ -55,31 +58,31 @@
 			return this;
 		}
 
-		///<remarks>This may be useful when using a local installation of the SmartyStreets APIs.</remarks>
+		/// <remarks>This may be useful when using a local installation of the SmartyStreets APIs.</remarks>
 		/// <param name="baseUrl">Defaults to the URL for the API corresponding to the Client object being built.</param>
 		/// <returns>Returns 'this' to accommodate method chaining.</returns>
 		public ClientBuilder WithCustomBaseUrl(string baseUrl)
 		{
 			this.urlPrefix = baseUrl;
-            return this;
+			return this;
 		}
 
-		///<remarks>ViaProxy saves the address of your proxy server through which to send all requests.</remarks>
+		/// <remarks>ViaProxy saves the address of your proxy server through which to send all requests.</remarks>
 		/// <param name="proxyAddress">Proxy address of your proxy server</param>
 		/// <param name="proxyUsername">Username for proxy authentication</param>
 		/// <param name="proxyPassword">Password for proxy authentication</param>
 		/// <returns>Returns 'this' to accommodate method chaining.</returns>
 		public ClientBuilder ViaProxy(string proxyAddress, string proxyUsername, string proxyPassword)
-        {
-            if (proxyAddress == null)
+		{
+			if (proxyAddress == null)
 				throw new UnprocessableEntityException("ProxyUrl is required");
 
-            this.proxy = new Proxy(proxyAddress, proxyUsername, proxyPassword);
-            return this;
-        }
+			this.proxy = new Proxy(proxyAddress, proxyUsername, proxyPassword);
+			return this;
+		}
 
 		/// <summary>
-		/// Changes the Serializer from the default NativeSerializer.
+		///     Changes the Serializer from the default NativeSerializer.
 		/// </summary>
 		/// <param name="value">An object that implements the ISerializer interface.</param>
 		/// <returns>Returns 'this' to accommodate method chaining.</returns>
@@ -97,30 +100,33 @@
 			return this;
 		}
 
-		public InternationalStreetApi.Client BuildInternationalStreetApiClient() {
-			EnsureURLPrefixNotNull(InternationalStreetApiUrl);
-			return new InternationalStreetApi.Client(BuildSender(), this.serializer);
+		public Client BuildInternationalStreetApiClient()
+		{
+			this.EnsureURLPrefixNotNull(InternationalStreetApiUrl);
+			return new Client(this.BuildSender(), this.serializer);
 		}
 
-		public USAutocompleteApi.Client BuildUsAutocompleteApiClient() {
-			EnsureURLPrefixNotNull(UsAutocompleteApiUrl);
-			return new USAutocompleteApi.Client(BuildSender(), this.serializer);
+		public USAutocompleteApi.Client BuildUsAutocompleteApiClient()
+		{
+			this.EnsureURLPrefixNotNull(UsAutocompleteApiUrl);
+			return new USAutocompleteApi.Client(this.BuildSender(), this.serializer);
 		}
 
-		public USExtractApi.Client BuildUsExtractApiClient() {
+		public USExtractApi.Client BuildUsExtractApiClient()
+		{
 			this.EnsureURLPrefixNotNull(UsExtractApiUrl);
-			return new USExtractApi.Client(BuildSender(), this.serializer);
+			return new USExtractApi.Client(this.BuildSender(), this.serializer);
 		}
 
 		public USStreetApi.Client BuildUsStreetApiClient()
 		{
-			EnsureURLPrefixNotNull(UsStreetApiUrl);
+			this.EnsureURLPrefixNotNull(UsStreetApiUrl);
 			return new USStreetApi.Client(this.BuildSender(), this.serializer);
 		}
 
 		public USZipCodeApi.Client BuildUsZipCodeApiClient()
 		{
-			EnsureURLPrefixNotNull(UsZipCodeApiUrl);
+			this.EnsureURLPrefixNotNull(UsZipCodeApiUrl);
 			return new USZipCodeApi.Client(this.BuildSender(), this.serializer);
 		}
 
@@ -129,7 +135,7 @@
 			if (this.httpSender != null)
 				return this.httpSender;
 
-            ISender sender = new NativeSender(this.maxTimeout, this.proxy);
+			ISender sender = new NativeSender(this.maxTimeout, this.proxy);
 			sender = new StatusCodeSender(sender);
 
 			if (this.signer != null)

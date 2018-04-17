@@ -10,7 +10,7 @@
 		[SetUp]
 		public void SetUp()
 		{
-			signer = new StaticCredentials("id", "secret");
+			this.signer = new StaticCredentials("id", "secret");
 		}
 
 		[Test]

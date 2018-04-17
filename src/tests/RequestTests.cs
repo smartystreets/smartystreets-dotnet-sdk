@@ -63,17 +63,17 @@
 			Assert.AreEqual(Expected, request.GetUrl());
 		}
 
-        [Test]
-        public void TestUrlEncodingOfUnicodeCharacters()
-        {
-            var request = new Request();
+		[Test]
+		public void TestUrlEncodingOfUnicodeCharacters()
+		{
+			var request = new Request();
 
 			request.SetParameter("needs_encoding", "&foo=bar");
 			request.SetParameter("unicode", "Sjömadsvägen");
 
 			const string Expected = "?needs_encoding=%26foo%3Dbar&unicode=Sj%C3%B6madsv%C3%A4gen";
 			Assert.AreEqual(Expected, request.GetUrl());
-        }
+		}
 
 		[Test]
 		public void TestUrlWithoutTrailingQuestionMark()
@@ -111,13 +111,13 @@
 		{
 			var request = new Request
 			{
-				Payload = new byte[] { 0, 1, 2 }
+				Payload = new byte[] {0, 1, 2}
 			};
 
 			var actualPayload = request.Payload;
 
 			Assert.AreEqual("POST", request.Method);
-			Assert.AreEqual(new byte[] { 0, 1, 2 }, actualPayload);
+			Assert.AreEqual(new byte[] {0, 1, 2}, actualPayload);
 		}
 	}
 }

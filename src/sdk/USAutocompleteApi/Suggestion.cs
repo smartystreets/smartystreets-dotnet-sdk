@@ -1,23 +1,24 @@
-﻿using System.Runtime.Serialization;
-
-namespace SmartyStreets.USAutocompleteApi
+﻿namespace SmartyStreets.USAutocompleteApi
 {
-    /// <remarks>
-    /// See "https://smartystreets.com/docs/cloud/us-autocomplete-api#http-response"
-    /// </remarks>>
-    [DataContract]
-    public class Suggestion
-    {
-        [DataMember(Name = "text")]
-        public string Text { get; private set; }
+	using System.Runtime.Serialization;
 
-        [DataMember(Name = "street_line")]
-        public string StreetLine { get; private set;}
+	/// <remarks>
+	///     See "https://smartystreets.com/docs/cloud/us-autocomplete-api#http-response"
+	/// </remarks>
+	/// >
+	[DataContract]
+	public class Suggestion
+	{
+		[DataMember(Name = "text")]
+		public string Text { get; private set; }
 
-        [DataMember(Name = "city")]
-        public string City { get; private set;}
+		[DataMember(Name = "street_line")]
+		public string StreetLine { get; private set; }
 
-        [DataMember(Name = "state")]
-        public string State { get; private set;}
-    }
+		[DataMember(Name = "city")]
+		public string City { get; private set; }
+
+		[DataMember(Name = "state")]
+		public string State { get; private set; }
+	}
 }

@@ -64,7 +64,7 @@
 				}
 
 				var cityStates = result.CityStates;
-				Console.WriteLine(cityStates.Length + " City and State match" + ((cityStates.Length == 1) ? ":" : "es:"));
+				Console.WriteLine(cityStates.Length + " City and State match" + (cityStates.Length == 1 ? ":" : "es:"));
 
 				foreach (var cityState in cityStates)
 				{
@@ -75,7 +75,7 @@
 				}
 
 				var zipCodes = result.ZipCodes;
-				Console.WriteLine(zipCodes.Length + " ZIP Code match" + ((cityStates.Length == 1) ? ":" : "es:"));
+				Console.WriteLine(zipCodes.Length + " ZIP Code match" + (cityStates.Length == 1 ? ":" : "es:"));
 
 				foreach (var zipCode in zipCodes)
 				{
@@ -85,6 +85,7 @@
 					Console.WriteLine("Longitude: " + zipCode.Longitude);
 					Console.WriteLine();
 				}
+
 				Console.WriteLine("***********************************");
 			}
 		}

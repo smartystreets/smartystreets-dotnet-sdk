@@ -26,7 +26,7 @@
 
 		public bool IsValid()
 		{
-			return (this.Status == null && this.Reason == null);
+			return this.Status == null && this.Reason == null;
 		}
 
 		public CityEntry GetCityState(int index)

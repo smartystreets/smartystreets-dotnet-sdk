@@ -88,6 +88,7 @@
 					Console.WriteLine("Latitude:        " + metadata.Latitude);
 					Console.WriteLine("Longitude:       " + metadata.Longitude);
 				}
+
 				Console.WriteLine();
 			}
 		}

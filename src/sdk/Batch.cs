@@ -35,20 +35,24 @@
 
 			this.named[key] = item;
 		}
+
 		public bool Contains(T item)
 		{
 			return this.all.Contains(item);
 		}
+
 		public bool Remove(T item)
 		{
 			this.named.Remove(item.InputId);
 			return this.all.Remove(item);
 		}
+
 		public void Clear()
 		{
 			this.named.Clear();
 			this.all.Clear();
 		}
+
 		public void CopyTo(T[] array, int arrayIndex)
 		{
 			this.all.CopyTo(array, arrayIndex);
@@ -62,6 +66,7 @@
 		{
 			return this.all.GetEnumerator();
 		}
+
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();

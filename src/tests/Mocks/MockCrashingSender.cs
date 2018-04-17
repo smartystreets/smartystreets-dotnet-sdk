@@ -27,7 +27,7 @@
 			if (request.GetUrl().Contains(RetryMaxTimes))
 				throw new IOException("Retrying won't help");
 
-			return new Response(StatusCode, new byte[] { });
+			return new Response(StatusCode, new byte[] {});
 		}
 	}
 }

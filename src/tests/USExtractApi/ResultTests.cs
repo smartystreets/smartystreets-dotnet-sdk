@@ -1,23 +1,23 @@
 ﻿namespace SmartyStreets.USExtractApi
 {
-	using NUnit.Framework;
 	using System.IO;
 	using System.Text;
-	using USStreetApi;
+	using NUnit.Framework;
 
 	[TestFixture]
 	public class ResultTests
 	{
 		private readonly NativeSerializer nativeSerializer = new NativeSerializer();
+
 		private const string ResponsePayload = "{\"meta\":{\"lines\":1,\"unicode\":true,\"address_count\":2," +
-            "\"verified_count\":3,\"bytes\":4,\"character_count\":5},\"addresses\":[{\"text\":\"6\"," +
-            "\"verified\":true,\"line\":7,\"start\":8,\"end\":9,\"api_output\":[{}]},{\"text\":\"10\"}]}";
+		                                       "\"verified_count\":3,\"bytes\":4,\"character_count\":5},\"addresses\":[{\"text\":\"6\"," +
+		                                       "\"verified\":true,\"line\":7,\"start\":8,\"end\":9,\"api_output\":[{}]},{\"text\":\"10\"}]}";
 
 		[Test]
 		public void TestAllFieldsFilledCorrectly()
 		{
 			Stream Source = new MemoryStream(Encoding.ASCII.GetBytes(ResponsePayload));
-			var Result = nativeSerializer.Deserialize<Result>(Source);
+			var Result = this.nativeSerializer.Deserialize<Result>(Source);
 
 			var Metadata = Result.Metadata;
 			Assert.IsNotNull(Metadata);

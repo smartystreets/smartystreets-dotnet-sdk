@@ -25,10 +25,11 @@
 			{
 				Property1 = "Name",
 				Property2 = 42,
-				Property3 = true,
+				Property3 = true
 			});
 
-			Assert.AreEqual(Encoding.UTF8.GetString(results), "{'Property2':42,'Property3':true,'property_1':'Name'}".Replace("'", "\""));
+			Assert.AreEqual(Encoding.UTF8.GetString(results),
+				"{'Property2':42,'Property3':true,'property_1':'Name'}".Replace("'", "\""));
 		}
 
 		[Test]
@@ -46,10 +47,12 @@
 			{
 				Property1 = "Name",
 				Property2 = 42,
-				Property3 = true,
+				Property3 = true
 			};
 
-			var stream = new MemoryStream(Encoding.UTF8.GetBytes("{'Property2':42,'Property3':true,'property_1':'Name'}".Replace("'", "\"")));
+			var stream =
+				new MemoryStream(
+					Encoding.UTF8.GetBytes("{'Property2':42,'Property3':true,'property_1':'Name'}".Replace("'", "\"")));
 			var actual = this.serializer.Deserialize<NativeSerializerTestObject>(stream);
 
 			Assert.AreEqual(expected.Property1, actual.Property1);

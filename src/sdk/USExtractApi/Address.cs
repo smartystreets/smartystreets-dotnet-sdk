@@ -1,10 +1,10 @@
 ﻿namespace SmartyStreets.USExtractApi
 {
 	using System.Runtime.Serialization;
-	using SmartyStreets.USStreetApi;
+	using USStreetApi;
 
 	/// <summary>
-	///  See "https://smartystreets.com/docs/cloud/us-extract-api#http-response-status"
+	///     See "https://smartystreets.com/docs/cloud/us-extract-api#http-response-status"
 	/// </summary>
 	[DataContract]
 	public class Address

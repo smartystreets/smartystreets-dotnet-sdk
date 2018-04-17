@@ -11,14 +11,14 @@
 		{
 			var authId = "Your SmartyStreets Auth ID here";
 			var authToken = "Your SmartyStreets Auth Token here";
-			
+
 			// We recommend storing your keys in environment variables instead---it's safer!
 //			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 //			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			
+
 			var client = new ClientBuilder(authId, authToken)
-                                //.ViaProxy("http://localhost:8080", "username", "password") // uncomment this line to point to the specified proxy.
-                                .BuildUsStreetApiClient();
+				//.ViaProxy("http://localhost:8080", "username", "password") // uncomment this line to point to the specified proxy.
+				.BuildUsStreetApiClient();
 
 			var lookup = new Lookup
 			{

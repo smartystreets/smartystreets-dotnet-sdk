@@ -1,81 +1,81 @@
 ﻿namespace SmartyStreets.InternationalStreetApi
 {
-    using System;
-    using System.IO;
-    using System.Collections.Generic;
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
 
-    public class Client
-    {
-        private readonly ISender sender;
-        private readonly ISerializer serializer;
+	public class Client
+	{
+		private readonly ISender sender;
+		private readonly ISerializer serializer;
 
-        public Client(ISender sender, ISerializer serializer)
-        {
-            this.sender = sender;
-            this.serializer = serializer;
-        }
-
-        public void Send(Lookup lookup)
-        {
-            if (lookup == null)
-                throw new ArgumentNullException("lookup");
-
-            EnsureEnoughInfo(lookup);
-            var request = BuildRequest(lookup);
-
-            var response = this.sender.Send(request);
-
-            using (var payloadStream = new MemoryStream(response.Payload))
-            {
-                var candidates = this.serializer.Deserialize<List<Candidate>>(payloadStream) ?? new List<Candidate>();
-                AssignCandidatesToLookups(candidates, lookup);
-            }
-        }
-
-        private static void AssignCandidatesToLookups(IEnumerable<Candidate> candidates, Lookup lookup)
+		public Client(ISender sender, ISerializer serializer)
 		{
-			foreach (var candidate in candidates)
-                lookup.AddToResult(candidate);
+			this.sender = sender;
+			this.serializer = serializer;
 		}
 
-        private static Request BuildRequest(Lookup lookup)
-        {
-            var request = new Request();
+		public void Send(Lookup lookup)
+		{
+			if (lookup == null)
+				throw new ArgumentNullException("lookup");
 
-            request.SetParameter("country", lookup.Country);
-            request.SetParameter("geocode", lookup.Geocode ? lookup.Geocode.ToString().ToLower() : null);
-            if (lookup.Language != null)
-                request.SetParameter("language", lookup.Language);
-            request.SetParameter("freeform", lookup.Freeform);
-            request.SetParameter("address1", lookup.Address1);
-            request.SetParameter("address2", lookup.Address2);
-            request.SetParameter("address3", lookup.Address3);
-            request.SetParameter("address4", lookup.Address4);
-            request.SetParameter("organization", lookup.Organization);
-            request.SetParameter("locality", lookup.Locality);
-            request.SetParameter("administrative_area", lookup.AdministrativeArea);
-            request.SetParameter("postal_code", lookup.PostalCode);
+			EnsureEnoughInfo(lookup);
+			var request = BuildRequest(lookup);
 
-            return request;
-        }
+			var response = this.sender.Send(request);
 
-        private static void EnsureEnoughInfo(Lookup lookup)
-        {
-            if (lookup.MissingCountry())
-                throw new UnprocessableEntityException("Country field is required.");
+			using (var payloadStream = new MemoryStream(response.Payload))
+			{
+				var candidates = this.serializer.Deserialize<List<Candidate>>(payloadStream) ?? new List<Candidate>();
+				AssignCandidatesToLookups(candidates, lookup);
+			}
+		}
 
-            if (lookup.HasFreeform())
-                return;
+		private static void AssignCandidatesToLookups(IEnumerable<Candidate> candidates, Lookup lookup)
+		{
+			foreach (var candidate in candidates)
+				lookup.AddToResult(candidate);
+		}
 
-            if (lookup.MissingAddress1())
-                throw new UnprocessableEntityException("Either freeform or address1 is required.");
+		private static Request BuildRequest(Lookup lookup)
+		{
+			var request = new Request();
 
-            if (lookup.HasPostalCode())
-                return;
+			request.SetParameter("country", lookup.Country);
+			request.SetParameter("geocode", lookup.Geocode ? lookup.Geocode.ToString().ToLower() : null);
+			if (lookup.Language != null)
+				request.SetParameter("language", lookup.Language);
+			request.SetParameter("freeform", lookup.Freeform);
+			request.SetParameter("address1", lookup.Address1);
+			request.SetParameter("address2", lookup.Address2);
+			request.SetParameter("address3", lookup.Address3);
+			request.SetParameter("address4", lookup.Address4);
+			request.SetParameter("organization", lookup.Organization);
+			request.SetParameter("locality", lookup.Locality);
+			request.SetParameter("administrative_area", lookup.AdministrativeArea);
+			request.SetParameter("postal_code", lookup.PostalCode);
 
-            if (lookup.MissingLocalityOrAdministrativeArea())
-                throw new UnprocessableEntityException("Insufficient information: One or more required fields " +
-                                                       "were not set on the lookup.");
-        }
-    }
+			return request;
+		}
+
+		private static void EnsureEnoughInfo(Lookup lookup)
+		{
+			if (lookup.MissingCountry())
+				throw new UnprocessableEntityException("Country field is required.");
+
+			if (lookup.HasFreeform())
+				return;
+
+			if (lookup.MissingAddress1())
+				throw new UnprocessableEntityException("Either freeform or address1 is required.");
+
+			if (lookup.HasPostalCode())
+				return;
+
+			if (lookup.MissingLocalityOrAdministrativeArea())
+				throw new UnprocessableEntityException("Insufficient information: One or more required fields " +
+				                                       "were not set on the lookup.");
+		}
+	}
 }

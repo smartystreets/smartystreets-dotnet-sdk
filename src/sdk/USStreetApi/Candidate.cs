@@ -8,7 +8,7 @@
 		#region [ Fields ]
 
 		[DataMember(Name = "input_index")]
-		public int InputIndex { get; private set; }
+		public int InputIndex { get; }
 
 		[DataMember(Name = "candidate_index")]
 		public int CandidateIndex { get; private set; }
