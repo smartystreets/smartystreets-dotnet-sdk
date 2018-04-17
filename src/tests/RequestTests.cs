@@ -59,7 +59,7 @@
 			request.SetParameter("name&", "value");
 			request.SetParameter("name1", "other !value$");
 
-			const string Expected = "?name%26=value&name1=other+!value%24";
+			const string Expected = "?name%26=value&name1=other%20%21value%24";
 			Assert.AreEqual(Expected, request.GetUrl());
 		}
 

@@ -1,7 +1,7 @@
 ﻿namespace SmartyStreets
 {
+	using System;
 	using System.Collections.Generic;
-	using System.Net;
 
 	public class Request
 	{
@@ -73,7 +73,7 @@
 		{
 			try
 			{
-				return WebUtility.UrlEncode(value);
+				return Uri.EscapeDataString(value);
 			}
 			catch
 			{
