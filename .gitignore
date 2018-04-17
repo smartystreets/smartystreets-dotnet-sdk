@@ -11,3 +11,4 @@ src/.idea
 .DS_Store
 /workspace/
 .vs
+*.user
