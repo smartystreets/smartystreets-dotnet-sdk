@@ -4,7 +4,7 @@
 	using System.Collections.Generic;
 	using System.IO;
 
-	public class Client
+	public class Client : IClient<Lookup>
 	{
 		private readonly ISender sender;
 		private readonly ISerializer serializer;

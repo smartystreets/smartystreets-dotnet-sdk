@@ -8,7 +8,7 @@
 	///     This client sends lookups to the SmartyStreets US Autocomplete API,
 	///     and attaches the results to the appropriate Lookup objects.
 	/// </summary>
-	public class Client
+	public class Client : IClient<Lookup>
 	{
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
