@@ -9,12 +9,12 @@
 	public class Analysis
 	{
 		[DataMember(Name = "verification_status")]
-		public string VerificationStatus { get; private set; }
+		public string VerificationStatus { get; set; }
 
 		[DataMember(Name = "address_precision")]
-		public string AddressPrecision { get; private set; }
+		public string AddressPrecision { get; set; }
 
 		[DataMember(Name = "max_address_precision")]
-		public string MaxAddressPrecision { get; private set; }
+		public string MaxAddressPrecision { get; set; }
 	}
 }

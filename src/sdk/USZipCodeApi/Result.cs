@@ -8,19 +8,19 @@
 		#region [ Fields ]
 
 		[DataMember(Name = "status")]
-		public string Status { get; private set; }
+		public string Status { get; set; }
 
 		[DataMember(Name = "reason")]
-		public string Reason { get; private set; }
+		public string Reason { get; set; }
 
 		[DataMember(Name = "input_index")]
-		public int InputIndex { get; private set; }
+		public int InputIndex { get; set; }
 
 		[DataMember(Name = "city_states")]
-		public CityEntry[] CityStates { get; private set; }
+		public CityEntry[] CityStates { get; set; }
 
 		[DataMember(Name = "zipcodes")]
-		public ZipCodeEntry[] ZipCodes { get; private set; }
+		public ZipCodeEntry[] ZipCodes { get; set; }
 
 		#endregion
 

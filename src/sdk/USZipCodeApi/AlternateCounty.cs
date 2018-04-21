@@ -9,15 +9,15 @@
 	public class AlternateCounty
 	{
 		[DataMember(Name = "county_fips")]
-		public string CountyFips { get; private set; }
+		public string CountyFips { get; set; }
 
 		[DataMember(Name = "county_name")]
-		public string CountyName { get; private set; }
+		public string CountyName { get; set; }
 
 		[DataMember(Name = "state_abbreviation")]
-		public string StateAbbreviation { get; private set; }
+		public string StateAbbreviation { get; set; }
 
 		[DataMember(Name = "state")]
-		public string State { get; private set; }
+		public string State { get; set; }
 	}
 }

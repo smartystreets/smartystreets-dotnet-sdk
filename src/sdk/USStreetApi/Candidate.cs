@@ -8,34 +8,34 @@
 		#region [ Fields ]
 
 		[DataMember(Name = "input_index")]
-		public int InputIndex { get; private set; }
+		public int InputIndex { get; set; }
 
 		[DataMember(Name = "candidate_index")]
-		public int CandidateIndex { get; private set; }
+		public int CandidateIndex { get; set; }
 
 		[DataMember(Name = "addressee")]
-		public string Addressee { get; private set; }
+		public string Addressee { get; set; }
 
 		[DataMember(Name = "delivery_line_1")]
-		public string DeliveryLine1 { get; private set; }
+		public string DeliveryLine1 { get; set; }
 
 		[DataMember(Name = "delivery_line_2")]
-		public string DeliveryLine2 { get; private set; }
+		public string DeliveryLine2 { get; set; }
 
 		[DataMember(Name = "last_line")]
-		public string LastLine { get; private set; }
+		public string LastLine { get; set; }
 
 		[DataMember(Name = "delivery_point_barcode")]
-		public string DeliveryPointBarcode { get; private set; }
+		public string DeliveryPointBarcode { get; set; }
 
 		[DataMember(Name = "components")]
-		public Components Components { get; private set; }
+		public Components Components { get; set; }
 
 		[DataMember(Name = "metadata")]
-		public Metadata Metadata { get; private set; }
+		public Metadata Metadata { get; set; }
 
 		[DataMember(Name = "analysis")]
-		public Analysis Analysis { get; private set; }
+		public Analysis Analysis { get; set; }
 
 		#endregion
 

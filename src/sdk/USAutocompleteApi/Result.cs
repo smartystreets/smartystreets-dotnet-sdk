@@ -6,6 +6,6 @@
 	public class Result
 	{
 		[DataMember(Name = "suggestions")]
-		public Suggestion[] Suggestions { get; private set; }
+		public Suggestion[] Suggestions { get; set; }
 	}
 }

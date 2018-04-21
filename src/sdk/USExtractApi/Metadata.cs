@@ -11,22 +11,22 @@
 		#region [ Fields ]
 
 		[DataMember(Name = "lines")]
-		public int Lines { get; private set; }
+		public int Lines { get; set; }
 
 		[DataMember(Name = "unicode")]
-		public bool Unicode { get; private set; }
+		public bool Unicode { get; set; }
 
 		[DataMember(Name = "address_count")]
-		public int AddressCount { get; private set; }
+		public int AddressCount { get; set; }
 
 		[DataMember(Name = "verified_count")]
-		public int VerifiedCount { get; private set; }
+		public int VerifiedCount { get; set; }
 
 		[DataMember(Name = "bytes")]
-		public int Bytes { get; private set; }
+		public int Bytes { get; set; }
 
 		[DataMember(Name = "character_count")]
-		public int CharacterCount { get; private set; }
+		public int CharacterCount { get; set; }
 
 		#endregion
 	}

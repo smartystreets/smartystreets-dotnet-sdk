@@ -11,19 +11,19 @@
 		#region [ Fields ]
 
 		[DataMember(Name = "latitude")]
-		public double Latitude { get; private set; }
+		public double Latitude { get; set; }
 
 		[DataMember(Name = "longitude")]
-		public double Longitude { get; private set; }
+		public double Longitude { get; set; }
 
 		[DataMember(Name = "geocode_precision")]
-		public string GeocodePrecision { get; private set; }
+		public string GeocodePrecision { get; set; }
 
 		[DataMember(Name = "max_geocode_precision")]
-		public string MaxGeocodePrecision { get; private set; }
+		public string MaxGeocodePrecision { get; set; }
 
 		[DataMember(Name = "address_format")]
-		public string AddressFormat { get; private set; }
+		public string AddressFormat { get; set; }
 
 		#endregion
 	}

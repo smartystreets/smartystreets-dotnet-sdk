@@ -8,34 +8,34 @@
 		#region [ Fields ]
 
 		[DataMember(Name = "dpv_match_code")]
-		public string DpvMatchCode { get; private set; }
+		public string DpvMatchCode { get; set; }
 
 		[DataMember(Name = "dpv_footnotes")]
-		public string DpvFootnotes { get; private set; }
+		public string DpvFootnotes { get; set; }
 
 		[DataMember(Name = "dpv_cmra")]
-		public string Cmra { get; private set; }
+		public string Cmra { get; set; }
 
 		[DataMember(Name = "dpv_vacant")]
-		public string Vacant { get; private set; }
+		public string Vacant { get; set; }
 
 		[DataMember(Name = "active")]
-		public string Active { get; private set; }
+		public string Active { get; set; }
 
 		[DataMember(Name = "ews_match")]
-		public bool IsEwsMatch { get; private set; }
+		public bool IsEwsMatch { get; set; }
 
 		[DataMember(Name = "footnotes")]
-		public string Footnotes { get; private set; }
+		public string Footnotes { get; set; }
 
 		[DataMember(Name = "lacslink_code")]
-		public string LacsLinkCode { get; private set; }
+		public string LacsLinkCode { get; set; }
 
 		[DataMember(Name = "lacslink_indicator")]
-		public string LacsLinkIndicator { get; private set; }
+		public string LacsLinkIndicator { get; set; }
 
 		[DataMember(Name = "suitelink_match")]
-		public bool IsSuiteLinkMatch { get; private set; }
+		public bool IsSuiteLinkMatch { get; set; }
 
 		#endregion
 	}

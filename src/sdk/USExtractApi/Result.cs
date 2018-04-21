@@ -9,9 +9,9 @@
 	public class Result
 	{
 		[DataMember(Name = "meta")]
-		public Metadata Metadata { get; private set; }
+		public Metadata Metadata { get; set; }
 
 		[DataMember(Name = "addresses")]
-		public Address[] Addresses { get; private set; }
+		public Address[] Addresses { get; set; }
 	}
 }

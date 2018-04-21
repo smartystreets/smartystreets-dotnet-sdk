@@ -8,16 +8,16 @@
 		#region [ Fields ]
 
 		[DataMember(Name = "city")]
-		public string City { get; private set; }
+		public string City { get; set; }
 
 		[DataMember(Name = "mailable_city")]
-		public bool MailableCity { get; private set; }
+		public bool MailableCity { get; set; }
 
 		[DataMember(Name = "state_abbreviation")]
-		public string StateAbbreviation { get; private set; }
+		public string StateAbbreviation { get; set; }
 
 		[DataMember(Name = "state")]
-		public string State { get; private set; }
+		public string State { get; set; }
 
 		#endregion
 	}
