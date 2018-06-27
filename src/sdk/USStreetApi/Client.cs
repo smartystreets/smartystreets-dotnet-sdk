@@ -24,6 +24,9 @@
 			this.Send(new Batch {lookup});
 		}
 
+		/// <summary>
+		///     Sends a batch of up to 100 lookups for verification
+		/// </summary>
 		public void Send(Batch batch)
 		{
 			if (batch == null)
