@@ -20,6 +20,9 @@ compile: clean
 test:
 	@dotnet test "$(TEST_FILE)"
 
+integrate:
+	@dotnet run --project "src/examples/examples.csproj"
+
 package: clean
 	@mkdir -p "$(WORKSPACE_DIR)"
 	@dotnet pack "$(PROJECT_FILE)" --configuration "$(CONFIGURATION)" \
