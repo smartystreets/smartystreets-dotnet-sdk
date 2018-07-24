@@ -52,6 +52,9 @@
 		[DataMember(Name = "premise_number")]
 		public string PremiseNumber { get; set; }
 
+		[DataMember(Name = "premise_number_prefix")]
+		public string PremiseNumberPrefix { get; set; }
+
 		[DataMember(Name = "premise_type")]
 		public string PremiseType { get; set; }
 

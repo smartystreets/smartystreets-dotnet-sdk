@@ -18,7 +18,7 @@
 			                               "\"administrative_area\":\"16\",\"sub_administrative_area\":\"17\",\"dependent_locality\":\"18\"," +
 			                               "\"dependent_locality_name\":\"19\",\"double_dependent_locality\":\"20\",\"locality\":\"21\"," +
 			                               "\"postal_code\":\"22\",\"postal_code_short\":\"23\",\"postal_code_extra\":\"24\"," +
-			                               "\"premise\":\"25\",\"premise_extra\":\"26\",\"premise_number\":\"27\",\"premise_type\":\"28\"," +
+			                               "\"premise\":\"25\",\"premise_extra\":\"26\",\"premise_number\":\"27\",\"premise_number_prefix\":\"27.1\",\"premise_type\":\"28\"," +
 			                               "\"thoroughfare\":\"29\",\"thoroughfare_predirection\":\"30\",\"thoroughfare_postdirection\":\"31\"," +
 			                               "\"thoroughfare_name\":\"32\",\"thoroughfare_trailing_type\":\"33\",\"thoroughfare_type\":\"34\"," +
 			                               "\"dependent_thoroughfare\":\"35\",\"dependent_thoroughfare_predirection\":\"36\"," +
@@ -75,6 +75,7 @@
 			Assert.AreEqual("25", components.Premise);
 			Assert.AreEqual("26", components.PremiseExtra);
 			Assert.AreEqual("27", components.PremiseNumber);
+			Assert.AreEqual("27.1", components.PremiseNumberPrefix);
 			Assert.AreEqual("28", components.PremiseType);
 			Assert.AreEqual("29", components.Thoroughfare);
 			Assert.AreEqual("30", components.ThoroughfarePredirection);
