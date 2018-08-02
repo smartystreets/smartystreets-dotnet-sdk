@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  sdk:
+    build: .
+    working_dir: /code
+    volumes: 
+      - .:/code
+    environment:
+      - SMARTY_AUTH_ID
+      - SMARTY_AUTH_TOKEN
+      - NUGET_KEY
