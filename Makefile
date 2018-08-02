@@ -31,9 +31,8 @@ package: clean
 		--output "../../$(WORKSPACE_DIR)" \
 		/p:CustomVersion="$(shell git describe 2>/dev/null)"
 
-publish: clean version package
+publish: clean package
 	@dotnet nuget push $(WORKSPACE_DIR)/* --source nuget.org -k "$(NUGET_KEY)"
-	@git push origin --tags
 
 version:
 	$(eval PREFIX := $(SOURCE_VERSION).)
@@ -44,9 +43,14 @@ version:
 
 ##########################################################
 
-container-test:
-	 docker-compose run sdk make test
 container-compile:
-	 docker-compose run sdk make compile
+	docker-compose run sdk make compile
+container-test:
+	docker-compose run sdk make test
+container-integrate:
+	docker-compose run sdk make integrate
 container-package:
-	 docker-compose run sdk make package
+	docker-compose run sdk make package
+container-publish: version
+	docker-compose run sdk make publish
+	git push origin --tags

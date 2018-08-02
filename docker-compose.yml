@@ -5,3 +5,7 @@ services:
     working_dir: /code
     volumes: 
       - .:/code
+    environment:
+      - SMARTY_AUTH_ID
+      - SMARTY_AUTH_TOKEN
+      - NUGET_KEY
