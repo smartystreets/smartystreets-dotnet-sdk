@@ -44,11 +44,9 @@ version:
 
 ##########################################################
 
-container-test: container-up
+container-test:
 	 docker-compose run sdk make test
-container-compile: container-up
+container-compile:
 	 docker-compose run sdk make compile
-container-package: container-up
+container-package:
 	 docker-compose run sdk make package
-container-up:
-	docker-compose up
