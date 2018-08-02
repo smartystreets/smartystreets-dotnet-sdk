@@ -10,7 +10,7 @@
 	///     Lookups must have certain required fields set with non-blank values.
 	///     These can be found at "https://smartystreets.com/docs/cloud/international-street-api#http-input-fields"
 	/// </remarks>
-	public class Lookup
+	public class Lookup : ILookup
 	{
 		#region [ Fields ]
 
