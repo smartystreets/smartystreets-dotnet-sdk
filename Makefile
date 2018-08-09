@@ -1,6 +1,5 @@
 #!/usr/bin/make -f
 
-SOURCE_VERSION := 8.0
 SOLUTION_FILE := src/smartystreets-dotnet-sdk.sln
 PROJECT_FILE := src/sdk/sdk.csproj
 TEST_FILE := src/tests/tests.csproj
@@ -30,17 +29,13 @@ package: clean
 		--include-source \
 		--include-symbols \
 		--output "../../$(WORKSPACE_DIR)" \
-		/p:CustomVersion="$(shell git describe 2>/dev/null)"
+		/p:CustomVersion="$(shell git describe)"
 
 publish: clean package
 	@dotnet nuget push $(WORKSPACE_DIR)/* --source nuget.org -k "$(NUGET_KEY)"
 
 version:
-	$(eval PREFIX := $(SOURCE_VERSION).)
-	$(eval CURRENT := $(shell git describe 2>/dev/null))
-	$(eval EXPECTED := $(PREFIX)$(shell git tag -l "$(PREFIX)*" | wc -l | xargs expr -1 +))
-	$(eval INCREMENTED := $(PREFIX)$(shell git tag -l "$(PREFIX)*" | wc -l | xargs expr 0 +))
-	@if [ "$(CURRENT)" != "$(EXPECTED)" ]; then git tag -a "$(INCREMENTED)" -m "" 2>/dev/null || true; fi
+	@tagit -p
 
 ##########################################################
 
