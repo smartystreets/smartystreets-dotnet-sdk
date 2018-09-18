@@ -34,10 +34,10 @@ publish: clean package
 
 ##########################################################
 
-version:
-	tagit -p
-
 workspace:
 	docker-compose run sdk
 
-.PHONY: clean compile test integrate package publish version workspace
+release:
+	docker-compose run sdk make publish && tagit -p && git push origin --tags
+
+.PHONY: clean compile test integrate package publish version workspace release
