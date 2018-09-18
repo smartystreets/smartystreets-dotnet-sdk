@@ -39,7 +39,6 @@ version:
 	tagit -p
 
 dev:
-	docker build . --no-cache --rm -t "smartystreets-dotnet-sdk:local" \
-		&& docker-compose run sdk
+	docker-compose run sdk
 
 .PHONY: clean compile test integrate package publish version dev

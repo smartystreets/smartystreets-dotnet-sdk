@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   sdk:
-    image: smartystreets-dotnet-sdk:local
+    build: .
     volumes: 
       - .:/code
     environment:
