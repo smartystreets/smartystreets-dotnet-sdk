@@ -10,7 +10,6 @@ WORKSPACE_DIR := workspace
 export FrameworkPathOverride=$(dir $(shell which mono))/../lib/mono/4.0-api/
 
 clean:
-	# NOTE: for some crazy reason running make clean after make compile in a container fails
 	rm -rf "$(WORKSPACE_DIR)"
 	dotnet clean "$(SOLUTION_FILE)"
 
