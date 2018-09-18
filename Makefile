@@ -38,7 +38,7 @@ publish: clean package
 version:
 	tagit -p
 
-dev:
+workspace:
 	docker-compose run sdk
 
-.PHONY: clean compile test integrate package publish version dev
+.PHONY: clean compile test integrate package publish version workspace
