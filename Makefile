@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-SOLUTION_FILE := src/$(NAME).sln
+SOLUTION_FILE := src/smartystreets-dotnet-sdk.sln
 PROJECT_FILE  := src/sdk/sdk.csproj
 TEST_FILE     := src/tests/tests.csproj
 CONFIGURATION := Release
