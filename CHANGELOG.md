@@ -26,5 +26,5 @@ For details on earlier changes, please see the [releases listing](https://github
 ------------
 
 [Unreleased]: https://github.com/smartystreets/smartystreets-dotnet-sdk/compare/8.0.14...HEAD
-[5.5.4]: https://github.com/smartystreets/smartystreets-dotnet-sdk/compare/8.0.13...8.0.14
+[8.0.14]: https://github.com/smartystreets/smartystreets-dotnet-sdk/compare/8.0.13...8.0.14
 [Earlier]: https://github.com/smartystreets/smartystreets-dotnet-sdk/releases
