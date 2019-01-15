@@ -45,6 +45,7 @@
 			frameworkRequest.Timeout = (int)this.timeout.TotalMilliseconds;
 			frameworkRequest.Method = request.Method;
 			frameworkRequest.Proxy = this.proxy;
+			frameworkRequest.AutomaticDecompression = DecompressionMethods.GZip;
 			return frameworkRequest;
 		}
 
@@ -65,9 +66,7 @@
 				return;
 
 			using (var sourceStream = new MemoryStream(request.Payload))
-			{
 				CopyStream(sourceStream, GetRequestStream(frameworkRequest));
-			}
 		}
 
 		private static void CopyStream(Stream source, Stream target)
