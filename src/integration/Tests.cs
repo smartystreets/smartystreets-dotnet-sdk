@@ -22,7 +22,7 @@
 
 		private static void TestInternationalStreetRequestReturnsWithCorrectNumberOfResults(ICredentials credentials)
 		{
-			var client = new ClientBuilder(credentials).RetryAtMost(0).BuildInternationalStreetApiClient();
+			var client = new ClientBuilder(credentials).WithCustomBaseUrl(Environment.GetEnvironmentVariable("SMARTY_URL_INTERNATIONAL")).RetryAtMost(0).BuildInternationalStreetApiClient();
 			var lookup = new Lookup("Rua Padre Antonio D'Angelo 121 Casa Verde, Sao Paulo", "Brazil");
 
 			try
@@ -43,7 +43,7 @@
 
 		private static void TestUSAutocompleteRequestReturnsWithCorrectNumberOfResults(ICredentials credentials)
 		{
-			var client = new ClientBuilder(credentials).RetryAtMost(0).BuildUsAutocompleteApiClient();
+			var client = new ClientBuilder(credentials).WithCustomBaseUrl(Environment.GetEnvironmentVariable("SMARTY_URL_US_AUTOCOMPLETE")).RetryAtMost(0).BuildUsAutocompleteApiClient();
 			var lookup = new SmartyStreets.USAutocompleteApi.Lookup("4770 Lincoln Ave O");
 			lookup.AddStateFilter("IL");
 
@@ -65,7 +65,7 @@
 
 		private static void TestUSExtractRequestReturnsWithCorrectNumberOfResults(ICredentials credentials)
 		{
-			var client = new ClientBuilder(credentials).RetryAtMost(0).BuildUsExtractApiClient();
+			var client = new ClientBuilder(credentials).WithCustomBaseUrl(Environment.GetEnvironmentVariable("SMARTY_URL_US_EXTRACT")).RetryAtMost(0).BuildUsExtractApiClient();
 			const string text = "Here is some text.\r\nMy address is 3785 Las Vegs Av." +
 			                    "\r\nLos Vegas, Nevada." +
 			                    "\r\nMeet me at 1 Rosedale Baltimore Maryland, not at 123 Phony Street, Boise Idaho.";
@@ -90,7 +90,7 @@
 
 		private static void TestUSStreetRequestReturnsWithCorrectNumberOfResults(ICredentials credentials)
 		{
-			var client = new ClientBuilder(credentials).RetryAtMost(0).BuildUsStreetApiClient();
+			var client = new ClientBuilder(credentials).WithCustomBaseUrl(Environment.GetEnvironmentVariable("SMARTY_URL_US_STREET")).RetryAtMost(0).BuildUsStreetApiClient();
 			var lookup = new SmartyStreets.USStreetApi.Lookup("1 Rosedale, Baltimore, Maryland") {MaxCandidates = 10};
 
 			try
@@ -111,7 +111,7 @@
 
 		private static void TestUSZIPCodeRequestReturnsWithCorrectNumberOfResults(ICredentials credentials)
 		{
-			var client = new ClientBuilder(credentials).RetryAtMost(0).BuildUsZipCodeApiClient();
+			var client = new ClientBuilder(credentials).WithCustomBaseUrl(Environment.GetEnvironmentVariable("SMARTY_URL_US_ZIP")).RetryAtMost(0).BuildUsZipCodeApiClient();
 			var lookup = new SmartyStreets.USZipCodeApi.Lookup(null, null, "38852");
 
 			try
@@ -132,7 +132,7 @@
 
 		private static void TestReturnsCorrectNumberOfResultsViaProxy(ICredentials credentials)
 		{
-			var client = new ClientBuilder(credentials).ViaProxy("http://proxy.api.smartystreets.com:80", "", "")
+			var client = new ClientBuilder(credentials).WithCustomBaseUrl(Environment.GetEnvironmentVariable("SMARTY_URL_US_ZIP")).ViaProxy("http://proxy.api.smartystreets.com:80", "", "")
 				.BuildUsZipCodeApiClient();
 			var lookup = new SmartyStreets.USZipCodeApi.Lookup(null, null, "38852");
 
