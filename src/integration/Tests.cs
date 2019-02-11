@@ -22,7 +22,7 @@
 
 		private static void TestInternationalStreetRequestReturnsWithCorrectNumberOfResults(ICredentials credentials)
 		{
-			var client = new ClientBuilder(credentials).WithCustomBaseUrl(Environment.GetEnvironmentVariable("SMARTY_URL_INTERNATIONAL")).RetryAtMost(0).BuildInternationalStreetApiClient();
+			var client = new ClientBuilder(credentials).WithCustomBaseUrl(Environment.GetEnvironmentVariable("SMARTY_URL_INTERNATIONAL_STREET")).RetryAtMost(0).BuildInternationalStreetApiClient();
 			var lookup = new Lookup("Rua Padre Antonio D'Angelo 121 Casa Verde, Sao Paulo", "Brazil");
 
 			try
