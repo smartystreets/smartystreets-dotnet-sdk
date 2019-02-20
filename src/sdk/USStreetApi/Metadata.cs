@@ -54,6 +54,9 @@
 
 		[DataMember(Name = "dst")]
 		public bool ObeysDst { get; set; }
+		
+		[DataMember(Name = "ews_match")]
+		public bool IsEwsMatch { get; set; }
 
 		#endregion
 	}

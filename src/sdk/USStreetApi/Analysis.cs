@@ -22,8 +22,7 @@
 		[DataMember(Name = "active")]
 		public string Active { get; set; }
 
-		[DataMember(Name = "ews_match")]
-		public bool IsEwsMatch { get; set; }
+		[DataMember(Name = "ews_match")] public bool IsEwsMatch = false;
 
 		[DataMember(Name = "footnotes")]
 		public string Footnotes { get; set; }
