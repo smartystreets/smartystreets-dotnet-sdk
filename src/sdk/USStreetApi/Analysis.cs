@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets.USStreetApi
+﻿using System;
+
+namespace SmartyStreets.USStreetApi
 {
 	using System.Runtime.Serialization;
 
@@ -22,6 +24,7 @@
 		[DataMember(Name = "active")]
 		public string Active { get; set; }
 
+		[Obsolete("Analysis.ews_match is deprecated, refer to Metadata.ews_match instead.")]
 		[DataMember(Name = "ews_match")] public bool IsEwsMatch = false;
 
 		[DataMember(Name = "footnotes")]
