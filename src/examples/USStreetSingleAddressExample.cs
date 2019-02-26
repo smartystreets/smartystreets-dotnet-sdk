@@ -24,7 +24,8 @@
 			{
 				Street = "1600 Amphitheatre Pkwy",
 				City = "Mountain View",
-				State = "CA"
+				State = "CA",
+				MatchStrategy = "invalid"
 			};
 
 			try

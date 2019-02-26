@@ -19,7 +19,8 @@
 			{
 				Street = "1600 amphitheatre parkway",
 				City = "Mountain view",
-				State = "california"
+				State = "california",
+				MatchStrategy = "invalid"
 			};
 
 			var address2 = new Lookup("1 Rosedale, Baltimore, Maryland")
