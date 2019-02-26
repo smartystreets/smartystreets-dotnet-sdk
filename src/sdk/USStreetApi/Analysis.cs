@@ -25,7 +25,8 @@ namespace SmartyStreets.USStreetApi
 		public string Active { get; set; }
 
 		[Obsolete("Analysis.ews_match is deprecated, refer to Metadata.ews_match instead.")]
-		[DataMember(Name = "ews_match")] public bool IsEwsMatch = false;
+		[DataMember(Name = "ews_match")]
+		public bool IsEwsMatch { get; set; };
 
 		[DataMember(Name = "footnotes")]
 		public string Footnotes { get; set; }
