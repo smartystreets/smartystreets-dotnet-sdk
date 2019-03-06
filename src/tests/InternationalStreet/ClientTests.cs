@@ -2,7 +2,8 @@
 {
 	using System.Collections.Generic;
 	using System.Text;
-	using InternationalStreetApi;
+    using System.Threading.Tasks;
+    using InternationalStreetApi;
 	using NUnit.Framework;
 
 	[TestFixture]
@@ -20,19 +21,19 @@
 		}
 
 		[Test]
-		public void TestSendingFreeformLookup()
+		public async Task TestSendingFreeformLookupAsync()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.sender, serializer);
 			var lookup = new Lookup("freeform", "USA");
 
-			client.Send(lookup);
+			await client.SendAsync(lookup);
 
 			Assert.AreEqual("http://localhost/?country=USA&freeform=freeform", this.capturingSender.Request.GetUrl());
 		}
 
 		[Test]
-		public void TestSendingSingleFullyPopulatedLookup()
+		public async Task TestSendingSingleFullyPopulatedLookupAsync()
 		{
 			const string expectedUrl = "http://localhost/?country=0&geocode=true&language=native&freeform=1" +
 			                           "&address1=2&address2=3&address3=4&address4=5&organization=6&locality=7&administrative_area=8&postal_code=9";
@@ -54,7 +55,7 @@
 				PostalCode = "9"
 			};
 
-			client.Send(lookup);
+			await client.SendAsync(lookup);
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
@@ -65,7 +66,7 @@
 			var crashSender = new MockCrashingSender();
 			var client = new Client(crashSender, null);
 
-			Assert.Throws<UnprocessableEntityException>(() => client.Send(new Lookup()));
+			Assert.ThrowsAsync<UnprocessableEntityException>(async () => await client.SendAsync(new Lookup()));
 		}
 
 		[Test]
@@ -75,7 +76,7 @@
 			var client = new Client(crashSender, null);
 			var lookup = new Lookup {Country = "0"};
 
-			Assert.Throws<UnprocessableEntityException>(() => client.Send(lookup));
+			Assert.ThrowsAsync<UnprocessableEntityException>(async () => await client.SendAsync(lookup));
 		}
 
 		[Test]
@@ -89,7 +90,7 @@
 				Address1 = "1"
 			};
 
-			Assert.Throws<UnprocessableEntityException>(() => client.Send(lookup));
+			Assert.ThrowsAsync<UnprocessableEntityException>(async () => await client.SendAsync(lookup));
 		}
 
 		[Test]
@@ -104,7 +105,7 @@
 				Locality = "2"
 			};
 
-			Assert.Throws<UnprocessableEntityException>(() => client.Send(lookup));
+			Assert.ThrowsAsync<UnprocessableEntityException>(async () => await client.SendAsync(lookup));
 		}
 
 		[Test]
@@ -119,11 +120,11 @@
 				AdministrativeArea = "2"
 			};
 
-			Assert.Throws<UnprocessableEntityException>(() => client.Send(lookup));
+			Assert.ThrowsAsync<UnprocessableEntityException>(async () => await client.SendAsync(lookup));
 		}
 
 		[Test]
-		public void TestAcceptsLookupsWithEnoughInfo()
+		public async Task TestAcceptsLookupsWithEnoughInfoAsync()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(new RequestCapturingSender(), serializer);
@@ -133,34 +134,34 @@
 				Freeform = "1"
 			};
 
-			client.Send(lookup);
+			await client.SendAsync(lookup);
 
 			lookup.Freeform = null;
 			lookup.Address1 = "1";
 			lookup.PostalCode = "2";
-			client.Send(lookup);
+			await client.SendAsync(lookup);
 
 			lookup.PostalCode = null;
 			lookup.Locality = "3";
 			lookup.AdministrativeArea = "4";
-			client.Send(lookup);
+			await client.SendAsync(lookup);
 		}
 
 		[Test]
-		public void TestDeserializeCalledWithResponseBody()
+		public async Task TestDeserializeCalledWithResponseBodyAsync()
 		{
 			var response = new Response(0, Encoding.ASCII.GetBytes("Hello, World!"));
 			var mockSender = new MockSender(response);
 			var deserializer = new FakeDeserializer(null);
 			var client = new Client(mockSender, deserializer);
 
-			client.Send(new Lookup("1", "2"));
+			await client.SendAsync(new Lookup("1", "2"));
 
 			Assert.AreEqual(response.Payload, deserializer.Payload);
 		}
 
 		[Test]
-		public void TestCandidatesCorrectlyAssignedToLookup()
+		public async Task TestCandidatesCorrectlyAssignedToLookupAsync()
 		{
 			var expectedCandidates = new List<Candidate> {new Candidate(), new Candidate()};
 			var lookup = new Lookup("1", "2");
@@ -169,7 +170,7 @@
 			var deserializer = new FakeDeserializer(expectedCandidates);
 			var client = new Client(mockSender, deserializer);
 
-			client.Send(lookup);
+			await client.SendAsync(lookup);
 
 			Assert.AreEqual(expectedCandidates[0], lookup.Result[0]);
 			Assert.AreEqual(expectedCandidates[1], lookup.Result[1]);

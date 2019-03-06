@@ -1,12 +1,13 @@
 ﻿namespace Examples
 {
 	using System;
-	using SmartyStreets;
+    using System.Threading.Tasks;
+    using SmartyStreets;
 	using SmartyStreets.USAutocompleteApi;
 
 	internal static class USAutocompleteExample
 	{
-		public static void Run()
+		public static async Task RunAsync()
 		{
 			// We recommend storing your secret keys in environment variables.
 			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
@@ -14,7 +15,7 @@
 			var client = new ClientBuilder(authId, authToken).BuildUsAutocompleteApiClient();
 			var lookup = new Lookup("4770 Lincoln Ave O");
 
-			client.Send(lookup);
+			await client.SendAsync(lookup);
 
 			Console.WriteLine("*** Result with no filter ***");
 			Console.WriteLine();
@@ -24,7 +25,7 @@
 			lookup.AddStateFilter("IL");
 			lookup.MaxSuggestions = 5;
 
-			client.Send(lookup);
+			await client.SendAsync(lookup);
 
 			var suggestions = lookup.Result;
 

@@ -3,8 +3,9 @@
 	using System;
 	using System.IO;
 	using System.Net;
+    using System.Threading.Tasks;
 
-	public class NativeSender : ISender
+    public class NativeSender : ISender
 	{
 		private static readonly Version AssemblyVersion = typeof(NativeSender).Assembly.GetName().Version;
 
@@ -25,16 +26,16 @@
 			this.proxy = (proxy ?? new Proxy()).NativeProxy;
 		}
 
-		public Response Send(Request request)
+		public async Task<Response> SendAsync(Request request)
 		{
 			var frameworkRequest = this.BuildRequest(request);
 			CopyHeaders(request, frameworkRequest);
 
-			TryWritePayload(request, frameworkRequest);
+			await TryWritePayloadAsync(request, frameworkRequest);
 
-			var frameworkResponse = GetResponse(frameworkRequest);
+			var frameworkResponse = await GetResponseAsync(frameworkRequest);
 			var statusCode = (int)frameworkResponse.StatusCode;
-			var payload = GetResponseBody(frameworkResponse);
+			var payload = await GetResponseBodyAsync(frameworkResponse);
 
 			return new Response(statusCode, payload);
 		}
@@ -60,20 +61,20 @@
 			frameworkRequest.UserAgent = UserAgent;
 		}
 
-		private static void TryWritePayload(Request request, WebRequest frameworkRequest)
+		private static async Task TryWritePayloadAsync(Request request, WebRequest frameworkRequest)
 		{
 			if (request.Method != "POST" || request.Payload == null)
 				return;
 
 			using (var sourceStream = new MemoryStream(request.Payload))
-				CopyStream(sourceStream, GetRequestStream(frameworkRequest));
+				await CopyStreamAsync(sourceStream, GetRequestStream(frameworkRequest));
 		}
 
-		private static void CopyStream(Stream source, Stream target)
+		private static async Task CopyStreamAsync(Stream source, Stream target)
 		{
 			try
 			{
-				source.CopyTo(target);
+				await source.CopyToAsync(target);
 			}
 			catch (IOException ex)
 			{
@@ -93,11 +94,11 @@
 			}
 		}
 
-		private static HttpWebResponse GetResponse(WebRequest request)
+		private static async Task<HttpWebResponse> GetResponseAsync(WebRequest request)
 		{
 			try
 			{
-				return (HttpWebResponse)request.GetResponse();
+				return (HttpWebResponse) await request.GetResponseAsync();
 			}
 			catch (WebException e)
 			{
@@ -108,14 +109,14 @@
 			}
 		}
 
-		private static byte[] GetResponseBody(WebResponse response)
+		private static async Task<byte[]> GetResponseBodyAsync(WebResponse response)
 		{
 			var length = response.ContentLength >= 0 ? (int)response.ContentLength : 0;
 
 			using (var targetStream = new MemoryStream(length))
 			using (var responseStream = response.GetResponseStream())
 			{
-				CopyStream(responseStream, targetStream);
+				await CopyStreamAsync(responseStream, targetStream);
 				return targetStream.ToArray();
 			}
 		}

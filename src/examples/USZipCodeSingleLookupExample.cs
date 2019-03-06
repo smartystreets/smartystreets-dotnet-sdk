@@ -2,12 +2,13 @@
 {
 	using System;
 	using System.IO;
-	using SmartyStreets;
+    using System.Threading.Tasks;
+    using SmartyStreets;
 	using SmartyStreets.USZipCodeApi;
 
 	internal static class USZipCodeSingleLookupExample
 	{
-		public static void Run()
+		public static async Task RunAsync()
 		{
 			// You don't have to store your keys in environment variables, but we recommend it.
 			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
@@ -22,7 +23,7 @@
 
 			try
 			{
-				client.Send(lookup);
+				await client.SendAsync(lookup);
 			}
 			catch (SmartyException ex)
 			{

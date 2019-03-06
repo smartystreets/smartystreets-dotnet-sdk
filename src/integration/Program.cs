@@ -4,7 +4,7 @@
 	{
 		private static void Main()
 		{
-			Tests.RunAllApiIntegrationTests();
+            Tests.RunAllApiIntegrationTestsAsync().Wait();
 		}
 	}
 }

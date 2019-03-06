@@ -1,10 +1,12 @@
-﻿namespace SmartyStreets
+﻿using System.Threading.Tasks;
+
+namespace SmartyStreets
 {
 	public class RequestCapturingSender : ISender
 	{
 		public Request Request { get; private set; }
 
-		public Response Send(Request request)
+		public async Task<Response> SendAsync(Request request)
 		{
 			this.Request = request;
 

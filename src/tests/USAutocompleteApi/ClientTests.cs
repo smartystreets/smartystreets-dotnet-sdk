@@ -2,7 +2,8 @@
 {
 	using System;
 	using System.Text;
-	using NUnit.Framework;
+    using System.Threading.Tasks;
+    using NUnit.Framework;
 
 	[TestFixture]
 	public class ClientTests
@@ -20,19 +21,19 @@
 		#region [ Single Lookup ]
 
 		[Test]
-		public void TestSendingSinglePrefixOnlyLookup()
+		public async Task TestSendingSinglePrefixOnlyLookupAsync()
 		{
 			var serializer = new FakeSerializer(new byte[0]);
 			var client = new Client(this.urlSender, serializer);
 
-			client.Send(new Lookup("1"));
+			await client.SendAsync(new Lookup("1"));
 
 			Assert.AreEqual("http://localhost/?prefix=1&geolocate=true&geolocate_precision=city",
 				this.capturingSender.Request.GetUrl());
 		}
 
 		[Test]
-		public void TestSendingSingleFullyPopulatedLookup()
+		public async Task TestSendingSingleFullyPopulatedLookupAsync()
 		{
 			var serializer = new FakeSerializer(new byte[0]);
 			var client = new Client(this.urlSender, serializer);
@@ -49,7 +50,7 @@
 			lookup.GeolocateType = GeolocateType.STATE;
 			lookup.PreferRatio = .6;
 
-			client.Send(lookup);
+			await client.SendAsync(lookup);
 
 			Assert.AreEqual(expectedURL, this.capturingSender.Request.GetUrl());
 		}
@@ -59,7 +60,7 @@
 		#region [ Response Handling ]
 
 		[Test]
-		public void TestDeserializeCalledWithResponseBody()
+		public async Task TestDeserializeCalledWithResponseBodyAsync()
 		{
 			var response = new Response(0, Encoding.ASCII.GetBytes("Hello, World!"));
 			var mockSender = new MockSender(response);
@@ -67,7 +68,7 @@
 			var deserializer = new FakeDeserializer(new Result());
 			var client = new Client(sender, deserializer);
 
-			client.Send(new Lookup("1"));
+			await client.SendAsync(new Lookup("1"));
 
 			Assert.AreEqual(response.Payload, deserializer.Payload);
 		}
@@ -78,7 +79,7 @@
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
 
-			Assert.Throws<ArgumentNullException>(() => client.Send(null));
+			Assert.ThrowsAsync<ArgumentNullException>(async () => await client.SendAsync(null));
 		}
 
 		[Test]
@@ -87,7 +88,7 @@
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
 
-			Assert.Throws<SmartyException>(() => client.Send(new Lookup()));
+			Assert.ThrowsAsync<SmartyException>(async () => await client.SendAsync(new Lookup()));
 		}
 
 		[Test]
@@ -96,12 +97,12 @@
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
 
-			Assert.Throws<SmartyException>(() => client.Send(new Lookup("")));
+			Assert.ThrowsAsync<SmartyException>(async () => await client.SendAsync(new Lookup("")));
 		}
 
 
 		[Test]
-		public void TestResultCorrectlyAssignedToLookup()
+		public async Task TestResultCorrectlyAssignedToLookupAsync()
 		{
 			var lookup = new Lookup("1");
 			var expectedResult = new Result();
@@ -111,7 +112,7 @@
 			var deserializer = new FakeDeserializer(expectedResult);
 			var client = new Client(sender, deserializer);
 
-			client.Send(lookup);
+			await client.SendAsync(lookup);
 
 			Assert.AreEqual(expectedResult.Suggestions, lookup.Result);
 		}

@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets
+﻿using System.Threading.Tasks;
+
+namespace SmartyStreets
 {
 	public class StatusCodeSender : ISender
 	{
@@ -9,9 +11,9 @@
 			this.inner = inner;
 		}
 
-		public Response Send(Request request)
+		public async Task<Response> SendAsync(Request request)
 		{
-			var response = this.inner.Send(request);
+			var response = await this.inner.SendAsync(request);
 
 			switch (response.StatusCode)
 			{

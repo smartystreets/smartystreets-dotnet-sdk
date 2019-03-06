@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets
+﻿using System.Threading.Tasks;
+
+namespace SmartyStreets
 {
 	public class SigningSender : ISender
 	{
@@ -11,10 +13,10 @@
 			this.inner = inner;
 		}
 
-		public Response Send(Request request)
+		public async Task<Response> SendAsync(Request request)
 		{
 			this.signer.Sign(request);
-			return this.inner.Send(request);
+			return await this.inner.SendAsync(request);
 		}
 	}
 }

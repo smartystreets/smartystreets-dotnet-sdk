@@ -1,7 +1,9 @@
-﻿namespace SmartyStreets
+﻿using System.Threading.Tasks;
+
+namespace SmartyStreets
 {
 	public interface IClient<in TLookup>
 	{
-		void Send(TLookup lookup);
+		Task SendAsync(TLookup lookup);
 	}
 }

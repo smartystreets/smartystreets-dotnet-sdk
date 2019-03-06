@@ -3,8 +3,9 @@
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
+    using System.Threading.Tasks;
 
-	public class Client : IClient<Lookup>
+    public class Client : IClient<Lookup>
 	{
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
@@ -15,18 +16,18 @@
 			this.serializer = serializer;
 		}
 
-		public void Send(Lookup lookup)
+		public async Task SendAsync(Lookup lookup)
 		{
 			if (lookup == null)
 				throw new ArgumentNullException("lookup");
 
-			this.Send(new Batch {lookup});
+			await this.SendAsync(new Batch {lookup});
 		}
 
 		/// <summary>
 		///     Sends a batch of up to 100 lookups for verification
 		/// </summary>
-		public void Send(Batch batch)
+		public async Task SendAsync(Batch batch)
 		{
 			if (batch == null)
 				throw new ArgumentNullException("batch");
@@ -41,12 +42,12 @@
 			else
 				request.Payload = batch.Serialize(this.serializer);
 
-			var response = this.sender.Send(request);
-			var payloadStream = new MemoryStream(response.Payload);
-
-			var results = this.serializer.Deserialize<Result[]>(payloadStream) ?? new Result[0];
-
-			AssignResultsToLookups(batch, results);
+			var response = await this.sender.SendAsync(request);
+            using (var payloadStream = new MemoryStream(response.Payload))
+            {
+                var results = this.serializer.Deserialize<Result[]>(payloadStream) ?? new Result[0];
+                AssignResultsToLookups(batch, results);
+            }
 		}
 
 		private static void PopulateQueryString(Lookup lookup, Request request)

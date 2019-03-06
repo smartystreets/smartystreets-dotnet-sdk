@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <!-- in JetBrains Project Rider, use only netstandard2.0; it doesn't understand multiple target frameworks -->
-    <TargetFrameworks>netstandard2.0;net40;net35</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <AssemblyName>smartystreets-dotnet-sdk</AssemblyName>
     <RootNamespace>SmartyStreets</RootNamespace>
     <Company>SmartyStreets, LLC</Company>

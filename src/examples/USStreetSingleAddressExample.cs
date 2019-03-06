@@ -2,12 +2,13 @@
 {
 	using System;
 	using System.IO;
-	using SmartyStreets;
+    using System.Threading.Tasks;
+    using SmartyStreets;
 	using SmartyStreets.USStreetApi;
 
 	internal static class USStreetSingleAddressExample
 	{
-		public static void Run()
+		public static async Task RunAsync()
 		{
 			// var authId = "Your SmartyStreets Auth ID here";
 			// var authToken = "Your SmartyStreets Auth Token here";
@@ -30,7 +31,7 @@
 
 			try
 			{
-				client.Send(lookup);
+				await client.SendAsync(lookup);
 			}
 			catch (SmartyException ex)
 			{

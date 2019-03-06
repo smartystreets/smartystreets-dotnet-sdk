@@ -1,8 +1,9 @@
 ﻿namespace SmartyStreets
 {
 	using System.IO;
+    using System.Threading.Tasks;
 
-	public class MockCrashingSender : ISender
+    public class MockCrashingSender : ISender
 	{
 		private const int StatusCode = 200;
 		public const string DoNotRetry = "Do Not Retry";
@@ -16,7 +17,7 @@
 			this.SendCount = 0;
 		}
 
-		public Response Send(Request request)
+		public async Task<Response> SendAsync(Request request)
 		{
 			this.SendCount++;
 

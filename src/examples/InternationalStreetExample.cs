@@ -1,12 +1,13 @@
 ﻿namespace Examples
 {
 	using System;
-	using SmartyStreets;
+    using System.Threading.Tasks;
+    using SmartyStreets;
 	using SmartyStreets.InternationalStreetApi;
 
 	internal static class InternationalStreetExample
 	{
-		public static void Run()
+		public static async Task RunAsync()
 		{
 			// We recommend storing your secret keys in environment variables.
 			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
@@ -16,7 +17,7 @@
 			// Geocoding must be expressly set to get latitude and longitude.
 			var lookup = new Lookup("Rua Padre Antonio D'Angelo 121 Casa Verde, Sao Paulo", "Brazil") {Geocode = true};
 
-			client.Send(lookup);
+			await client.SendAsync(lookup);
 
 			var candidates = lookup.Result;
 			var firstCandidate = candidates[0];
