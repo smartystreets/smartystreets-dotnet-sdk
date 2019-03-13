@@ -16,5 +16,8 @@
 
 		[DataMember(Name = "max_address_precision")]
 		public string MaxAddressPrecision { get; set; }
+		
+		[DataMember(Name = "changes")]
+		public Changes Changes { get; set; }
 	}
 }
