@@ -14,9 +14,17 @@ Module Module1
  
         Dim myLookup As New Lookup()
         With myLookup
+            .InputId = "24601"
+            .Addressee = "John Doe"
             .Street = "1600 Amphitheatre Pkwy"
+            .Street2 = "closet under the stairs"
+            .Secondary = "APT 2"
+            .Urbanization = ""
             .City = "Mountain View"
             .State = "CA"
+            .ZipCode = "21229"
+            .MaxCandidates = 3
+            .MatchStrategy = lookup.INVALID
         End With
  
         Try

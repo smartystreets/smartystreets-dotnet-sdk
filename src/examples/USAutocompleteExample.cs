@@ -13,6 +13,7 @@
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			var client = new ClientBuilder(authId, authToken).BuildUsAutocompleteApiClient();
 			var lookup = new Lookup("4770 Lincoln Ave O");
+			lookup.GeolocateType = "null";
 
 			client.Send(lookup);
 
@@ -20,9 +21,15 @@
 			Console.WriteLine();
 			foreach (var suggestion in lookup.Result)
 				Console.WriteLine(suggestion.Text);
+			
+			// Documentation for input fields can be found at:
+			// https://smartystreets.com/docs/cloud/us-autocomplete-api#http-request-input-fields
 
+			lookup.AddCityFilter("Ogden");
 			lookup.AddStateFilter("IL");
+			lookup.AddPrefer("Ogden, IL");
 			lookup.MaxSuggestions = 5;
+			lookup.PreferRatio = 0.3333333;
 
 			client.Send(lookup);
 

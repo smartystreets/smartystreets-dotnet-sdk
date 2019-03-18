@@ -13,11 +13,16 @@
 			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			var client = new ClientBuilder(authId, authToken).BuildUsZipCodeApiClient();
+			
+			// Documentation for input fields can be found at:
+			// https://smartystreets.com/docs/us-zipcode-api#input-fields
 
 			var lookup = new Lookup
 			{
+				InputId = "dfc33cb6-829e-4fea-aa1b-b6d6580f0817", // Optional ID from your system
 				City = "Mountain View",
-				State = "California"
+				State = "California",
+				ZipCode = "94039"
 			};
 
 			try

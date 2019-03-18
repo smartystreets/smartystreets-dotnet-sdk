@@ -14,26 +14,40 @@
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			var client = new ClientBuilder(authId, authToken).BuildUsStreetApiClient();
 			var batch = new Batch();
+			
+			// Documentation for input fields can be found at:
+			// https://smartystreets.com/docs/us-street-api#input-fields
 
 			var address1 = new Lookup
 			{
+				InputId = "24601", // Optional ID from your system
+				Addressee = "John Doe",
 				Street = "1600 amphitheatre parkway",
+				Street2 = "closet under the stairs",
+				Secondary = "APT 2",
+				Urbanization = "", // Only applies to Puerto Rico addresses
 				City = "Mountain view",
 				State = "california",
-				MatchStrategy = "invalid"
+				ZipCode = "94043",
+				MaxCandidates = 3,
+				MatchStrategy = Lookup.INVALID // "invalid" is the most permissive match
 			};
 
 			var address2 = new Lookup("1 Rosedale, Baltimore, Maryland")
 			{
-				MaxCandidates = 10
-			}; // Freeform addresses work too.
+				Street = "1 Rosedale",
+				Lastline = "Baltimore, Maryland",
+				MaxCandidates = 5
+			};
 
-			var address3 = new Lookup("123 Bogus Street, Pretend Lake, Oklahoma");
+			var address3 = new Lookup("123 Bogus Street, Pretend Lake, Oklahoma"); // Freeform addresses work too
 
 			var address4 = new Lookup
 			{
+				InputId = "8675309",
 				Street = "1 Infinite Loop",
-				ZipCode = "95014"
+				ZipCode = "95014",
+				MaxCandidates = 1
 			};
 
 			try

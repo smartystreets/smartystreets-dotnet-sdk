@@ -19,13 +19,23 @@
 			var client = new ClientBuilder(authId, authToken)
 				//.ViaProxy("http://localhost:8080", "username", "password") // uncomment this line to point to the specified proxy.
 				.BuildUsStreetApiClient();
+			
+			// Documentation for input fields can be found at:
+			// https://smartystreets.com/docs/us-street-api#input-fields
 
 			var lookup = new Lookup
 			{
+				InputId = "24601", // Optional ID from you system
+				Addressee = "John Doe",
 				Street = "1600 Amphitheatre Pkwy",
+				Street2 = "closet under the stairs",
+				Secondary = "APT 2",
+				Urbanization = "", // Only applies to Puerto Rico addresses
 				City = "Mountain View",
 				State = "CA",
-				MatchStrategy = "invalid"
+				ZipCode = "21229",
+				MaxCandidates = 3,
+				MatchStrategy = Lookup.INVALID // "invalid" is the most permissive match
 			};
 
 			try

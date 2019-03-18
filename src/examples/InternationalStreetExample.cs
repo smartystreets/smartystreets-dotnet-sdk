@@ -12,9 +12,23 @@
 			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			var client = new ClientBuilder(authId, authToken).BuildInternationalStreetApiClient();
+			
+			// Documentation for input fields can be found at:
+			// https://smartystreetscom/docs/cloud/international-street-api#http-input-fields
 
 			// Geocoding must be expressly set to get latitude and longitude.
-			var lookup = new Lookup("Rua Padre Antonio D'Angelo 121 Casa Verde, Sao Paulo", "Brazil") {Geocode = true};
+			var lookup = new Lookup("Rua Padre Antonio D'Angelo 121 Casa Verde, Sao Paulo", "Brazil")
+			{
+				InputId = "ID-8675309", // Optional ID from your system
+				Geocode = true,
+				Organization = "John Doe",
+				Address1 = "Rua Padre Antonio D'Angelo 121",
+				Address2 = "Casa Verde",
+				Locality = "Sao Paulo",
+				AdministrativeArea = "SP",
+				Country = "Brazil",
+				PostalCode = "02516-050"
+			};
 
 			client.Send(lookup);
 

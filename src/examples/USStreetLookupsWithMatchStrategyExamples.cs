@@ -14,6 +14,9 @@
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			var client = new ClientBuilder(authId, authToken).BuildUsStreetApiClient();
 			var batch = new Batch();
+			
+			// Documentation for input fields can be found at:
+			// https://smartystreets.com/docs/us-street-api#input-fields
 
 			var addressWithStrictStrategy = new Lookup
 			{

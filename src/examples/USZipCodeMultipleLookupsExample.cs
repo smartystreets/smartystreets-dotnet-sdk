@@ -16,6 +16,7 @@
 
 			var lookup1 = new Lookup
 			{
+				InputId = "dfc33cb6-829e-4fea-aa1b-b6d6580f0817", // Optional ID from your system
 				ZipCode = "12345"
 			};
 
@@ -25,7 +26,10 @@
 				State = "Arizona"
 			};
 
-			var lookup3 = new Lookup("cupertino", "CA", "95014"); // You can also set these with arguments
+			var lookup3 = new Lookup("cupertino", "CA", "95014") // You can also set these with arguments
+			{
+				InputId = "01189998819991197253"
+			};
 
 			var batch = new Batch();
 
