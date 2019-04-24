@@ -7,6 +7,9 @@
 	///     The ClientBuilder class helps you build a client object for one of the supported SmartyStreets APIs.
 	///     You can use ClientBuilder's methods to customize settings like maximum retries or timeout duration. These methods
 	///     are chainable, so you can usually get set up with one line of code.
+	///     THREAD SAFETY: Instances of the ClientBuilder class are NOT thread safe and are only designed to be called from
+	///     a single thread. Typically the Build() method should be called and then the ClientBuilder instance should be
+	///     discarded.
 	/// </summary>
 	public class ClientBuilder
 	{
