@@ -8,7 +8,7 @@ Module Module1
     Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
     Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
  
-    Dim client = New ClientBuilder(authID, authToken).Build()
+    Dim client = New ClientBuilder(authID, authToken).BuildUsStreetApiClient()
  
     Sub Test_SingleAddress()
  
