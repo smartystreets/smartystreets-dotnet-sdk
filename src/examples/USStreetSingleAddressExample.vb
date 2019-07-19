@@ -10,7 +10,7 @@ Module Module1
  
     Dim client = New ClientBuilder(authID, authToken).BuildUsStreetApiClient()
  
-    Sub Test_SingleAddress()
+    Sub Main()
  
         Dim myLookup As New Lookup()
         With myLookup
@@ -45,7 +45,7 @@ Module Module1
  
         Dim firstCandidate = candidates(0)
  
-        Console.WriteLine("Address is valid. (There is at least one candidate)" & vbLf)
+        Console.WriteLine("Address is valid. (There is at least one candidate)")
         Console.WriteLine("Primary Number: " + firstCandidate.Components.PrimaryNumber)
         Console.WriteLine("Street: " + firstCandidate.Components.StreetName)
         Console.WriteLine("CityName: " + firstCandidate.Components.CityName)
