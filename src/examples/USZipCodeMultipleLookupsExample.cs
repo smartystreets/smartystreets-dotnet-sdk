@@ -67,6 +67,8 @@
 					continue;
 				}
 
+				Console.WriteLine("Input ID: " + result.InputId);
+
 				var cityStates = result.CityStates;
 				Console.WriteLine(cityStates.Length + " City and State match" + (cityStates.Length == 1 ? ":" : "es:"));
 

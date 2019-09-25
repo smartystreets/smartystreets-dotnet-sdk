@@ -11,7 +11,7 @@
 		[Test]
 		public void TestAllFieldsFilledCorrectly()
 		{
-			const string responsePayload = "[{\"organization\":\"1\",\"address1\":\"2\",\"address2\":\"3\"," +
+			const string responsePayload = "[{\"input_id\":\"1234\",\"organization\":\"1\",\"address1\":\"2\",\"address2\":\"3\"," +
 			                               "\"address3\":\"4\",\"address4\":\"5\",\"address5\":\"6\",\"address6\":\"7\",\"address7\":\"8\"," +
 			                               "\"address8\":\"9\",\"address9\":\"10\",\"address10\":\"11\",\"address11\":\"12\",\"address12\":\"13\"," +
 			                               "\"components\":{\"country_iso_3\":\"14\",\"super_administrative_area\":\"15\"," +
@@ -57,6 +57,7 @@
 
 			#region [ Candidate ]
 
+			Assert.AreEqual("1234", candidate.InputId);
 			Assert.AreEqual("1", candidate.Organization);
 			Assert.AreEqual("2", candidate.Address1);
 			Assert.AreEqual("3", candidate.Address2);

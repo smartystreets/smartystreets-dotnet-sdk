@@ -53,6 +53,7 @@
 
 		private static void PopulateQueryString(Lookup address, Request request)
 		{
+		    request.SetParameter("input_id", address.InputId);
 			request.SetParameter("street", address.Street);
 			request.SetParameter("street2", address.Street2);
 			request.SetParameter("secondary", address.Secondary);

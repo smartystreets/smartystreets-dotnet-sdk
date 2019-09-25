@@ -42,6 +42,7 @@
 		{
 			var request = new Request();
 
+            request.SetParameter("input_id", lookup.InputId);
 			request.SetParameter("country", lookup.Country);
 			request.SetParameter("geocode", lookup.Geocode ? lookup.Geocode.ToString().ToLower() : null);
 			if (lookup.Language != null)

@@ -91,6 +91,7 @@
 					var metadata = candidate.Metadata;
 
 					Console.WriteLine("\nCandidate " + candidate.CandidateIndex + ":");
+					Console.WriteLine("Input ID: " + candidate.InputId);
 					Console.WriteLine("Delivery line 1: " + candidate.DeliveryLine1);
 					Console.WriteLine("Last line:       " + candidate.LastLine);
 					Console.WriteLine("ZIP Code:        " + components.ZipCode + "-" + components.Plus4Code);

@@ -28,6 +28,7 @@
 			var client = new Client(sender, serializer);
 			var lookup = new Lookup
 			{
+			    InputId = "1234",
 				City = "1",
 				State = "2",
 				ZipCode = "3"
@@ -35,7 +36,7 @@
 
 			client.Send(lookup);
 
-			Assert.AreEqual("?city=1&state=2&zipcode=3", sender.Request.GetUrl());
+			Assert.AreEqual("?input_id=1234&city=1&state=2&zipcode=3", sender.Request.GetUrl());
 		}
 
 		#endregion

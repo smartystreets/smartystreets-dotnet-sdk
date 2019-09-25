@@ -7,6 +7,9 @@ namespace SmartyStreets.InternationalStreetApi
     {
         #region [ Fields ]
         
+        [DataMember(Name = "input_id")]
+        public string InputId { get; set; }
+        
         [DataMember(Name = "organization")]
         public string Organization { get; set; }
 

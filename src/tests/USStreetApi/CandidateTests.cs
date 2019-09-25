@@ -14,7 +14,7 @@ namespace SmartyStreets.USStreetApi
             var nativeserializer = new NativeSerializer();
             var RawJSON = @"[
             {
-                ""input_id"": ""blah"",
+                ""input_id"": ""1234"",
                 ""input_index"": 0,
                 ""candidate_index"": 4242,
                 ""addressee"": ""John Smith"",
@@ -86,6 +86,7 @@ namespace SmartyStreets.USStreetApi
             Assert.AreEqual(1, actual.Count);
             Assert.AreEqual(0, actual[0].InputIndex);
             Assert.AreEqual(4242, actual[0].CandidateIndex);
+            Assert.AreEqual("1234", actual[0].InputId);
             Assert.AreEqual("John Smith", actual[0].Addressee);
             Assert.AreEqual("3214 N University Ave # 409", actual[0].DeliveryLine1);
             Assert.AreEqual("blah blah", actual[0].DeliveryLine2);

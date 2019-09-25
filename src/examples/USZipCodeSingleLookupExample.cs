@@ -43,6 +43,8 @@
 			var cities = result.CityStates;
 			var zipCodes = result.ZipCodes;
 
+			Console.WriteLine("Input ID: " + result.InputId);
+
 			foreach (var city in cities)
 			{
 				Console.WriteLine("\nCity: " + city.City);

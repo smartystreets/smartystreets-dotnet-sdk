@@ -29,6 +29,7 @@
 			var client = new Client(sender, serializer);
 			var lookup = new Lookup
 			{
+			    InputId = "1234",
 				Addressee = "0",
 				Street = "1",
 				Secondary = "2",
@@ -44,7 +45,7 @@
 
 			client.Send(lookup);
 
-			Assert.AreEqual("?street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&" +
+			Assert.AreEqual("?input_id=1234&street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&" +
 			                "lastline=8&addressee=0&urbanization=4&match=10&candidates=9", sender.Request.GetUrl());
 		}
 

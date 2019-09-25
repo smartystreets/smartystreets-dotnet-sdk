@@ -62,6 +62,7 @@
 
 			var firstCandidate = candidates[0];
 
+            Console.WriteLine("Input ID: " + firstCandidate.InputId);
 			Console.WriteLine("Address is valid. (There is at least one candidate)\n");
 			Console.WriteLine("ZIP Code: " + firstCandidate.Components.ZipCode);
 			Console.WriteLine("County: " + firstCandidate.Metadata.CountyName);
