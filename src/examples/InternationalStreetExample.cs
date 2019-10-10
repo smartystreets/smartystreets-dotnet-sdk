@@ -34,7 +34,7 @@
 
 			var candidates = lookup.Result;
 			var firstCandidate = candidates[0];
-			Console.WriteLine("Input ID: " + firstCandidate.InputId)
+			Console.WriteLine("Input ID: " + firstCandidate.InputId);
 			Console.WriteLine("Address is " + firstCandidate.Analysis.VerificationStatus);
 			Console.WriteLine("Address precision: " + firstCandidate.Analysis.AddressPrecision + "\n");
 
