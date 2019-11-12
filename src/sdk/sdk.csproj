@@ -9,7 +9,6 @@
     <Description>Official SDK for accessing various SmartyStreets APIs</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Copyright>Copyright © SmartyStreets, LLC</Copyright>
-    <PackageLicenseUrl>https://github.com/smartystreets/smartystreets-dotnet-sdk/blob/master/LICENSE.md</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/smartystreets/smartystreets-dotnet-sdk</PackageProjectUrl>
     <RepositoryUrl>https://github.com/smartystreets/smartystreets-dotnet-sdk</RepositoryUrl>
     <SignAssembly>true</SignAssembly>
