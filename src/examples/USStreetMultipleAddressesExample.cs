@@ -30,7 +30,9 @@
 				State = "california",
 				ZipCode = "94043",
 				MaxCandidates = 3,
-				MatchStrategy = Lookup.INVALID // "invalid" is the most permissive match
+				MatchStrategy = Lookup.INVALID // "invalid" is the most permissive match,
+                                               // this will always return at least one result even if the address is invalid.
+                                               // Refer to the documentation for additional MatchStrategy options.
 			};
 
 			var address2 = new Lookup("1 Rosedale, Baltimore, Maryland")
