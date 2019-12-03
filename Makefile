@@ -20,7 +20,7 @@ test:
 	dotnet test "$(TEST_FILE)"
 
 integrate:
-	dotnet run --project "src/examples/examples.csproj"
+	dotnet run --project "src/integration/integration.csproj"
 
 package: clean
 	dotnet pack "$(PROJECT_FILE)" --configuration "$(CONFIGURATION)" \
