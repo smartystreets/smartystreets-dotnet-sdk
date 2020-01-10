@@ -5,7 +5,7 @@
 	using System.Globalization;
 	using System.IO;
 
-	public class Client : IClient<Lookup>
+	public class Client : IUSStreetClient
 	{
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
