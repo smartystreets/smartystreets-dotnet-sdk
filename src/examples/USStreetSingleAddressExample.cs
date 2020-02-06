@@ -17,6 +17,7 @@
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 
 			var client = new ClientBuilder(authId, authToken)
+				//.WithCustomBaseUrl("us-street.api.smartystreets.com")
 				//.ViaProxy("http://localhost:8080", "username", "password") // uncomment this line to point to the specified proxy.
 				.BuildUsStreetApiClient();
 			
