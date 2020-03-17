@@ -8,7 +8,7 @@
 	///     This client sends lookups to the SmartyStreets US Extract API,
 	///     and attaches the results to the Lookup objects.
 	/// </summary>
-	public class Client : IClient<Lookup>
+	public class Client : IUSExtractClient
 	{
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
