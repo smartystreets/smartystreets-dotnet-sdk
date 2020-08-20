@@ -1,4 +1,6 @@
-﻿namespace Examples
+﻿using System.Collections.Generic;
+
+namespace Examples
 {
 	using System;
 	using System.IO;
@@ -12,7 +14,8 @@
 			// You don't have to store your keys in environment variables, but we recommend it.
 			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			var client = new ClientBuilder(authId, authToken).BuildUsStreetApiClient();
+			var client = new ClientBuilder(authId, authToken) // .WithLicense(new List<string>{"us-rooftop-geo-cloud"})
+				.BuildUsStreetApiClient();
 			var batch = new Batch();
 			
 			// Documentation for input fields can be found at:

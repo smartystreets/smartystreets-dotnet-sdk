@@ -1,4 +1,6 @@
-﻿namespace Examples
+﻿using System.Collections.Generic;
+
+namespace Examples
 {
 	using System;
 	using SmartyStreets;
@@ -11,7 +13,8 @@
 			// We recommend storing your secret keys in environment variables.
 			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			var client = new ClientBuilder(authId, authToken).BuildInternationalStreetApiClient();
+			var client = new ClientBuilder(authId, authToken) // .WithLicense(new List<string>{"international-street-fake"})
+				.BuildInternationalStreetApiClient();
 			
 			// Documentation for input fields can be found at:
 			// https://smartystreetscom/docs/cloud/international-street-api#http-input-fields
