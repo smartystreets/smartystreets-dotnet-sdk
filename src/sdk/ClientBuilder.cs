@@ -23,6 +23,7 @@ namespace SmartyStreets
         private ISender httpSender;
         private Proxy proxy;
         private Dictionary<string, string> customHeaders;
+        private List<string> licenses;
         private const string InternationalStreetApiUrl = "https://international-street.api.smartystreets.com/verify";
         private const string UsAutocompleteApiUrl = "https://us-autocomplete.api.smartystreets.com/suggest";
         private const string UsExtractApiUrl = "https://us-extract.api.smartystreets.com/";
@@ -34,6 +35,7 @@ namespace SmartyStreets
             this.maxRetries = 5;
             this.maxTimeout = TimeSpan.FromSeconds(10);
             this.serializer = new NativeSerializer();
+            this.licenses = new List<string>();
         }
 
         public ClientBuilder(ICredentials signer) : this()
@@ -115,6 +117,17 @@ namespace SmartyStreets
             return this;
         }
 
+        /// <summary>
+        ///     Allows the caller to specify the subscription license(s) (aka "track") they wish to use.
+        /// </summary>
+        /// <param name="licenses">A List of license strings</param>
+        /// <returns>Returns 'this' to accommodate method chaining.</returns>
+        public ClientBuilder WithLicense(List<string> licenses)
+        {
+            this.licenses.AddRange(licenses);
+            return this;
+        }
+
         public Client BuildInternationalStreetApiClient()
         {
             this.EnsureURLPrefixNotNull(InternationalStreetApiUrl);
@@ -163,6 +176,8 @@ namespace SmartyStreets
 
             if (this.maxRetries > 0)
                 sender = new RetrySender(this.maxRetries, sender);
+            
+            sender = new LicenseSender(this.licenses, sender);
 
             return sender;
         }
