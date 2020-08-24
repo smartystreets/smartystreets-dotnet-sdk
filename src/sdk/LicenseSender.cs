@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace SmartyStreets
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class LicenseSender : ISender
     {
         private readonly List<string> licenses;

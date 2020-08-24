@@ -1,7 +1,6 @@
-using System.Collections.Generic;
-
 namespace SmartyStreets
 {
+    using System.Collections.Generic;
     using NUnit.Framework;
 
     [TestFixture]

@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Examples
+﻿namespace Examples
 {
 	using System;
+	using System.Collections.Generic;
 	using System.IO;
 	using SmartyStreets;
 	using SmartyStreets.USStreetApi;
