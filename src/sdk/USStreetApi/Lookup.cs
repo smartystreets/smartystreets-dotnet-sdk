@@ -15,6 +15,7 @@
 
 		public List<Candidate> Result { get; private set; }
 
+        [DataMember(Name = "input_id")]
 		public string InputId { get; set; }
 
 		[DataMember(Name = "street")]
