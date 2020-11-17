@@ -1,7 +1,5 @@
 ﻿namespace SmartyStreets.USReverseGeo
 {
-	using System.Collections.Generic;
-	using System.Text;
 	using USReverseGeoApi;
 	using NUnit.Framework;
 
