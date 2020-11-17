@@ -60,7 +60,7 @@
 				Console.WriteLine("Street: " + address.Street);
 				Console.WriteLine("City: " + address.City);
 				Console.WriteLine("State Abbreviation: " + address.StateAbbreviation);
-				Console.WriteLine("ZIP Code: " + address.Zipcode);
+				Console.WriteLine("ZIP Code: " + address.ZipCode);
 			}
 		}
 	}

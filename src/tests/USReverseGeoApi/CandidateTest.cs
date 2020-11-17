@@ -49,7 +49,7 @@
 			Assert.AreEqual("6", address.Street);
 			Assert.AreEqual("7", address.City);
 			Assert.AreEqual("8", address.StateAbbreviation);
-			Assert.AreEqual("9", address.Zipcode);
+			Assert.AreEqual("9", address.ZipCode);
 
 			#endregion
 

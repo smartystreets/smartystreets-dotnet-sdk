@@ -20,7 +20,7 @@
 		public string StateAbbreviation { get; set; }
 
 		[DataMember(Name = "zipcode")]
-		public string Zipcode { get; set; }
+		public string ZipCode { get; set; }
 		
 		#endregion
 	}
