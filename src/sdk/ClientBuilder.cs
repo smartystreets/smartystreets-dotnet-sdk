@@ -29,6 +29,7 @@ namespace SmartyStreets
         private const string UsExtractApiUrl = "https://us-extract.api.smartystreets.com/";
         private const string UsStreetApiUrl = "https://us-street.api.smartystreets.com/street-address";
         private const string UsZipCodeApiUrl = "https://us-zipcode.api.smartystreets.com/lookup";
+        private const string UsReverseGeoApiUrl = "https://us-reverse-geo.api.smartystreets.com/lookup";
 
         public ClientBuilder()
         {
@@ -156,6 +157,12 @@ namespace SmartyStreets
         {
             this.EnsureURLPrefixNotNull(UsZipCodeApiUrl);
             return new USZipCodeApi.Client(this.BuildSender(), this.serializer);
+        }
+
+        public USReverseGeoApi.Client BuildUsReverseGeoApiClient()
+        {
+            this.EnsureURLPrefixNotNull(UsReverseGeoApiUrl);
+            return new USReverseGeoApi.Client(this.BuildSender(), this.serializer);
         }
 
         private ISender BuildSender()
