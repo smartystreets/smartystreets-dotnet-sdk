@@ -12,6 +12,7 @@
 			InternationalStreetExample.Run();
 			USExtractExample.Run();
 			USAutocompleteExample.Run();
+			USReverseGeoExample.Run();
 		}
 	}
 }
