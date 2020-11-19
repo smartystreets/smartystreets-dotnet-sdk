@@ -20,7 +20,7 @@
 		public string Accuracy { get; set; }
 
 		[DataMember(Name = "license")]
-		public int License { get; set; }
+		public License License { get; set; }
 		
 		#endregion
 	}

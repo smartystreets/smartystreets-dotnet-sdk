@@ -61,6 +61,7 @@
 				Console.WriteLine("City: " + address.City);
 				Console.WriteLine("State Abbreviation: " + address.StateAbbreviation);
 				Console.WriteLine("ZIP Code: " + address.ZipCode);
+				Console.WriteLine("License: " + coordinate.License);
 			}
 		}
 	}
