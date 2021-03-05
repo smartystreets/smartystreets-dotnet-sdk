@@ -12,8 +12,13 @@
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			var credentials = new StaticCredentials(authId, authToken);
 
+			var key = Environment.GetEnvironmentVariable("SMARTY_AUTH_WEB");
+			var hostname = Environment.GetEnvironmentVariable("SMARTY_AUTH_REFERER");
+			var shared = new SharedCredentials(key, hostname);
+
 			TestInternationalStreetRequestReturnsWithCorrectNumberOfResults(credentials);
 			TestUSAutocompleteRequestReturnsWithCorrectNumberOfResults(credentials);
+			TestUSAutocompleteProRequestReturnsWithCorrectNumberOfResults(shared);
 			TestUSExtractRequestReturnsWithCorrectNumberOfResults(credentials);
 			TestUSStreetRequestReturnsWithCorrectNumberOfResults(credentials);
 			TestUSZIPCodeRequestReturnsWithCorrectNumberOfResults(credentials);
@@ -61,6 +66,29 @@
 				suggestions = lookup.Result.Length;
 
 			AssertResults("US_Autocomplete", suggestions, 9);
+		}
+
+		private static void TestUSAutocompleteProRequestReturnsWithCorrectNumberOfResults(ICredentials credentials)
+		{
+			var client = new ClientBuilder(credentials).WithCustomBaseUrl(Environment.GetEnvironmentVariable("SMARTY_URL_US_AUTOCOMPLETE_PRO")).RetryAtMost(0).BuildUsAutocompleteProApiClient();
+			var lookup = new SmartyStreets.USAutocompleteProApi.Lookup("4770 Lincoln Ave O");
+			lookup.AddStateFilter("IL");
+
+			try
+			{
+				client.Send(lookup);
+			}
+			catch (Exception)
+			{
+				Console.Write("");
+				throw;
+			}
+
+			var suggestions = 0;
+			if (lookup.Result != null)
+				suggestions = lookup.Result.Length;
+			
+			AssertResults("US_Autocomplete_Pro", suggestions, 1);
 		}
 
 		private static void TestUSExtractRequestReturnsWithCorrectNumberOfResults(ICredentials credentials)
