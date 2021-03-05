@@ -21,6 +21,9 @@ namespace SmartyStreets.USStreetApi
 		[DataMember(Name = "dpv_vacant")]
 		public string Vacant { get; set; }
 
+		[DataMember(Name = "dpv_no_stat")]
+		public string NoStat { get; set; }
+
 		[DataMember(Name = "active")]
 		public string Active { get; set; }
 

@@ -67,6 +67,7 @@ namespace SmartyStreets.USStreetApi
                     ""dpv_footnotes"": ""AACCRR"",
                     ""dpv_cmra"": ""Y"",
                     ""dpv_vacant"": ""N"",
+                    ""dpv_no_stat"": ""N"",
                     ""active"": ""Y"",
                     ""footnotes"": ""footnotes"",
                     ""lacslink_code"": ""lacslink_code"",
@@ -132,13 +133,13 @@ namespace SmartyStreets.USStreetApi
             Assert.AreEqual("AACCRR", analysis.DpvFootnotes);
             Assert.AreEqual("Y", analysis.Cmra);
             Assert.AreEqual("N", analysis.Vacant);
+            Assert.AreEqual("N", analysis.NoStat);
             Assert.AreEqual("Y", analysis.Active);
             Assert.AreEqual("footnotes", analysis.Footnotes);
             Assert.AreEqual("lacslink_code", analysis.LacsLinkCode);
             Assert.AreEqual("lacslink_indicator", analysis.LacsLinkIndicator);
             Assert.AreEqual(true, analysis.IsSuiteLinkMatch);
-            //TODO: Finish writing tests
         }
-}
+    }
 
 }
