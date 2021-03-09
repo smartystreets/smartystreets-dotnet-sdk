@@ -13,7 +13,7 @@
 			var credentials = new StaticCredentials(authId, authToken);
 
 			var key = Environment.GetEnvironmentVariable("SMARTY_AUTH_WEB");
-			var hostname = Environment.GetEnvironmentVariable("SMARTY_AUTH_REFERER");
+			var hostname = Environment.GetEnvironmentVariable("SMARTY_WEBSITE_DOMAIN");
 			var shared = new SharedCredentials(key, hostname);
 
 			TestInternationalStreetRequestReturnsWithCorrectNumberOfResults(credentials);

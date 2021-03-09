@@ -12,7 +12,7 @@
 		public void TestAllFieldsFilledCorrectly()
 		{
 			const string responsePayload = "{\"results\":[" +
-										   "{\"coordinate\":{\"latitude\":1.1,\"longitude\":2.2,\"accuracy\":\"3\",\"license\":4}," +
+										   "{\"coordinate\":{\"latitude\":1.1,\"longitude\":2.2,\"accuracy\":\"3\",\"license\":1}," +
 										   "\"distance\":5.5," +
 										   "\"address\":{\"street\":\"6\",\"city\":\"7\",\"state_abbreviation\":\"8\",\"zipcode\":\"9\"}" +
 										   "},]}";
@@ -38,7 +38,7 @@
 			Assert.AreEqual(1.1, coordinate.Latitude);
 			Assert.AreEqual(2.2, coordinate.Longitude);
 			Assert.AreEqual("3", coordinate.Accuracy);
-			Assert.AreEqual(4, coordinate.License);
+			Assert.AreEqual(License.SmartyStreetsProprietary, coordinate.License);
 
 			#endregion
 

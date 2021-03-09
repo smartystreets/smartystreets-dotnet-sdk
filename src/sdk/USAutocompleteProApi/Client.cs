@@ -53,7 +53,7 @@
 			request.SetParameter("prefer_states", BuildFilterString(lookup.PreferStates));
 			request.SetParameter("prefer_zip_codes", BuildFilterString(lookup.PreferZIPCodes));
 			request.SetParameter("prefer_ratio", lookup.GetPreferRatioStringIfSet());
-			request.SetParameter("prefer_geolocation", lookup.GeolocateType);
+			request.SetParameter("prefer_geolocation", lookup.PreferGeolocation);
 			request.SetParameter("selected", lookup.Selected);
 
 			return request;

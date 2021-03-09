@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets.USAutocompleteProApi
+﻿using SmartyStreets.USAutocompleteApi;
+
+namespace SmartyStreets.USAutocompleteProApi
 {
 	using System.Runtime.Serialization;
 

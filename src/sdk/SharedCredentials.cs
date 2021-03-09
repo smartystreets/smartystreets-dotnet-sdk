@@ -14,7 +14,7 @@
 		public void Sign(Request request)
 		{
 			request.SetParameter("key", this.id);
-			request.SetHeader("Referer", this.hostname);
+			request.SetHeader("Referer", "https://" + this.hostname);
 		}
 	}
 }

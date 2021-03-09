@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets.USAutocompleteProApi
+﻿using SmartyStreets.USAutocompleteApi;
+
+namespace SmartyStreets.USAutocompleteProApi
 {
 	using System.Collections;
 
@@ -26,7 +28,7 @@
 		public ArrayList PreferStates { get; set; }
 		public ArrayList PreferZIPCodes { get; set; }	
 		public double PreferRatio { get; set; }
-		public string GeolocateType { get; set; }
+		public string PreferGeolocation { get; set; }
 		public string Selected { get; set; }
 
 		#endregion
@@ -48,7 +50,7 @@
 			this.PreferStates = new ArrayList();
 			this.PreferZIPCodes = new ArrayList();
 			this.PreferRatio = PREFER_RATIO_DEFAULT;
-			this.GeolocateType = USAutocompleteProApi.GeolocateType.CITY;
+			this.PreferGeolocation = GeolocateType.CITY;
 		}
 
 		/// <param name="prefix">The beginning of an address.</param>
@@ -85,7 +87,7 @@
 
 		public void AddZIPFilter(string zipcode)
 		{
-			this.GeolocateType = USAutocompleteProApi.GeolocateType.NONE;
+			this.PreferGeolocation = GeolocateType.NONE;
 			this.ZIPFilter.Add(zipcode);
 		}
 
@@ -106,7 +108,7 @@
 
 		public void AddPreferZIP(string zipcode)
 		{
-			this.GeolocateType = USAutocompleteProApi.GeolocateType.NONE;
+			this.PreferGeolocation = GeolocateType.NONE;
 			this.PreferZIPCodes.Add(zipcode);
 		}
 	}
