@@ -9,7 +9,7 @@
 		public void AssertSignedRequest()
 		{
 			var request = CreateSignedRequest();
-			const string expected = "https://us-street.api.smartystreets.com/street-address?auth-id=3516378604772256";
+			const string expected = "https://us-street.api.smartystreets.com/street-address?key=3516378604772256";
 
 			Assert.AreEqual(expected, request.GetUrl());
 		}

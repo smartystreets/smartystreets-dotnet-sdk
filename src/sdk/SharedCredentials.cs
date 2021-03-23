@@ -13,7 +13,7 @@
 
 		public void Sign(Request request)
 		{
-			request.SetParameter("auth-id", this.id);
+			request.SetParameter("key", this.id);
 			request.SetHeader("Referer", "https://" + this.hostname);
 		}
 	}

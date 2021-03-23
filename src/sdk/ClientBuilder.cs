@@ -3,7 +3,6 @@
 namespace SmartyStreets
 {
     using System;
-    using InternationalStreetApi;
 
     /// <summary>
     ///     The ClientBuilder class helps you build a client object for one of the supported SmartyStreets APIs.
@@ -26,6 +25,7 @@ namespace SmartyStreets
         private List<string> licenses;
         private const string InternationalStreetApiUrl = "https://international-street.api.smartystreets.com/verify";
         private const string UsAutocompleteApiUrl = "https://us-autocomplete.api.smartystreets.com/suggest";
+        private const string UsAutocompleteProApiUrl = "https://us-autocomplete-pro.api.smartystreets.com/lookup";
         private const string UsExtractApiUrl = "https://us-extract.api.smartystreets.com/";
         private const string UsStreetApiUrl = "https://us-street.api.smartystreets.com/street-address";
         private const string UsZipCodeApiUrl = "https://us-zipcode.api.smartystreets.com/lookup";
@@ -129,16 +129,22 @@ namespace SmartyStreets
             return this;
         }
 
-        public Client BuildInternationalStreetApiClient()
+        public InternationalStreetApi.Client BuildInternationalStreetApiClient()
         {
             this.EnsureURLPrefixNotNull(InternationalStreetApiUrl);
-            return new Client(this.BuildSender(), this.serializer);
+            return new InternationalStreetApi.Client(this.BuildSender(), this.serializer);
         }
 
         public USAutocompleteApi.Client BuildUsAutocompleteApiClient()
         {
             this.EnsureURLPrefixNotNull(UsAutocompleteApiUrl);
             return new USAutocompleteApi.Client(this.BuildSender(), this.serializer);
+        }
+
+        public USAutocompleteProApi.Client BuildUsAutocompleteProApiClient()
+        {
+            this.EnsureURLPrefixNotNull(UsAutocompleteProApiUrl);
+            return new USAutocompleteProApi.Client(this.BuildSender(), this.serializer);
         }
 
         public USExtractApi.Client BuildUsExtractApiClient()
