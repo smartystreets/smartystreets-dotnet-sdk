@@ -16,7 +16,10 @@
 			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 
-			var client = new ClientBuilder(authId, authToken)
+			// The appropriate license values to be used for your subscriptions
+			// can be found on the Subscriptions page the account dashboard.
+			// https://www.smartystreets.com/docs/cloud/licensing
+			var client = new ClientBuilder(authId, authToken).WithLicense(new List<string>{"us-reverse-geocoding-cloud"})
 				//.WithCustomBaseUrl("us-street-reverse-geo.api.smartystreets.com")
 				//.ViaProxy("http://localhost:8080", "username", "password") // uncomment this line to point to the specified proxy.
 				.BuildUsReverseGeoApiClient();

@@ -12,7 +12,13 @@
 			var key = Environment.GetEnvironmentVariable("SMARTY_AUTH_WEB");
 			var hostname = Environment.GetEnvironmentVariable("SMARTY_WEBSITE_DOMAIN");
 			var credentials = new SharedCredentials(key, hostname);
-			var client = new ClientBuilder(credentials).BuildUsAutocompleteProApiClient();
+
+            // The appropriate license values to be used for your subscriptions
+            // can be found on the Subscriptions page the account dashboard.
+            // https://www.smartystreets.com/docs/cloud/licensing
+			var client = new ClientBuilder(credentials).WithLicense(new List<string>{"us-autocomplete-pro-cloud"})
+			    .BuildUsAutocompleteProApiClient();
+
 			var lookup = new Lookup("4770 Lincoln Ave O");
 			lookup.PreferGeolocation = "null";
 

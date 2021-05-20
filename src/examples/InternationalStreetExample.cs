@@ -12,7 +12,11 @@
 			// We recommend storing your secret keys in environment variables.
 			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			var client = new ClientBuilder(authId, authToken) // .WithLicense(new List<string>{"international-street-fake"})
+
+			// The appropriate license values to be used for your subscriptions
+			// can be found on the Subscriptions page the account dashboard.
+			// https://www.smartystreets.com/docs/cloud/licensing
+			var client = new ClientBuilder(authId, authToken).WithLicense(new List<string>{"international-global-plus-cloud"})
 				.BuildInternationalStreetApiClient();
 			
 			// Documentation for input fields can be found at:
