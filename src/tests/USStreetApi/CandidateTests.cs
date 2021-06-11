@@ -72,7 +72,9 @@ namespace SmartyStreets.USStreetApi
                     ""footnotes"": ""footnotes"",
                     ""lacslink_code"": ""lacslink_code"",
                     ""lacslink_indicator"": ""lacslink_indicator"",
-                    ""suitelink_match"": true
+                    ""suitelink_match"": true,
+                    ""match_mode"": ""match_mode"",
+                    ""match_details"": ""match_details""
                 }
             }
             ]";
@@ -139,6 +141,8 @@ namespace SmartyStreets.USStreetApi
             Assert.AreEqual("lacslink_code", analysis.LacsLinkCode);
             Assert.AreEqual("lacslink_indicator", analysis.LacsLinkIndicator);
             Assert.AreEqual(true, analysis.IsSuiteLinkMatch);
+            Assert.AreEqual("match_mode", analysis.MatchMode);
+            Assert.AreEqual("match_details", analysis.MatchDetails);
         }
     }
 
