@@ -43,11 +43,8 @@ namespace SmartyStreets.USStreetApi
 		[DataMember(Name = "suitelink_match")]
 		public bool IsSuiteLinkMatch { get; set; }
 
-		[DataMember(Name = "match_mode")]
-		public string MatchMode { get; set; }
-
-		[DataMember(Name = "match_details")]
-		public string MatchDetails { get; set; }
+		[DataMember(Name = "enhanced_match")]
+		public string EnhancedMatch { get; set; }
 
 		#endregion
 	}
