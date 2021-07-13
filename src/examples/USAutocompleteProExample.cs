@@ -1,6 +1,7 @@
 ﻿namespace Examples
 {
 	using System;
+	using System.Collections.Generic;
 	using SmartyStreets;
 	using SmartyStreets.USAutocompleteProApi;
 
@@ -27,7 +28,7 @@
 			Console.WriteLine("*** Result with no filter ***");
 			Console.WriteLine();
 			foreach (var suggestion in lookup.Result)
-				Console.WriteLine(suggestion.StreetLine, suggestion.City, ", ", suggestion.State);
+				Console.WriteLine(suggestion.Street, suggestion.City, ", ", suggestion.State);
 				
 				
 			
@@ -48,7 +49,7 @@
 			Console.WriteLine();
 			Console.WriteLine("*** Result with some filters ***");
 			foreach (var suggestion in suggestions)
-				Console.WriteLine(suggestion.StreetLine, suggestion.City, ", ", suggestion.State);
+				Console.WriteLine(suggestion.Street, suggestion.City, ", ", suggestion.State);
 		}
 	}
 }
