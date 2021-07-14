@@ -35,12 +35,12 @@
 				Street = "1600 Amphitheatre Pkwy",
 				Street2 = "closet under the stairs",
 				Secondary = "APT 2",
-				Urbanization = "", // Only applies to Puerto Rico addresses
+				Urbanization = "", // Only applies to Pue rto Rico addresses
 				City = "Mountain View",
 				State = "CA",
 				ZipCode = "21229",
 				MaxCandidates = 3,
-				MatchStrategy = Lookup.INVALID // "invalid" is the most permissive match,
+				MatchStrategy = Lookup.ENHANCED // "invalid" is the most permissive match,
                                                // this will always return at least one result even if the address is invalid.
                                                // Refer to the documentation for additional MatchStrategy options.
 			};

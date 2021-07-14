@@ -37,7 +37,7 @@
 				Street = "693 W 1150 S",
 				City = "provo",
 				State = "utah",
-				MatchStrategy = Lookup.RANGE
+				MatchStrategy = Lookup.ENHANCED
 			};
 
 			var addressWithInvalidStrategy = new Lookup

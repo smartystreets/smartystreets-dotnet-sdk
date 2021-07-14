@@ -10,8 +10,9 @@
 		#region [ Fields ]
 
 		public const string STRICT = "strict";
-		public const string RANGE = "range";
+		public const string ENHANCED = "enhanced";
 		public const string INVALID = "invalid";
+		public const string RANGE = "range"; // Deprecated
 
 		public List<Candidate> Result { get; private set; }
 
