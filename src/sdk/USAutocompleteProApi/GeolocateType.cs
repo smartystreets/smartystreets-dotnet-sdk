@@ -7,6 +7,6 @@
 	public static class GeolocateType
 	{
 		public const string CITY = "city";
-		public const string NONE = "null";
+		public const string NONE = "none";
 	}
 }
