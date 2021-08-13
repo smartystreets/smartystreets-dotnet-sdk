@@ -21,7 +21,7 @@
 			    .BuildUsAutocompleteProApiClient();
 
 			var lookup = new Lookup("4770 Lincoln Ave O");
-			lookup.PreferGeolocation = "null";
+			lookup.PreferGeolocation = "none";
 
 			client.Send(lookup);
 
