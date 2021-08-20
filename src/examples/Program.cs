@@ -11,7 +11,6 @@
 			USZipCodeMultipleLookupsExample.Run();
 			InternationalStreetExample.Run();
 			USExtractExample.Run();
-			USAutocompleteExample.Run();
 			USAutocompleteProExample.Run();
 			USReverseGeoExample.Run();
 		}
