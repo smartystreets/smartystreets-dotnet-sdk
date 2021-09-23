@@ -41,6 +41,7 @@
 			lookup.AddPreferState("IL");
 			lookup.MaxResults = 5;
 			lookup.PreferRatio = 3;
+			lookup.Source = "all";
 
 			client.Send(lookup);
 

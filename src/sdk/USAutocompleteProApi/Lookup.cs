@@ -30,6 +30,7 @@ namespace SmartyStreets.USAutocompleteProApi
 		public double PreferRatio { get; set; }
 		public string PreferGeolocation { get; set; }
 		public string Selected { get; set; }
+		public string Source { get; set; }
 
 		#endregion
 

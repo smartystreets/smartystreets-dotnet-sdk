@@ -55,6 +55,7 @@
 			request.SetParameter("prefer_ratio", lookup.GetPreferRatioStringIfSet());
 			request.SetParameter("prefer_geolocation", lookup.PreferGeolocation);
 			request.SetParameter("selected", lookup.Selected);
+			request.SetParameter("source", lookup.Source);
 
 			return request;
 		}
