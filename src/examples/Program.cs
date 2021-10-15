@@ -10,6 +10,7 @@
 			USZipCodeSingleLookupExample.Run();
 			USZipCodeMultipleLookupsExample.Run();
 			InternationalStreetExample.Run();
+			InternationalAutocompleteExample.Run();
 			USExtractExample.Run();
 			USAutocompleteProExample.Run();
 			USReverseGeoExample.Run();
