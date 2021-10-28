@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1-sdk-alpine
+FROM mcr.microsoft.com/dotnet/sdk:2.1-alpine
 
 ADD . /code
 WORKDIR /code
