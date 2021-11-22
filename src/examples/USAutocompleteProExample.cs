@@ -20,7 +20,7 @@
 			var client = new ClientBuilder(credentials).WithLicense(new List<string>{"us-autocomplete-pro-cloud"})
 			    .BuildUsAutocompleteProApiClient();
 
-			var lookup = new Lookup("4770 Lincoln Ave O");
+			var lookup = new Lookup("1042 W Center");
 			lookup.PreferGeolocation = "none";
 
 			client.Send(lookup);
@@ -35,11 +35,15 @@
 			// Documentation for input fields can be found at:
 			// https://smartystreets.com/docs/cloud/us-autocomplete-api#http-request-input-fields
 
-			lookup.AddCityFilter("Ogden");
-			lookup.AddStateFilter("IL");
-			lookup.AddPreferCity("Ogden");
-			lookup.AddPreferState("IL");
+			lookup.AddStateFilter("CO");
+			lookup.AddStateFilter("UT");
+			lookup.AddCityFilter("Denver");
+			lookup.AddCityFilter("Orem");
+			lookup.AddPreferState("CO");
+			lookup.AddPreferState("UT");
+			//lookup.Selected = "1042 W Center St Apt A (24) Orem UT 84057";
 			lookup.MaxResults = 5;
+			lookup.PreferGeolocation = GeolocateType.NONE;
 			lookup.PreferRatio = 3;
 			lookup.Source = "all";
 

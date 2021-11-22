@@ -68,9 +68,9 @@
 			var filterList = "";
 
 			foreach (string item in list)
-				filterList += item + ",";
+				filterList += item + ";";
 
-			if (filterList.EndsWith(","))
+			if (filterList.EndsWith(";"))
 				filterList = filterList.Substring(0, filterList.Length - 1);
 
 			return filterList;
