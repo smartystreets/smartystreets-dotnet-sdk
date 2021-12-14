@@ -14,6 +14,10 @@
 			var hostname = Environment.GetEnvironmentVariable("SMARTY_WEBSITE_DOMAIN");
 			var credentials = new SharedCredentials(key, hostname);
 
+			// var id = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
+			// var token = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
+			// var credentials = new StaticCredentials(id, token);
+
             // The appropriate license values to be used for your subscriptions
             // can be found on the Subscriptions page the account dashboard.
             // https://www.smartystreets.com/docs/cloud/licensing
