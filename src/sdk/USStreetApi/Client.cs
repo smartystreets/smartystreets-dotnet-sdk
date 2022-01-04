@@ -53,6 +53,8 @@
 
 		private static void PopulateQueryString(Lookup address, Request request)
 		{
+			if (address.MatchStrategy == "enhanced" && address.MaxCandidates == 1)
+				address.MaxCandidates = 5;
 		    request.SetParameter("input_id", address.InputId);
 			request.SetParameter("street", address.Street);
 			request.SetParameter("street2", address.Street2);
