@@ -80,7 +80,7 @@
 					continue;
 				}
 
-				Console.WriteLine("Address " + i + " is valid. (There is at least one candidate)");
+				Console.WriteLine("Address " + i + " has at least one candidate.\n If the match parameter is set to STRICT, the address is valid.\n Otherwise, check the Analysis output fields to see if the address is valid.");
 
 				foreach (var candidate in candidates)
 				{

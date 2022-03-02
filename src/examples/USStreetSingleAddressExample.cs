@@ -70,7 +70,7 @@
 			var firstCandidate = candidates[0];
 
 			Console.WriteLine("Input ID: " + firstCandidate.InputId);
-			Console.WriteLine("Address is valid. (There is at least one candidate)\n");
+			Console.WriteLine("There is at least one candidate.\n If the match parameter is set to STRICT, the address is valid.\n Otherwise, check the Analysis output fields to see if the address is valid.\n");
 			Console.WriteLine("ZIP Code: " + firstCandidate.Components.ZipCode);
 			Console.WriteLine("County: " + firstCandidate.Metadata.CountyName);
 			Console.WriteLine("Latitude: " + firstCandidate.Metadata.Latitude);
