@@ -39,7 +39,10 @@
 			if (batch.Count == 1)
 				PopulateQueryString(batch[0], request);
 			else
+			{
+				request.Headers.Add("Content-Type", "application/json");
 				request.Payload = batch.Serialize(this.serializer);
+			}
 
 			var response = this.sender.Send(request);
 			var payloadStream = new MemoryStream(response.Payload);
