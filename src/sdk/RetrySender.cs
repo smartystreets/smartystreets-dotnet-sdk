@@ -6,11 +6,13 @@
 	{
 		private readonly int maxRetries;
 		private readonly ISender inner;
+		private Action<int> sleep;
 
-		public RetrySender(int maxRetries, ISender inner)
+		public RetrySender(int maxRetries, ISender inner, Action<int> sleep)
 		{
 			this.maxRetries = maxRetries;
 			this.inner = inner;
+			this.sleep = sleep;
 		}
 
 		public Response Send(Request request)
@@ -30,6 +32,12 @@
 			try
 			{
 				return this.inner.Send(request);
+			}
+			catch (TooManyRequestsException)
+			{
+				if (attempt >= this.maxRetries)
+					throw;
+				this.sleep(5000);
 			}
 			catch (Exception) // TODO: catch HTTP 400, 413, 422 and just throw.
 			{

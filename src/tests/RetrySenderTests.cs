@@ -7,6 +7,7 @@
 	public class RetrySenderTests
 	{
 		private MockCrashingSender mockCrashingSender;
+		private int milliseconds;
 
 		[SetUp]
 		public void Setup()
@@ -36,13 +37,26 @@
 			Assert.Throws<IOException>(() => this.SendRequest(MockCrashingSender.RetryMaxTimes));
 		}
 
+		[Test]
+		public void TestSleepOnRateLimit()
+		{
+			this.SendRequest(MockCrashingSender.TooManyRequests);
+			
+			Assert.AreEqual(5000, this.milliseconds);
+		}
+
 		private void SendRequest(string requestBehavior)
 		{
 			var request = new Request();
 			request.SetUrlPrefix(requestBehavior);
-			var retrySender = new RetrySender(5, this.mockCrashingSender);
+			var retrySender = new RetrySender(5, this.mockCrashingSender, this.sleep);
 
 			retrySender.Send(request);
+		}
+
+		public void sleep(int milliseconds)
+		{
+			this.milliseconds = milliseconds;
 		}
 	}
 }

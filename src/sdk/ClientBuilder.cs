@@ -195,11 +195,16 @@ public InternationalAutocompleteApi.Client BuildInternationalAutocompleteApiClie
             sender = new URLPrefixSender(this.urlPrefix, sender);
 
             if (this.maxRetries > 0)
-                sender = new RetrySender(this.maxRetries, sender);
+                sender = new RetrySender(this.maxRetries, sender, this.Sleep);
             
             sender = new LicenseSender(this.licenses, sender);
 
             return sender;
+        }
+
+        private void Sleep(int time)
+        {
+            System.Threading.Thread.Sleep(time);
         }
 
         private void EnsureURLPrefixNotNull(string url)
