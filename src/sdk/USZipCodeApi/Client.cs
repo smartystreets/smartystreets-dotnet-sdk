@@ -40,7 +40,7 @@
 				PopulateQueryString(batch[0], request);
 			else
 			{
-				request.Headers.Add("Content-Type", "application/json");
+				request.ContentType = "application/json";
 				request.Payload = batch.Serialize(this.serializer);
 			}
 
