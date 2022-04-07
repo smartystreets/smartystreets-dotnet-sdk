@@ -40,7 +40,13 @@
 				PopulateQueryString(batch[0], request);
 			else
 			{
-				request.Headers.Add("Content-Type", "application/json");
+				// Per the discussion on this Stack Overflow thread, the suggested
+				// fix for this issue is to set the ContentType property on the
+				// Request object
+				//
+				// https://stackoverflow.com/questions/45076369/the-content-type-header-must-be-modified-using-the-appropriate-property-or-met
+				//
+				request.ContentType = "application/json";
 				request.Payload = batch.Serialize(this.serializer);
 			}
 
