@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2037
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sdk", "sdk\sdk.csproj", "{078EC965-EB61-4757-B4EA-CF0387E7C050}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "integration", "integration\integration.csproj", "{366C228F-8D22-4712-B5B8-A26B4F61AFBF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "examples", "examples\examples.csproj", "{F92D4539-4EB1-4399-BB8C-CFE6EDEB06D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "examples_frmwrk", "examples_frmwrk\examples_frmwrk.csproj", "{FA59D02E-0955-4E60-9DD0-A2F6BF3719D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F92D4539-4EB1-4399-BB8C-CFE6EDEB06D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F92D4539-4EB1-4399-BB8C-CFE6EDEB06D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F92D4539-4EB1-4399-BB8C-CFE6EDEB06D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA59D02E-0955-4E60-9DD0-A2F6BF3719D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA59D02E-0955-4E60-9DD0-A2F6BF3719D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA59D02E-0955-4E60-9DD0-A2F6BF3719D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA59D02E-0955-4E60-9DD0-A2F6BF3719D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
