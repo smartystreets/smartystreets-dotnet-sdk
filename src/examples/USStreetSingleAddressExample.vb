@@ -8,7 +8,7 @@ Module Module1
     Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
     Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
  
-    Dim client = New ClientBuilder(authID, authToken).BuildUsStreetApiClient()
+    Dim client = New ClientBuilder(authID, authToken).WithLicense(new List<string>{"us-core-cloud"}).BuildUsStreetApiClient()
  
     Sub Main()
  
