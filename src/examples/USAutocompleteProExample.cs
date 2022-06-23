@@ -48,7 +48,7 @@
 			//lookup.Selected = "1042 W Center St Apt A (24) Orem UT 84057";
 			lookup.MaxResults = 5;
 			lookup.PreferGeolocation = GeolocateType.NONE;
-			lookup.PreferRatio = 3;
+			lookup.PreferRatio = 4;
 			lookup.Source = "all";
 
 			client.Send(lookup);
