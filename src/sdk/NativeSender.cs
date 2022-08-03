@@ -73,7 +73,17 @@
 		{
 			try
 			{
+#if NET35
+			    byte[] buffer = new byte[16 * 1024]; // Fairly arbitrary size
+			    int bytesRead;
+
+			    while ((bytesRead = source.Read(buffer, 0, buffer.Length)) > 0)
+			    {
+			        target.Write(buffer, 0, bytesRead);
+			    }
+#else
 				source.CopyTo(target);
+#endif
 			}
 			catch (IOException ex)
 			{

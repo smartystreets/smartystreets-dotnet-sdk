@@ -17,7 +17,7 @@ namespace SmartyStreets
 
         public Response Send(Request request)
         {
-            request.SetParameter("license", String.Join(",", this.licenses));
+            request.SetParameter("license", String.Join(",", this.licenses.ToArray()));
             return this.inner.Send(request);
         }
     }
