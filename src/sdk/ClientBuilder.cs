@@ -195,7 +195,7 @@ public InternationalAutocompleteApi.Client BuildInternationalAutocompleteApiClie
             sender = new URLPrefixSender(this.urlPrefix, sender);
 
             if (this.maxRetries > 0)
-                sender = new RetrySender(this.maxRetries, sender, this.Sleep);
+                sender = new RetrySender(this.maxRetries, sender, this.Sleep, new RandomGenerator());
             
             sender = new LicenseSender(this.licenses, sender);
 

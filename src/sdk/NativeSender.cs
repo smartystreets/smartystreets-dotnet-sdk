@@ -36,7 +36,17 @@
 			var statusCode = (int)frameworkResponse.StatusCode;
 			var payload = GetResponseBody(frameworkResponse);
 
-			return new Response(statusCode, payload);
+			var retVal = new Response(statusCode, payload);
+			if (statusCode == 429)
+			{
+				string retryValue = frameworkResponse.Headers.Get("Retry-After");
+				if ((retryValue != null) && (retryValue.Length != 0))
+				{
+					retVal.HeaderInfo.Add("Retry-After", retryValue);
+				}
+			}
+
+			return retVal;
 		}
 
 		private HttpWebRequest BuildRequest(Request request)
@@ -73,7 +83,17 @@
 		{
 			try
 			{
+#if NET35
+			    byte[] buffer = new byte[16 * 1024]; // Fairly arbitrary size
+			    int bytesRead;
+
+			    while ((bytesRead = source.Read(buffer, 0, buffer.Length)) > 0)
+			    {
+			        target.Write(buffer, 0, bytesRead);
+			    }
+#else
 				source.CopyTo(target);
+#endif
 			}
 			catch (IOException ex)
 			{

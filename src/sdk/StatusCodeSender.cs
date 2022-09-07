@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets
+﻿using System;
+
+namespace SmartyStreets
 {
 	public class StatusCodeSender : ISender
 	{
@@ -35,8 +37,14 @@
 				case 422:
 					throw new UnprocessableEntityException("GET request lacked required fields.");
 				case 429:
+					string retry;
+					Int64 retryVal = 0;
+					if (response.HeaderInfo.TryGetValue("Retry-After", out retry))
+					{
+						Int64.TryParse(retry, out retryVal);
+					}
 					throw new TooManyRequestsException(
-						"When using public \"website key\" authentication, we restrict the number of requests coming from a given source over too short of a time.");
+						"When using public \"website key\" authentication, we restrict the number of requests coming from a given source over too short of a time.", retryVal);
 				case 500:
 					throw new InternalServerErrorException("Internal Server Error.");
 				case 503:

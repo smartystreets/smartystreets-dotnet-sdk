@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets
+﻿using System;
+
+namespace SmartyStreets
 {
 	using System.IO;
 	using NUnit.Framework;
@@ -8,11 +10,13 @@
 	{
 		private MockCrashingSender mockCrashingSender;
 		private int milliseconds;
+		private FakeRandomNumberGenerator fakeRandomNumberGenerator;
 
 		[SetUp]
 		public void Setup()
 		{
 			this.mockCrashingSender = new MockCrashingSender();
+			fakeRandomNumberGenerator = new FakeRandomNumberGenerator();
 		}
 
 		[Test]
@@ -20,6 +24,15 @@
 		{
 			this.SendRequest(MockCrashingSender.DoNotRetry);
 
+			Assert.AreEqual(1, this.mockCrashingSender.SendCount);
+		}
+
+		[TestCase(typeof(BadRequestException), MockCrashingSender.BadRequest)]
+		[TestCase(typeof(RequestEntityTooLargeException), MockCrashingSender.RequestEntityTooLarge)]
+		[TestCase(typeof(UnprocessableEntityException), MockCrashingSender.UnprocessableEntity)]
+		public void TestSpecificErrorThrowsExceptionAndDoesNotRetry(Type exceptionType, string requestBehavior)
+		{
+			Assert.Throws(exceptionType, () => this.SendRequest(requestBehavior));
 			Assert.AreEqual(1, this.mockCrashingSender.SendCount);
 		}
 
@@ -32,24 +45,27 @@
 		}
 
 		[Test]
-		public void TestRetryUntilMaxAttemps()
+		public void TestRetryUntilMaxAttempts()
 		{
 			Assert.Throws<IOException>(() => this.SendRequest(MockCrashingSender.RetryMaxTimes));
 		}
 
-		[Test]
-		public void TestSleepOnRateLimit()
+		[TestCase(3)]
+		[TestCase(2)]
+		[TestCase(4)]
+		public void TestSleepOnRateLimit(int pseudoRandomNumber)
 		{
+			fakeRandomNumberGenerator.SetNextRandomNumber(pseudoRandomNumber);
 			this.SendRequest(MockCrashingSender.TooManyRequests);
 			
-			Assert.AreEqual(5000, this.milliseconds);
+			Assert.AreEqual(pseudoRandomNumber*1000, this.milliseconds);
 		}
 
 		private void SendRequest(string requestBehavior)
 		{
 			var request = new Request();
 			request.SetUrlPrefix(requestBehavior);
-			var retrySender = new RetrySender(5, this.mockCrashingSender, this.sleep);
+			var retrySender = new RetrySender(5, this.mockCrashingSender, this.sleep, fakeRandomNumberGenerator);
 
 			retrySender.Send(request);
 		}
