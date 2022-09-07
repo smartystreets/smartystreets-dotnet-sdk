@@ -36,7 +36,17 @@
 			var statusCode = (int)frameworkResponse.StatusCode;
 			var payload = GetResponseBody(frameworkResponse);
 
-			return new Response(statusCode, payload);
+			var retVal = new Response(statusCode, payload);
+			if (statusCode == 429)
+			{
+				string retryValue = frameworkResponse.Headers.Get("Retry-After");
+				if ((retryValue != null) && (retryValue.Length != 0))
+				{
+					retVal.HeaderInfo.Add("Retry-After", retryValue);
+				}
+			}
+
+			return retVal;
 		}
 
 		private HttpWebRequest BuildRequest(Request request)

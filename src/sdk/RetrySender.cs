@@ -55,10 +55,12 @@
 			{
 				return this.inner.Send(request);
 			}
-			catch (TooManyRequestsException)
+			catch (TooManyRequestsException e)
 			{
-				attempts = 1;
-				var sleepDurationInMilliseconds = randomNumGenerator.Next(BackOffRateLimit)*1000;
+				attempts = 0;
+				int sleepDurationInMilliseconds = (int)e.RetryAfterInSeconds*1000;
+					if (sleepDurationInMilliseconds == 0)
+						sleepDurationInMilliseconds= randomNumGenerator.Next(BackOffRateLimit)*1000;
 				this.sleep(sleepDurationInMilliseconds);
 			}
 			catch (Exception ex) when ((ex is BadRequestException) || (ex is RequestEntityTooLargeException) || (ex is UnprocessableEntityException))
