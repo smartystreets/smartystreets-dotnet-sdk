@@ -1,0 +1,74 @@
+name: Upload dotnet Package
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  publish:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 6.0.x
+
+      - name: clean
+        run: |
+          rm -rf workspace
+          dotnet clean src/smartystreets-dotnet-sdk.sln
+
+      - name: compile
+        run: |
+          dotnet build src/smartystreets-dotnet-sdk.sln --configuration Release
+
+      - name: test
+        run: |
+          dotnet test src/tests/tests.csproj
+
+      - name: integrate
+        run: |
+          dotnet run --project "src/integration/integration.csproj"
+
+      - name: package
+        run: |
+          dotnet pack "$(PROJECT_FILE)" --configuration Release \
+          --include-source \
+          --include-symbols \
+          --output "../../workspace" \
+          /p:CustomVersion="$(shell tagit -p --dry-run)"
+
+      - name: publish
+        run: |
+          dotnet nuget push workspace/* --source nuget.org -k "$(NUGET_KEY)"
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+
+
+#!/usr/bin/make -f
+
+#  SOLUTION_FILE := src/smartystreets-dotnet-sdk.sln
+#  PROJECT_FILE  := src/sdk/sdk.csproj
+#  TEST_FILE     := src/tests/tests.csproj
+#  CONFIGURATION := Release
+#  WORKSPACE_DIR := workspace
+  
+#  export FrameworkPathOverride=$(dir $(shell which mono))/../lib/mono/4.0-api/
+
+
+#workspace:
+#  docker-compose run sdk
+#
+#release:
+#  docker-compose run sdk make publish && tagit -p && git push origin --tags
+#
+#.PHONY: clean compile test integrate package publish version workspace release
