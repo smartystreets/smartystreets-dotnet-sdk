@@ -37,7 +37,7 @@ jobs:
 
       - name: package
         run: |
-          dotnet pack "$(PROJECT_FILE)" --configuration Release \
+          dotnet pack src/sdk/sdk.csproj --configuration Release \
           --include-source \
           --include-symbols \
           --output "../../workspace" \
@@ -45,7 +45,7 @@ jobs:
 
       - name: publish
         run: |
-          dotnet nuget push workspace/* --source nuget.org -k "$(NUGET_KEY)"
+          dotnet nuget push workspace/* --source nuget.org -k ${{ secrets.NUGET_API_KEY }}
 
       - name: Build
         run: dotnet build --no-restore
