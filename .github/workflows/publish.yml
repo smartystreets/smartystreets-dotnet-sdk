@@ -38,13 +38,16 @@ jobs:
         run: |
           dotnet run --project "src/integration/integration.csproj"
 
+      - name: Set Environment Variable
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
       - name: package
         run: |
           dotnet pack src/sdk/sdk.csproj --configuration Release \
           --include-source \
           --include-symbols \
           --output "../../workspace" \
-          /p:CustomVersion="$(shell tagit -p --dry-run)"
+          /p:CustomVersion= ${{ env.RELEASE_VERSION }} 
 
       - name: publish
         run: |
@@ -55,23 +58,3 @@ jobs:
 
       - name: Test
         run: dotnet test --no-build --verbosity normal
-
-
-#!/usr/bin/make -f
-
-#  SOLUTION_FILE := src/smartystreets-dotnet-sdk.sln
-#  PROJECT_FILE  := src/sdk/sdk.csproj
-#  TEST_FILE     := src/tests/tests.csproj
-#  CONFIGURATION := Release
-#  WORKSPACE_DIR := workspace
-  
-#  export FrameworkPathOverride=$(dir $(shell which mono))/../lib/mono/4.0-api/
-
-
-#workspace:
-#  docker-compose run sdk
-#
-#release:
-#  docker-compose run sdk make publish && tagit -p && git push origin --tags
-#
-#.PHONY: clean compile test integrate package publish version workspace release
