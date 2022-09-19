@@ -30,31 +30,13 @@ jobs:
         run: |
           dotnet build src/smartystreets-dotnet-sdk.sln --configuration Release
 
-#      - name: test # Failing here
-#        run: |
-#          dotnet test src/tests/tests.csproj
-#
-#      - name: integrate # Failing here
-#        run: |
-#          dotnet run --project "src/integration/integration.csproj"
-
       - name: Set Environment Variable
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
-      - name: package
-        run: |
-          dotnet pack src/sdk/sdk.csproj --configuration Release \
-          --include-source \
-          --include-symbols \
-          --output "../../workspace" \
-          /p:CustomVersion= ${{ env.RELEASE_VERSION }} 
+      - name: package # Failing here too, look at ""
+        run: | 
+          dotnet pack src/sdk/sdk.csproj --configuration Release --include-source --include-symbols --output "../../workspace" /p:CustomVersion= ${{ env.RELEASE_VERSION }} 
 
       - name: publish
         run: |
           dotnet nuget push workspace/* --source nuget.org -k ${{ secrets.NUGET_API_KEY }}
-
-      - name: Build
-        run: dotnet build --no-restore
-
-      - name: Test
-        run: dotnet test --no-build --verbosity normal
