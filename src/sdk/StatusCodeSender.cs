@@ -29,6 +29,9 @@ namespace SmartyStreets
 				case 403:
 					throw new ForbiddenException(
 						"Because the international service is currently in a limited release phase, only approved accounts may access the service.");
+				case 408:
+					throw new RequestTimeoutException(
+						"Request timeout error.");
 				case 413:
 					throw new RequestEntityTooLargeException(
 						"Request Entity Too Large: The request body has exceeded the maximum size.");
@@ -51,6 +54,8 @@ namespace SmartyStreets
 					throw new TooManyRequestsException(errorMsg, retryVal);
 				case 500:
 					throw new InternalServerErrorException("Internal Server Error.");
+				case 502:
+					throw new BadGatewayException("Bad Gateway error.");
 				case 503:
 					throw new ServiceUnavailableException("Service Unavailable. Try again later.");
 				case 504:

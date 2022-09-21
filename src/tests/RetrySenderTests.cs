@@ -11,12 +11,14 @@ namespace SmartyStreets
 		private MockCrashingSender mockCrashingSender;
 		private int milliseconds;
 		private FakeRandomNumberGenerator fakeRandomNumberGenerator;
+		private int MaxRetries = 5;
 
 		[SetUp]
 		public void Setup()
 		{
 			this.mockCrashingSender = new MockCrashingSender();
 			fakeRandomNumberGenerator = new FakeRandomNumberGenerator();
+			this.mockCrashingSender.FailCount = 1;
 		}
 
 		[Test]
@@ -34,6 +36,18 @@ namespace SmartyStreets
 		{
 			Assert.Throws(exceptionType, () => this.SendRequest(requestBehavior));
 			Assert.AreEqual(1, this.mockCrashingSender.SendCount);
+		}
+
+		[TestCase(typeof(RequestTimeoutException), MockCrashingSender.RequestTimeout)]
+		[TestCase(typeof(InternalServerErrorException), MockCrashingSender.InternalServer)]
+		[TestCase(typeof(BadGatewayException), MockCrashingSender.BadGateway)]
+		[TestCase(typeof(ServiceUnavailableException), MockCrashingSender.ServiceUnavailable)]
+		[TestCase(typeof(GatewayTimeoutException), MockCrashingSender.GatewayTimeout)]
+		public void TestSpecificErrorThrowsExceptionAndRetries(Type exceptionType, string requestBehavior)
+		{
+			this.mockCrashingSender.FailCount = 3;
+			this.SendRequest(requestBehavior);
+			Assert.AreEqual(3, this.mockCrashingSender.SendCount);
 		}
 
 		[Test]
@@ -65,7 +79,7 @@ namespace SmartyStreets
 		{
 			var request = new Request();
 			request.SetUrlPrefix(requestBehavior);
-			var retrySender = new RetrySender(5, this.mockCrashingSender, this.sleep, fakeRandomNumberGenerator);
+			var retrySender = new RetrySender(MaxRetries, this.mockCrashingSender, this.sleep, fakeRandomNumberGenerator);
 
 			retrySender.Send(request);
 		}

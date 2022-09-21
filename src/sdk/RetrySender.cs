@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets
+﻿using System.IO;
+
+namespace SmartyStreets
 {
 	using System;
 
@@ -63,16 +65,12 @@
 						sleepDurationInMilliseconds= randomNumGenerator.Next(BackOffRateLimit)*1000;
 				this.sleep(sleepDurationInMilliseconds);
 			}
-			catch (Exception ex) when ((ex is BadRequestException) || (ex is RequestEntityTooLargeException) || (ex is UnprocessableEntityException))
-			{ // catch HTTP 400, 413, 422 and just throw.
-				throw;
-			}
-			catch (Exception)
+			catch (Exception ex) when ((ex is InternalServerErrorException) || (ex is ServiceUnavailableException) || (ex is GatewayTimeoutException) || (ex is RequestTimeoutException) || (ex is BadGatewayException) || (ex is IOException))
 			{
 				if (attempts >= this.maxRetries)
 					throw;
 			}
-
+			// all other exceptions are just allowed to be caught by the caller
 			return null;
 		}
 	}
