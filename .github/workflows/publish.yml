@@ -35,7 +35,7 @@ jobs:
 
       - name: package # Failing here too, look at ""
         run: | 
-          dotnet pack src/sdk/sdk.csproj --configuration Release --include-source --include-symbols --output "../../workspace" /p:CustomVersion= ${{ env.RELEASE_VERSION }} 
+          dotnet pack src/sdk/sdk.csproj --configuration Release --include-source --include-symbols --output ../../workspace /p:CustomVersion=${{ env.RELEASE_VERSION }} 
 
       - name: publish
         run: |
