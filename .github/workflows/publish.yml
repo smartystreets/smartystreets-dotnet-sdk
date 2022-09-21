@@ -39,4 +39,4 @@ jobs:
 
       - name: publish
         run: |
-          dotnet nuget push workspace/* --source nuget.org -k ${{ secrets.NUGET_API_KEY }}
+          dotnet nuget push ../../workspace/* --source nuget.org -k ${{ secrets.NUGET_API_KEY }}
