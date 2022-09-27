@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace SmartyStreets
 {
@@ -28,6 +29,9 @@ namespace SmartyStreets
 				case 403:
 					throw new ForbiddenException(
 						"Because the international service is currently in a limited release phase, only approved accounts may access the service.");
+				case 408:
+					throw new RequestTimeoutException(
+						"Request timeout error.");
 				case 413:
 					throw new RequestEntityTooLargeException(
 						"Request Entity Too Large: The request body has exceeded the maximum size.");
@@ -39,14 +43,19 @@ namespace SmartyStreets
 				case 429:
 					string retry;
 					Int64 retryVal = 0;
+
 					if (response.HeaderInfo.TryGetValue("Retry-After", out retry))
 					{
 						Int64.TryParse(retry, out retryVal);
 					}
-					throw new TooManyRequestsException(
-						"When using public \"website key\" authentication, we restrict the number of requests coming from a given source over too short of a time.", retryVal);
+
+					var errorMsg = ExtractErrorMsgFromResponse(response, "When using public \"website key\" authentication, we restrict the number of requests coming from a given source over too short of a time.");
+
+					throw new TooManyRequestsException(errorMsg, retryVal);
 				case 500:
 					throw new InternalServerErrorException("Internal Server Error.");
+				case 502:
+					throw new BadGatewayException("Bad Gateway error.");
 				case 503:
 					throw new ServiceUnavailableException("Service Unavailable. Try again later.");
 				case 504:
@@ -55,6 +64,32 @@ namespace SmartyStreets
 				default:
 					return null;
 			}
+		}
+
+		private string ExtractErrorMsgFromResponse(Response response, string defaultErrorMessage)
+		{
+			try
+			{
+				// do this in a try-catch to ensure any exception is caught.  Don't need to handle any error since we have a generic error message
+				var payloadString = System.Text.Encoding.UTF8.GetString(response.Payload);
+				var exp = new Regex("\"message\" *: *\"[^\"]*\""); // look for "message":"<some error text>"
+				var innerExp = new Regex("\"[^\"]*\""); // look for text that is included inside of double quotes
+				var matches = exp.Matches(payloadString);
+				foreach (Match match in matches)
+				{
+					string errorPair = match.Value.Substring(9); // skip over "message"
+					string error = innerExp.Match(errorPair).Value;
+					if (error.Length > 2) // make sure string isn't just a quoted empty string 
+					{
+						return error.Substring(1, error.Length - 2);
+					}
+				}
+			}
+			catch (Exception)
+			{
+			}
+
+			return defaultErrorMessage;
 		}
 	}
 }
