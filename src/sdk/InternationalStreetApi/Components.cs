@@ -19,6 +19,12 @@
 		[DataMember(Name = "administrative_area")]
 		public string AdministrativeArea { get; set; }
 
+		[DataMember(Name = "administrative_area_short")]
+		public string AdministrativeAreaShort { get; set; }
+
+		[DataMember(Name = "administrative_area_long")]
+		public string AdministrativeAreaLong { get; set; }
+
 		[DataMember(Name = "sub_administrative_area")]
 		public string SubAdministrativeArea { get; set; }
 
@@ -117,6 +123,12 @@
 
 		[DataMember(Name = "sub_building")]
 		public string SubBuilding { get; set; }
+
+		[DataMember(Name = "level_type")]
+		public string LevelType { get; set; }
+
+		[DataMember(Name = "level_number")]
+		public string LevelNumber { get; set; }
 
 		[DataMember(Name = "post_box")]
 		public string PostBox { get; set; }

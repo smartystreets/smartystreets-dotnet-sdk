@@ -38,6 +38,7 @@
 		public string Address2 { get; set; }
 		public string Address3 { get; set; }
 		public string Address4 { get; set; }
+		public string Unit { get; set; }
 		public string Organization { get; set; }
 		public string Locality { get; set; }
 		public string AdministrativeArea { get; set; }
