@@ -52,7 +52,6 @@
 			request.SetParameter("address2", lookup.Address2);
 			request.SetParameter("address3", lookup.Address3);
 			request.SetParameter("address4", lookup.Address4);
-			request.SetParameter("unit", lookup.Unit);
 			request.SetParameter("organization", lookup.Organization);
 			request.SetParameter("locality", lookup.Locality);
 			request.SetParameter("administrative_area", lookup.AdministrativeArea);
