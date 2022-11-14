@@ -22,22 +22,19 @@ test:
 integrate:
 	dotnet run --project "src/integration/integration.csproj"
 
-package: clean
+package: clean compile
 	dotnet pack "$(PROJECT_FILE)" --configuration "$(CONFIGURATION)" \
 		--include-source \
 		--include-symbols \
 		--output "../../$(WORKSPACE_DIR)" \
-		/p:CustomVersion="$(shell tagit -p --dry-run)"
+		/p:CustomVersion="${VERSION}"
 
 publish: clean package
-	dotnet nuget push $(WORKSPACE_DIR)/* --source nuget.org -k "$(NUGET_KEY)"
+	dotnet nuget push $(WORKSPACE_DIR)/* --source nuget.org -k "${NUGET_KEY}" --skip-duplicate
 
 ##########################################################
 
-workspace:
-	docker-compose run sdk
-
 release:
-	docker-compose run sdk make publish && tagit -p && git push origin --tags
+	make publish
 
-.PHONY: clean compile test integrate package publish version workspace release
+.PHONY: clean compile test integrate package publish version release
