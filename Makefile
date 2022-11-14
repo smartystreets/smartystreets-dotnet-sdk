@@ -23,11 +23,7 @@ integrate:
 	dotnet run --project "src/integration/integration.csproj"
 
 package: clean compile
-	dotnet pack "$(PROJECT_FILE)" --configuration "$(CONFIGURATION)" \
-		--include-source \
-		--include-symbols \
-		--output "../../$(WORKSPACE_DIR)" \
-		/p:CustomVersion="${VERSION}"
+	dotnet pack "$(PROJECT_FILE)" --configuration "$(CONFIGURATION)" --include-source --include-symbols --output "../../$(WORKSPACE_DIR)" /p:CustomVersion="${VERSION}"
 
 publish: clean package
 	dotnet nuget push $(WORKSPACE_DIR)/* --source nuget.org -k "${NUGET_KEY}" --skip-duplicate
