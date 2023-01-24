@@ -14,6 +14,8 @@
 		#region [ Fields ]
 
 		private const int MAX_RESULTS_DEFAULT = 10;
+		public const int DISTANCE_DEFAULT = 5;
+		
 		public Candidate[] Result { get; set; }
 		public string Search { get; set; }
 		
@@ -26,6 +28,14 @@
 		
 		public string PostalCode { get; set; }
 
+		public int Distance { get; set; }
+		
+		public string Geolocation { get; set; }
+		
+		public string Latitude { get; set; }
+		
+		public string Longitude { get; set; }
+
 		#endregion
 
 		#region [ Constructors ]
@@ -37,6 +47,8 @@
 		public Lookup()
 		{
 			this.MaxResults = MAX_RESULTS_DEFAULT;
+			this.Geolocation = GeolocateType.NONE;
+			this.Distance = Lookup.DISTANCE_DEFAULT;
 		}
 
 		/// <param name="search">The beginning of an address.</param>
@@ -44,14 +56,13 @@
 		{
 			this.Search = search;
 		}
-		
-		internal string GetMaxSuggestionsStringIfSet()
-		{
-			if (this.MaxResults.Equals(MAX_RESULTS_DEFAULT))
-				return null;
-			return this.MaxResults.ToString();
-		}
 
 		#endregion
+		
+		internal string MaxSuggestionsString => this.MaxResults.Equals(MAX_RESULTS_DEFAULT) ? null : this.MaxResults.ToString();
+
+		internal string GeolocationString => this.Geolocation == GeolocateType.NONE ? null : this.Geolocation;
+
+		internal string DistanceString => (this.Distance < 1) ? Lookup.DISTANCE_DEFAULT.ToString() : (this.Distance == Lookup.DISTANCE_DEFAULT) ? null : this.Distance.ToString();
 	}
 }

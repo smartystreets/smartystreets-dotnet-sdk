@@ -21,7 +21,7 @@ namespace SmartyStreets
 
             sender.Send(new Request());
 
-            Assert.AreEqual("license=one%2Ctwo%2Cthree", mockSender.Request.GetUrl().Split("?")[1]);
+            Assert.AreEqual("license=one%2Ctwo%2Cthree", mockSender.Request.GetUrl().Split('?')[1]);
         }
 
         [Test]

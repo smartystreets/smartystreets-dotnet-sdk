@@ -45,10 +45,14 @@
 			
 			request.SetParameter("search", lookup.Search);
 			request.SetParameter("country", lookup.Country);
-			request.SetParameter("max_results", lookup.GetMaxSuggestionsStringIfSet());
+			request.SetParameter("max_results", lookup.MaxSuggestionsString);
 			request.SetParameter("include_only_administrative_area", lookup.AdministrativeArea);
 			request.SetParameter("include_only_locality", lookup.Locality);
 			request.SetParameter("include_only_postal_code", lookup.PostalCode);
+			request.SetParameter("geolocation", lookup.GeolocationString);
+			request.SetParameter("distance", lookup.DistanceString);
+			request.SetParameter("latitude", lookup.Latitude);
+			request.SetParameter("longitude", lookup.Longitude);
 			
 			return request;
 		}

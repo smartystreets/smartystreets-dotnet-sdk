@@ -37,7 +37,7 @@
 			var serializer = new FakeSerializer(new byte[0]);
 			var client = new Client(this.urlSender, serializer);
 			const string expectedURL =
-				"http://localhost/?search=1&country=2&max_results=3&include_only_administrative_area=4&include_only_locality=5&include_only_postal_code=6";
+				"http://localhost/?search=1&country=2&max_results=3&include_only_administrative_area=4&include_only_locality=5&include_only_postal_code=6&geolocation=7&distance=8&latitude=9&longitude=10";
 			var lookup = new Lookup
 			{
 				Search = "1",
@@ -46,6 +46,62 @@
 				AdministrativeArea = "4",
 				Locality = "5",
 				PostalCode = "6",
+				Geolocation = "7",
+				Distance = 8,
+				Latitude = "9",
+				Longitude = "10"
+			};
+			
+			client.Send(lookup);
+
+			Assert.AreEqual(expectedURL, this.capturingSender.Request.GetUrl());
+		}
+
+		[Test]
+		public void TestSendingSinglePopulatedLookupWithNoGeolocation()
+		{
+			var serializer = new FakeSerializer(new byte[0]);
+			var client = new Client(this.urlSender, serializer);
+			const string expectedURL =
+				"http://localhost/?search=1&country=2&max_results=3&include_only_administrative_area=4&include_only_locality=5&include_only_postal_code=6&distance=7&latitude=9&longitude=10";
+			var lookup = new Lookup
+			{
+				Search = "1",
+				Country = "2",
+				MaxResults = 3,
+				AdministrativeArea = "4",
+				Locality = "5",
+				PostalCode = "6",
+				Distance = 7,
+				Geolocation = GeolocateType.NONE,
+				Latitude = "9",
+				Longitude = "10"
+			};
+			
+			client.Send(lookup);
+
+			Assert.AreEqual(expectedURL, this.capturingSender.Request.GetUrl());
+		}
+
+		[Test]
+		public void TestSendingSinglePopulatedLookupWithEmptyGeolocation()
+		{
+			var serializer = new FakeSerializer(new byte[0]);
+			var client = new Client(this.urlSender, serializer);
+			const string expectedURL =
+				"http://localhost/?search=1&country=2&max_results=3&include_only_administrative_area=4&include_only_locality=5&include_only_postal_code=6&distance=7&latitude=9&longitude=10";
+			var lookup = new Lookup
+			{
+				Search = "1",
+				Country = "2",
+				MaxResults = 3,
+				AdministrativeArea = "4",
+				Locality = "5",
+				PostalCode = "6",
+				Distance = 7,
+				Geolocation = "",
+				Latitude = "9",
+				Longitude = "10"
 			};
 			
 			client.Send(lookup);

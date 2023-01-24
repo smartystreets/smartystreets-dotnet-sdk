@@ -18,6 +18,12 @@
 		[DataMember(Name = "administrative_area")]
 		public string AdministrativeArea { get; set; }
 
+		[DataMember(Name = "super_administrative_area")]
+		public string SuperAdministrativeArea { get; set; }
+
+		[DataMember(Name = "sub_administrative_area")]
+		public string SubAdministrativeArea { get; set; }
+
 		[DataMember(Name = "postal_code")]
 		public string PostalCode { get; set; }
 		
