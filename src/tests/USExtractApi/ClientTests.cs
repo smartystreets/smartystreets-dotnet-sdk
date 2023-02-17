@@ -31,17 +31,20 @@
 			Assert.AreEqual(expectedPayload, this.capturingSender.Request.Payload);
 		}
 
-		[Test]
-		public void TestSendingFullyPopulatedLookup()
+		[TestCase(Lookup.ENHANCED)]
+		[TestCase(Lookup.INVALID)]
+		public void TestSendingFullyPopulatedLookup(string matchStrategy)
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
-			const string expectedUrl = "http://localhost/?html=true&aggressive=true&addr_line_breaks=false&addr_per_line=2";
+			const string expectedUrlTemplate = "http://localhost/?html=true&aggressive=true&addr_line_breaks=false&addr_per_line=2&match={0}";
+			var expectedUrl = string.Format(expectedUrlTemplate, matchStrategy);
 			var lookup = new Lookup("1");
 			lookup.SpecifyHtmlInput(true);
 			lookup.IsAggressive = true;
 			lookup.AddressesHaveLineBreaks = false;
 			lookup.AddressesPerLine = 2;
+			lookup.MatchStrategy = matchStrategy;
 
 			client.Send(lookup);
 

@@ -49,6 +49,8 @@
 			request.SetParameter("aggressive", lookup.IsAggressive.ToString().ToLower());
 			request.SetParameter("addr_line_breaks", lookup.AddressesHaveLineBreaks.ToString().ToLower());
 			request.SetParameter("addr_per_line", lookup.AddressesPerLine.ToString());
+			if ((lookup.MatchStrategy != "") && (lookup.MatchStrategy != Lookup.STRICT))
+				request.SetParameter("match", lookup.MatchStrategy);
 
 			return request;
 		}

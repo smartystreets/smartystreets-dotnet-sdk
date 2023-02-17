@@ -8,12 +8,17 @@
 	public class Lookup
 	{
 		#region [ Fields ]
+		
+		public const string STRICT = "strict";
+		public const string ENHANCED = "enhanced";
+		public const string INVALID = "invalid";
 
 		private string html;
 		public Result Result { get; set; }
 		public bool IsAggressive { get; set; }
 		public bool AddressesHaveLineBreaks { get; set; }
 		public int AddressesPerLine { get; set; }
+		public string MatchStrategy { get; set; }
 		public string Text { get; set; }
 
 		#endregion
