@@ -31,6 +31,9 @@
 		[DataMember(Name = "delivery_point_barcode")]
 		public string DeliveryPointBarcode { get; set; }
 
+		[DataMember(Name = "smarty_key")]
+		public string SmartyKey{ get; set; }
+
 		[DataMember(Name = "components")]
 		public Components Components { get; set; }
 

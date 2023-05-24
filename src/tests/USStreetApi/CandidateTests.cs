@@ -22,6 +22,7 @@ namespace SmartyStreets.USStreetApi
                 ""delivery_line_2"": ""blah blah"",
                 ""last_line"": ""Provo UT 84604-4405"",
                 ""delivery_point_barcode"": ""846044405140"",
+                ""smarty_key"": ""1750774478"",
                 ""components"": {
                     ""primary_number"": ""3214"",
                     ""street_predirection"": ""N"",
@@ -94,6 +95,7 @@ namespace SmartyStreets.USStreetApi
             Assert.AreEqual("blah blah", actual[0].DeliveryLine2);
             Assert.AreEqual("Provo UT 84604-4405", actual[0].LastLine);
             Assert.AreEqual("846044405140", actual[0].DeliveryPointBarcode);
+            Assert.AreEqual("1750774478", actual[0].SmartyKey);
             Assert.AreEqual("3214", components.PrimaryNumber);
             Assert.AreEqual("N", components.StreetPredirection);
             Assert.AreEqual("Q", components.StreetPostdirection);
