@@ -22,6 +22,9 @@
 		[DataMember(Name = "zipcode")]
 		public string ZipCode { get; set; }
 		
+		[DataMember(Name = "source")]
+		public string Source { get; set; }
+
 		#endregion
 	}
 }

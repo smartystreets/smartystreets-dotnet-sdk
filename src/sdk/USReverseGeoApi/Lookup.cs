@@ -16,15 +16,17 @@ namespace SmartyStreets.USReverseGeoApi
 
 		public string Latitude { get; set; }
 		public string Longitude { get; set; }
-		
+		public string Source { get; set; }
+
 		#endregion
 
 		#region [ Constructors ]
 
-		public Lookup(double latitude, double longitude)
+		public Lookup(double latitude, double longitude, string source)
 		{
 			this.Latitude = latitude.ToString("0.00000000");
 			this.Longitude = longitude.ToString("0.00000000");
+			this.Source = source;
 		}
 
 		#endregion
