@@ -36,6 +36,7 @@
 
 			request.SetParameter("latitude", lookup.Latitude);
 			request.SetParameter("longitude", lookup.Longitude);
+			request.SetParameter("source", lookup.Source);
 
 			return request;
 		}
