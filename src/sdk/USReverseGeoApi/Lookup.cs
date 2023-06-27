@@ -22,11 +22,10 @@ namespace SmartyStreets.USReverseGeoApi
 
 		#region [ Constructors ]
 
-		public Lookup(double latitude, double longitude, string source)
+		public Lookup(double latitude, double longitude)
 		{
 			this.Latitude = latitude.ToString("0.00000000");
 			this.Longitude = longitude.ToString("0.00000000");
-			this.Source = source;
 		}
 
 		#endregion
