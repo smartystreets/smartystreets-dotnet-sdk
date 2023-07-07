@@ -23,14 +23,14 @@ namespace SmartyStreets
         private Proxy proxy;
         private Dictionary<string, string> customHeaders;
         private List<string> licenses;
-        private const string InternationalStreetApiUrl = "https://international-street.api.smartystreets.com/verify";
-        private const string InternationalAutocompleteApiUrl = "https://international-autocomplete.api.smartystreets.com/lookup";
-        private const string UsAutocompleteApiUrl = "https://us-autocomplete.api.smartystreets.com/suggest";
-        private const string UsAutocompleteProApiUrl = "https://us-autocomplete-pro.api.smartystreets.com/lookup";
-        private const string UsExtractApiUrl = "https://us-extract.api.smartystreets.com/";
-        private const string UsStreetApiUrl = "https://us-street.api.smartystreets.com/street-address";
-        private const string UsZipCodeApiUrl = "https://us-zipcode.api.smartystreets.com/lookup";
-        private const string UsReverseGeoApiUrl = "https://us-reverse-geo.api.smartystreets.com/lookup";
+        private const string InternationalStreetApiUrl = "https://international-street.api.smarty.com/verify";
+        private const string InternationalAutocompleteApiUrl = "https://international-autocomplete.api.smarty.com/lookup";
+        private const string UsAutocompleteApiUrl = "https://us-autocomplete.api.smarty.com/suggest";
+        private const string UsAutocompleteProApiUrl = "https://us-autocomplete-pro.api.smarty.com/lookup";
+        private const string UsExtractApiUrl = "https://us-extract.api.smarty.com/";
+        private const string UsStreetApiUrl = "https://us-street.api.smarty.com/street-address";
+        private const string UsZipCodeApiUrl = "https://us-zipcode.api.smarty.com/lookup";
+        private const string UsReverseGeoApiUrl = "https://us-reverse-geo.api.smarty.com/lookup";
 
         public ClientBuilder()
         {

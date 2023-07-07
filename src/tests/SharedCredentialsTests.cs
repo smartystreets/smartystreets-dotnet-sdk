@@ -9,7 +9,7 @@
 		public void AssertSignedRequest()
 		{
 			var request = CreateSignedRequest();
-			const string expected = "https://us-street.api.smartystreets.com/street-address?key=3516378604772256";
+			const string expected = "https://us-street.api.smarty.com/street-address?key=3516378604772256";
 
 			Assert.AreEqual(expected, request.GetUrl());
 		}
@@ -26,7 +26,7 @@
 		{
 			var mobile = new SharedCredentials("3516378604772256", "example.com");
 			var request = new Request();
-			request.SetUrlPrefix("https://us-street.api.smartystreets.com/street-address?");
+			request.SetUrlPrefix("https://us-street.api.smarty.com/street-address?");
 			mobile.Sign(request);
 			return request;
 		}

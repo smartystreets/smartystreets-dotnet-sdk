@@ -160,7 +160,7 @@
 
 		private static void TestReturnsCorrectNumberOfResultsViaProxy(ICredentials credentials)
 		{
-			var client = new ClientBuilder(credentials).WithCustomBaseUrl(Environment.GetEnvironmentVariable("SMARTY_URL_US_ZIP")).ViaProxy("http://proxy.api.smartystreets.com:80", "", "")
+			var client = new ClientBuilder(credentials).WithCustomBaseUrl(Environment.GetEnvironmentVariable("SMARTY_URL_US_ZIP")).ViaProxy("http://proxy.api.smarty.com:80", "", "")
 				.BuildUsZipCodeApiClient();
 			var lookup = new SmartyStreets.USZipCodeApi.Lookup(null, null, "38852");
 
