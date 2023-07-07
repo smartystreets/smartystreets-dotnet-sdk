@@ -14,3 +14,4 @@ Release
 bin
 obj
 /.idea/
+/src/vbexamples/My Project/launchSettings.json

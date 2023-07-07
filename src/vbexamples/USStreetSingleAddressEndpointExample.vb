@@ -36,6 +36,9 @@ Module USStreetSingleAddressEndpointExample
             Console.WriteLine(ex.StackTrace)
         Catch ex As IOException
             Console.WriteLine(ex.StackTrace)
+        Catch ex As Exception
+            Console.WriteLine(ex.Message)
+            Console.WriteLine(ex.StackTrace)
         End Try
 
         Dim candidates = myLookup.Result
