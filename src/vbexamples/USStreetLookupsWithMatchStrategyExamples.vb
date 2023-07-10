@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.Data
+Imports System.IO
 Imports System.Text.RegularExpressions
 Imports SmartyStreets
 Imports SmartyStreets.USStreetApi
@@ -10,12 +11,14 @@ Module USStreetLookupsWithMatchStrategyExamples
     Dim url = Environment.GetEnvironmentVariable("SMARTY_US_STREET_URL")
 
     Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"us-core-cloud"}).WithCustomBaseUrl(url).BuildUsStreetApiClient()
-    Dim batch = New Batch()
 
     Sub USStreetLookupsWithMatchStrategyExamples()
 
+        Dim batch = New Batch()
+
         Dim addressWithStrictStrategy As New Lookup()
         With addressWithStrictStrategy
+            .InputId = "23493"
             .Street = "691 W 1150 S"
             .City = "provo"
             .State = "utah"
@@ -38,6 +41,9 @@ Module USStreetLookupsWithMatchStrategyExamples
             .MatchStrategy = Lookup.INVALID
         End With
 
+        Console.WriteLine("*******************************************************")
+        Console.WriteLine()
+
         Try
             batch.Add(addressWithStrictStrategy)
             batch.Add(addressWithRangeStrategy)
@@ -45,7 +51,6 @@ Module USStreetLookupsWithMatchStrategyExamples
             client.Send(batch)
         Catch ex As BatchFullException
             Console.WriteLine("Error. The batch is already full.")
-        Catch ex As SmartyException
             Console.WriteLine(ex.Message)
             Console.WriteLine(ex.StackTrace)
         Catch ex As IOException
@@ -55,22 +60,30 @@ Module USStreetLookupsWithMatchStrategyExamples
             Console.WriteLine(ex.StackTrace)
         End Try
 
-        Console.WriteLine("*******************************************************")
+        Dim numLookups = batch.Count
 
-        For i As Integer = 0 To batch.Count - 1
+        If numLookups = 0 Then
+            Console.WriteLine("No lookups in batch." + Environment.NewLine)
+            Return
+        End If
+
+        For i As Integer = 0 To numLookups - 1
             Dim candidates = batch(i).Result
 
             If candidates.Count = 0 Then
-                Console.WriteLine("Address " + CStr(i) + " is invalid." + Environment.NewLine)
+                Console.WriteLine("Address " + CStr(i) + " has no candidates. This means the address is not valid." + Environment.NewLine)
                 Continue For
             End If
 
-            Console.WriteLine("Address " + CStr(i) + " is valid. (There is at least one candidate)" + Environment.NewLine + "If the match parameter is set to STRICT, the address is valid." + Environment.NewLine + "Otherwise, check the Analysis output fields to see if the address is valid.")
+            Console.WriteLine("Address " + CStr(i) + " has at least one candidate" + Environment.NewLine + "If the match parameter is set to STRICT, the address is valid." + Environment.NewLine + "Otherwise, check the Analysis output fields to see if the address is valid." + Environment.NewLine())
+
+            Console.WriteLine("Input ID: " + batch(i).InputId)
 
             For Each candidate In candidates
                 Console.WriteLine()
                 Dim components = candidate.Components
                 Dim metadata = candidate.Metadata
+
 
                 Console.Write("Candidate " + CStr(candidate.CandidateIndex))
                 Dim match = batch(i).MatchStrategy
@@ -86,8 +99,6 @@ Module USStreetLookupsWithMatchStrategyExamples
             Console.WriteLine()
 
         Next
-
-        Console.WriteLine()
 
     End Sub
 

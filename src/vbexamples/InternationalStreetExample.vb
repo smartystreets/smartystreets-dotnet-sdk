@@ -9,7 +9,7 @@ Module InternationalStreetExample
 
 	Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
 	Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
-	Dim url = Environment.GetEnvironmentVariable("SMARTY_URL")
+	Dim url = Environment.GetEnvironmentVariable("SMARTY_INTERNATIONAL_STREET_URL")
 
 	Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"international-global-plus-cloud"}).WithCustomBaseUrl(url).BuildInternationalStreetApiClient()
 	Sub InternationalStreetExample()
@@ -27,6 +27,9 @@ Module InternationalStreetExample
 			.PostalCode = "02516-050"
 		End With
 
+		Console.WriteLine("*******************************************************")
+		Console.WriteLine()
+
 		Try
 			client.Send(lookup)
 		Catch ex As SmartyException
@@ -40,18 +43,36 @@ Module InternationalStreetExample
 		End Try
 
 		Dim candidates = lookup.Result
-		Dim firstCandidate = candidates(0)
-		Console.WriteLine("Input ID: " + firstCandidate.InputId)
-		Console.WriteLine("Address is " + firstCandidate.Analysis.VerificationStatus)
-		Console.WriteLine("Address precision: " + firstCandidate.Analysis.AddressPrecision + "\n")
 
-		Console.WriteLine("First Line: " + firstCandidate.Address1)
-		Console.WriteLine("Second Line: " + firstCandidate.Address2)
-		Console.WriteLine("Third Line: " + firstCandidate.Address3)
-		Console.WriteLine("Fourth Line: " + firstCandidate.Address4)
-		Console.WriteLine("Address Format: " + firstCandidate.Metadata.AddressFormat)
-		Console.WriteLine("Latitude: " + firstCandidate.Metadata.Latitude)
-		Console.WriteLine("Longitude: " + firstCandidate.Metadata.Longitude)
+		If candidates.Count = 0 Then
+			Console.WriteLine("No candidates. This means the address is not valid." + Environment.NewLine)
+			Return
+		End If
+
+		Console.WriteLine("Address is valid. (There is at least one candidate)" + Environment.NewLine())
+
+		Console.WriteLine("Input ID: " + lookup.InputId)
+
+		For Each candidate In candidates
+			Console.WriteLine()
+			Dim components = candidate.Components
+			Dim metadata = candidate.Metadata
+
+			Console.WriteLine("Address: " + candidate.Analysis.VerificationStatus)
+			Console.WriteLine("Address precision: " + candidate.Analysis.AddressPrecision + Environment.NewLine)
+
+			Console.WriteLine("First Line: " + candidate.Address1)
+			Console.WriteLine("Second Line: " + candidate.Address2)
+			Console.WriteLine("Third Line: " + candidate.Address3)
+			Console.WriteLine("Fourth Line: " + candidate.Address4)
+			Console.WriteLine("Address Format: " + candidate.Metadata.AddressFormat)
+			Console.WriteLine("Latitude: " + CStr(candidate.Metadata.Latitude))
+			Console.WriteLine("Longitude: " + CStr(candidate.Metadata.Longitude))
+		Next
+
+		Console.WriteLine()
+
+
 
 	End Sub
 

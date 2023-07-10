@@ -7,13 +7,16 @@ Module USReverseGeoExample
 
     Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
     Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
-    Dim url = Environment.GetEnvironmentVariable("SMARTY_URL")
+    Dim url = Environment.GetEnvironmentVariable("SMARTY_US_REVERSE_GEO_URL")
 
     Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"us-reverse-geocoding-cloud"}).WithCustomBaseUrl(url).BuildUsReverseGeoApiClient()
 
     Sub USReverseGeoExample()
 
         Dim lookup As New Lookup(40.111111, -111.111111)
+
+        Console.WriteLine("*******************************************************")
+        Console.WriteLine()
 
         Try
             client.Send(lookup)
@@ -30,25 +33,29 @@ Module USReverseGeoExample
         Dim results = lookup.SmartyResponse.Results
 
         If results.Count = 0 Then
-            Console.WriteLine("No candidates. This means the address is not valid.")
+            Console.WriteLine("No candidates. This means the coordinates did not return any results.")
             Return
         End If
 
-        Console.WriteLine("\nResults for input: (" + lookup.Latitude + ", " + lookup.Longitude)
+        Console.WriteLine("Coordinates are valid. (There is at least one result)" + Environment.NewLine())
+
+        Console.WriteLine(CStr(results.Count) + " results for input (" + lookup.Latitude + ", " + lookup.Longitude + ")")
 
         For Each result In results
             Dim coordinate = result.Coordinate
             Dim address = result.Address
-
-            Console.WriteLine("\nLatitude: " + coordinate.Latitude)
-            Console.WriteLine("Longitude: " + coordinate.Longitude)
-            Console.WriteLine("Distance: " + result.Distance)
+            Console.WriteLine()
+            Console.WriteLine("Latitude: " + CStr(coordinate.Latitude))
+            Console.WriteLine("Longitude: " + CStr(coordinate.Longitude))
+            Console.WriteLine("Distance: " + CStr(result.Distance))
             Console.WriteLine("Street: " + address.Street)
             Console.WriteLine("City: " + address.City)
             Console.WriteLine("State Abbreviation: " + address.StateAbbreviation)
             Console.WriteLine("ZIP Code: " + address.ZipCode)
-            Console.WriteLine("License: " + coordinate.License)
+            Console.WriteLine("License: " + CStr(coordinate.License))
         Next
+
+        Console.WriteLine()
 
     End Sub
 

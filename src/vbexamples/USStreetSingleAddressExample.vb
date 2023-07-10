@@ -28,6 +28,9 @@ Module USStreetSingleAddressExample
             .MatchStrategy = Lookup.INVALID
         End With
 
+        Console.WriteLine("*******************************************************")
+        Console.WriteLine()
+
         Try
             client.Send(lookup)
         Catch ex As SmartyException
@@ -42,16 +45,14 @@ Module USStreetSingleAddressExample
 
         Dim candidates = lookup.Result
 
-        Console.WriteLine("*******************************************************")
-
         If candidates.Count = 0 Then
-            Console.WriteLine("No candidates. This means the address is not valid.")
+            Console.WriteLine("No candidates. This means the address is not valid." + Environment.NewLine)
             Return
         End If
 
-        Dim firstCandidate = candidates(0)
+        Console.WriteLine("Address is valid. (There is at least one candidate)" + Environment.NewLine())
 
-        Console.WriteLine("Address is valid. (There is at least one candidate)")
+        Console.WriteLine("Input ID: " + lookup.InputId)
 
         For Each candidate In candidates
             Console.WriteLine()
@@ -59,7 +60,6 @@ Module USStreetSingleAddressExample
             Dim metadata = candidate.Metadata
 
             Console.WriteLine("Candidate " + CStr(candidate.CandidateIndex) + ":")
-            Console.WriteLine("Input ID: " + candidate.InputId)
             Console.WriteLine("Delivery line 1: " + candidate.DeliveryLine1)
             Console.WriteLine("Last line:       " + candidate.LastLine)
             Console.WriteLine("ZIP Code:        " + components.ZipCode + "-" + components.Plus4Code)
