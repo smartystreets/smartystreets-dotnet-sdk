@@ -43,14 +43,19 @@ Module USExtractExample
         Dim result = lookup.Result
         Dim metadata = result.Metadata
         Dim addressCount = metadata.AddressCount
+        Dim verifiedCount = metadata.VerifiedCount
 
-        Console.WriteLine("Extracted " + CStr(addressCount) + " address" + If(addressCount = 1, ":", "es:"))
-        Console.WriteLine(CStr(metadata.VerifiedCount) + " of them were valid.")
+        Console.WriteLine("Original lookup: " + lookup.Text + Environment.NewLine())
+
+        Console.WriteLine("Extracted " + CStr(addressCount) + " address" + If(addressCount = 1, ".", "es."))
+        Console.WriteLine(CStr(verifiedCount) + " of them " + If(addressCount = 1, "was", "were") + " valid.")
         Console.WriteLine()
 
         Dim addresses = result.Addresses
 
-        Console.WriteLine("Extracted address" + If(addressCount = 1, ":", "es:"))
+        If addressCount > 0 Then
+            Console.WriteLine("Extracted address" + If(addressCount = 1, ":", "es:"))
+        End If
 
         For Each address In addresses
             Console.WriteLine("""" + address.Text + """")
@@ -59,7 +64,7 @@ Module USExtractExample
             Dim candidatesCount = address.Candidates.Length
 
             If (candidatesCount > 0) Then
-                Console.WriteLine("Found " + CStr(address.Candidates.Length) + " address match" + If(candidatesCount = 1, ":", "es:"))
+                Console.WriteLine("Found " + CStr(address.Candidates.Length) + " address match" + If(candidatesCount = 1, ":", "es:") + Environment.NewLine())
 
                 For Each candidate In address.Candidates
                     Console.WriteLine(candidate.DeliveryLine1)

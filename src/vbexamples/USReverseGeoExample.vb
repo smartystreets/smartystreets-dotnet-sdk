@@ -32,12 +32,14 @@ Module USReverseGeoExample
 
         Dim results = lookup.SmartyResponse.Results
 
+        Console.WriteLine("Original lookup: Latitude: " + lookup.Latitude + " Longitude: " + lookup.Longitude + Environment.NewLine())
+
         If results.Count = 0 Then
-            Console.WriteLine("No candidates. This means the coordinates did not return any results.")
+            Console.WriteLine("No candidates. The coordinates did not return any results.")
             Return
         End If
 
-        Console.WriteLine("Coordinates are valid. (There is at least one result)" + Environment.NewLine())
+        Console.WriteLine("Coordinates are valid." + Environment.NewLine())
 
         Console.WriteLine(CStr(results.Count) + " results for input (" + lookup.Latitude + ", " + lookup.Longitude + ")")
 

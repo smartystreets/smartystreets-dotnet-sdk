@@ -6,15 +6,16 @@ Imports SmartyStreets.USZipCodeApi
 Imports System.Formats
 
 Module USZipCodeMultipleLookupsExample
-	Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
-	Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
-	Dim url = Environment.GetEnvironmentVariable("SMARTY_US_ZIP_URL")
-
-	Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"us-core-cloud"}).WithCustomBaseUrl(url).BuildUsZipCodeApiClient()
-
 
 	Sub USZipCodeMultipleLookupsExample()
+
+		Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
+		Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
+		Dim url = Environment.GetEnvironmentVariable("SMARTY_US_ZIP_URL")
+
+		Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"us-core-cloud"}).WithCustomBaseUrl(url).BuildUsZipCodeApiClient()
 		Dim batch = New Batch()
+
 		Dim lookup0 As New Lookup()
 		With lookup0
 			.InputId = "dfc33cb6-829e-4fea-aa1b-b6d6580f0817"
@@ -39,7 +40,7 @@ Module USZipCodeMultipleLookupsExample
 			batch.Add(lookup0)
 			batch.Add(lookup1)
 			batch.Add(lookup2)
-			client.Send(batch)
+			Client.Send(batch)
 		Catch ex As BatchFullException
 			Console.WriteLine("Error. The batch is already full.")
 		Catch ex As SmartyException
@@ -54,11 +55,6 @@ Module USZipCodeMultipleLookupsExample
 
 		Dim numLookups = batch.Count
 
-		If numLookups = 0 Then
-			Console.WriteLine("No lookups in batch." + Environment.NewLine)
-			Return
-		End If
-
 		For i As Integer = 0 To numLookups - 1
 			If i > 0 Then
 				Console.WriteLine()
@@ -69,28 +65,22 @@ Module USZipCodeMultipleLookupsExample
 			Dim zipCodes = result.ZipCodes
 
 			If result.Status IsNot Nothing Then
-				Console.WriteLine("ZIP " + CStr(i) + " has an invalid status.")
+				Console.WriteLine("Lookup " + CStr(i) + " has an invalid status.")
 				Console.WriteLine("Status: " + result.Status)
 				Console.WriteLine("Reason: " + result.Reason)
-				If i = numLookups - 1 Then
-					Console.WriteLine()
-				End If
 				Continue For
 			End If
 
 			If zipCodes Is Nothing Or cities Is Nothing Then
-				Console.WriteLine("No results. This means the ZIP code is not valid.")
-				If i = numLookups - 1 Then
-					Console.WriteLine()
-				End If
+				Console.WriteLine("Lookup " + CStr(i) + " has no candidates. The lookup is not valid.")
 				Continue For
 			End If
 
-			Console.WriteLine("ZIP " + CStr(i) + " is valid. (There is at least one result)" + Environment.NewLine())
+			Console.WriteLine("Lookup " + CStr(i) + " is valid." + Environment.NewLine())
 
 			Console.WriteLine("Input ID: " + result.InputId + Environment.NewLine())
 
-			Console.WriteLine(CStr(cities.Length) + " City and State match" + If(cities.Length = 1, ":", "es:"))
+			Console.WriteLine(CStr(cities.Length) + " city and state match" + If(cities.Length = 1, ":", "es:"))
 
 			For Each cityState In cities
 				Console.WriteLine()
@@ -100,7 +90,7 @@ Module USZipCodeMultipleLookupsExample
 			Next
 
 			Console.WriteLine()
-			Console.WriteLine(CStr(zipCodes.Length) + " ZIP Code match" + If((zipCodes.Length = 1), ":", "es:"))
+			Console.WriteLine(CStr(zipCodes.Length) + " ZIP code match" + If((zipCodes.Length = 1), ":", "es:"))
 
 			For Each zipCode In zipCodes
 				Console.WriteLine()

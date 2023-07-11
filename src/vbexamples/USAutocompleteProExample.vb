@@ -33,18 +33,18 @@ Module USAutocompleteProExample
             Console.WriteLine(ex.StackTrace)
         End Try
 
-        Dim result = lookup.Result
+        Dim candidates = lookup.Result
 
         Console.WriteLine("Original lookup: " + lookup.Search + Environment.NewLine())
 
-        If lookup.Result Is Nothing Then
-            Console.WriteLine("No results. This means the address is not valid." + Environment.NewLine)
+        If candidates Is Nothing Then
+            Console.WriteLine("No results. This means the input is not valid." + Environment.NewLine)
             Return
         End If
 
-        Console.WriteLine("*** Result" + If(result.Count = 1, "", "s") + " with no filter ***" + Environment.NewLine)
+        Console.WriteLine("*** Found " + CStr(candidates.Count) + " result" + If(candidates.Count = 1, "", "s") + " with no filter ***" + Environment.NewLine)
 
-        For Each suggestion In lookup.Result
+        For Each suggestion In candidates
             Console.WriteLine(suggestion.Street + " " + suggestion.City + ", " + suggestion.State)
         Next
 
@@ -60,17 +60,35 @@ Module USAutocompleteProExample
         lookup.PreferRatio = 4
         lookup.Source = "all"
 
-        client.Send(lookup)
+        Try
+            client.Send(lookup)
+        Catch ex As SmartyException
+            Console.WriteLine(ex.Message)
+            Console.WriteLine(ex.StackTrace)
+        Catch ex As IOException
+            Console.WriteLine(ex.StackTrace)
+        Catch ex As Exception
+            Console.WriteLine(ex.Message)
+            Console.WriteLine(ex.StackTrace)
+        End Try
 
         Dim suggestions = lookup.Result
 
-        Console.WriteLine(Environment.NewLine + "*** Result" + If(suggestions.Count = 1, "", "s") + " with some filters ***" + Environment.NewLine)
+        Console.WriteLine()
+
+        If suggestions Is Nothing Then
+            Console.WriteLine("No results with specified filters." + Environment.NewLine)
+            Return
+        End If
+
+        Console.WriteLine("*** Found " + CStr(suggestions.Count) + " result" + If(suggestions.Count = 1, "", "s") + " with some filters ***" + Environment.NewLine)
 
         For Each suggestion In suggestions
             Console.WriteLine(suggestion.Street + " " + suggestion.City + ", " + suggestion.State)
         Next
 
         Console.WriteLine()
+
     End Sub
 
 End Module

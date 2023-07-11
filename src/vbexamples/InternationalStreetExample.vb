@@ -12,6 +12,7 @@ Module InternationalStreetExample
 	Dim url = Environment.GetEnvironmentVariable("SMARTY_INTERNATIONAL_STREET_URL")
 
 	Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"international-global-plus-cloud"}).WithCustomBaseUrl(url).BuildInternationalStreetApiClient()
+
 	Sub InternationalStreetExample()
 
 		Dim lookup As New Lookup("Rua Padre Antonio D'Angelo 121 Casa Verde, Sao Paulo", "Brazil")
@@ -44,14 +45,18 @@ Module InternationalStreetExample
 
 		Dim candidates = lookup.Result
 
+		Console.WriteLine("Original lookup: " + lookup.Freeform + " " + lookup.Country)
+		Console.WriteLine("Input ID: " + lookup.InputId + Environment.NewLine())
+
 		If candidates.Count = 0 Then
-			Console.WriteLine("No candidates. This means the address is not valid." + Environment.NewLine)
+			Console.WriteLine("No candidates. Tthe address is not valid." + Environment.NewLine)
 			Return
 		End If
 
-		Console.WriteLine("Address is valid. (There is at least one candidate)" + Environment.NewLine())
+		Console.WriteLine("Address is valid. (There is at least one candidate)")
 
-		Console.WriteLine("Input ID: " + lookup.InputId)
+
+		Console.WriteLine("*** Found " + CStr(candidates.Count) + " result" + If(candidates.Count = 1, "", "s") + " ***")
 
 		For Each candidate In candidates
 			Console.WriteLine()

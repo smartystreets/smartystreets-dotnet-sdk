@@ -44,13 +44,14 @@ Module USStreetSingleAddressExample
         End Try
 
         Dim candidates = lookup.Result
+        Console.WriteLine("Original lookup: " + lookup.Street + ", " + lookup.Street2 + ", " + lookup.Secondary + ", " + lookup.City + ", " + lookup.State + ", " + lookup.ZipCode + Environment.NewLine())
 
         If candidates.Count = 0 Then
-            Console.WriteLine("No candidates. This means the address is not valid." + Environment.NewLine)
+            Console.WriteLine("No candidates. The address is not valid." + Environment.NewLine)
             Return
         End If
 
-        Console.WriteLine("Address is valid. (There is at least one candidate)" + Environment.NewLine())
+        Console.WriteLine("Address has " + CStr(candidates.Count) + " candidate" + If(candidates.Count = 1, "", "s") + Environment.NewLine())
 
         Console.WriteLine("Input ID: " + lookup.InputId)
 

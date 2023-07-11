@@ -62,20 +62,19 @@ Module USStreetLookupsWithMatchStrategyExamples
 
         Dim numLookups = batch.Count
 
-        If numLookups = 0 Then
-            Console.WriteLine("No lookups in batch." + Environment.NewLine)
-            Return
-        End If
-
         For i As Integer = 0 To numLookups - 1
-            Dim candidates = batch(i).Result
+            If i > 0 Then
+                Console.WriteLine()
+            End If
 
+            Dim candidates = batch(i).Result
+            Console.WriteLine("Address " + CStr(i) + " original lookup: " + batch(i).Street + ", " + batch(i).Street2 + ", " + batch(i).Secondary + ", " + batch(i).City + ", " + batch(i).State + ", " + batch(i).ZipCode + Environment.NewLine())
             If candidates.Count = 0 Then
-                Console.WriteLine("Address " + CStr(i) + " has no candidates. This means the address is not valid." + Environment.NewLine)
+                Console.WriteLine("Address " + CStr(i) + " has no candidates. The address is not valid." + Environment.NewLine)
                 Continue For
             End If
 
-            Console.WriteLine("Address " + CStr(i) + " has at least one candidate" + Environment.NewLine + "If the match parameter is set to STRICT, the address is valid." + Environment.NewLine + "Otherwise, check the Analysis output fields to see if the address is valid." + Environment.NewLine())
+            Console.WriteLine("Address " + CStr(i) + " has " + CStr(candidates.Count) + " candidate" + If(candidates.Count = 1, "", "s") + Environment.NewLine + "If the match parameter is set to STRICT, the address is valid." + Environment.NewLine + "Otherwise, check the Analysis output fields to see if the address is valid." + Environment.NewLine())
 
             Console.WriteLine("Input ID: " + batch(i).InputId)
 
@@ -84,9 +83,12 @@ Module USStreetLookupsWithMatchStrategyExamples
                 Dim components = candidate.Components
                 Dim metadata = candidate.Metadata
 
-
                 Console.Write("Candidate " + CStr(candidate.CandidateIndex))
                 Dim match = batch(i).MatchStrategy
+                If match Is Nothing Then
+                    match = "strict"
+                End If
+
                 Console.WriteLine(" with " + match + " strategy:")
                 Console.WriteLine("Delivery line 1: " + candidate.DeliveryLine1)
                 Console.WriteLine("Last line:       " + candidate.LastLine)
@@ -96,9 +98,9 @@ Module USStreetLookupsWithMatchStrategyExamples
                 Console.WriteLine("Longitude:       " + CStr(metadata.Longitude))
             Next
 
-            Console.WriteLine()
-
         Next
+
+        Console.WriteLine()
 
     End Sub
 

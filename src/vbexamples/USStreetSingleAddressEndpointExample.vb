@@ -5,14 +5,14 @@ Imports SmartyStreets.USStreetApi
 
 Module USStreetSingleAddressEndpointExample
 
-    Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
-    Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
-
-    ' NOTE this Is how to point the SDK at an alternate installation
-    ' for example, this might be used to connect through "stunnel" to handle things Like TLSv1.2 encryption
-    Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"us-core-cloud"}).WithCustomBaseUrl("http://127.0.0.1:8080/street-address").BuildUsStreetApiClient()
-
     Sub USStreetSingleAddressEndpointExample()
+
+        Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
+        Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
+
+        ' NOTE this Is how to point the SDK at an alternate installation
+        ' for example, this might be used to connect through "stunnel" to handle things Like TLSv1.2 encryption
+        Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"us-core-cloud"}).WithCustomBaseUrl("http://127.0.0.1:8080/street-address").BuildUsStreetApiClient()
 
         Dim lookup As New Lookup()
         With lookup
@@ -45,13 +45,14 @@ Module USStreetSingleAddressEndpointExample
         End Try
 
         Dim candidates = lookup.Result
+        Console.WriteLine("Original lookup: " + lookup.Street + ", " + lookup.Street2 + ", " + lookup.Secondary + ", " + lookup.City + ", " + lookup.State + ", " + lookup.ZipCode + Environment.NewLine())
 
         If candidates.Count = 0 Then
-            Console.WriteLine("No candidates. This means the address is not valid." + Environment.NewLine)
+            Console.WriteLine("No candidates. The address is not valid." + Environment.NewLine)
             Return
         End If
 
-        Console.WriteLine("Address is valid. (There is at least one candidate)" + Environment.NewLine())
+        Console.WriteLine("Address has " + CStr(candidates.Count) + " candidate" + If(candidates.Count = 1, "", "s") + Environment.NewLine())
 
         Console.WriteLine("Input ID: " + lookup.InputId)
 

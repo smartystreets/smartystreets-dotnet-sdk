@@ -36,25 +36,26 @@ Module USZipCodeSingleLookupExample
         End Try
 
         Dim result = lookup.Result
-
         Dim cities = result.CityStates
         Dim zipCodes = result.ZipCodes
 
         If result.Status IsNot Nothing Then
-            Console.WriteLine("ZIP has an invalid status.")
+            Console.WriteLine("Lookup has an invalid status.")
             Console.WriteLine("Status: " + result.Status)
             Console.WriteLine("Reason: " + result.Reason + Environment.NewLine)
             Return
         End If
 
         If zipCodes Is Nothing Or cities Is Nothing Then
-            Console.WriteLine("No results. This means the ZIP code is not valid." + Environment.NewLine)
+            Console.WriteLine("Lookup has no candidates. The lookup is not valid." + Environment.NewLine)
             Return
         End If
 
-        Console.WriteLine("ZIP is valid. (There is at least one result)" + Environment.NewLine())
+        Console.WriteLine("Lookup is valid." + Environment.NewLine())
 
         Console.WriteLine("Input ID: " + result.InputId)
+
+        Console.WriteLine(CStr(cities.Length) + " city and state match" + If(cities.Length = 1, ":", "es:"))
 
         For Each city In cities
             Console.WriteLine()
