@@ -3,7 +3,8 @@
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
-	using SmartyStreets;
+    using System.Net;
+    using SmartyStreets;
 	using SmartyStreets.USStreetApi;
 
 	internal static class USStreetSingleAddressExample
@@ -16,6 +17,7 @@
 			// We recommend storing your keys in environment variables instead---it's safer!
 			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
+			ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
 
 			// The appropriate license values to be used for your subscriptions
 			// can be found on the Subscriptions page the account dashboard.
@@ -35,7 +37,7 @@
 				Street = "1600 Amphitheatre Pkwy",
 				Street2 = "closet under the stairs",
 				Secondary = "APT 2",
-				Urbanization = "", // Only applies to Pue rto Rico addresses
+				Urbanization = "", // Only applies to Puerto Rico addresses
 				City = "Mountain View",
 				State = "CA",
 				ZipCode = "21229",
