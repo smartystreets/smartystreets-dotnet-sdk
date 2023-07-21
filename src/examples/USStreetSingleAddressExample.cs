@@ -32,7 +32,7 @@
 
 			var lookup = new Lookup
 			{
-				InputId = "24601", // Optional ID from you system
+				InputId = "24601", // Optional ID from your system
 				Addressee = "John Doe",
 				Street = "1600 Amphitheatre Pkwy",
 				Street2 = "closet under the stairs",
