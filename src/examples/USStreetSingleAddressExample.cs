@@ -20,7 +20,7 @@
             // We recommend storing your keys in environment variables instead---it's safer!
             var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			ServicePointManager.SecurityProtocolType = tlsProtocol1_2;
+			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
             // The appropriate license values to be used for your subscriptions
             // can be found on the Subscriptions page the account dashboard.
