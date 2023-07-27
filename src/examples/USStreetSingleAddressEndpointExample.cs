@@ -1,21 +1,26 @@
 ﻿namespace Examples
 {
 	using System;
+	using System.Net;
 	using System.Collections.Generic;
 	using System.IO;
-	using SmartyStreets;
+    using SmartyStreets;
 	using SmartyStreets.USStreetApi;
 
 	internal static class USStreetSingleAddressEndpointExample
 	{
 		public static void Run()
 		{
-			// var authId = "Your SmartyStreets Auth ID here";
-			// var authToken = "Your SmartyStreets Auth Token here";
+            // specifies the TLS protocoll to use - this is TLS 1.2
+            const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
 
-			// We recommend storing your keys in environment variables instead---it's safer!
-			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
+            // var authId = "Your SmartyStreets Auth ID here";
+            // var authToken = "Your SmartyStreets Auth Token here";
+
+            // We recommend storing your keys in environment variables instead---it's safer!
+            var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
+			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
 			// The appropriate license values to be used for your subscriptions
 			// can be found on the Subscriptions page the account dashboard.

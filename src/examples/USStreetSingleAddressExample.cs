@@ -11,18 +11,21 @@
 	{
 		public static void Run()
 		{
-			// var authId = "Your SmartyStreets Auth ID here";
-			// var authToken = "Your SmartyStreets Auth Token here";
+            // specifies the TLS protocoll to use - this is TLS 1.2
+            const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
 
-			// We recommend storing your keys in environment variables instead---it's safer!
-			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
+            // var authId = "Your SmartyStreets Auth ID here";
+            // var authToken = "Your SmartyStreets Auth Token here";
+
+            // We recommend storing your keys in environment variables instead---it's safer!
+            var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
+			ServicePointManager.SecurityProtocolType = tlsProtocol1_2;
 
-			// The appropriate license values to be used for your subscriptions
-			// can be found on the Subscriptions page the account dashboard.
-			// https://www.smartystreets.com/docs/cloud/licensing
-			var client = new ClientBuilder(authId, authToken).WithLicense(new List<string>{"us-core-cloud"})
+            // The appropriate license values to be used for your subscriptions
+            // can be found on the Subscriptions page the account dashboard.
+            // https://www.smartystreets.com/docs/cloud/licensing
+            var client = new ClientBuilder(authId, authToken).WithLicense(new List<string>{"us-core-cloud"})
 				//.WithCustomBaseUrl("us-street.api.smartystreets.com")
 				//.ViaProxy("http://localhost:8080", "username", "password") // uncomment this line to point to the specified proxy.
 				.BuildUsStreetApiClient();
