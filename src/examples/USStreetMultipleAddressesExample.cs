@@ -23,7 +23,7 @@
             // can be found on the Subscriptions page the account dashboard.
             // https://www.smartystreets.com/docs/cloud/licensing
 			var client = new ClientBuilder(authId, authToken).WithLicense(new List<string>{"us-core-cloud"})
-				.BuildUsStreetApiClient();
+                .BuildUsStreetApiClient();
 			var batch = new Batch();
 			
 			// Documentation for input fields can be found at:

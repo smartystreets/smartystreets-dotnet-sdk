@@ -26,9 +26,9 @@
             // can be found on the Subscriptions page the account dashboard.
             // https://www.smartystreets.com/docs/cloud/licensing
             var client = new ClientBuilder(authId, authToken).WithLicense(new List<string>{"us-core-cloud"})
-				//.WithCustomBaseUrl("us-street.api.smartystreets.com")
-				//.ViaProxy("http://localhost:8080", "username", "password") // uncomment this line to point to the specified proxy.
-				.BuildUsStreetApiClient();
+                //.WithCustomBaseUrl("us-street.api.smartystreets.com")
+                //.ViaProxy("http://localhost:8080", "username", "password") // uncomment this line to point to the specified proxy.
+                .BuildUsStreetApiClient();
 			
 			// Documentation for input fields can be found at:
 			// https://smartystreets.com/docs/us-street-api#input-fields
