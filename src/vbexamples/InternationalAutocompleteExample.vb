@@ -6,9 +6,8 @@ Imports SmartyStreets.InternationalAutocompleteApi
 Module InternationalAutocompleteExample
     Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
     Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
-    Dim url = Environment.GetEnvironmentVariable("SMARTY_INTERNATIONAL_AUTOCOMPLETE_URL")
 
-    Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"international-autocomplete-cloud"}).WithCustomBaseUrl(url).BuildInternationalAutocompleteApiClient()
+    Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"international-autocomplete-cloud"}).BuildInternationalAutocompleteApiClient()
 
     Sub InternationalAutocompleteExample()
 

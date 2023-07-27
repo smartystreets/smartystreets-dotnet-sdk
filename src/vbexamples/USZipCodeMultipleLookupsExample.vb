@@ -11,9 +11,8 @@ Module USZipCodeMultipleLookupsExample
 
 		Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
 		Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
-		Dim url = Environment.GetEnvironmentVariable("SMARTY_US_ZIP_URL")
 
-		Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"us-core-cloud"}).WithCustomBaseUrl(url).BuildUsZipCodeApiClient()
+		Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"us-core-cloud"}).BuildUsZipCodeApiClient()
 		Dim batch = New Batch()
 
 		Dim lookup0 As New Lookup()
