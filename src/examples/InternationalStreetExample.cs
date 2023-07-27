@@ -2,22 +2,27 @@
 {
 	using System;
 	using System.Collections.Generic;
-	using SmartyStreets;
+    using System.Net;
+    using SmartyStreets;
 	using SmartyStreets.InternationalStreetApi;
 
 	internal static class InternationalStreetExample
 	{
 		public static void Run()
 		{
-			// We recommend storing your secret keys in environment variables.
-			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
+            // specifies the TLS protocoll to use - this is TLS 1.2
+            const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
+
+            // We recommend storing your secret keys in environment variables.
+            var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
+			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
 			// The appropriate license values to be used for your subscriptions
 			// can be found on the Subscriptions page the account dashboard.
 			// https://www.smartystreets.com/docs/cloud/licensing
 			var client = new ClientBuilder(authId, authToken).WithLicense(new List<string>{"international-global-plus-cloud"})
-				.BuildInternationalStreetApiClient();
+                .BuildInternationalStreetApiClient();
 			
 			// Documentation for input fields can be found at:
 			// https://smartystreetscom/docs/cloud/international-street-api#http-input-fields

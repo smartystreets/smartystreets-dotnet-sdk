@@ -3,19 +3,24 @@
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
-	using SmartyStreets;
+    using System.Net;
+    using SmartyStreets;
 	using SmartyStreets.USStreetApi;
 
 	internal static class USStreetSingleAddressExample
 	{
 		public static void Run()
 		{
-			// var authId = "Your SmartyStreets Auth ID here";
-			// var authToken = "Your SmartyStreets Auth Token here";
+            // specifies the TLS protocoll to use - this is TLS 1.2
+            const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
 
-			// We recommend storing your keys in environment variables instead---it's safer!
-			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
+            // var authId = "Your SmartyStreets Auth ID here";
+            // var authToken = "Your SmartyStreets Auth Token here";
+
+            // We recommend storing your keys in environment variables instead---it's safer!
+            var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
+			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
 			// The appropriate license values to be used for your subscriptions
 			// can be found on the Subscriptions page the account dashboard.
@@ -30,12 +35,12 @@
 
 			var lookup = new Lookup
 			{
-				InputId = "24601", // Optional ID from you system
+				InputId = "24601", // Optional ID from your system
 				Addressee = "John Doe",
 				Street = "1600 Amphitheatre Pkwy",
 				Street2 = "closet under the stairs",
 				Secondary = "APT 2",
-				Urbanization = "", // Only applies to Pue rto Rico addresses
+				Urbanization = "", // Only applies to Puerto Rico addresses
 				City = "Mountain View",
 				State = "CA",
 				ZipCode = "21229",

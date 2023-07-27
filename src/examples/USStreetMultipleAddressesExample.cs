@@ -3,22 +3,27 @@
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
-	using SmartyStreets;
+    using System.Net;
+    using SmartyStreets;
 	using SmartyStreets.USStreetApi;
 
 	internal static class USStreetMultipleAddressesExample
 	{
 		public static void Run()
 		{
-			// You don't have to store your keys in environment variables, but we recommend it.
-			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
+            // specifies the TLS protocoll to use - this is TLS 1.2
+            const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
+
+            // You don't have to store your keys in environment variables, but we recommend it.
+            var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
+			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
             // The appropriate license values to be used for your subscriptions
             // can be found on the Subscriptions page the account dashboard.
             // https://www.smartystreets.com/docs/cloud/licensing
 			var client = new ClientBuilder(authId, authToken).WithLicense(new List<string>{"us-core-cloud"})
-				.BuildUsStreetApiClient();
+                .BuildUsStreetApiClient();
 			var batch = new Batch();
 			
 			// Documentation for input fields can be found at:
