@@ -1,6 +1,7 @@
 ﻿namespace Examples
 {
 	using System;
+    using System.IO;
     using System.Net;
     using SmartyStreets;
 	using SmartyStreets.USExtractApi;
@@ -31,11 +32,32 @@
 				AddressesHaveLineBreaks = false,
 				AddressesPerLine = 1
 			};
-
-			client.Send(lookup);
+			
+            try
+            {
+                client.Send(lookup);
+            }
+            catch (SmartyException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+				return;
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+				return;
+            }
 
 			var result = lookup.Result;
-			var metadata = result.Metadata;
+
+            if (result.Metadata == null)
+            {
+                Console.WriteLine("No candidates. This means the address is not valid.");
+                return;
+            }
+
+            var metadata = result.Metadata;
 			Console.WriteLine("Found " + metadata.AddressCount + " addresses.");
 			Console.WriteLine(metadata.VerifiedCount + " of them were valid.");
 			Console.WriteLine();

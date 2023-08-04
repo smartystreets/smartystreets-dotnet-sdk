@@ -50,15 +50,18 @@
 			catch (BatchFullException)
 			{
 				Console.WriteLine("Error. The batch is already full.");
+				return;
 			}
 			catch (SmartyException ex)
 			{
 				Console.WriteLine(ex.Message);
 				Console.WriteLine(ex.StackTrace);
+				return;
 			}
 			catch (IOException ex)
 			{
 				Console.WriteLine(ex.StackTrace);
+				return;
 			}
 
 			for (var i = 0; i < batch.Count; i++)
@@ -75,8 +78,16 @@
 
 				Console.WriteLine("Input ID: " + result.InputId);
 
-				var cityStates = result.CityStates;
-				Console.WriteLine(cityStates.Length + " City and State match" + (cityStates.Length == 1 ? ":" : "es:"));
+                var cityStates = result.CityStates;
+                var zipCodes = result.ZipCodes;
+
+                if (cityStates == null || zipCodes == null)
+                {
+                    Console.WriteLine("Lookup " + i + " is invalid.\n");
+                    continue;
+                }
+
+                Console.WriteLine(cityStates.Length + " City and State match" + (cityStates.Length == 1 ? ":" : "es:"));
 
 				foreach (var cityState in cityStates)
 				{
@@ -86,7 +97,6 @@
 					Console.WriteLine();
 				}
 
-				var zipCodes = result.ZipCodes;
 				Console.WriteLine(zipCodes.Length + " ZIP Code match" + (cityStates.Length == 1 ? ":" : "es:"));
 
 				foreach (var zipCode in zipCodes)

@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+    using System.IO;
     using System.Net;
     using SmartyStreets;
 	using SmartyStreets.InternationalStreetApi;
@@ -41,10 +42,31 @@
 				PostalCode = "02516-050"
 			};
 
-			client.Send(lookup);
+            try
+            {
+                client.Send(lookup);
+            }
+            catch (SmartyException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                return;
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return;
+            }
 
-			var candidates = lookup.Result;
-			var firstCandidate = candidates[0];
+            var candidates = lookup.Result;
+
+            if (candidates.Count == 0)
+            {
+                Console.WriteLine("No candidates. This means the address is not valid.");
+                return;
+            }
+
+            var firstCandidate = candidates[0];
 			Console.WriteLine("Input ID: " + firstCandidate.InputId);
 			Console.WriteLine("Address is " + firstCandidate.Analysis.VerificationStatus);
 			Console.WriteLine("Address precision: " + firstCandidate.Analysis.AddressPrecision + "\n");
