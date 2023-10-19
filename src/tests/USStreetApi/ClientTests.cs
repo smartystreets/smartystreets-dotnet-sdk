@@ -73,7 +73,7 @@
 			client.Send(lookup);
 
 			Assert.AreEqual("?input_id=1234&street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&" +
-			                "lastline=8&addressee=0&urbanization=4&match=enhanced&format=project-usa&candidates=5", sender.Request.GetUrl());
+			                "lastline=8&addressee=0&urbanization=4&match=enhanced&candidates=5&format=project-usa", sender.Request.GetUrl());
 		}
 		
 		#endregion
