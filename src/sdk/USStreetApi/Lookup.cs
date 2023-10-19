@@ -105,7 +105,7 @@ namespace SmartyStreets.USStreetApi
 				case Format.Default:
 					return "default";
 				case Format.ProjectUsa:
-					return "project_usa";
+					return "project-usa";
 				case Format.Cass:
 					return "cass";
 				default:
