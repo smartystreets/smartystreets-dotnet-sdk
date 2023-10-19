@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets.USStreetApi
+﻿using SmartyStreets.USReverseGeoApi;
+
+namespace SmartyStreets.USStreetApi
 {
 	using System;
 	using System.Collections.Generic;
@@ -66,6 +68,7 @@
 			request.SetParameter("addressee", address.Addressee);
 			request.SetParameter("urbanization", address.Urbanization);
 			request.SetParameter("match", address.MatchStrategy);
+			request.SetParameter("format", address.GetFormatString());
 
 			if (address.MaxCandidates != 1)
 				request.SetParameter("candidates", address.MaxCandidates.ToString(CultureInfo.InvariantCulture));

@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets.USStreetApi
+﻿using System.Runtime.CompilerServices;
+
+namespace SmartyStreets.USStreetApi
 {
 	using System;
 	using System.Collections.Generic;
@@ -13,7 +15,14 @@
 		public const string ENHANCED = "enhanced";
 		public const string INVALID = "invalid";
 		public const string RANGE = "range"; // Deprecated
-
+		
+		public enum Format
+		{
+			Default,
+			ProjectUsa,
+			Cass
+		}
+		
 		public List<Candidate> Result { get; private set; }
 
         [DataMember(Name = "input_id")]
@@ -52,6 +61,9 @@
 		[DataMember(Name = "match")]
 		public string MatchStrategy { get; set; }
 
+		[DataMember(Name = "format")]
+		public Format OutputFormat { get; set; }
+		
 		public int MaxCandidates
 		{
 			get => this.maxCandidates;
@@ -84,6 +96,21 @@
 		public void AddToResult(Candidate newCandidate)
 		{
 			this.Result.Add(newCandidate);
+		}
+		
+		public string GetFormatString()
+		{
+			switch (this.OutputFormat)
+			{
+				case Format.Default:
+					return "default";
+				case Format.ProjectUsa:
+					return "project_usa";
+				case Format.Cass:
+					return "cass";
+				default:
+					return "";
+			}
 		}
 	}
 }
