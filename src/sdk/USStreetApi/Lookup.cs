@@ -20,7 +20,6 @@ namespace SmartyStreets.USStreetApi
 		{
 			Default,
 			ProjectUsa,
-			Cass
 		}
 		
 		public List<Candidate> Result { get; private set; }
@@ -106,8 +105,6 @@ namespace SmartyStreets.USStreetApi
 					return "default";
 				case Format.ProjectUsa:
 					return "project-usa";
-				case Format.Cass:
-					return "cass";
 				default:
 					return "";
 			}
