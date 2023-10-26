@@ -47,7 +47,35 @@
 			Assert.AreEqual("?input_id=1234&street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&" +
 			                "lastline=8&addressee=0&urbanization=4&match=enhanced&candidates=5", sender.Request.GetUrl());
 		}
+		
+		[Test]
+		public void TestSendingSingleFullyPopulatedLookupWithFormatOutput()
+		{
+			var sender = new RequestCapturingSender();
+			var serializer = new FakeSerializer(null);
+			var client = new Client(sender, serializer);
+			var lookup = new Lookup
+			{
+				InputId = "1234",
+				Addressee = "0",
+				Street = "1",
+				Secondary = "2",
+				Street2 = "3",
+				Urbanization = "4",
+				City = "5",
+				State = "6",
+				ZipCode = "7",
+				Lastline = "8",
+				MatchStrategy = "enhanced",
+				OutputFormat = Lookup.Format.ProjectUsa
+			};
 
+			client.Send(lookup);
+
+			Assert.AreEqual("?input_id=1234&street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&" +
+			                "lastline=8&addressee=0&urbanization=4&match=enhanced&candidates=5&format=project-usa", sender.Request.GetUrl());
+		}
+		
 		#endregion
 
 		#region [ Batch Lookup ]
