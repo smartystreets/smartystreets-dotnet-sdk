@@ -24,11 +24,10 @@ namespace SmartyStreets.InternationalAutcompleteApi
                         ""country_iso3"": ""AUS""
                     },
                     {
-                        ""street"": ""TWELFTH AV"",
-                        ""locality"": ""EDEN PARK"",
-                        ""administrative_area"": ""VIC"",
-                        ""postal_code"": ""3757"",
-                        ""country_iso3"": ""AUS""
+                        ""entries"": ""3"",
+                        ""address_text"": ""my_fun_street"",
+                        ""address_id"": ""my_address_id""
+
                     }
                 ]
             }";
@@ -46,11 +45,9 @@ namespace SmartyStreets.InternationalAutcompleteApi
             Assert.AreEqual("VIC", actual[0].AdministrativeArea);
             Assert.AreEqual("3226", actual[0].PostalCode);
             Assert.AreEqual("AUS", actual[0].CountryISO3);
-            Assert.AreEqual("TWELFTH AV", actual[1].Street);
-            Assert.AreEqual("EDEN PARK", actual[1].Locality);
-            Assert.AreEqual("VIC", actual[1].AdministrativeArea);
-            Assert.AreEqual("3757", actual[1].PostalCode);
-            Assert.AreEqual("AUS", actual[1].CountryISO3);
+            Assert.AreEqual("3", actual[1].Entries);
+            Assert.AreEqual("my_fun_street", actual[1].AddressText);
+            Assert.AreEqual("my_address_id", actual[1].AddressID);
         }
     }
 

@@ -14,7 +14,7 @@
 		public void Setup()
 		{
 			this.capturingSender = new RequestCapturingSender();
-			this.urlSender = new URLPrefixSender("http://localhost/", this.capturingSender);
+			this.urlSender = new URLPrefixSender("http://localhost/lookup", this.capturingSender);
 		}
 
 		#region [ Single Lookup ]
@@ -24,10 +24,14 @@
 		{
 			var serializer = new FakeSerializer(new byte[0]);
 			var client = new Client(this.urlSender, serializer);
+            var lookup = new Lookup("1")
+            {
+                Country = "2"
+            };
 
-			client.Send(new Lookup("1"));
+            client.Send(lookup);
 
-			Assert.AreEqual("http://localhost/?search=1",
+			Assert.AreEqual("http://localhost/lookup?search=1&country=2",
 				this.capturingSender.Request.GetUrl());
 		}
 
@@ -37,19 +41,15 @@
 			var serializer = new FakeSerializer(new byte[0]);
 			var client = new Client(this.urlSender, serializer);
 			const string expectedURL =
-				"http://localhost/?search=1&country=2&max_results=3&include_only_administrative_area=4&include_only_locality=5&include_only_postal_code=6&geolocation=7&distance=8&latitude=9&longitude=10";
+				"http://localhost/lookup/myID?search=1&country=2&max_results=3&include_only_locality=5&include_only_postal_code=6";
 			var lookup = new Lookup
 			{
 				Search = "1",
 				Country = "2",
 				MaxResults = 3,
-				AdministrativeArea = "4",
 				Locality = "5",
 				PostalCode = "6",
-				Geolocation = "7",
-				Distance = 8,
-				Latitude = "9",
-				Longitude = "10"
+				AddressID = "myID"
 			};
 			
 			client.Send(lookup);
@@ -63,19 +63,14 @@
 			var serializer = new FakeSerializer(new byte[0]);
 			var client = new Client(this.urlSender, serializer);
 			const string expectedURL =
-				"http://localhost/?search=1&country=2&max_results=3&include_only_administrative_area=4&include_only_locality=5&include_only_postal_code=6&distance=7&latitude=9&longitude=10";
+				"http://localhost/lookup?search=1&country=2&max_results=3&include_only_locality=5&include_only_postal_code=6";
 			var lookup = new Lookup
 			{
 				Search = "1",
 				Country = "2",
 				MaxResults = 3,
-				AdministrativeArea = "4",
 				Locality = "5",
 				PostalCode = "6",
-				Distance = 7,
-				Geolocation = GeolocateType.NONE,
-				Latitude = "9",
-				Longitude = "10"
 			};
 			
 			client.Send(lookup);
@@ -89,19 +84,14 @@
 			var serializer = new FakeSerializer(new byte[0]);
 			var client = new Client(this.urlSender, serializer);
 			const string expectedURL =
-				"http://localhost/?search=1&country=2&max_results=3&include_only_administrative_area=4&include_only_locality=5&include_only_postal_code=6&distance=7&latitude=9&longitude=10";
+				"http://localhost/lookup?search=1&country=2&max_results=3&include_only_locality=5&include_only_postal_code=6";
 			var lookup = new Lookup
 			{
 				Search = "1",
 				Country = "2",
 				MaxResults = 3,
-				AdministrativeArea = "4",
 				Locality = "5",
 				PostalCode = "6",
-				Distance = 7,
-				Geolocation = "",
-				Latitude = "9",
-				Longitude = "10"
 			};
 			
 			client.Send(lookup);
@@ -122,7 +112,10 @@
 			var deserializer = new FakeDeserializer(new Result());
 			var client = new Client(sender, deserializer);
 
-			client.Send(new Lookup("1"));
+			var lookup = new Lookup("1");
+			lookup.Country = "2";
+
+			client.Send(lookup);
 
 			Assert.AreEqual(response.Payload, deserializer.Payload);
 		}
@@ -159,6 +152,7 @@
 		public void TestResultCorrectlyAssignedToLookup()
 		{
 			var lookup = new Lookup("1");
+			lookup.Country = "2";
 			var expectedResult = new Result();
 
 			var mockSender = new MockSender(new Response(0, Encoding.ASCII.GetBytes("{[]}")));

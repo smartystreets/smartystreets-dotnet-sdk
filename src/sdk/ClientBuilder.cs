@@ -24,7 +24,7 @@ namespace SmartyStreets
         private Dictionary<string, string> customHeaders;
         private List<string> licenses;
         private const string InternationalStreetApiUrl = "https://international-street.api.smarty.com/verify";
-        private const string InternationalAutocompleteApiUrl = "https://international-autocomplete.api.smarty.com/lookup";
+        private const string InternationalAutocompleteApiUrl = "https://international-autocomplete.api.smarty.com/v2/lookup";
         private const string UsAutocompleteApiUrl = "https://us-autocomplete.api.smarty.com/suggest";
         private const string UsAutocompleteProApiUrl = "https://us-autocomplete-pro.api.smarty.com/lookup";
         private const string UsExtractApiUrl = "https://us-extract.api.smarty.com/";
@@ -136,7 +136,7 @@ namespace SmartyStreets
             return new InternationalStreetApi.Client(this.BuildSender(), this.serializer);
         }
         
-public InternationalAutocompleteApi.Client BuildInternationalAutocompleteApiClient()
+        public InternationalAutocompleteApi.Client BuildInternationalAutocompleteApiClient()
         {
             this.EnsureURLPrefixNotNull(InternationalAutocompleteApiUrl);
             return new InternationalAutocompleteApi.Client(this.BuildSender(), this.serializer);

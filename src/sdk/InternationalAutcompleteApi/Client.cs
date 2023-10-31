@@ -21,11 +21,16 @@
 
 		public void Send(Lookup lookup)
 		{
+
 			if (lookup == null)
 				throw new ArgumentNullException("lookup");
 
-			if (string.IsNullOrEmpty(lookup?.Search))
-				throw new SmartyException("Send() must be passed a Lookup with the prefix field set.");
+			if (string.IsNullOrEmpty(lookup?.Country))
+				throw new SmartyException("Send() must be passed a Lookup with the country field set.");
+
+			if (string.IsNullOrEmpty(lookup?.Search) && string.IsNullOrEmpty(lookup?.AddressID))
+				throw new SmartyException("Send() must be passed a Lookup with the search or addressID field set.");
+
 
 			var request = BuildRequest(lookup);
 
@@ -37,22 +42,22 @@
 				var candidates = result.Candidates;
 				lookup.Result = candidates;
 			}
+
 		}
 
 		private static Request BuildRequest(Lookup lookup)
 		{
 			var request = new Request();
+
+			if (lookup.AddressID != null) {
+				request.SetUrlPrefix("/" + lookup.AddressID);
+			}
 			
 			request.SetParameter("search", lookup.Search);
 			request.SetParameter("country", lookup.Country);
 			request.SetParameter("max_results", lookup.MaxSuggestionsString);
-			request.SetParameter("include_only_administrative_area", lookup.AdministrativeArea);
 			request.SetParameter("include_only_locality", lookup.Locality);
 			request.SetParameter("include_only_postal_code", lookup.PostalCode);
-			request.SetParameter("geolocation", lookup.GeolocationString);
-			request.SetParameter("distance", lookup.DistanceString);
-			request.SetParameter("latitude", lookup.Latitude);
-			request.SetParameter("longitude", lookup.Longitude);
 			
 			return request;
 		}

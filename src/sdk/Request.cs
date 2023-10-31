@@ -49,6 +49,11 @@
 			this.urlPrefix = value;
 		}
 
+		public String GetUrlPrefix()
+		{
+			return this.urlPrefix;
+		}
+
 		public string GetUrl()
 		{
 			var url = this.urlPrefix;
