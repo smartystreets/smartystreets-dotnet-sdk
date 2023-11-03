@@ -67,7 +67,7 @@
 				ZipCode = "7",
 				Lastline = "8",
 				MatchStrategy = "enhanced",
-				OutputFormat = Lookup.Format.ProjectUsa
+				OutputFormat = Lookup.PROJECT_USA_FORMAT
 			};
 
 			client.Send(lookup);
