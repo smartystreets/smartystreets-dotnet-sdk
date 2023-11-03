@@ -15,12 +15,9 @@ namespace SmartyStreets.USStreetApi
 		public const string ENHANCED = "enhanced";
 		public const string INVALID = "invalid";
 		public const string RANGE = "range"; // Deprecated
-		
-		public enum Format
-		{
-			Default,
-			ProjectUsa,
-		}
+
+		public const string DEFAULT_FORMAT = "default";
+		public const string PROJECT_USA_FORMAT = "project-usa";
 		
 		public List<Candidate> Result { get; private set; }
 
@@ -61,7 +58,7 @@ namespace SmartyStreets.USStreetApi
 		public string MatchStrategy { get; set; }
 
 		[DataMember(Name = "format")]
-		public Format OutputFormat { get; set; }
+		public string OutputFormat { get; set; }
 		
 		public int MaxCandidates
 		{
@@ -95,19 +92,6 @@ namespace SmartyStreets.USStreetApi
 		public void AddToResult(Candidate newCandidate)
 		{
 			this.Result.Add(newCandidate);
-		}
-		
-		public string GetFormatString()
-		{
-			switch (this.OutputFormat)
-			{
-				case Format.Default:
-					return "default";
-				case Format.ProjectUsa:
-					return "project-usa";
-				default:
-					return "";
-			}
 		}
 	}
 }

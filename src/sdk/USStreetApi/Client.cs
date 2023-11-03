@@ -72,8 +72,7 @@ namespace SmartyStreets.USStreetApi
 			if (address.MaxCandidates != 1) 
 				request.SetParameter("candidates", address.MaxCandidates.ToString(CultureInfo.InvariantCulture));
 			
-			if (address.GetFormatString() != "default")
-				request.SetParameter("format", address.GetFormatString());
+			request.SetParameter("format", address.OutputFormat);
 		}
 
 		private static void AssignCandidatesToLookups(Batch batch, IEnumerable<Candidate> candidates)
