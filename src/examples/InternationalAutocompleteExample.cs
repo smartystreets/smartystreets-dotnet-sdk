@@ -41,13 +41,21 @@ namespace Examples
 			Console.WriteLine("*** Results ***");
 			foreach (var candidate in candidates)
 			{
-				Console.Write(candidate.Street);
-				Console.Write(" ");
-				Console.Write(candidate.Locality);
-				Console.Write(", ");
-				Console.WriteLine(candidate.CountryISO3);
+				if (candidate.AddressText != null) {
+					Console.Write(candidate.Entries);
+					Console.Write(" ");
+					Console.Write(candidate.AddressText);
+					Console.Write(", ");
+					Console.WriteLine(candidate.AddressID);
+				} else {
+					Console.Write(candidate.Street);
+					Console.Write(" ");
+					Console.Write(candidate.Locality);
+					Console.Write(", ");
+					Console.WriteLine(candidate.CountryISO3);
+				}
 			}
-			}
+		}
 				
     }
 }

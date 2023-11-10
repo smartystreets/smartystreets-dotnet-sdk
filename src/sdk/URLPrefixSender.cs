@@ -13,7 +13,11 @@
 
 		public Response Send(Request request)
 		{
-			request.SetUrlPrefix(this.urlPrefix);
+			if (request.GetUrlPrefix() != null) {
+				request.SetUrlPrefix(this.urlPrefix + request.GetUrlPrefix());
+			} else {
+				request.SetUrlPrefix(this.urlPrefix);
+			}
 			return this.inner.Send(request);
 		}
 	}
