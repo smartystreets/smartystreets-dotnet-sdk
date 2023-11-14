@@ -44,10 +44,8 @@
 			// Documentation for input fields can be found at:
 			// https://smartystreets.com/docs/cloud/us-autocomplete-api#http-request-input-fields
 
-			lookup.AddStateFilter("CO");
-			lookup.AddStateFilter("UT");
-			lookup.AddCityFilter("Denver");
-			lookup.AddCityFilter("Orem");
+			lookup.AddCityFilter("Denver,Aurora,CO");
+			lookup.AddCityFilter("Orem,UT");
 			lookup.AddPreferState("CO");
 			lookup.AddPreferState("UT");
 			//lookup.Selected = "1042 W Center St Apt A (24) Orem UT 84057";
@@ -63,7 +61,7 @@
 			Console.WriteLine();
 			Console.WriteLine("*** Result with some filters ***");
 			foreach (var suggestion in suggestions)
-				Console.WriteLine(suggestion.Street, suggestion.City, ", ", suggestion.State);
+				Console.WriteLine(suggestion.Street + " " + suggestion.City + ", " + suggestion.State);
 		}
 	}
 }
