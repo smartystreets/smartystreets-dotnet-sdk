@@ -31,6 +31,7 @@ namespace SmartyStreets
         private const string UsStreetApiUrl = "https://us-street.api.smarty.com/street-address";
         private const string UsZipCodeApiUrl = "https://us-zipcode.api.smarty.com/lookup";
         private const string UsReverseGeoApiUrl = "https://us-reverse-geo.api.smarty.com/lookup";
+        private const string USEnrichmentApiUrl = "https://us-enrichment.api.smarty.com/lookup";
 
         public ClientBuilder()
         {
@@ -175,6 +176,12 @@ namespace SmartyStreets
         public USReverseGeoApi.Client BuildUsReverseGeoApiClient()
         {
             this.EnsureURLPrefixNotNull(UsReverseGeoApiUrl);
+            return new USReverseGeoApi.Client(this.BuildSender(), this.serializer);
+        }
+
+        public USEnrichmentApi.Client BuildUsEnrichmentApiClient()
+        {
+            this.EnsureURLPrefixNotNull(USEnrichmentApiUrl);
             return new USReverseGeoApi.Client(this.BuildSender(), this.serializer);
         }
 

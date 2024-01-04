@@ -1,1085 +1,1088 @@
-namespace SmartyStreets.USEnrichmentApi.ResultTypes.Property
+namespace SmartyStreets.USEnrichmentApi.ResultTypes.Property.Principal
 {
+    using System.Runtime.Serialization;
+
+	[DataContract]
     public class Attributes
     {
-        [JsonProperty("1st_floor_sqft")]
+        [DataMember(Name = "1st_floor_sqft")]
         public string FirstFloorSqft { get; set; }
 
-        [JsonProperty("2nd_floor_sqft")]
+        [DataMember(Name = "2nd_floor_sqft")]
         public string SecondFloorSqft { get; set; }
 
-        [JsonProperty("acres")]
+        [DataMember(Name = "acres")]
         public string Acres { get; set; }
 
-        [JsonProperty("air_conditioner")]
+        [DataMember(Name = "air_conditioner")]
         public string AirConditioner { get; set; }
 
-        [JsonProperty("arbor_pergola")]
+        [DataMember(Name = "arbor_pergola")]
         public string ArborPergola { get; set; }
 
-        [JsonProperty("assessed_improvement_percent")]
+        [DataMember(Name = "assessed_improvement_percent")]
         public string AssessedImprovementPercent { get; set; }
 
-        [JsonProperty("assessed_improvement_value")]
+        [DataMember(Name = "assessed_improvement_value")]
         public string AssessedImprovementValue { get; set; }
 
-        [JsonProperty("assessed_land_value")]
+        [DataMember(Name = "assessed_land_value")]
         public string AssessedLandValue { get; set; }
 
-        [JsonProperty("assessed_value")]
+        [DataMember(Name = "assessed_value")]
         public string AssessedValue { get; set; }
 
-        [JsonProperty("assessor_last_update")]
+        [DataMember(Name = "assessor_last_update")]
         public string AssessorLastUpdate { get; set; }
 
-        [JsonProperty("assessor_taxroll_update")]
+        [DataMember(Name = "assessor_taxroll_update")]
         public string AssessorTaxrollUpdate { get; set; }
 
-        [JsonProperty("attic_area")]
+        [DataMember(Name = "attic_area")]
         public string AtticArea { get; set; }
 
-        [JsonProperty("attic_flag")]
+        [DataMember(Name = "attic_flag")]
         public string AtticFlag { get; set; }
 
-        [JsonProperty("balcony")]
+        [DataMember(Name = "balcony")]
         public string Balcony { get; set; }
 
-        [JsonProperty("balcony_area")]
+        [DataMember(Name = "balcony_area")]
         public string BalconyArea { get; set; }
 
-        [JsonProperty("basement_sqft")]
+        [DataMember(Name = "basement_sqft")]
         public string BasementSqft { get; set; }
 
-        [JsonProperty("basement_sqft_finished")]
+        [DataMember(Name = "basement_sqft_finished")]
         public string BasementSqftFinished { get; set; }
 
-        [JsonProperty("basement_sqft_unfinished")]
+        [DataMember(Name = "basement_sqft_unfinished")]
         public string BasementSqftUnfinished { get; set; }
 
-        [JsonProperty("bath_house")]
+        [DataMember(Name = "bath_house")]
         public string BathHouse { get; set; }
 
-        [JsonProperty("bath_house_sqft")]
+        [DataMember(Name = "bath_house_sqft")]
         public string BathHouseSqft { get; set; }
 
-        [JsonProperty("bathrooms_partial")]
+        [DataMember(Name = "bathrooms_partial")]
         public string BathroomsPartial { get; set; }
 
-        [JsonProperty("bathrooms_total")]
+        [DataMember(Name = "bathrooms_total")]
         public string BathroomsTotal { get; set; }
 
-        [JsonProperty("bedrooms")]
+        [DataMember(Name = "bedrooms")]
         public string Bedrooms { get; set; }
 
-        [JsonProperty("block1")]
+        [DataMember(Name = "block1")]
         public string Block1 { get; set; }
 
-        [JsonProperty("block2")]
+        [DataMember(Name = "block2")]
         public string Block2 { get; set; }
 
-        [JsonProperty("boat_access")]
+        [DataMember(Name = "boat_access")]
         public string BoatAccess { get; set; }
 
-        [JsonProperty("boat_house")]
+        [DataMember(Name = "boat_house")]
         public string BoatHouse { get; set; }
 
-        [JsonProperty("boat_house_sqft")]
+        [DataMember(Name = "boat_house_sqft")]
         public string BoatHouseSqft { get; set; }
 
-        [JsonProperty("boat_lift")]
+        [DataMember(Name = "boat_lift")]
         public string BoatLift { get; set; }
 
-        [JsonProperty("bonus_room")]
+        [DataMember(Name = "bonus_room")]
         public string BonusRoom { get; set; }
 
-        [JsonProperty("breakfast_nook")]
+        [DataMember(Name = "breakfast_nook")]
         public string BreakfastNook { get; set; }
 
-        [JsonProperty("breezeway")]
+        [DataMember(Name = "breezeway")]
         public string Breezeway { get; set; }
 
-        [JsonProperty("building_definition_code")]
+        [DataMember(Name = "building_definition_code")]
         public string BuildingDefinitionCode { get; set; }
 
-        [JsonProperty("building_sqft")]
+        [DataMember(Name = "building_sqft")]
         public string BuildingSqft { get; set; }
 
-        [JsonProperty("cabin")]
+        [DataMember(Name = "cabin")]
         public string Cabin { get; set; }
 
-        [JsonProperty("cabin_sqft")]
+        [DataMember(Name = "cabin_sqft")]
         public string CabinSqft { get; set; }
 
-        [JsonProperty("canopy")]
+        [DataMember(Name = "canopy")]
         public string Canopy { get; set; }
 
-        [JsonProperty("canopy_sqft")]
+        [DataMember(Name = "canopy_sqft")]
         public string CanopySqft { get; set; }
 
-        [JsonProperty("carport")]
+        [DataMember(Name = "carport")]
         public string Carport { get; set; }
 
-        [JsonProperty("carport_sqft")]
+        [DataMember(Name = "carport_sqft")]
         public string CarportSqft { get; set; }
 
-        [JsonProperty("cbsa_code")]
+        [DataMember(Name = "cbsa_code")]
         public string CbsaCode { get; set; }
 
-        [JsonProperty("cbsa_name")]
+        [DataMember(Name = "cbsa_name")]
         public string CbsaName { get; set; }
 
-        [JsonProperty("cellar")]
+        [DataMember(Name = "cellar")]
         public string Cellar { get; set; }
 
-        [JsonProperty("census_block")]
+        [DataMember(Name = "census_block")]
         public string CensusBlock { get; set; }
 
-        [JsonProperty("census_block_group")]
+        [DataMember(Name = "census_block_group")]
         public string CensusBlockGroup { get; set; }
 
-        [JsonProperty("census_fips_place_code")]
+        [DataMember(Name = "census_fips_place_code")]
         public string CensusFipsPlaceCode { get; set; }
 
-        [JsonProperty("census_tract")]
+        [DataMember(Name = "census_tract")]
         public string CensusTract { get; set; }
 
-        [JsonProperty("central_vacuum")]
+        [DataMember(Name = "central_vacuum")]
         public string CentralVacuum { get; set; }
 
-        [JsonProperty("code_title_company")]
+        [DataMember(Name = "code_title_company")]
         public string CodeTitleCompany { get; set; }
 
-        [JsonProperty("combined_statistical_area")]
+        [DataMember(Name = "combined_statistical_area")]
         public string CombinedStatisticalArea { get; set; }
 
-        [JsonProperty("community_rec")]
+        [DataMember(Name = "community_rec")]
         public string CommunityRec { get; set; }
 
-        [JsonProperty("company_flag")]
+        [DataMember(Name = "company_flag")]
         public string CompanyFlag { get; set; }
 
-        [JsonProperty("congressional_district")]
+        [DataMember(Name = "congressional_district")]
         public string CongressionalDistrict { get; set; }
 
-        [JsonProperty("construction_type")]
+        [DataMember(Name = "construction_type")]
         public string ConstructionType { get; set; }
 
-        [JsonProperty("contact_city")]
+        [DataMember(Name = "contact_city")]
         public string ContactCity { get; set; }
 
-        [JsonProperty("contact_crrt")]
+        [DataMember(Name = "contact_crrt")]
         public string ContactCrrt { get; set; }
 
-        [JsonProperty("contact_full_address")]
+        [DataMember(Name = "contact_full_address")]
         public string ContactFullAddress { get; set; }
 
-        [JsonProperty("contact_house_number")]
+        [DataMember(Name = "contact_house_number")]
         public string ContactHouseNumber { get; set; }
 
-        [JsonProperty("contact_mail_info_format")]
+        [DataMember(Name = "contact_mail_info_format")]
         public string ContactMailInfoFormat { get; set; }
 
-        [JsonProperty("contact_mail_info_privacy")]
+        [DataMember(Name = "contact_mail_info_privacy")]
         public string ContactMailInfoPrivacy { get; set; }
 
-        [JsonProperty("contact_mailing_county")]
+        [DataMember(Name = "contact_mailing_county")]
         public string ContactMailingCounty { get; set; }
 
-        [JsonProperty("contact_mailing_fips")]
+        [DataMember(Name = "contact_mailing_fips")]
         public string ContactMailingFips { get; set; }
 
-        [JsonProperty("contact_post_direction")]
+        [DataMember(Name = "contact_post_direction")]
         public string ContactPostDirection { get; set; }
 
-        [JsonProperty("contact_pre_direction")]
+        [DataMember(Name = "contact_pre_direction")]
         public string ContactPreDirection { get; set; }
 
-        [JsonProperty("contact_state")]
+        [DataMember(Name = "contact_state")]
         public string ContactState { get; set; }
 
-        [JsonProperty("contact_street_name")]
+        [DataMember(Name = "contact_street_name")]
         public string ContactStreetName { get; set; }
 
-        [JsonProperty("contact_suffix")]
+        [DataMember(Name = "contact_suffix")]
         public string ContactSuffix { get; set; }
 
-        [JsonProperty("contact_unit_designator")]
+        [DataMember(Name = "contact_unit_designator")]
         public string ContactUnitDesignator { get; set; }
 
-        [JsonProperty("contact_value")]
+        [DataMember(Name = "contact_value")]
         public string ContactValue { get; set; }
 
-        [JsonProperty("contact_zip")]
+        [DataMember(Name = "contact_zip")]
         public string ContactZip { get; set; }
 
-        [JsonProperty("contact_zip4")]
+        [DataMember(Name = "contact_zip4")]
         public string ContactZip4 { get; set; }
 
-        [JsonProperty("courtyard")]
+        [DataMember(Name = "courtyard")]
         public string Courtyard { get; set; }
 
-        [JsonProperty("courtyard_area")]
+        [DataMember(Name = "courtyard_area")]
         public string CourtyardArea { get; set; }
 
-        [JsonProperty("deck")]
+        [DataMember(Name = "deck")]
         public string Deck { get; set; }
 
-        [JsonProperty("deck_area")]
+        [DataMember(Name = "deck_area")]
         public string DeckArea { get; set; }
 
-        [JsonProperty("deed_document_book")]
+        [DataMember(Name = "deed_document_book")]
         public string DeedDocumentBook { get; set; }
 
-        [JsonProperty("deed_document_number")]
+        [DataMember(Name = "deed_document_number")]
         public string DeedDocumentNumber { get; set; }
 
-        [JsonProperty("deed_document_page")]
+        [DataMember(Name = "deed_document_page")]
         public string DeedDocumentPage { get; set; }
 
-        [JsonProperty("deed_owner_first_name")]
+        [DataMember(Name = "deed_owner_first_name")]
         public string DeedOwnerFirstName { get; set; }
 
-        [JsonProperty("deed_owner_first_name2")]
+        [DataMember(Name = "deed_owner_first_name2")]
         public string DeedOwnerFirstName2 { get; set; }
 
-        [JsonProperty("deed_owner_first_name3")]
+        [DataMember(Name = "deed_owner_first_name3")]
         public string DeedOwnerFirstName3 { get; set; }
 
-        [JsonProperty("deed_owner_first_name4")]
+        [DataMember(Name = "deed_owner_first_name4")]
         public string DeedOwnerFirstName4 { get; set; }
 
-        [JsonProperty("deed_owner_full_name")]
+        [DataMember(Name = "deed_owner_full_name")]
         public string DeedOwnerFullName { get; set; }
 
-        [JsonProperty("deed_owner_full_name2")]
+        [DataMember(Name = "deed_owner_full_name2")]
         public string DeedOwnerFullName2 { get; set; }
 
-        [JsonProperty("deed_owner_full_name3")]
+        [DataMember(Name = "deed_owner_full_name3")]
         public string DeedOwnerFullName3 { get; set; }
 
-        [JsonProperty("deed_owner_full_name4")]
+        [DataMember(Name = "deed_owner_full_name4")]
         public string DeedOwnerFullName4 { get; set; }
 
-        [JsonProperty("deed_owner_last_name")]
+        [DataMember(Name = "deed_owner_last_name")]
         public string DeedOwnerLastName { get; set; }
 
-        [JsonProperty("deed_owner_last_name2")]
+        [DataMember(Name = "deed_owner_last_name2")]
         public string DeedOwnerLastName2 { get; set; }
 
-        [JsonProperty("deed_owner_last_name3")]
+        [DataMember(Name = "deed_owner_last_name3")]
         public string DeedOwnerLastName3 { get; set; }
 
-        [JsonProperty("deed_owner_last_name4")]
+        [DataMember(Name = "deed_owner_last_name4")]
         public string DeedOwnerLastName4 { get; set; }
 
-        [JsonProperty("deed_owner_middle_name")]
+        [DataMember(Name = "deed_owner_middle_name")]
         public string DeedOwnerMiddleName { get; set; }
 
-        [JsonProperty("deed_owner_middle_name2")]
+        [DataMember(Name = "deed_owner_middle_name2")]
         public string DeedOwnerMiddleName2 { get; set; }
 
-        [JsonProperty("deed_owner_middle_name3")]
+        [DataMember(Name = "deed_owner_middle_name3")]
         public string DeedOwnerMiddleName3 { get; set; }
 
-        [JsonProperty("deed_owner_middle_name4")]
+        [DataMember(Name = "deed_owner_middle_name4")]
         public string DeedOwnerMiddleName4 { get; set; }
 
-        [JsonProperty("deed_owner_suffix")]
+        [DataMember(Name = "deed_owner_suffix")]
         public string DeedOwnerSuffix { get; set; }
 
-        [JsonProperty("deed_owner_suffix2")]
+        [DataMember(Name = "deed_owner_suffix2")]
         public string DeedOwnerSuffix2 { get; set; }
 
-        [JsonProperty("deed_owner_suffix3")]
+        [DataMember(Name = "deed_owner_suffix3")]
         public string DeedOwnerSuffix3 { get; set; }
 
-        [JsonProperty("deed_owner_suffix4")]
+        [DataMember(Name = "deed_owner_suffix4")]
         public string DeedOwnerSuffix4 { get; set; }
 
-        [JsonProperty("deed_sale_date")]
+        [DataMember(Name = "deed_sale_date")]
         public string DeedSaleDate { get; set; }
 
-        [JsonProperty("deed_sale_price")]
+        [DataMember(Name = "deed_sale_price")]
         public string DeedSalePrice { get; set; }
 
-        [JsonProperty("deed_transaction_id")]
+        [DataMember(Name = "deed_transaction_id")]
         public string DeedTransactionId { get; set; }
 
-        [JsonProperty("depth_linear_footage")]
+        [DataMember(Name = "depth_linear_footage")]
         public string DepthLinearFootage { get; set; }
 
-        [JsonProperty("disabled_tax_exemption")]
+        [DataMember(Name = "disabled_tax_exemption")]
         public string DisabledTaxExemption { get; set; }
 
-        [JsonProperty("document_type_description")]
+        [DataMember(Name = "document_type_description")]
         public string DocumentTypeDescription { get; set; }
 
-        [JsonProperty("driveway_sqft")]
+        [DataMember(Name = "driveway_sqft")]
         public string DrivewaySqft { get; set; }
 
-        [JsonProperty("driveway_type")]
+        [DataMember(Name = "driveway_type")]
         public string DrivewayType { get; set; }
 
-        [JsonProperty("effective_year_built")]
+        [DataMember(Name = "effective_year_built")]
         public string EffectiveYearBuilt { get; set; }
 
-        [JsonProperty("elevation_feet")]
+        [DataMember(Name = "elevation_feet")]
         public string ElevationFeet { get; set; }
 
-        [JsonProperty("elevator")]
+        [DataMember(Name = "elevator")]
         public string Elevator { get; set; }
 
-        [JsonProperty("equestrian_arena")]
+        [DataMember(Name = "equestrian_arena")]
         public string EquestrianArena { get; set; }
 
-        [JsonProperty("escalator")]
+        [DataMember(Name = "escalator")]
         public string Escalator { get; set; }
 
-        [JsonProperty("exercise_room")]
+        [DataMember(Name = "exercise_room")]
         public string ExerciseRoom { get; set; }
 
-        [JsonProperty("exterior_walls")]
+        [DataMember(Name = "exterior_walls")]
         public string ExteriorWalls { get; set; }
 
-        [JsonProperty("family_room")]
+        [DataMember(Name = "family_room")]
         public string FamilyRoom { get; set; }
 
-        [JsonProperty("fence")]
+        [DataMember(Name = "fence")]
         public string Fence { get; set; }
 
-        [JsonProperty("fence_area")]
+        [DataMember(Name = "fence_area")]
         public string FenceArea { get; set; }
 
-        [JsonProperty("fips_code")]
+        [DataMember(Name = "fips_code")]
         public string FipsCode { get; set; }
 
-        [JsonProperty("fire_resistance_code")]
+        [DataMember(Name = "fire_resistance_code")]
         public string FireResistanceCode { get; set; }
 
-        [JsonProperty("fire_sprinklers_flag")]
+        [DataMember(Name = "fire_sprinklers_flag")]
         public string FireSprinklersFlag { get; set; }
 
-        [JsonProperty("fireplace")]
+        [DataMember(Name = "fireplace")]
         public string Fireplace { get; set; }
 
-        [JsonProperty("fireplace_number")]
+        [DataMember(Name = "fireplace_number")]
         public string FireplaceNumber { get; set; }
 
-        [JsonProperty("first_name")]
+        [DataMember(Name = "first_name")]
         public string FirstName { get; set; }
 
-        [JsonProperty("first_name_2")]
+        [DataMember(Name = "first_name_2")]
         public string FirstName2 { get; set; }
 
-        [JsonProperty("first_name_3")]
+        [DataMember(Name = "first_name_3")]
         public string FirstName3 { get; set; }
 
-        [JsonProperty("first_name_4")]
+        [DataMember(Name = "first_name_4")]
         public string FirstName4 { get; set; }
 
-        [JsonProperty("flooring")]
+        [DataMember(Name = "flooring")]
         public string Flooring { get; set; }
 
-        [JsonProperty("foundation")]
+        [DataMember(Name = "foundation")]
         public string Foundation { get; set; }
 
-        [JsonProperty("game_room")]
+        [DataMember(Name = "game_room")]
         public string GameRoom { get; set; }
 
-        [JsonProperty("garage")]
+        [DataMember(Name = "garage")]
         public string Garage { get; set; }
 
-        [JsonProperty("garage_sqft")]
+        [DataMember(Name = "garage_sqft")]
         public string GarageSqft { get; set; }
 
-        [JsonProperty("gazebo")]
+        [DataMember(Name = "gazebo")]
         public string Gazebo { get; set; }
 
-        [JsonProperty("gazebo_sqft")]
+        [DataMember(Name = "gazebo_sqft")]
         public string GazeboSqft { get; set; }
 
-        [JsonProperty("golf_course")]
+        [DataMember(Name = "golf_course")]
         public string GolfCourse { get; set; }
 
-        [JsonProperty("grainery")]
+        [DataMember(Name = "grainery")]
         public string Grainery { get; set; }
 
-        [JsonProperty("grainery_sqft")]
+        [DataMember(Name = "grainery_sqft")]
         public string GrainerySqft { get; set; }
 
-        [JsonProperty("great_room")]
+        [DataMember(Name = "great_room")]
         public string GreatRoom { get; set; }
 
-        [JsonProperty("greenhouse")]
+        [DataMember(Name = "greenhouse")]
         public string Greenhouse { get; set; }
 
-        [JsonProperty("greenhouse_sqft")]
+        [DataMember(Name = "greenhouse_sqft")]
         public string GreenhouseSqft { get; set; }
 
-        [JsonProperty("gross_sqft")]
+        [DataMember(Name = "gross_sqft")]
         public string GrossSqft { get; set; }
 
-        [JsonProperty("guesthouse")]
+        [DataMember(Name = "guesthouse")]
         public string Guesthouse { get; set; }
 
-        [JsonProperty("guesthouse_sqft")]
+        [DataMember(Name = "guesthouse_sqft")]
         public string GuesthouseSqft { get; set; }
 
-        [JsonProperty("handicap_accessibility")]
+        [DataMember(Name = "handicap_accessibility")]
         public string HandicapAccessibility { get; set; }
 
-        [JsonProperty("heat")]
+        [DataMember(Name = "heat")]
         public string Heat { get; set; }
 
-        [JsonProperty("heat_fuel_type")]
+        [DataMember(Name = "heat_fuel_type")]
         public string HeatFuelType { get; set; }
 
-        [JsonProperty("hobby_room")]
+        [DataMember(Name = "hobby_room")]
         public string HobbyRoom { get; set; }
 
-        [JsonProperty("homeowner_tax_exemption")]
+        [DataMember(Name = "homeowner_tax_exemption")]
         public string HomeownerTaxExemption { get; set; }
 
-        [JsonProperty("instrument_date")]
+        [DataMember(Name = "instrument_date")]
         public string InstrumentDate { get; set; }
 
-        [JsonProperty("intercom_system")]
+        [DataMember(Name = "intercom_system")]
         public string IntercomSystem { get; set; }
 
-        [JsonProperty("interest_rate_type_2")]
+        [DataMember(Name = "interest_rate_type_2")]
         public string InterestRateType2 { get; set; }
 
-        [JsonProperty("interior_structure")]
+        [DataMember(Name = "interior_structure")]
         public string InteriorStructure { get; set; }
 
-        [JsonProperty("kennel")]
+        [DataMember(Name = "kennel")]
         public string Kennel { get; set; }
 
-        [JsonProperty("kennel_sqft")]
+        [DataMember(Name = "kennel_sqft")]
         public string KennelSqft { get; set; }
 
-        [JsonProperty("land_use_code")]
+        [DataMember(Name = "land_use_code")]
         public string LandUseCode { get; set; }
 
-        [JsonProperty("land_use_group")]
+        [DataMember(Name = "land_use_group")]
         public string LandUseGroup { get; set; }
 
-        [JsonProperty("land_use_standard")]
+        [DataMember(Name = "land_use_standard")]
         public string LandUseStandard { get; set; }
 
-        [JsonProperty("last_name")]
+        [DataMember(Name = "last_name")]
         public string LastName { get; set; }
 
-        [JsonProperty("last_name_2")]
+        [DataMember(Name = "last_name_2")]
         public string LastName2 { get; set; }
 
-        [JsonProperty("last_name_3")]
+        [DataMember(Name = "last_name_3")]
         public string LastName3 { get; set; }
 
-        [JsonProperty("last_name_4")]
+        [DataMember(Name = "last_name_4")]
         public string LastName4 { get; set; }
 
-        [JsonProperty("latitude")]
+        [DataMember(Name = "latitude")]
         public string Latitude { get; set; }
 
-        [JsonProperty("laundry")]
+        [DataMember(Name = "laundry")]
         public string Laundry { get; set; }
 
-        [JsonProperty("lean_to")]
+        [DataMember(Name = "lean_to")]
         public string LeanTo { get; set; }
 
-        [JsonProperty("lean_to_sqft")]
+        [DataMember(Name = "lean_to_sqft")]
         public string LeanToSqft { get; set; }
 
-        [JsonProperty("legal_description")]
+        [DataMember(Name = "legal_description")]
         public string LegalDescription { get; set; }
 
-        [JsonProperty("legal_unit")]
+        [DataMember(Name = "legal_unit")]
         public string LegalUnit { get; set; }
 
-        [JsonProperty("lender_address")]
+        [DataMember(Name = "lender_address")]
         public string LenderAddress { get; set; }
 
-        [JsonProperty("lender_address_2")]
+        [DataMember(Name = "lender_address_2")]
         public string LenderAddress2 { get; set; }
 
-        [JsonProperty("lender_city")]
+        [DataMember(Name = "lender_city")]
         public string LenderCity { get; set; }
 
-        [JsonProperty("lender_city_2")]
+        [DataMember(Name = "lender_city_2")]
         public string LenderCity2 { get; set; }
 
-        [JsonProperty("lender_code_2")]
+        [DataMember(Name = "lender_code_2")]
         public string LenderCode2 { get; set; }
 
-        [JsonProperty("lender_first_name")]
+        [DataMember(Name = "lender_first_name")]
         public string LenderFirstName { get; set; }
 
-        [JsonProperty("lender_first_name_2")]
+        [DataMember(Name = "lender_first_name_2")]
         public string LenderFirstName2 { get; set; }
 
-        [JsonProperty("lender_last_name")]
+        [DataMember(Name = "lender_last_name")]
         public string LenderLastName { get; set; }
 
-        [JsonProperty("lender_last_name_2")]
+        [DataMember(Name = "lender_last_name_2")]
         public string LenderLastName2 { get; set; }
 
-        [JsonProperty("lender_name")]
+        [DataMember(Name = "lender_name")]
         public string LenderName { get; set; }
 
-        [JsonProperty("lender_name_2")]
+        [DataMember(Name = "lender_name_2")]
         public string LenderName2 { get; set; }
 
-        [JsonProperty("lender_seller_carry_back")]
+        [DataMember(Name = "lender_seller_carry_back")]
         public string LenderSellerCarryBack { get; set; }
 
-        [JsonProperty("lender_seller_carry_back_2")]
+        [DataMember(Name = "lender_seller_carry_back_2")]
         public string LenderSellerCarryBack2 { get; set; }
 
-        [JsonProperty("lender_state")]
+        [DataMember(Name = "lender_state")]
         public string LenderState { get; set; }
 
-        [JsonProperty("lender_state_2")]
+        [DataMember(Name = "lender_state_2")]
         public string LenderState2 { get; set; }
 
-        [JsonProperty("lender_zip")]
+        [DataMember(Name = "lender_zip")]
         public string LenderZip { get; set; }
 
-        [JsonProperty("lender_zip_2")]
+        [DataMember(Name = "lender_zip_2")]
         public string LenderZip2 { get; set; }
 
-        [JsonProperty("lender_zip_extended")]
+        [DataMember(Name = "lender_zip_extended")]
         public string LenderZipExtended { get; set; }
 
-        [JsonProperty("lender_zip_extended_2")]
+        [DataMember(Name = "lender_zip_extended_2")]
         public string LenderZipExtended2 { get; set; }
 
-        [JsonProperty("loading_platform")]
+        [DataMember(Name = "loading_platform")]
         public string LoadingPlatform { get; set; }
 
-        [JsonProperty("loading_platform_sqft")]
+        [DataMember(Name = "loading_platform_sqft")]
         public string LoadingPlatformSqft { get; set; }
 
-        [JsonProperty("longitude")]
+        [DataMember(Name = "longitude")]
         public string Longitude { get; set; }
 
-        [JsonProperty("lot_1")]
+        [DataMember(Name = "lot_1")]
         public string Lot1 { get; set; }
 
-        [JsonProperty("lot_2")]
+        [DataMember(Name = "lot_2")]
         public string Lot2 { get; set; }
 
-        [JsonProperty("lot_3")]
+        [DataMember(Name = "lot_3")]
         public string Lot3 { get; set; }
 
-        [JsonProperty("lot_sqft")]
+        [DataMember(Name = "lot_sqft")]
         public string LotSqft { get; set; }
 
-        [JsonProperty("market_improvement_percent")]
+        [DataMember(Name = "market_improvement_percent")]
         public string MarketImprovementPercent { get; set; }
 
-        [JsonProperty("market_improvement_value")]
+        [DataMember(Name = "market_improvement_value")]
         public string MarketImprovementValue { get; set; }
 
-        [JsonProperty("market_land_value")]
+        [DataMember(Name = "market_land_value")]
         public string MarketLandValue { get; set; }
 
-        [JsonProperty("market_value_year")]
+        [DataMember(Name = "market_value_year")]
         public string MarketValueYear { get; set; }
 
-        [JsonProperty("match_type")]
+        [DataMember(Name = "match_type")]
         public string MatchType { get; set; }
 
-        [JsonProperty("media_room")]
+        [DataMember(Name = "media_room")]
         public string MediaRoom { get; set; }
 
-        [JsonProperty("metro_division")]
+        [DataMember(Name = "metro_division")]
         public string MetroDivision { get; set; }
 
-        [JsonProperty("middle_name")]
+        [DataMember(Name = "middle_name")]
         public string MiddleName { get; set; }
 
-        [JsonProperty("middle_name_2")]
+        [DataMember(Name = "middle_name_2")]
         public string MiddleName2 { get; set; }
 
-        [JsonProperty("middle_name_3")]
+        [DataMember(Name = "middle_name_3")]
         public string MiddleName3 { get; set; }
 
-        [JsonProperty("middle_name_4")]
+        [DataMember(Name = "middle_name_4")]
         public string MiddleName4 { get; set; }
 
-        [JsonProperty("milkhouse")]
+        [DataMember(Name = "milkhouse")]
         public string Milkhouse { get; set; }
 
-        [JsonProperty("milkhouse_sqft")]
+        [DataMember(Name = "milkhouse_sqft")]
         public string MilkhouseSqft { get; set; }
 
-        [JsonProperty("minor_civil_division_code")]
+        [DataMember(Name = "minor_civil_division_code")]
         public string MinorCivilDivisionCode { get; set; }
 
-        [JsonProperty("minor_civil_division_name")]
+        [DataMember(Name = "minor_civil_division_name")]
         public string MinorCivilDivisionName { get; set; }
 
-        [JsonProperty("mobile_home_hookup")]
+        [DataMember(Name = "mobile_home_hookup")]
         public string MobileHomeHookup { get; set; }
 
-        [JsonProperty("mortgage_amount")]
+        [DataMember(Name = "mortgage_amount")]
         public string MortgageAmount { get; set; }
 
-        [JsonProperty("mortgage_amount_2")]
+        [DataMember(Name = "mortgage_amount_2")]
         public string MortgageAmount2 { get; set; }
 
-        [JsonProperty("mortgage_due_date")]
+        [DataMember(Name = "mortgage_due_date")]
         public string MortgageDueDate { get; set; }
 
-        [JsonProperty("mortgage_due_date_2")]
+        [DataMember(Name = "mortgage_due_date_2")]
         public string MortgageDueDate2 { get; set; }
 
-        [JsonProperty("mortgage_interest_rate")]
+        [DataMember(Name = "mortgage_interest_rate")]
         public string MortgageInterestRate { get; set; }
 
-        [JsonProperty("mortgage_interest_rate_type")]
+        [DataMember(Name = "mortgage_interest_rate_type")]
         public string MortgageInterestRateType { get; set; }
 
-        [JsonProperty("mortgage_lender_code")]
+        [DataMember(Name = "mortgage_lender_code")]
         public string MortgageLenderCode { get; set; }
 
-        [JsonProperty("mortgage_rate_2")]
+        [DataMember(Name = "mortgage_rate_2")]
         public string MortgageRate2 { get; set; }
 
-        [JsonProperty("mortgage_recording_date")]
+        [DataMember(Name = "mortgage_recording_date")]
         public string MortgageRecordingDate { get; set; }
 
-        [JsonProperty("mortgage_recording_date_2")]
+        [DataMember(Name = "mortgage_recording_date_2")]
         public string MortgageRecordingDate2 { get; set; }
 
-        [JsonProperty("mortgage_term")]
+        [DataMember(Name = "mortgage_term")]
         public string MortgageTerm { get; set; }
 
-        [JsonProperty("mortgage_term_2")]
+        [DataMember(Name = "mortgage_term_2")]
         public string MortgageTerm2 { get; set; }
 
-        [JsonProperty("mortgage_term_type")]
+        [DataMember(Name = "mortgage_term_type")]
         public string MortgageTermType { get; set; }
 
-        [JsonProperty("mortgage_term_type_2")]
+        [DataMember(Name = "mortgage_term_type_2")]
         public string MortgageTermType2 { get; set; }
 
-        [JsonProperty("mortgage_type")]
+        [DataMember(Name = "mortgage_type")]
         public string MortgageType { get; set; }
 
-        [JsonProperty("mortgage_type_2")]
+        [DataMember(Name = "mortgage_type_2")]
         public string MortgageType2 { get; set; }
 
-        [JsonProperty("msa_code")]
+        [DataMember(Name = "msa_code")]
         public string MsaCode { get; set; }
 
-        [JsonProperty("msa_name")]
+        [DataMember(Name = "msa_name")]
         public string MsaName { get; set; }
 
-        [JsonProperty("mud_room")]
+        [DataMember(Name = "mud_room")]
         public string MudRoom { get; set; }
 
-        [JsonProperty("multi_parcel_flag")]
+        [DataMember(Name = "multi_parcel_flag")]
         public string MultiParcelFlag { get; set; }
 
-        [JsonProperty("name_title_company")]
+        [DataMember(Name = "name_title_company")]
         public string NameTitleCompany { get; set; }
 
-        [JsonProperty("neighborhood_code")]
+        [DataMember(Name = "neighborhood_code")]
         public string NeighborhoodCode { get; set; }
 
-        [JsonProperty("number_of_buildings")]
+        [DataMember(Name = "number_of_buildings")]
         public string NumberOfBuildings { get; set; }
 
-        [JsonProperty("office")]
+        [DataMember(Name = "office")]
         public string Office { get; set; }
 
-        [JsonProperty("office_sqft")]
+        [DataMember(Name = "office_sqft")]
         public string OfficeSqft { get; set; }
 
-        [JsonProperty("other_tax_exemption")]
+        [DataMember(Name = "other_tax_exemption")]
         public string OtherTaxExemption { get; set; }
 
-        [JsonProperty("outdoor_kitchen_fireplace")]
+        [DataMember(Name = "outdoor_kitchen_fireplace")]
         public string OutdoorKitchenFireplace { get; set; }
 
-        [JsonProperty("overhead_door")]
+        [DataMember(Name = "overhead_door")]
         public string OverheadDoor { get; set; }
 
-        [JsonProperty("owner_full_name")]
+        [DataMember(Name = "owner_full_name")]
         public string OwnerFullName { get; set; }
 
-        [JsonProperty("owner_full_name_2")]
+        [DataMember(Name = "owner_full_name_2")]
         public string OwnerFullName2 { get; set; }
 
-        [JsonProperty("owner_full_name_3")]
+        [DataMember(Name = "owner_full_name_3")]
         public string OwnerFullName3 { get; set; }
 
-        [JsonProperty("owner_full_name_4")]
+        [DataMember(Name = "owner_full_name_4")]
         public string OwnerFullName4 { get; set; }
 
-        [JsonProperty("owner_occupancy_status")]
+        [DataMember(Name = "owner_occupancy_status")]
         public string OwnerOccupancyStatus { get; set; }
 
-        [JsonProperty("ownership_transfer_date")]
+        [DataMember(Name = "ownership_transfer_date")]
         public string OwnershipTransferDate { get; set; }
 
-        [JsonProperty("ownership_transfer_doc_number")]
+        [DataMember(Name = "ownership_transfer_doc_number")]
         public string OwnershipTransferDocNumber { get; set; }
 
-        [JsonProperty("ownership_transfer_transaction_id")]
+        [DataMember(Name = "ownership_transfer_transaction_id")]
         public string OwnershipTransferTransactionId { get; set; }
 
-        [JsonProperty("ownership_type")]
+        [DataMember(Name = "ownership_type")]
         public string OwnershipType { get; set; }
 
-        [JsonProperty("ownership_type_2")]
+        [DataMember(Name = "ownership_type_2")]
         public string OwnershipType2 { get; set; }
 
-        [JsonProperty("ownership_vesting_relation_code")]
+        [DataMember(Name = "ownership_vesting_relation_code")]
         public string OwnershipVestingRelationCode { get; set; }
 
-        [JsonProperty("parcel_account_number")]
+        [DataMember(Name = "parcel_account_number")]
         public string ParcelAccountNumber { get; set; }
 
-        [JsonProperty("parcel_map_book")]
+        [DataMember(Name = "parcel_map_book")]
         public string ParcelMapBook { get; set; }
 
-        [JsonProperty("parcel_map_page")]
+        [DataMember(Name = "parcel_map_page")]
         public string ParcelMapPage { get; set; }
 
-        [JsonProperty("parcel_number_alternate")]
+        [DataMember(Name = "parcel_number_alternate")]
         public string ParcelNumberAlternate { get; set; }
 
-        [JsonProperty("parcel_number_formatted")]
+        [DataMember(Name = "parcel_number_formatted")]
         public string ParcelNumberFormatted { get; set; }
 
-        [JsonProperty("parcel_number_previous")]
+        [DataMember(Name = "parcel_number_previous")]
         public string ParcelNumberPrevious { get; set; }
 
-        [JsonProperty("parcel_number_year_added")]
+        [DataMember(Name = "parcel_number_year_added")]
         public string ParcelNumberYearAdded { get; set; }
 
-        [JsonProperty("parcel_number_year_change")]
+        [DataMember(Name = "parcel_number_year_change")]
         public string ParcelNumberYearChange { get; set; }
 
-        [JsonProperty("parcel_raw_number")]
+        [DataMember(Name = "parcel_raw_number")]
         public string ParcelRawNumber { get; set; }
 
-        [JsonProperty("parcel_shell_record")]
+        [DataMember(Name = "parcel_shell_record")]
         public string ParcelShellRecord { get; set; }
 
-        [JsonProperty("parking_spaces")]
+        [DataMember(Name = "parking_spaces")]
         public string ParkingSpaces { get; set; }
 
-        [JsonProperty("patio_area")]
+        [DataMember(Name = "patio_area")]
         public string PatioArea { get; set; }
 
-        [JsonProperty("phase_name")]
+        [DataMember(Name = "phase_name")]
         public string PhaseName { get; set; }
 
-        [JsonProperty("plumbing_fixtures_count")]
+        [DataMember(Name = "plumbing_fixtures_count")]
         public string PlumbingFixturesCount { get; set; }
 
-        [JsonProperty("pole_struct")]
+        [DataMember(Name = "pole_struct")]
         public string PoleStruct { get; set; }
 
-        [JsonProperty("pole_struct_sqft")]
+        [DataMember(Name = "pole_struct_sqft")]
         public string PoleStructSqft { get; set; }
 
-        [JsonProperty("pond")]
+        [DataMember(Name = "pond")]
         public string Pond { get; set; }
 
-        [JsonProperty("pool")]
+        [DataMember(Name = "pool")]
         public string Pool { get; set; }
 
-        [JsonProperty("pool_area")]
+        [DataMember(Name = "pool_area")]
         public string PoolArea { get; set; }
 
-        [JsonProperty("poolhouse")]
+        [DataMember(Name = "poolhouse")]
         public string Poolhouse { get; set; }
 
-        [JsonProperty("poolhouse_sqft")]
+        [DataMember(Name = "poolhouse_sqft")]
         public string PoolhouseSqft { get; set; }
 
-        [JsonProperty("porch")]
+        [DataMember(Name = "porch")]
         public string Porch { get; set; }
 
-        [JsonProperty("porch_area")]
+        [DataMember(Name = "porch_area")]
         public string PorchArea { get; set; }
 
-        [JsonProperty("poultry_house")]
+        [DataMember(Name = "poultry_house")]
         public string PoultryHouse { get; set; }
 
-        [JsonProperty("poultry_house_sqft")]
+        [DataMember(Name = "poultry_house_sqft")]
         public string PoultryHouseSqft { get; set; }
 
-        [JsonProperty("previous_assessed_value")]
+        [DataMember(Name = "previous_assessed_value")]
         public string PreviousAssessedValue { get; set; }
 
-        [JsonProperty("prior_sale_amount")]
+        [DataMember(Name = "prior_sale_amount")]
         public string PriorSaleAmount { get; set; }
 
-        [JsonProperty("prior_sale_date")]
+        [DataMember(Name = "prior_sale_date")]
         public string PriorSaleDate { get; set; }
 
-        [JsonProperty("property_address_carrier_route_code")]
+        [DataMember(Name = "property_address_carrier_route_code")]
         public string PropertyAddressCarrierRouteCode { get; set; }
 
-        [JsonProperty("property_address_city")]
+        [DataMember(Name = "property_address_city")]
         public string PropertyAddressCity { get; set; }
 
-        [JsonProperty("property_address_full")]
+        [DataMember(Name = "property_address_full")]
         public string PropertyAddressFull { get; set; }
 
-        [JsonProperty("property_address_house_number")]
+        [DataMember(Name = "property_address_house_number")]
         public string PropertyAddressHouseNumber { get; set; }
 
-        [JsonProperty("property_address_post_direction")]
+        [DataMember(Name = "property_address_post_direction")]
         public string PropertyAddressPostDirection { get; set; }
 
-        [JsonProperty("property_address_pre_direction")]
+        [DataMember(Name = "property_address_pre_direction")]
         public string PropertyAddressPreDirection { get; set; }
 
-        [JsonProperty("property_address_state")]
+        [DataMember(Name = "property_address_state")]
         public string PropertyAddressState { get; set; }
 
-        [JsonProperty("property_address_street_name")]
+        [DataMember(Name = "property_address_street_name")]
         public string PropertyAddressStreetName { get; set; }
 
-        [JsonProperty("property_address_street_suffix")]
+        [DataMember(Name = "property_address_street_suffix")]
         public string PropertyAddressStreetSuffix { get; set; }
 
-        [JsonProperty("property_address_unit_designator")]
+        [DataMember(Name = "property_address_unit_designator")]
         public string PropertyAddressUnitDesignator { get; set; }
 
-        [JsonProperty("property_address_unit_value")]
+        [DataMember(Name = "property_address_unit_value")]
         public string PropertyAddressUnitValue { get; set; }
 
-        [JsonProperty("property_address_zip_4")]
+        [DataMember(Name = "property_address_zip_4")]
         public string PropertyAddressZip4 { get; set; }
 
-        [JsonProperty("property_address_zipcode")]
+        [DataMember(Name = "property_address_zipcode")]
         public string PropertyAddressZipcode { get; set; }
 
-        [JsonProperty("publication_date")]
+        [DataMember(Name = "publication_date")]
         public string PublicationDate { get; set; }
 
-        [JsonProperty("quarter")]
+        [DataMember(Name = "quarter")]
         public string Quarter { get; set; }
 
-        [JsonProperty("quarter_quarter")]
+        [DataMember(Name = "quarter_quarter")]
         public string QuarterQuarter { get; set; }
 
-        [JsonProperty("quonset")]
+        [DataMember(Name = "quonset")]
         public string Quonset { get; set; }
 
-        [JsonProperty("quonset_sqft")]
+        [DataMember(Name = "quonset_sqft")]
         public string QuonsetSqft { get; set; }
 
-        [JsonProperty("range")]
+        [DataMember(Name = "range")]
         public string Range { get; set; }
 
-        [JsonProperty("recording_date")]
+        [DataMember(Name = "recording_date")]
         public string RecordingDate { get; set; }
 
-        [JsonProperty("roof_cover")]
+        [DataMember(Name = "roof_cover")]
         public string RoofCover { get; set; }
 
-        [JsonProperty("roof_frame")]
+        [DataMember(Name = "roof_frame")]
         public string RoofFrame { get; set; }
 
-        [JsonProperty("rooms")]
+        [DataMember(Name = "rooms")]
         public string Rooms { get; set; }
 
-        [JsonProperty("rv_parking")]
+        [DataMember(Name = "rv_parking")]
         public string RvParking { get; set; }
 
-        [JsonProperty("safe_room")]
+        [DataMember(Name = "safe_room")]
         public string SafeRoom { get; set; }
 
-        [JsonProperty("sale_amount")]
+        [DataMember(Name = "sale_amount")]
         public string SaleAmount { get; set; }
 
-        [JsonProperty("sale_date")]
+        [DataMember(Name = "sale_date")]
         public string SaleDate { get; set; }
 
-        [JsonProperty("sauna")]
+        [DataMember(Name = "sauna")]
         public string Sauna { get; set; }
 
-        [JsonProperty("section")]
+        [DataMember(Name = "section")]
         public string Section { get; set; }
 
-        [JsonProperty("security_alarm")]
+        [DataMember(Name = "security_alarm")]
         public string SecurityAlarm { get; set; }
 
-        [JsonProperty("senior_tax_exemption")]
+        [DataMember(Name = "senior_tax_exemption")]
         public string SeniorTaxExemption { get; set; }
 
-        [JsonProperty("sewer_type")]
+        [DataMember(Name = "sewer_type")]
         public string SewerType { get; set; }
 
-        [JsonProperty("shed")]
+        [DataMember(Name = "shed")]
         public string Shed { get; set; }
 
-        [JsonProperty("shed_sqft")]
+        [DataMember(Name = "shed_sqft")]
         public string ShedSqft { get; set; }
 
-        [JsonProperty("silo")]
+        [DataMember(Name = "silo")]
         public string Silo { get; set; }
 
-        [JsonProperty("silo_sqft")]
+        [DataMember(Name = "silo_sqft")]
         public string SiloSqft { get; set; }
 
-        [JsonProperty("sitting_room")]
+        [DataMember(Name = "sitting_room")]
         public string SittingRoom { get; set; }
 
-        [JsonProperty("situs_county")]
+        [DataMember(Name = "situs_county")]
         public string SitusCounty { get; set; }
 
-        [JsonProperty("situs_state")]
+        [DataMember(Name = "situs_state")]
         public string SitusState { get; set; }
 
-        [JsonProperty("sound_system")]
+        [DataMember(Name = "sound_system")]
         public string SoundSystem { get; set; }
 
-        [JsonProperty("sports_court")]
+        [DataMember(Name = "sports_court")]
         public string SportsCourt { get; set; }
 
-        [JsonProperty("sprinklers")]
+        [DataMember(Name = "sprinklers")]
         public string Sprinklers { get; set; }
 
-        [JsonProperty("stable")]
+        [DataMember(Name = "stable")]
         public string Stable { get; set; }
 
-        [JsonProperty("stable_sqft")]
+        [DataMember(Name = "stable_sqft")]
         public string StableSqft { get; set; }
 
-        [JsonProperty("storage_building")]
+        [DataMember(Name = "storage_building")]
         public string StorageBuilding { get; set; }
 
-        [JsonProperty("storage_building_sqft")]
+        [DataMember(Name = "storage_building_sqft")]
         public string StorageBuildingSqft { get; set; }
 
-        [JsonProperty("stories_number")]
+        [DataMember(Name = "stories_number")]
         public string StoriesNumber { get; set; }
 
-        [JsonProperty("storm_shelter")]
+        [DataMember(Name = "storm_shelter")]
         public string StormShelter { get; set; }
 
-        [JsonProperty("storm_shutter")]
+        [DataMember(Name = "storm_shutter")]
         public string StormShutter { get; set; }
 
-        [JsonProperty("structure_style")]
+        [DataMember(Name = "structure_style")]
         public string StructureStyle { get; set; }
 
-        [JsonProperty("study")]
+        [DataMember(Name = "study")]
         public string Study { get; set; }
 
-        [JsonProperty("subdivision")]
+        [DataMember(Name = "subdivision")]
         public string Subdivision { get; set; }
 
-        [JsonProperty("suffix")]
+        [DataMember(Name = "suffix")]
         public string Suffix { get; set; }
 
-        [JsonProperty("suffix_2")]
+        [DataMember(Name = "suffix_2")]
         public string Suffix2 { get; set; }
 
-        [JsonProperty("suffix_3")]
+        [DataMember(Name = "suffix_3")]
         public string Suffix3 { get; set; }
 
-        [JsonProperty("suffix_4")]
+        [DataMember(Name = "suffix_4")]
         public string Suffix4 { get; set; }
 
-        [JsonProperty("sunroom")]
+        [DataMember(Name = "sunroom")]
         public string Sunroom { get; set; }
 
-        [JsonProperty("tax_assess_year")]
+        [DataMember(Name = "tax_assess_year")]
         public string TaxAssessYear { get; set; }
 
-        [JsonProperty("tax_billed_amount")]
+        [DataMember(Name = "tax_billed_amount")]
         public string TaxBilledAmount { get; set; }
 
-        [JsonProperty("tax_delinquent_year")]
+        [DataMember(Name = "tax_delinquent_year")]
         public string TaxDelinquentYear { get; set; }
 
-        [JsonProperty("tax_fiscal_year")]
+        [DataMember(Name = "tax_fiscal_year")]
         public string TaxFiscalYear { get; set; }
 
-        [JsonProperty("tax_jurisdiction")]
+        [DataMember(Name = "tax_jurisdiction")]
         public string TaxJurisdiction { get; set; }
 
-        [JsonProperty("tax_rate_area")]
+        [DataMember(Name = "tax_rate_area")]
         public string TaxRateArea { get; set; }
 
-        [JsonProperty("tennis_court")]
+        [DataMember(Name = "tennis_court")]
         public string TennisCourt { get; set; }
 
-        [JsonProperty("topography_code")]
+        [DataMember(Name = "topography_code")]
         public string TopographyCode { get; set; }
 
-        [JsonProperty("total_market_value")]
+        [DataMember(Name = "total_market_value")]
         public string TotalMarketValue { get; set; }
 
-        [JsonProperty("township")]
+        [DataMember(Name = "township")]
         public string Township { get; set; }
 
-        [JsonProperty("tract_number")]
+        [DataMember(Name = "tract_number")]
         public string TractNumber { get; set; }
 
-        [JsonProperty("transfer_amount")]
+        [DataMember(Name = "transfer_amount")]
         public string TransferAmount { get; set; }
 
-        [JsonProperty("trust_description")]
+        [DataMember(Name = "trust_description")]
         public string TrustDescription { get; set; }
 
-        [JsonProperty("unit_count")]
+        [DataMember(Name = "unit_count")]
         public string UnitCount { get; set; }
 
-        [JsonProperty("upper_floors_sqft")]
+        [DataMember(Name = "upper_floors_sqft")]
         public string UpperFloorsSqft { get; set; }
 
-        [JsonProperty("utility")]
+        [DataMember(Name = "utility")]
         public string Utility { get; set; }
 
-        [JsonProperty("utility_building")]
+        [DataMember(Name = "utility_building")]
         public string UtilityBuilding { get; set; }
 
-        [JsonProperty("utility_building_sqft")]
+        [DataMember(Name = "utility_building_sqft")]
         public string UtilityBuildingSqft { get; set; }
 
-        [JsonProperty("utility_sqft")]
+        [DataMember(Name = "utility_sqft")]
         public string UtilitySqft { get; set; }
 
-        [JsonProperty("veteran_tax_exemption")]
+        [DataMember(Name = "veteran_tax_exemption")]
         public string VeteranTaxExemption { get; set; }
 
-        [JsonProperty("view_description")]
+        [DataMember(Name = "view_description")]
         public string ViewDescription { get; set; }
 
-        [JsonProperty("water_feature")]
+        [DataMember(Name = "water_feature")]
         public string WaterFeature { get; set; }
 
-        [JsonProperty("water_service_type")]
+        [DataMember(Name = "water_service_type")]
         public string WaterServiceType { get; set; }
 
-        [JsonProperty("wet_bar")]
+        [DataMember(Name = "wet_bar")]
         public string WetBar { get; set; }
 
-        [JsonProperty("widow_tax_exemption")]
+        [DataMember(Name = "widow_tax_exemption")]
         public string WidowTaxExemption { get; set; }
 
-        [JsonProperty("width_linear_footage")]
+        [DataMember(Name = "width_linear_footage")]
         public string WidthLinearFootage { get; set; }
 
-        [JsonProperty("wine_cellar")]
+        [DataMember(Name = "wine_cellar")]
         public string WineCellar { get; set; }
 
-        [JsonProperty("year_built")]
+        [DataMember(Name = "year_built")]
         public string YearBuilt { get; set; }
 
-        [JsonProperty("zoning")]
+        [DataMember(Name = "zoning")]
         public string Zoning { get; set; }
     }
 }
