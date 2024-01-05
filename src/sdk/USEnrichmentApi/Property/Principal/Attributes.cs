@@ -1,4 +1,4 @@
-namespace SmartyStreets.USEnrichmentApi.ResultTypes.Property.Principal
+namespace SmartyStreets.USEnrichmentApi.Property.Principal
 {
     using System.Runtime.Serialization;
 

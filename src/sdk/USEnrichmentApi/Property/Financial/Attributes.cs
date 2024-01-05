@@ -1,6 +1,7 @@
 namespace SmartyStreets.USEnrichmentApi.ResultTypes.Property.Financial
 {
     using System.Runtime.Serialization;
+    using System.Collections.Generic;
 
 	[DataContract]
 

@@ -1,4 +1,4 @@
-namespace SmartyStreets.USEnrichmentApi.LookupTypes
+namespace SmartyStreets.USEnrichmentApi
 {
     using System;
     using System.IO;
@@ -31,6 +31,6 @@ namespace SmartyStreets.USEnrichmentApi.LookupTypes
             return dataSubsetName;
         }
 
-        public abstract void DeserializeAndSetResults(Serializer serializer, byte[] payload);
+        public abstract void DeserializeAndSetResults(SmartyStreets.ISerializer serializer, Stream payload);
     }
 }

@@ -28,27 +28,16 @@ namespace Examples
 			var client = new ClientBuilder(authId, authToken).WithLicense(new List<string>{"us-geocoding-cloud"})
 				.BuildUsEnrichmentApiClient();
 			
-			PrincipalResponse[] results = null;
+			ResultTypes.Property.Principal.Result[] results = null;
             try
             {
-                results = client.sendPropertyPrincipalLookup("1682393594");
+                results = client.SendPropertyPrincipalLookup("1682393594");
             }
-            catch (SmartyException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                ex.StackTrace();
+                Console.WriteLine(ex.Message + ex.StackTrace);
             }
-            catch (IOException ex)
-            {
-                Console.WriteLine(ex.Message);
-                ex.StackTrace();
-            }
-            catch (InterruptedException ex)
-            {
-                Console.WriteLine(ex.Message);
-                ex.StackTrace();
-            }
-
+            
             if (results != null)
             {
                 Console.WriteLine(string.Join(", ", results));
@@ -58,25 +47,15 @@ namespace Examples
                 Console.WriteLine("Result was null");
             }
 
-            FinancialResponse[] financialResults = null;
+
+            ResultTypes.Property.Financial.Result[] financialResults = null;
             try
             {
-                financialResults = client.sendPropertyFinancialLookup("1682393594");
+                financialResults = client.SendPropertyFinancialLookup("1682393594");
             }
-            catch (SmartyException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                ex.StackTrace();
-            }
-            catch (IOException ex)
-            {
-                Console.WriteLine(ex.Message);
-                ex.StackTrace();
-            }
-            catch (InterruptedException ex)
-            {
-                Console.WriteLine(ex.Message);
-                ex.StackTrace();
+                Console.WriteLine(ex.Message + ex.StackTrace);
             }
 
             if (financialResults != null)
@@ -87,8 +66,6 @@ namespace Examples
             {
                 Console.WriteLine("Result was null");
             }
-
-
 		}
 	}
 }

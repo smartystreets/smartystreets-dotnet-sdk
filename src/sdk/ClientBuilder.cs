@@ -182,7 +182,7 @@ namespace SmartyStreets
         public USEnrichmentApi.Client BuildUsEnrichmentApiClient()
         {
             this.EnsureURLPrefixNotNull(USEnrichmentApiUrl);
-            return new USReverseGeoApi.Client(this.BuildSender(), this.serializer);
+            return new USEnrichmentApi.Client(this.BuildSender(), this.serializer);
         }
 
         private ISender BuildSender()
