@@ -4,8 +4,10 @@ namespace Examples
 	using System.Net;
 	using System.Collections.Generic;
 	using System.IO;
+    using System.Linq;
     using SmartyStreets;
 	using SmartyStreets.USEnrichmentApi;
+    using System.Reflection;
 
 	internal static class USEnrichmentExample
 	{
@@ -22,13 +24,9 @@ namespace Examples
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			// The appropriate license values to be used for your subscriptions
-			// can be found on the Subscriptions page the account dashboard.
-			// https://www.smartystreets.com/docs/cloud/licensing
-			var client = new ClientBuilder(authId, authToken).WithLicense(new List<string>{"us-geocoding-cloud"})
-				.BuildUsEnrichmentApiClient();
+			var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
 			
-			ResultTypes.Property.Principal.Result[] results = null;
+			SmartyStreets.USEnrichmentApi.Property.Principal.Result[] results = null;
             try
             {
                 results = client.SendPropertyPrincipalLookup("1682393594");
@@ -40,7 +38,9 @@ namespace Examples
             
             if (results != null)
             {
-                Console.WriteLine(string.Join(", ", results));
+                foreach (SmartyStreets.USEnrichmentApi.Property.Principal.Result result in results) {
+                    printResult(result);
+                }
             }
             else
             {
@@ -48,7 +48,7 @@ namespace Examples
             }
 
 
-            ResultTypes.Property.Financial.Result[] financialResults = null;
+            SmartyStreets.USEnrichmentApi.Property.Financial.Result[] financialResults = null;
             try
             {
                 financialResults = client.SendPropertyFinancialLookup("1682393594");
@@ -60,12 +60,28 @@ namespace Examples
 
             if (financialResults != null)
             {
-                Console.WriteLine(string.Join(", ", financialResults));
+                foreach (SmartyStreets.USEnrichmentApi.Property.Financial.Result result in financialResults) {
+                    printResult(result);
+                }
             }
             else
             {
                 Console.WriteLine("Result was null");
             }
 		}
+
+        private static void printResult(object obj){
+            Type type = obj.GetType();
+
+            foreach (PropertyInfo property in type.GetProperties())
+            {
+                if (property.Name == "Attributes" ){
+                    printResult(property.GetValue(obj, null));
+                }
+                if (property.GetValue(obj, null) != null) {
+                    Console.WriteLine($"{property.Name}: {property.GetValue(obj, null)}");
+                }
+            }
+        }
 	}
 }

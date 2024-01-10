@@ -1,4 +1,4 @@
-namespace SmartyStreets.USEnrichmentApi.ResultTypes.Property.Financial
+namespace SmartyStreets.USEnrichmentApi.Property.Financial
 {
     using System.Runtime.Serialization;
     using System.Collections.Generic;

@@ -34,15 +34,17 @@ namespace SmartyStreets.USEnrichmentApi
 				throw new SmartyStreets.SmartyException("Client.Send() requires a Lookup with the 'smartyKey' field set");
 			Request request = BuildRequest(lookup);
 			Response response = this.sender.Send(request);
-			using (var payloadStream = new MemoryStream(response.Payload)){
-				lookup.DeserializeAndSetResults(serializer, payloadStream);
+			if (response.Payload != null){
+				using (var payloadStream = new MemoryStream(response.Payload)){
+					lookup.DeserializeAndSetResults(serializer, payloadStream);
+				}
 			}
 		}
 
 		private SmartyStreets.Request BuildRequest(Lookup lookup)
 		{
 			SmartyStreets.Request request = new SmartyStreets.Request();
-			request.SetUrlPrefix("/" + lookup.GetSmartyKey() + "/" + lookup.GetDatasetName() + "/" + lookup.GetDatasetName());
+			request.SetUrlPrefix("/" + lookup.GetSmartyKey() + "/" + lookup.GetDatasetName() + "/" + lookup.GetDataSubsetName());
 			return request;
 		}
     }
