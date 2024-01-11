@@ -23,6 +23,8 @@
 			TestUSStreetRequestReturnsWithCorrectNumberOfResults(credentials);
 			TestUSZIPCodeRequestReturnsWithCorrectNumberOfResults(credentials);
 			TestReturnsCorrectNumberOfResultsViaProxy(credentials);
+			TestUsEnrichmentPropertyPrincipalRequestReturnsCorrectNumberOfResults(credentials);
+			TestUsEnrichmentPropertyFinancialRequestReturnsCorrectNumberOfResults(credentials);
 		}
 
 		private static void TestInternationalStreetRequestReturnsWithCorrectNumberOfResults(ICredentials credentials)
@@ -178,6 +180,37 @@
 				citiesAmount = lookup.Result.CityStates.Length;
 
 			AssertResults("VIA_PROXY", citiesAmount, 7);
+		}
+
+		private static void TestUsEnrichmentPropertyPrincipalRequestReturnsCorrectNumberOfResults(ICredentials credentials){
+			var client = new ClientBuilder(credentials).BuildUsEnrichmentApiClient();
+			
+			SmartyStreets.USEnrichmentApi.Property.Principal.Result[] results = null;
+            try
+            {
+                results = client.SendPropertyPrincipalLookup("1682393594");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("");
+            }
+			AssertResults("ENRICHMENT_PROPERTY_PRINCIPAL", results.Length, 1);
+		}
+
+		private static void TestUsEnrichmentPropertyFinancialRequestReturnsCorrectNumberOfResults(ICredentials credentials){
+			var client = new ClientBuilder(credentials).BuildUsEnrichmentApiClient();
+			
+			SmartyStreets.USEnrichmentApi.Property.Financial.Result[] results = null;
+            try
+            {
+                results = client.SendPropertyFinancialLookup("1682393594");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("");
+            }
+
+			AssertResults("ENRICHMENT_FINANCIAL_PRINCIPAL", results.Length, 1);
 		}
 
 		private static void AssertResults(string apiType, int actualResultCount, int expectedResultCount)
