@@ -27,56 +27,47 @@ namespace Examples
 			var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
 			
 			SmartyStreets.USEnrichmentApi.Property.Principal.Result[] results = null;
-            try
-            {
+            try {
                 results = client.SendPropertyPrincipalLookup("1682393594");
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 Console.WriteLine(ex.Message + ex.StackTrace);
             }
             
-            if (results != null)
-            {
+            if (results != null) {
                 foreach (SmartyStreets.USEnrichmentApi.Property.Principal.Result result in results) {
-                    printResult(result);
+                    PrintResult(result);
                 }
             }
-            else
-            {
+            else {
                 Console.WriteLine("Result was null");
             }
 
 
             SmartyStreets.USEnrichmentApi.Property.Financial.Result[] financialResults = null;
-            try
-            {
+            try {
                 financialResults = client.SendPropertyFinancialLookup("1682393594");
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 Console.WriteLine(ex.Message + ex.StackTrace);
             }
 
-            if (financialResults != null)
-            {
+            if (financialResults != null) {
                 foreach (SmartyStreets.USEnrichmentApi.Property.Financial.Result result in financialResults) {
-                    printResult(result);
+                    PrintResult(result);
                 }
             }
-            else
-            {
+            else {
                 Console.WriteLine("Result was null");
             }
 		}
 
-        private static void printResult(object obj){
+        private static void PrintResult(object obj){
             Type type = obj.GetType();
 
-            foreach (PropertyInfo property in type.GetProperties())
-            {
+            foreach (PropertyInfo property in type.GetProperties()) {
                 if (property.Name == "Attributes" ){
-                    printResult(property.GetValue(obj, null));
+                    PrintResult(property.GetValue(obj, null));
                 }
                 if (property.GetValue(obj, null) != null) {
                     Console.WriteLine($"{property.Name}: {property.GetValue(obj, null)}");
