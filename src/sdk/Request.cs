@@ -6,6 +6,7 @@
 	public class Request
 	{
 		private string urlPrefix;
+		private string urlComponents;
 		private readonly Dictionary<string, string> parameters;
 		private byte[] payload;
 
@@ -29,6 +30,7 @@
 			this.Headers = new Dictionary<string, string>();
 			this.parameters = new Dictionary<string, string>();
 			this.urlPrefix = "";
+			this.urlComponents = "";
 		}
 
 		public void SetHeader(string header, string value)
@@ -44,14 +46,13 @@
 			this.parameters[name] = value;
 		}
 
-		public void SetUrlPrefix(string value)
-		{
-			this.urlPrefix = value;
+		public void SetUrlComponents(string value) {
+			this.urlComponents = value;
 		}
 
-		public String GetUrlPrefix()
+		public void SetUrlPrefix(string value)
 		{
-			return this.urlPrefix;
+			this.urlPrefix = value + this.urlComponents;
 		}
 
 		public string GetUrl()

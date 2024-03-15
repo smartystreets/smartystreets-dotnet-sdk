@@ -14,17 +14,16 @@ namespace SmartyStreets.USEnrichmentApi
 		public void Setup()
 		{
 			this.capturingSender = new RequestCapturingSender();
-			this.urlSender = new URLPrefixSender("http://localhost/", this.capturingSender);
+			this.urlSender = new URLPrefixSender("http://localhost", this.capturingSender);
 		}
 
 
 		[Test]
-		public void TestSendingFullyPopulatedPrincipalLookup(string matchStrategy)
+		public void TestSendingFullyPopulatedPrincipalLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
-			const string expectedUrlTemplate = "http://localhost/1/property/principal";
-			var expectedUrl = string.Format(expectedUrlTemplate, matchStrategy);
+			const string expectedUrl= "http://localhost/1/property/principal?";
 
 			client.SendPropertyPrincipalLookup("1");
 
@@ -32,14 +31,13 @@ namespace SmartyStreets.USEnrichmentApi
 		}
 
         [Test]
-		public void TestSendingFullyPopulatedFinancialLookup(string matchStrategy)
+		public void TestSendingFullyPopulatedFinancialLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
-			const string expectedUrlTemplate = "http://localhost/1/property/financial";
-			var expectedUrl = string.Format(expectedUrlTemplate, matchStrategy);
+			const string expectedUrl= "http://localhost/1/property/financial?";
 
-			client.SendPropertyPrincipalLookup("1");
+			client.SendPropertyFinancialLookup("1");
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
@@ -50,7 +48,7 @@ namespace SmartyStreets.USEnrichmentApi
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
 
-			Assert.Throws<ArgumentNullException>(() => client.SendPropertyFinancialLookup(null));
+			Assert.Throws<SmartyStreets.SmartyException>(() => client.SendPropertyFinancialLookup(null));
 		}
 	}
 }

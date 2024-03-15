@@ -50,7 +50,7 @@
 			var request = new Request();
 
 			if (lookup.AddressID != null) {
-				request.SetUrlPrefix("/" + lookup.AddressID);
+				request.SetUrlComponents("/" + lookup.AddressID);
 			}
 			
 			request.SetParameter("search", lookup.Search);
