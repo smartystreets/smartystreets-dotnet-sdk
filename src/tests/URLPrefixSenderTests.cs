@@ -13,7 +13,7 @@ namespace SmartyStreets
             var urlPrefixSender = new URLPrefixSender("http://localhost/", mockSender);
 
             var request = new Request();
-            request.SetUrlPrefix("jimbo");
+            request.SetUrlComponents("jimbo");
 
             urlPrefixSender.Send(request);
 
@@ -31,6 +31,21 @@ namespace SmartyStreets
             urlPrefixSender.Send(request);
 
             Assert.AreEqual("http://localhost/?", request.GetUrl());
+        }
+
+        [Test]
+        public void TestMultipleSends()
+        {
+            var mockSender = new MockSender(null);
+            var urlPrefixSender = new URLPrefixSender("http://localhost/", mockSender);
+
+            var request = new Request();
+            request.SetUrlComponents("jimbo");
+
+            urlPrefixSender.Send(request);
+            urlPrefixSender.Send(request);
+
+            Assert.AreEqual("http://localhost/jimbo?", request.GetUrl());
         }
     }
 }

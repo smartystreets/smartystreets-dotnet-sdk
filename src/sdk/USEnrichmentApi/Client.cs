@@ -44,7 +44,7 @@ namespace SmartyStreets.USEnrichmentApi
 		private SmartyStreets.Request BuildRequest(Lookup lookup)
 		{
 			SmartyStreets.Request request = new SmartyStreets.Request();
-			request.SetUrlPrefix("/" + lookup.GetSmartyKey() + "/" + lookup.GetDatasetName() + "/" + lookup.GetDataSubsetName());
+			request.SetUrlComponents("/" + lookup.GetSmartyKey() + "/" + lookup.GetDatasetName() + "/" + lookup.GetDataSubsetName());
 			return request;
 		}
     }
