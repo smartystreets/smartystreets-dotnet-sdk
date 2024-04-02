@@ -37,7 +37,7 @@
 				MatchStrategy = Lookup.STRICT
 			};
 
-			var addressWithRangeStrategy = new Lookup
+			var addressWithEnhancedStrategy = new Lookup
 			{
 				Street = "693 W 1150 S",
 				City = "provo",
@@ -56,7 +56,7 @@
 			try
 			{
 				batch.Add(addressWithStrictStrategy);
-				batch.Add(addressWithRangeStrategy);
+				batch.Add(addressWithEnhancedStrategy);
 				batch.Add(addressWithInvalidStrategy);
 
 				client.Send(batch);

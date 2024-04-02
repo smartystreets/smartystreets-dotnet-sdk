@@ -14,7 +14,6 @@ namespace SmartyStreets.USStreetApi
 		public const string STRICT = "strict";
 		public const string ENHANCED = "enhanced";
 		public const string INVALID = "invalid";
-		public const string RANGE = "range"; // Deprecated
 
 		public const string DEFAULT_FORMAT = "default";
 		public const string PROJECT_USA_FORMAT = "project-usa";

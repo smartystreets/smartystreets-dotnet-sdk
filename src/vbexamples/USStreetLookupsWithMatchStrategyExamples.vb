@@ -24,8 +24,8 @@ Module USStreetLookupsWithMatchStrategyExamples
             .MatchStrategy = Lookup.STRICT
         End With
 
-        Dim addressWithRangeStrategy As New Lookup()
-        With addressWithRangeStrategy
+        Dim addressWithEnhancedStrategy As New Lookup()
+        With addressWithEnhancedStrategy
             .Street = "691 W 1150 S"
             .City = "provo"
             .State = "utah"
@@ -45,7 +45,7 @@ Module USStreetLookupsWithMatchStrategyExamples
 
         Try
             batch.Add(addressWithStrictStrategy)
-            batch.Add(addressWithRangeStrategy)
+            batch.Add(addressWithEnhancedStrategy)
             batch.Add(addressWithInvalidStrategy)
             client.Send(batch)
         Catch ex As BatchFullException
