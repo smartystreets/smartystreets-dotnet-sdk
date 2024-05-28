@@ -64,15 +64,18 @@
 			catch (BatchFullException)
 			{
 				Console.WriteLine("Error. The batch is already full.");
+				return;
 			}
 			catch (SmartyException ex)
 			{
 				Console.WriteLine(ex.Message);
 				Console.WriteLine(ex.StackTrace);
+				return;
 			}
 			catch (IOException ex)
 			{
 				Console.WriteLine(ex.StackTrace);
+				return;
 			}
 
 			for (var i = 0; i < batch.Count; i++)
