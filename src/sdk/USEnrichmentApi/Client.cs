@@ -28,6 +28,13 @@ namespace SmartyStreets.USEnrichmentApi
 			return lookup.GetResults();
 		}
 
+		public GeoReference.Result[] SendGeoReferenceLookup(string smartyKey)
+		{
+			GeoReference.Lookup lookup = new GeoReference.Lookup(smartyKey);
+			Send(lookup);
+			return lookup.GetResults();
+		}
+
 		public byte[] SendUniversalLookup(Universal.Lookup lookup)
 		{
 			Send(lookup);
@@ -40,6 +47,9 @@ namespace SmartyStreets.USEnrichmentApi
 				throw new SmartyStreets.SmartyException("Client.Send() requires a Lookup with the 'smartyKey' field set");
 			Request request = BuildRequest(lookup);
 			Response response = this.sender.Send(request);
+			foreach(var entry in response.HeaderInfo) {
+				Console.WriteLine(entry.Key + " " + entry.Value);
+			}
 			if (response.Payload != null){
 				using (var payloadStream = new MemoryStream(response.Payload)){
 					lookup.DeserializeAndSetResults(serializer, payloadStream);

@@ -9,7 +9,7 @@ namespace Examples
 	using SmartyStreets.USEnrichmentApi;
     using System.Reflection;
 
-	internal static class USEnrichmentExample
+	internal static class USEnrichmentPropertyExample
 	{
 		public static void Run()
 		{

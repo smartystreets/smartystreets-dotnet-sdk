@@ -37,6 +37,9 @@
 			var payload = GetResponseBody(frameworkResponse);
 
 			var retVal = new Response(statusCode, payload);
+			// retrieve the etag header for enrichment api
+			retVal.HeaderInfo.Add("Etag", frameworkResponse.Headers.Get("Etag"));
+
 			if (statusCode == 429)
 			{
 				string retryValue = frameworkResponse.Headers.Get("Retry-After");
