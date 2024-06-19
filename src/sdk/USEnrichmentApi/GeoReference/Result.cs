@@ -1,4 +1,4 @@
-namespace SmartyStreets.USEnrichmentApi.Property.Principal
+namespace SmartyStreets.USEnrichmentApi.GeoReference
 {
     using System.Runtime.Serialization;
 
@@ -10,9 +10,6 @@ namespace SmartyStreets.USEnrichmentApi.Property.Principal
 
         [DataMember(Name = "data_set_name")]
         public string DataSetName { get; set; }
-
-        [DataMember(Name = "data_subset_name")]
-        public string DataSubsetName { get; set; }
 
         [DataMember(Name = "etag")]
         public string Etag { get; set; }

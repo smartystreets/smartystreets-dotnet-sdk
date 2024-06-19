@@ -1,13 +1,14 @@
-namespace SmartyStreets.USEnrichmentApi.Property.Financial
+namespace SmartyStreets.USEnrichmentApi.GeoReference
 {
     using System;
     using System.IO;
+    using SmartyStreets.USEnrichmentApi.GeoReference;
 
     public class Lookup : SmartyStreets.USEnrichmentApi.Lookup
     {
         private Result[] results;
 
-        public Lookup(string smartyKey) : base(smartyKey, "property", "financial")
+        public Lookup(string smartyKey) : base(smartyKey, "geo-reference", "")
         {
         }
 
@@ -27,6 +28,4 @@ namespace SmartyStreets.USEnrichmentApi.Property.Financial
             this.results[0].Etag = this.GetEtag();
         }
     }
-
-
 }

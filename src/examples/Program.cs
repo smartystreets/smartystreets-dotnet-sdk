@@ -14,7 +14,9 @@
 			USExtractExample.Run();
 			USAutocompleteProExample.Run();
 			USReverseGeoExample.Run();
-			USEnrichmentExample.Run();
+			USEnrichmentPropertyExample.Run();
+			USEnrichmentGeoReferenceExample.Run();
+			USEnrichmentUniversalExample.Run();
 		}
 	}
 }

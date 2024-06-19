@@ -9,7 +9,7 @@ namespace Examples
 	using SmartyStreets.USEnrichmentApi;
     using System.Reflection;
 
-	internal static class USEnrichmentExample
+	internal static class USEnrichmentPropertyExample
 	{
 		public static void Run()
 		{
@@ -26,9 +26,20 @@ namespace Examples
 
 			var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
 			
+
 			SmartyStreets.USEnrichmentApi.Property.Principal.Result[] results = null;
+            var lookup = new SmartyStreets.USEnrichmentApi.Property.Principal.Lookup("1682393594");
+            // See the US Enrichment API documenation for available lookup properties https://www.smarty.com/docs/cloud/us-address-enrichment-api#http-request-input-fields
+            // Options available for the Property Lookup
+            // lookup.SetEtag("GU4TINZRHA4TQMY");
+            // lookup.SetIncludeFields("assessed_value,assessor_last_update");
+            // lookup.SetExcludeFields("tax_fiscal_year,tax_jurisdiction");
             try {
-                results = client.SendPropertyPrincipalLookup("1682393594");
+                // results = client.SendPropertyPrincipalLookup("1682393594"); // simple call with just a SmartyKey
+                results = client.SendPropertyPrincipalLookup(lookup); // more flexible call to set other lookup options
+            }
+            catch (NotModifiedException ex) {
+                Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.Message + ex.StackTrace);
@@ -43,10 +54,18 @@ namespace Examples
                 Console.WriteLine("Result was null");
             }
 
-
             SmartyStreets.USEnrichmentApi.Property.Financial.Result[] financialResults = null;
+            var financialLookup = new SmartyStreets.USEnrichmentApi.Property.Financial.Lookup("1682393594");
+            // Options available for the Property Lookup
+            // financialLookup.SetEtag("GU4TINZRHA4TQMY");
+            // financialLookup.SetIncludeFields("assessed_value,assessor_last_update");
+            // financialLookup.SetExcludeFields("tax_fiscal_year,tax_jurisdiction");
             try {
-                financialResults = client.SendPropertyFinancialLookup("1682393594");
+                // financialResults = client.SendPropertyFinancialLookup("1682393594"); // simple call with just a SmartyKey
+                financialResults = client.SendPropertyFinancialLookup(financialLookup); // more flexible call to set other lookup options
+            }
+            catch (NotModifiedException ex) {
+                Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.Message + ex.StackTrace);
@@ -73,6 +92,7 @@ namespace Examples
                     Console.WriteLine($"{property.Name}: {property.GetValue(obj, null)}");
                 }
             }
+            Console.WriteLine();
         }
 	}
 }
