@@ -20,6 +20,9 @@ namespace SmartyStreets
 			{
 				case 200:
 					return response;
+				case 304:
+					throw new NotModifiedException(
+						"Not Modified: The requested record has not been modified since the previous request with the Etag value.");
 				case 401:
 					throw new BadCredentialsException(
 						"Unauthorized: The credentials were provided incorrectly or did not match any existing, active credentials.");

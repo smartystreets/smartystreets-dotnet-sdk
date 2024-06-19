@@ -21,6 +21,12 @@ namespace SmartyStreets.USEnrichmentApi
 			return lookup.GetResults();
 		}
 
+		public Property.Financial.Result[] SendPropertyFinancialLookup(Property.Financial.Lookup lookup)
+		{
+			Send(lookup);
+			return lookup.GetResults();
+		}
+
 		public Property.Principal.Result[] SendPropertyPrincipalLookup(string smartyKey)
 		{
 			Property.Principal.Lookup lookup = new Property.Principal.Lookup(smartyKey);
@@ -28,9 +34,21 @@ namespace SmartyStreets.USEnrichmentApi
 			return lookup.GetResults();
 		}
 
+		public Property.Principal.Result[] SendPropertyPrincipalLookup(Property.Principal.Lookup lookup)
+		{
+			Send(lookup);
+			return lookup.GetResults();
+		}
+
 		public GeoReference.Result[] SendGeoReferenceLookup(string smartyKey)
 		{
 			GeoReference.Lookup lookup = new GeoReference.Lookup(smartyKey);
+			Send(lookup);
+			return lookup.GetResults();
+		}
+
+		public GeoReference.Result[] SendGeoReferenceLookup(GeoReference.Lookup lookup)
+		{
 			Send(lookup);
 			return lookup.GetResults();
 		}
@@ -48,7 +66,9 @@ namespace SmartyStreets.USEnrichmentApi
 			Request request = BuildRequest(lookup);
 			Response response = this.sender.Send(request);
 			foreach(var entry in response.HeaderInfo) {
-				Console.WriteLine(entry.Key + " " + entry.Value);
+				if (entry.Key == "Etag") {
+					lookup.SetEtag(entry.Value);
+				}
 			}
 			if (response.Payload != null){
 				using (var payloadStream = new MemoryStream(response.Payload)){
@@ -76,7 +96,7 @@ namespace SmartyStreets.USEnrichmentApi
 			}
 
 			if (lookup.GetEtag() != null) {
-				request.SetHeader("ETag", lookup.GetEtag());
+				request.SetHeader("Etag", lookup.GetEtag());
 			}
 
 			return request;

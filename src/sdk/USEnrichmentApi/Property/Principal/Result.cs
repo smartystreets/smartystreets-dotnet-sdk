@@ -14,6 +14,9 @@ namespace SmartyStreets.USEnrichmentApi.Property.Principal
         [DataMember(Name = "data_subset_name")]
         public string DataSubsetName { get; set; }
 
+        [DataMember(Name = "etag")]
+        public string Etag { get; set; }
+
         [DataMember(Name = "attributes")]
         public Attributes Attributes { get; set; }
     }

@@ -11,6 +11,9 @@ namespace SmartyStreets.USEnrichmentApi.GeoReference
         [DataMember(Name = "data_set_name")]
         public string DataSetName { get; set; }
 
+        [DataMember(Name = "etag")]
+        public string Etag { get; set; }
+
         [DataMember(Name = "attributes")]
         public Attributes Attributes { get; set; }
     }

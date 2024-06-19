@@ -27,8 +27,15 @@ namespace Examples
 			var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
 			
 			SmartyStreets.USEnrichmentApi.GeoReference.Result[] results = null;
+            var lookup = new SmartyStreets.USEnrichmentApi.GeoReference.Lookup("1682393594");
+            // Options available for the GeoReference Lookup
+            // lookup.SetEtag("GEZTSMZYHE3DMNA");
             try {
-                results = client.SendGeoReferenceLookup("1682393594");
+                // results = client.SendGeoReferenceLookup("1682393594");  // simple call with just a SmartyKey
+                results = client.SendGeoReferenceLookup(lookup); // more flexible call to set other lookup options
+            }
+            catch (NotModifiedException ex) {
+                Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.Message + ex.StackTrace);
@@ -38,6 +45,7 @@ namespace Examples
                 foreach (SmartyStreets.USEnrichmentApi.GeoReference.Result result in results) {
                     Console.WriteLine("SmartyKey: " +result.SmartyKey);
                     Console.WriteLine("DataSet: " +result.DataSetName);
+                    Console.WriteLine("Etag: " +result.Etag);
                     Console.WriteLine("CensusBlock");
                     PrintObjectAttributes(result.Attributes.CensusBlock, 4);
                     Console.WriteLine("CensusCountyDivision");

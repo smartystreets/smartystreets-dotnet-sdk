@@ -25,6 +25,7 @@ namespace SmartyStreets.USEnrichmentApi.GeoReference
         public override void DeserializeAndSetResults(SmartyStreets.ISerializer serializer, Stream payload)
         {
             this.results = serializer.Deserialize<Result[]>(payload);
+            this.results[0].Etag = this.GetEtag();
         }
     }
 }
