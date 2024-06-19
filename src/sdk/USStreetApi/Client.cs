@@ -68,7 +68,8 @@ namespace SmartyStreets.USStreetApi
 			request.SetParameter("addressee", address.Addressee);
 			request.SetParameter("urbanization", address.Urbanization);
 			request.SetParameter("match", address.MatchStrategy);
-			
+			request.SetParameter("compatibility", address.Compatibility);
+
 			if (address.MaxCandidates != 1) 
 				request.SetParameter("candidates", address.MaxCandidates.ToString(CultureInfo.InvariantCulture));
 			

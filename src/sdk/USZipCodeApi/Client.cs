@@ -58,6 +58,7 @@
 			request.SetParameter("city", lookup.City);
 			request.SetParameter("state", lookup.State);
 			request.SetParameter("zipcode", lookup.ZipCode);
+			request.SetParameter("compatibility", lookup.Compatibility);
 		}
 
 		private static void AssignResultsToLookups(Batch batch, IList<Result> results)

@@ -59,6 +59,9 @@ namespace SmartyStreets.USStreetApi
 		[DataMember(Name = "format")]
 		public string OutputFormat { get; set; }
 		
+		[DataMember(Name = "compatibility")]
+		public string Compatibility { get; set; }
+
 		public int MaxCandidates
 		{
 			get => this.maxCandidates;

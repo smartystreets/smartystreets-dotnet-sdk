@@ -20,6 +20,9 @@
 		[DataMember(Name = "zipcode")]
 		public string ZipCode { get; set; }
 
+		[DataMember(Name = "compatibility")]
+		public string Compatibility { get; set; }
+
 		#endregion
 
 		#region [ Constructors ]
@@ -45,6 +48,14 @@
 			this.City = city;
 			this.State = state;
 			this.ZipCode = zipcode;
+		}
+
+		public Lookup(string city, string state, string zipcode, string compatibility) : this()
+		{
+			this.City = city;
+			this.State = state;
+			this.ZipCode = zipcode;
+			this.Compatibility = compatibility;
 		}
 
 		#endregion
