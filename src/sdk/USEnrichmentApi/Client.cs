@@ -53,6 +53,32 @@ namespace SmartyStreets.USEnrichmentApi
 			return lookup.GetResults();
 		}
 
+		public Secondary.Result[] SendSecondaryLookup(string smartyKey)
+		{
+			Secondary.Lookup lookup = new Secondary.Lookup(smartyKey);
+			Send(lookup);
+			return lookup.GetResults();
+		}
+
+		public Secondary.Result[] SendSecondaryLookup(Secondary.Lookup lookup)
+		{
+			Send(lookup);
+			return lookup.GetResults();
+		}
+
+		public Secondary.Count.Result[] SendSecondaryCountLookup(string smartyKey)
+		{
+			Secondary.Count.Lookup lookup = new Secondary.Count.Lookup(smartyKey);
+			Send(lookup);
+			return lookup.GetResults();
+		}
+
+		public Secondary.Count.Result[] SendSecondaryCountLookup(Secondary.Count.Lookup lookup)
+		{
+			Send(lookup);
+			return lookup.GetResults();
+		}
+
 		public byte[] SendUniversalLookup(Universal.Lookup lookup)
 		{
 			Send(lookup);
