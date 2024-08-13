@@ -50,9 +50,6 @@ namespace Examples
                         Console.WriteLine("Aliases: {");
                         foreach (SmartyStreets.USEnrichmentApi.Secondary.Aliases alias in result.Aliases) {
                             PrintResult(alias);
-                            if (indexOf(result.Aliases, alias)) {
-                                
-                            }
                             Console.WriteLine();
                         }
                         Console.WriteLine("}\n");
