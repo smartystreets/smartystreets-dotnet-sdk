@@ -43,7 +43,7 @@ namespace Examples
                 Console.WriteLine(ex.Message + ex.StackTrace);
             }
             
-            if (results != null) {
+            if (results is not null) {
                 foreach (SmartyStreets.USEnrichmentApi.Secondary.Result result in results) {
                     PrintResult(result);
                     if (result.Aliases != null) {
@@ -60,7 +60,6 @@ namespace Examples
                     Console.WriteLine("Secondaries: {");
                     foreach (SmartyStreets.USEnrichmentApi.Secondary.Secondaries secondary in result.Secondaries) {
                         PrintResult(secondary);
-                        if ()
                         Console.WriteLine();
                     }
                     Console.WriteLine("}\n");
