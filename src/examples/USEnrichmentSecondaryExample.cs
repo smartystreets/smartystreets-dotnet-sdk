@@ -46,7 +46,7 @@ namespace Examples
             if (results is not null) {
                 foreach (SmartyStreets.USEnrichmentApi.Secondary.Result result in results) {
                     PrintResult(result);
-                    if (result.Aliases != null) {
+                    if (result.Aliases is not null) {
                         Console.WriteLine("Aliases: {");
                         foreach (SmartyStreets.USEnrichmentApi.Secondary.Aliases alias in result.Aliases) {
                             PrintResult(alias);
@@ -81,7 +81,7 @@ namespace Examples
                 Console.WriteLine(ex.Message + ex.StackTrace);
             }
             
-            if (countResults != null) {
+            if (countResults is not null) {
                 Console.WriteLine("Count: {");
                 foreach (SmartyStreets.USEnrichmentApi.Secondary.Count.Result result in countResults) {
                     PrintResult(result);
@@ -103,7 +103,7 @@ namespace Examples
                     PrintResult(property.GetValue(obj, null));
                     Console.WriteLine("}\n");
                 }
-                else if (property.GetValue(obj, null) != null && property.Name != "Aliases" && property.Name != "Secondaries") {
+                else if (property.GetValue(obj, null) is not null && property.Name != "Aliases" && property.Name != "Secondaries") {
                     Console.WriteLine($"{property.Name}: {property.GetValue(obj, null)}");
                 }
             }
