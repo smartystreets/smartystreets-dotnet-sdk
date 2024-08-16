@@ -16,6 +16,7 @@
 			USReverseGeoExample.Run();
 			USEnrichmentPropertyExample.Run();
 			USEnrichmentGeoReferenceExample.Run();
+			USEnrichmentSecondaryExample.Run();
 			USEnrichmentUniversalExample.Run();
 		}
 	}
