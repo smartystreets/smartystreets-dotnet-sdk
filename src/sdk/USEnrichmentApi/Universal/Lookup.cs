@@ -9,7 +9,7 @@ namespace SmartyStreets.USEnrichmentApi.Universal
     {
         private byte[] results;
 
-        public Lookup(string smartyKey, string dataSet, string dataSubset) : base(smartyKey, dataSet, dataSubset)
+        public Lookup(string smartyKey = null, string dataSet = null, string dataSubset = null) : base(smartyKey, dataSet, dataSubset)
         {
         }
 

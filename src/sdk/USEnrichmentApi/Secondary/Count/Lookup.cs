@@ -8,7 +8,7 @@ namespace SmartyStreets.USEnrichmentApi.Secondary.Count
     {
         private Result[] results;
 
-        public Lookup(string smartyKey) : base(smartyKey, "secondary", "count")
+        public Lookup(string smartyKey = null) : base(smartyKey, "secondary", "count")
         {
         }
 
@@ -25,7 +25,9 @@ namespace SmartyStreets.USEnrichmentApi.Secondary.Count
         public override void DeserializeAndSetResults(SmartyStreets.ISerializer serializer, Stream payload)
         {
             this.results = serializer.Deserialize<Result[]>(payload);
-            this.results[0].Etag = this.GetEtag();
+            if (this.results != null) {
+                this.results[0].Etag = this.GetEtag();
+            }
         }
     }
 }
