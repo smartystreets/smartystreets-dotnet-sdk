@@ -7,8 +7,7 @@ namespace SmartyStreets.USEnrichmentApi.Property.Principal
     public class Lookup : SmartyStreets.USEnrichmentApi.Lookup
     {
         private Result[] results;
-
-        public Lookup(string smartyKey) : base(smartyKey, "property", "principal")
+        public Lookup(string smartyKey = null) : base(smartyKey, "property", "principal")
         {
         }
 
@@ -25,7 +24,9 @@ namespace SmartyStreets.USEnrichmentApi.Property.Principal
         public override void DeserializeAndSetResults(SmartyStreets.ISerializer serializer, Stream payload)
         {
             this.results = serializer.Deserialize<Result[]>(payload);
-            this.results[0].Etag = this.GetEtag();
+            if (this.results != null) {
+                this.results[0].Etag = this.GetEtag();
+            }
         }
     }
 }

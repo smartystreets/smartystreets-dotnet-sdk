@@ -8,7 +8,7 @@ namespace SmartyStreets.USEnrichmentApi.GeoReference
     {
         private Result[] results;
 
-        public Lookup(string smartyKey) : base(smartyKey, "geo-reference", "")
+        public Lookup(string smartyKey = null) : base(smartyKey, "geo-reference", "")
         {
         }
 
@@ -25,7 +25,9 @@ namespace SmartyStreets.USEnrichmentApi.GeoReference
         public override void DeserializeAndSetResults(SmartyStreets.ISerializer serializer, Stream payload)
         {
             this.results = serializer.Deserialize<Result[]>(payload);
-            this.results[0].Etag = this.GetEtag();
+            if (this.results != null) {
+                this.results[0].Etag = this.GetEtag();
+            }
         }
     }
 }

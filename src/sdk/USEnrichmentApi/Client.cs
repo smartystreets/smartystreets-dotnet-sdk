@@ -87,8 +87,8 @@ namespace SmartyStreets.USEnrichmentApi
 
 		private void Send(Lookup lookup)
 		{
-			if (lookup == null || string.IsNullOrEmpty(lookup.GetSmartyKey()))
-				throw new SmartyStreets.SmartyException("Client.Send() requires a Lookup with the 'smartyKey' field set");
+			if (lookup == null || (string.IsNullOrEmpty(lookup.GetSmartyKey()) && string.IsNullOrEmpty(lookup.GetStreet()) && string.IsNullOrEmpty(lookup.GetFreeform())))
+				throw new SmartyStreets.SmartyException("Client.Send() requires a Lookup with the 'smartyKey', 'street', or 'freeform' field set");
 			Request request = BuildRequest(lookup);
 			Response response = this.sender.Send(request);
 			foreach(var entry in response.HeaderInfo) {
@@ -98,6 +98,9 @@ namespace SmartyStreets.USEnrichmentApi
 			}
 			if (response.Payload != null){
 				using (var payloadStream = new MemoryStream(response.Payload)){
+					if (serializer == null) {
+						Console.WriteLine("true");
+					}
 					lookup.DeserializeAndSetResults(serializer, payloadStream);
 				}
 			}
@@ -108,10 +111,18 @@ namespace SmartyStreets.USEnrichmentApi
 			SmartyStreets.Request request = new SmartyStreets.Request();
 			
 			// some datasets have no data subset
-			if (lookup.GetDataSubsetName() == "") {
-				request.SetUrlComponents("/" + lookup.GetSmartyKey() + "/" + lookup.GetDatasetName());
+			if (string.IsNullOrEmpty(lookup.GetSmartyKey())) {
+				if (lookup.GetDataSubsetName() == "") {
+				request.SetUrlComponents("/search/" + lookup.GetDatasetName());
+				} else {
+				request.SetUrlComponents("/search/" + lookup.GetDatasetName() + "/" + lookup.GetDataSubsetName());
+				}
 			} else {
+				if (lookup.GetDataSubsetName() == "") {
+				request.SetUrlComponents("/" + lookup.GetSmartyKey() + "/" + lookup.GetDatasetName());
+				} else {
 				request.SetUrlComponents("/" + lookup.GetSmartyKey() + "/" + lookup.GetDatasetName() + "/" + lookup.GetDataSubsetName());
+				}
 			}
 
 			if (lookup.GetIncludeFields() != null) {
@@ -120,7 +131,21 @@ namespace SmartyStreets.USEnrichmentApi
 			if (lookup.GetExcludeFields() != null) {
 				request.SetParameter("exclude", lookup.GetExcludeFields());
 			}
-
+			if (lookup.GetFreeform() != null) {
+				request.SetParameter("freeform", lookup.GetFreeform());
+			}
+			if (lookup.GetStreet() != null) {
+				request.SetParameter("street", lookup.GetStreet());
+			}
+			if (lookup.GetCity() != null) {
+				request.SetParameter("city", lookup.GetCity());
+			}
+			if (lookup.GetState() != null) {
+				request.SetParameter("state", lookup.GetState());
+			}
+			if (lookup.GetZipcode() != null) {
+				request.SetParameter("zipcode", lookup.GetZipcode());
+			}
 			if (lookup.GetEtag() != null) {
 				request.SetHeader("Etag", lookup.GetEtag());
 			}

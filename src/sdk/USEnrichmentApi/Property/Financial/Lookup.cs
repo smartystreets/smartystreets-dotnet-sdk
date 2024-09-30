@@ -7,7 +7,7 @@ namespace SmartyStreets.USEnrichmentApi.Property.Financial
     {
         private Result[] results;
 
-        public Lookup(string smartyKey) : base(smartyKey, "property", "financial")
+        public Lookup(string smartyKey = null) : base(smartyKey, "property", "financial")
         {
         }
 
@@ -24,7 +24,9 @@ namespace SmartyStreets.USEnrichmentApi.Property.Financial
         public override void DeserializeAndSetResults(SmartyStreets.ISerializer serializer, Stream payload)
         {
             this.results = serializer.Deserialize<Result[]>(payload);
-            this.results[0].Etag = this.GetEtag();
+            if (this.results != null) {
+                this.results[0].Etag = this.GetEtag();
+            }
         }
     }
 

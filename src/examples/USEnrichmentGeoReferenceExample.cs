@@ -27,11 +27,29 @@ namespace Examples
 			var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
 			
 			SmartyStreets.USEnrichmentApi.GeoReference.Result[] results = null;
-            var lookup = new SmartyStreets.USEnrichmentApi.GeoReference.Lookup("1682393594");
+            
+
+            // Create a lookup with a smarty key using the line below
+            var lookup = new SmartyStreets.USEnrichmentApi.GeoReference.Lookup("325023201");
+            
+            // Create a lookup with address components using the lines below
+            var componentsLookup = new SmartyStreets.USEnrichmentApi.GeoReference.Lookup();
+            componentsLookup.SetStreet("56 Union Ave");
+            componentsLookup.SetCity("Somerville");
+            componentsLookup.SetState("NJ");
+            componentsLookup.SetZipcode("08876");
+
+            // Create a lookup with a single line address using the line below
+            var freeformLookup = new SmartyStreets.USEnrichmentApi.GeoReference.Lookup();
+            freeformLookup.SetFreeform("56 Union Ave Somerville NJ 08876");
+
             // Options available for the GeoReference Lookup
-            // lookup.SetEtag("GEZTSMZYHE3DMNA");
+            // lookup.SetEtag("GEZDSNBUHE3DEMQ");
+    
             try {
-                // results = client.SendGeoReferenceLookup("1682393594");  // simple call with just a SmartyKey
+                // results = client.SendGeoReferenceLookup("325023201");  // simple call with just a SmartyKey
+
+                // Send a lookup using the line below
                 results = client.SendGeoReferenceLookup(lookup); // more flexible call to set other lookup options
             }
             catch (NotModifiedException ex) {

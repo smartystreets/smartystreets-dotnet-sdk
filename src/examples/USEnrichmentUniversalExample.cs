@@ -26,16 +26,37 @@ namespace Examples
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
 			var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
-			
+
 			byte[] results = null;
             // See the US Enrichment API documenation for all available datasets and data subsets https://www.smarty.com/docs/cloud/us-address-enrichment-api#data-sets
-            var lookup = new SmartyStreets.USEnrichmentApi.Universal.Lookup("1682393594","property","principal"); 
+
+            // Create a lookup with a smarty key using the line below
+            var lookup = new SmartyStreets.USEnrichmentApi.Universal.Lookup("325023201","property","principal"); 
+
+            // Create a lookup with address components using the lines below
+            var componentsLookup = new SmartyStreets.USEnrichmentApi.Universal.Lookup();
+            componentsLookup.SetDatasetName("property");
+            componentsLookup.SetDataSubsetName("principal");
+            componentsLookup.SetStreet("56 Union Ave");
+            componentsLookup.SetCity("Somerville");
+            componentsLookup.SetState("NJ");
+            componentsLookup.SetZipcode("08876");
+
+            // Create a lookup with a single line address using the lines below
+            var freeformLookup = new SmartyStreets.USEnrichmentApi.Universal.Lookup();
+            freeformLookup.SetDatasetName("property");
+            freeformLookup.SetDataSubsetName("principal");
+            freeformLookup.SetFreeform("56 Union Ave Somerville NJ 08876");
+
             // Options available for Lookup
-            // lookup.SetEtag("GU4TINZRHA4TQMY");
+            // lookup.SetEtag("AIDAIAQCAIEQKAIC");
             // lookup.SetIncludeFields("assessed_value,assessor_last_update"); // applicable to Property lookups only
             // lookup.SetExcludeFields("tax_fiscal_year,tax_jurisdiction"); // applicable to Property lookups only
 
             try {
+                // results = client.SendUniversalLookup("325023201", "property", "principal"); // simple call with just a SmartyKey and Dataset info
+
+                // Send a lookup using the line below
                 results = client.SendUniversalLookup(lookup);
             }
             catch (NotModifiedException ex) {

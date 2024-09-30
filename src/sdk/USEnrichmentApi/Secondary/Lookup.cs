@@ -8,7 +8,7 @@ namespace SmartyStreets.USEnrichmentApi.Secondary
     {
         private Result[] results;
 
-        public Lookup(string smartyKey) : base(smartyKey, "secondary", "")
+        public Lookup(string smartyKey = null) : base(smartyKey, "secondary", "")
         {
         }
 
@@ -25,7 +25,9 @@ namespace SmartyStreets.USEnrichmentApi.Secondary
         public override void DeserializeAndSetResults(SmartyStreets.ISerializer serializer, Stream payload)
         {
             this.results = serializer.Deserialize<Result[]>(payload);
-            this.results[0].Etag = this.GetEtag();
+            if (this.results != null) {
+                this.results[0].Etag = this.GetEtag();
+            }
         }
     }
 }

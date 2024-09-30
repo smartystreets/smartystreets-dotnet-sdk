@@ -28,14 +28,31 @@ namespace Examples
 			
 
 			SmartyStreets.USEnrichmentApi.Property.Principal.Result[] results = null;
-            var lookup = new SmartyStreets.USEnrichmentApi.Property.Principal.Lookup("1682393594");
+
+            // Create a lookup with a smarty key using the line below
+            var lookup = new SmartyStreets.USEnrichmentApi.Property.Principal.Lookup("325023201");
+            
+            // Create a lookup with address components using the lines below
+            var componentsLookup = new SmartyStreets.USEnrichmentApi.Property.Principal.Lookup();
+            componentsLookup.SetStreet("56 Union Ave");
+            componentsLookup.SetCity("Somerville");
+            componentsLookup.SetState("NJ");
+            componentsLookup.SetZipcode("08876");
+
+            // Create a lookup with a single line address using the line below
+            var freeformLookup = new SmartyStreets.USEnrichmentApi.Property.Principal.Lookup();
+            freeformLookup.SetFreeform("56 Union Ave Somerville NJ 08876");
+
             // See the US Enrichment API documenation for available lookup properties https://www.smarty.com/docs/cloud/us-address-enrichment-api#http-request-input-fields
             // Options available for the Property Lookup
-            // lookup.SetEtag("GU4TINZRHA4TQMY");
+            // lookup.SetEtag("AIDAIAQCAIEQKAIC");
             // lookup.SetIncludeFields("assessed_value,assessor_last_update");
             // lookup.SetExcludeFields("tax_fiscal_year,tax_jurisdiction");
+
             try {
-                // results = client.SendPropertyPrincipalLookup("1682393594"); // simple call with just a SmartyKey
+                // results = client.SendPropertyPrincipalLookup("325023201"); // simple call with just a SmartyKey
+
+                // Send a lookup using the line below
                 results = client.SendPropertyPrincipalLookup(lookup); // more flexible call to set other lookup options
             }
             catch (NotModifiedException ex) {
@@ -55,13 +72,29 @@ namespace Examples
             }
 
             SmartyStreets.USEnrichmentApi.Property.Financial.Result[] financialResults = null;
-            var financialLookup = new SmartyStreets.USEnrichmentApi.Property.Financial.Lookup("1682393594");
+
+            // Create a lookup with a smarty key using the line below
+            var financialLookup = new SmartyStreets.USEnrichmentApi.Property.Financial.Lookup("325023201");
+
+            // Create a lookup with address components using the lines below
+            var financialComponentsLookup = new SmartyStreets.USEnrichmentApi.Property.Financial.Lookup();
+            financialComponentsLookup.SetStreet("56 Union Ave");
+            financialComponentsLookup.SetCity("Somerville");
+            financialComponentsLookup.SetState("NJ");
+            financialComponentsLookup.SetZipcode("08876");
+
+            // Create a lookup with a single line address using the line below
+            var financialFreeformLookup = new SmartyStreets.USEnrichmentApi.Property.Financial.Lookup();
+            financialFreeformLookup.SetFreeform("56 Union Ave Somerville NJ 08876");
+
             // Options available for the Property Lookup
-            // financialLookup.SetEtag("GU4TINZRHA4TQMY");
+            // financialLookup.SetEtag("AIDAIAQCAIEQKAIC");
             // financialLookup.SetIncludeFields("assessed_value,assessor_last_update");
             // financialLookup.SetExcludeFields("tax_fiscal_year,tax_jurisdiction");
             try {
-                // financialResults = client.SendPropertyFinancialLookup("1682393594"); // simple call with just a SmartyKey
+                // financialResults = client.SendPropertyFinancialLookup("325023201"); // simple call with just a SmartyKey
+
+                // Send a lookup using the line below
                 financialResults = client.SendPropertyFinancialLookup(financialLookup); // more flexible call to set other lookup options
             }
             catch (NotModifiedException ex) {
