@@ -44,7 +44,7 @@
 
 		#endregion
 		
-		internal string MaxSuggestionsString => this.MaxResults.Equals(MAX_RESULTS_DEFAULT) ? null : this.MaxResults.ToString();
+		internal string MaxSuggestionsString => this.MaxResults.ToString();
 
 	}
 }
