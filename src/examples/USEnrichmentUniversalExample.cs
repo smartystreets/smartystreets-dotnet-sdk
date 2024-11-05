@@ -60,7 +60,7 @@ namespace Examples
                 // results = client.SendUniversalLookup("325023201", "property", "principal"); // simple call with just a SmartyKey and Dataset info
 
                 // Send a lookup using the line below
-                results = client.SendUniversalLookup(componentsLookup);
+                results = client.SendUniversalLookup(lookup);
             }
             catch (NotModifiedException ex) {
                 Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record

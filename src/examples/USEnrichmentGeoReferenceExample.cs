@@ -53,7 +53,7 @@ namespace Examples
                 // results = client.SendGeoReferenceLookup("325023201");  // simple call with just a SmartyKey
 
                 // Send a lookup using the line below
-                results = client.SendGeoReferenceLookup(componentsLookup); // more flexible call to set other lookup options
+                results = client.SendGeoReferenceLookup(lookup); // more flexible call to set other lookup options
             }
             catch (NotModifiedException ex) {
                 Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record

@@ -37,13 +37,13 @@
 			{
 				InputId = "24601", // Optional ID from your system
 				Addressee = "John Doe",
-				Street = "2325 Mt. Pleasant Rd, 15666",
+				Street = "1600 Amphitheatre Pkwy",
 				Street2 = "closet under the stairs",
 				Secondary = "APT 2",
 				Urbanization = "", // Only applies to Puerto Rico addresses
-				City = "Ellery",
-				State = "IL",
-				ZipCode = "62833",
+				City = "Mountain View",
+				State = "CA",
+				ZipCode = "21229",
 				CountySource = Lookup.GEOGRAPHIC,
 				MaxCandidates = 3,
 				MatchStrategy = Lookup.ENHANCED // "invalid" is the most permissive match,
