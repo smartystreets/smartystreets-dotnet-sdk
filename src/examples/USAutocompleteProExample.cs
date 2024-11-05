@@ -2,6 +2,8 @@
 {
 	using System;
 	using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
     using System.Net;
     using SmartyStreets;
 	using SmartyStreets.USAutocompleteProApi;
@@ -32,9 +34,31 @@
 			var lookup = new Lookup("1042 W Center");
 			lookup.PreferGeolocation = "none";
 
-			client.Send(lookup);
+            try
+            {
+                client.Send(lookup);
+            }
+            catch (SmartyException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                return;
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return;
+            }
 
-			Console.WriteLine("*** Result with no filter ***");
+            var suggestions = lookup.Result;
+
+            if (suggestions == null)
+            {
+                Console.WriteLine("No suggestions.");
+                return;
+            }
+
+            Console.WriteLine("*** Result with no filter ***");
 			Console.WriteLine();
 			foreach (var suggestion in lookup.Result)
 				Console.WriteLine(suggestion.Street, suggestion.City, ", ", suggestion.State);
@@ -57,11 +81,31 @@
 			//uncomment the below line to add a custom parameter
 			//lookup.AddCustomParameter("source", "all");
 
-			client.Send(lookup);
+            try
+            {
+                client.Send(lookup);
+            }
+            catch (SmartyException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                //return;
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return;
+            }
 
-			var suggestions = lookup.Result;
+            suggestions = lookup.Result;
 
-			Console.WriteLine();
+            if (suggestions == null)
+            {
+                Console.WriteLine("No suggestions.");
+                return;
+            }
+
+            Console.WriteLine();
 			Console.WriteLine("*** Result with some filters ***");
 			foreach (var suggestion in suggestions)
 				Console.WriteLine(suggestion.Street + " " + suggestion.City + ", " + suggestion.State);

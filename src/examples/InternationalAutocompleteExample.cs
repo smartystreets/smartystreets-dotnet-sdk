@@ -2,6 +2,8 @@ namespace Examples
 {
 	using System;
 	using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
     using System.Net;
     using SmartyStreets;
 	using SmartyStreets.InternationalAutocompleteApi;
@@ -37,10 +39,31 @@ namespace Examples
 			//uncomment the line below to add a custom parameter
 			//lookup.AddCustomParameter("max_results", "3");
 
-			client.Send(lookup);
+            try
+            {
+                client.Send(lookup);
+            }
+            catch (SmartyException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                return;
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return;
+            }
 
-			var candidates = lookup.Result;
-			Console.WriteLine();
+            var candidates = lookup.Result;
+            
+            if (candidates == null)
+            {
+                Console.WriteLine("No candidates. This means the address is not valid.");
+                return;
+            }
+            
+            Console.WriteLine();
 			Console.WriteLine("*** Results ***");
 			foreach (var candidate in candidates)
 			{

@@ -42,15 +42,22 @@
 			{
 				Console.WriteLine(ex.Message);
 				Console.WriteLine(ex.StackTrace);
+				return;
 			}
 			catch (IOException ex)
 			{
 				Console.WriteLine(ex.StackTrace);
+				return;
 			}
 
 			var result = lookup.Result;
 			var cities = result.CityStates;
 			var zipCodes = result.ZipCodes;
+
+			if (cities == null || zipCodes == null) {
+                Console.WriteLine("No results.");
+                return;
+            }
 
 			Console.WriteLine("Input ID: " + result.InputId);
 

@@ -46,10 +46,18 @@
 			{
 				Console.WriteLine(ex.Message);
 				Console.WriteLine(ex.StackTrace);
+				return;
 			}
 			catch (IOException ex)
 			{
 				Console.WriteLine(ex.StackTrace);
+				return;
+			}
+
+			if (lookup.SmartyResponse == null)
+			{
+				Console.WriteLine("No candidates.");
+				return;
 			}
 
 			var results = lookup.SmartyResponse.Results;

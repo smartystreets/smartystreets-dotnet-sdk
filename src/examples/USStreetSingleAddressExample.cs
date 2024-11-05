@@ -62,10 +62,12 @@
 			{
 				Console.WriteLine(ex.Message);
 				Console.WriteLine(ex.StackTrace);
+				return;
 			}
 			catch (IOException ex)
 			{
 				Console.WriteLine(ex.StackTrace);
+				return;
 			}
 
 			var candidates = lookup.Result;
