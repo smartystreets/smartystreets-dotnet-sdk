@@ -46,6 +46,9 @@
                                                // Refer to the documentation for additional MatchStrategy options.
 			};
 
+			//uncomment the line below to add a custom parameter
+			//address1.AddCustomParameter("InputId", "24601");
+
 			var address2 = new Lookup("1 Rosedale, Baltimore, Maryland")
 			{
 				Street = "1 Rosedale",

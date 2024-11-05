@@ -32,6 +32,9 @@
 				AddressesPerLine = 1
 			};
 
+			//uncomment the line below to add a custom parameter
+			//lookup.AddCustomParameter("addr_line_breaks", "false");
+
 			client.Send(lookup);
 
 			var result = lookup.Result;

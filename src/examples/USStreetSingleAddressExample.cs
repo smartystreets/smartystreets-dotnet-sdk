@@ -37,18 +37,22 @@
 			{
 				InputId = "24601", // Optional ID from your system
 				Addressee = "John Doe",
-				Street = "1600 Amphitheatre Pkwy",
+				Street = "2325 Mt. Pleasant Rd, 15666",
 				Street2 = "closet under the stairs",
 				Secondary = "APT 2",
 				Urbanization = "", // Only applies to Puerto Rico addresses
-				City = "Mountain View",
-				State = "CA",
-				ZipCode = "21229",
+				City = "Ellery",
+				State = "IL",
+				ZipCode = "62833",
+				CountySource = Lookup.GEOGRAPHIC,
 				MaxCandidates = 3,
 				MatchStrategy = Lookup.ENHANCED // "invalid" is the most permissive match,
                                                // this will always return at least one result even if the address is invalid.
                                                // Refer to the documentation for additional MatchStrategy options.
 			};
+
+			//uncomment the line below to add a custom parameter
+			//lookup.AddCustomParameter("county_source", "geographic");
 
 			try
 			{

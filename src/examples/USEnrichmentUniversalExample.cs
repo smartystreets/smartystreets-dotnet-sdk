@@ -42,6 +42,9 @@ namespace Examples
             componentsLookup.SetState("NJ");
             componentsLookup.SetZipcode("08876");
 
+            //uncomment the line below to add a custom parameter
+            //componentsLookup.AddCustomParameter("zipcode", "08876");
+
             // Create a lookup with a single line address using the lines below
             var freeformLookup = new SmartyStreets.USEnrichmentApi.Universal.Lookup();
             freeformLookup.SetDatasetName("property");
@@ -57,7 +60,7 @@ namespace Examples
                 // results = client.SendUniversalLookup("325023201", "property", "principal"); // simple call with just a SmartyKey and Dataset info
 
                 // Send a lookup using the line below
-                results = client.SendUniversalLookup(lookup);
+                results = client.SendUniversalLookup(componentsLookup);
             }
             catch (NotModifiedException ex) {
                 Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record

@@ -39,6 +39,9 @@ namespace Examples
             componentsLookup.SetState("NJ");
             componentsLookup.SetZipcode("08876");
 
+            //uncomment the below line to add a custom parameter
+            //componentsLookup.AddCustomParameter("zipcode", "08876");
+
             // Create a lookup with a single line address using the line below
             var freeformLookup = new SmartyStreets.USEnrichmentApi.Property.Principal.Lookup();
             freeformLookup.SetFreeform("56 Union Ave Somerville NJ 08876");
@@ -82,6 +85,9 @@ namespace Examples
             financialComponentsLookup.SetCity("Somerville");
             financialComponentsLookup.SetState("NJ");
             financialComponentsLookup.SetZipcode("08876");
+
+            //uncomment the below line to add a custom parameter
+            //financialComponentsLookup.AddCustomParameter("zipcode", "08876");
 
             // Create a lookup with a single line address using the line below
             var financialFreeformLookup = new SmartyStreets.USEnrichmentApi.Property.Financial.Lookup();

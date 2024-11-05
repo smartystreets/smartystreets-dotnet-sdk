@@ -17,6 +17,9 @@ namespace SmartyStreets.USStreetApi
 
 		public const string DEFAULT_FORMAT = "default";
 		public const string PROJECT_USA_FORMAT = "project-usa";
+
+		public const string POSTAL = "postal";
+		public const string GEOGRAPHIC = "geographic";
 		
 		public List<Candidate> Result { get; private set; }
 
@@ -62,6 +65,12 @@ namespace SmartyStreets.USStreetApi
 		[DataMember(Name = "compatibility")]
 		public string Compatibility { get; set; }
 
+		[DataMember(Name = "county_source")]
+		public string CountySource { get; set; }
+
+		[DataMember(Name = "custom_param_dict")]
+		public Dictionary<string, string> CustomParamDict = new Dictionary<string, string>{};
+
 		public int MaxCandidates
 		{
 			get => this.maxCandidates;
@@ -94,6 +103,10 @@ namespace SmartyStreets.USStreetApi
 		public void AddToResult(Candidate newCandidate)
 		{
 			this.Result.Add(newCandidate);
+		}
+
+		public void AddCustomParameter(string parameter, string value) {
+			CustomParamDict.Add(parameter, value);
 		}
 	}
 }

@@ -54,6 +54,9 @@
 			lookup.PreferRatio = 4;
 			lookup.Source = "all";
 
+			//uncomment the below line to add a custom parameter
+			//lookup.AddCustomParameter("source", "all");
+
 			client.Send(lookup);
 
 			var suggestions = lookup.Result;

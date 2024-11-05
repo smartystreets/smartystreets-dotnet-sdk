@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.IO;
+	using System.Collections.Generic;
 
 	public class Client : IUSReverseGeoClient
 	{
@@ -37,6 +38,10 @@
 			request.SetParameter("latitude", lookup.Latitude);
 			request.SetParameter("longitude", lookup.Longitude);
 			request.SetParameter("source", lookup.Source);
+
+			foreach (KeyValuePair<string, string> line in lookup.CustomParamDict) {
+				request.SetParameter(line.Key, line.Value);
+			}
 
 			return request;
 		}

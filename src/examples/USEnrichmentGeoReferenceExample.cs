@@ -39,6 +39,9 @@ namespace Examples
             componentsLookup.SetState("NJ");
             componentsLookup.SetZipcode("08876");
 
+            //uncomment the below line to add a custom parameter
+            //componentsLookup.AddCustomParameter("zipcode", "08876");
+
             // Create a lookup with a single line address using the line below
             var freeformLookup = new SmartyStreets.USEnrichmentApi.GeoReference.Lookup();
             freeformLookup.SetFreeform("56 Union Ave Somerville NJ 08876");
@@ -50,7 +53,7 @@ namespace Examples
                 // results = client.SendGeoReferenceLookup("325023201");  // simple call with just a SmartyKey
 
                 // Send a lookup using the line below
-                results = client.SendGeoReferenceLookup(lookup); // more flexible call to set other lookup options
+                results = client.SendGeoReferenceLookup(componentsLookup); // more flexible call to set other lookup options
             }
             catch (NotModifiedException ex) {
                 Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record

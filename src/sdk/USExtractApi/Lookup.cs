@@ -1,4 +1,7 @@
-﻿namespace SmartyStreets.USExtractApi
+﻿using System.Collections.Generic;
+
+namespace SmartyStreets.USExtractApi
+
 {
 	/// <summary>
 	///     In addition to holding all of the input data for this lookup, this class also
@@ -20,6 +23,7 @@
 		public int AddressesPerLine { get; set; }
 		public string MatchStrategy { get; set; }
 		public string Text { get; set; }
+		public Dictionary<string, string> CustomParamDict = new Dictionary<string, string>{};
 
 		#endregion
 
@@ -50,6 +54,10 @@
 		public void SpecifyHtmlInput(bool html)
 		{
 			this.html = html.ToString().ToLower();
+		}
+
+		public void AddCustomParameter(string parameter, string value) {
+			CustomParamDict.Add(parameter, value);
 		}
 	}
 }

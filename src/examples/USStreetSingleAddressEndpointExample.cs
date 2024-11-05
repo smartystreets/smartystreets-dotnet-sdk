@@ -51,6 +51,9 @@
                                                // Refer to the documentation for additional MatchStrategy options.
 			};
 
+			//uncomment the line below to add a custom parameter
+			//lookup.AddCustomParameter("InputId", "24601");
+
 			try
 			{
 				client.Send(lookup);

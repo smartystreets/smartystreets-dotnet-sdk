@@ -37,6 +37,9 @@
 				MatchStrategy = Lookup.STRICT
 			};
 
+			//uncomment the line below to add a custom parameter
+			//addressWithStrictStrategy.AddCustomParameter("city", "provo");
+
 			var addressWithEnhancedStrategy = new Lookup
 			{
 				Street = "693 W 1150 S",

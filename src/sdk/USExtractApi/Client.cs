@@ -1,4 +1,6 @@
-﻿namespace SmartyStreets.USExtractApi
+﻿using System.Collections.Generic;
+
+namespace SmartyStreets.USExtractApi
 {
 	using System;
 	using System.IO;
@@ -51,6 +53,10 @@
 			request.SetParameter("addr_per_line", lookup.AddressesPerLine.ToString());
 			if ((lookup.MatchStrategy != "") && (lookup.MatchStrategy != Lookup.STRICT))
 				request.SetParameter("match", lookup.MatchStrategy);
+
+			foreach (KeyValuePair<string, string> line in lookup.CustomParamDict) {
+				request.SetParameter(line.Key, line.Value);
+			}
 
 			return request;
 		}

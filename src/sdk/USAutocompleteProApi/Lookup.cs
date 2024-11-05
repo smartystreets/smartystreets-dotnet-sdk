@@ -3,6 +3,7 @@
 namespace SmartyStreets.USAutocompleteProApi
 {
 	using System.Collections;
+	using System.Collections.Generic;
 
 	/// <summary>
 	///     In addition to holding all of the input data for this lookup, this class also
@@ -31,6 +32,7 @@ namespace SmartyStreets.USAutocompleteProApi
 		public string PreferGeolocation { get; set; }
 		public string Selected { get; set; }
 		public string Source { get; set; }
+		public Dictionary<string, string> CustomParamDict = new Dictionary<string, string>{};
 
 		#endregion
 
@@ -111,6 +113,10 @@ namespace SmartyStreets.USAutocompleteProApi
 		{
 			this.PreferGeolocation = GeolocateType.NONE;
 			this.PreferZIPCodes.Add(zipcode);
+		}
+
+		public void AddCustomParameter(string parameter, string value) {
+			CustomParamDict.Add(parameter, value);
 		}
 	}
 }
