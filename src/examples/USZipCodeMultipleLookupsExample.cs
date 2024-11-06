@@ -26,6 +26,10 @@
 				ZipCode = "12345"
 			};
 
+			//uncomment the lines below to add custom parameters
+			// lookup1.AddCustomParameter("city", "Schenectady");
+			// lookup1.AddCustomParameter("state", "NY");
+
 			var lookup2 = new Lookup
 			{
 				City = "Phoenix",

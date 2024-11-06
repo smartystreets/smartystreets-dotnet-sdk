@@ -42,6 +42,9 @@ namespace Examples
             componentsLookup.SetState("NJ");
             componentsLookup.SetZipcode("08876");
 
+            //uncomment the line below to add a custom parameter
+            //componentsLookup.AddCustomParameter("zipcode", "08876");
+
             // Create a lookup with a single line address using the lines below
             var freeformLookup = new SmartyStreets.USEnrichmentApi.Universal.Lookup();
             freeformLookup.SetDatasetName("property");

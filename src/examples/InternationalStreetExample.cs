@@ -41,6 +41,9 @@
 				Country = "Brazil",
 				PostalCode = "02516-050"
 			};
+			
+			//uncomment the line below to add a custom parameter
+			//lookup.AddCustomParameter("input_id", "ID-8675309");
 
             try
             {

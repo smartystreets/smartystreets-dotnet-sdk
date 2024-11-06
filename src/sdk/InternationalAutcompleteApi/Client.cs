@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections;
 	using System.IO;
+	using System.Collections.Generic;
 
 	/// <summary>
 	///     This client sends lookups to the SmartyStreets US Autocomplete API,
@@ -58,6 +59,10 @@
 			request.SetParameter("max_results", lookup.MaxSuggestionsString);
 			request.SetParameter("include_only_locality", lookup.Locality);
 			request.SetParameter("include_only_postal_code", lookup.PostalCode);
+
+			foreach (KeyValuePair<string, string> line in lookup.CustomParamDict) {
+				request.SetParameter(line.Key, line.Value);
+			}
 			
 			return request;
 		}

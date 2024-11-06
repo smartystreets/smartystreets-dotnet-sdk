@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SmartyStreets.USReverseGeoApi
 {
-	using System.Collections.Generic;
 
 	/// <summary>
 	///     In addition to holding all of the input data for this lookup, this class also
@@ -17,6 +17,7 @@ namespace SmartyStreets.USReverseGeoApi
 		public string Latitude { get; set; }
 		public string Longitude { get; set; }
 		public string Source { get; set; }
+		public Dictionary<string, string> CustomParamDict = new Dictionary<string, string>{};
 
 		#endregion
 
@@ -29,5 +30,9 @@ namespace SmartyStreets.USReverseGeoApi
 		}
 
 		#endregion
+
+		public void AddCustomParameter(string parameter, string value) {
+			CustomParamDict.Add(parameter, value);
+		}
 	}
 }

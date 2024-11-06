@@ -36,6 +36,9 @@ namespace Examples
 				Locality = "Paris",
 			};
 
+			//uncomment the line below to add a custom parameter
+			//lookup.AddCustomParameter("max_results", "3");
+
             try
             {
                 client.Send(lookup);

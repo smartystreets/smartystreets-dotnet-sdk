@@ -35,6 +35,9 @@
 
 			var lookup = new Lookup(40.111111, -111.111111);
 
+			//uncomment the line below to add a custom parameter
+			//lookup.AddCustomParameter("source", "all");
+
 			try
 			{
 				client.Send(lookup);

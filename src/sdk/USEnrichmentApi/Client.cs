@@ -2,6 +2,7 @@ namespace SmartyStreets.USEnrichmentApi
 {
     using System;
 	using System.IO;
+	using System.Collections.Generic;
 
     public class Client //: IUSEnrichmentClient
     {
@@ -148,6 +149,10 @@ namespace SmartyStreets.USEnrichmentApi
 			}
 			if (lookup.GetEtag() != null) {
 				request.SetHeader("Etag", lookup.GetEtag());
+			}
+
+			foreach (KeyValuePair<string, string> line in lookup.CustomParamDict) {
+				request.SetParameter(line.Key, line.Value);
 			}
 
 			return request;

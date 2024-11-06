@@ -4,7 +4,7 @@ namespace SmartyStreets.USStreetApi
 {
 	using System;
 	using System.Collections.Generic;
-	using System.Globalization;
+    using System.Globalization;
 	using System.IO;
 
 	public class Client : IUSStreetClient
@@ -69,6 +69,11 @@ namespace SmartyStreets.USStreetApi
 			request.SetParameter("urbanization", address.Urbanization);
 			request.SetParameter("match", address.MatchStrategy);
 			request.SetParameter("compatibility", address.Compatibility);
+			request.SetParameter("county_source", address.CountySource);
+
+			foreach (KeyValuePair<string, string> line in address.CustomParamDict) {
+				request.SetParameter(line.Key, line.Value);
+			}
 
 			if (address.MaxCandidates != 1) 
 				request.SetParameter("candidates", address.MaxCandidates.ToString(CultureInfo.InvariantCulture));

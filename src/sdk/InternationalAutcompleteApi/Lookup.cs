@@ -1,6 +1,7 @@
 ﻿namespace SmartyStreets.InternationalAutocompleteApi
 {
 	using System.Collections;
+	using System.Collections.Generic;
 
 	/// <summary>
 	///     In addition to holding all of the input data for this lookup, this class also
@@ -22,6 +23,7 @@
 		public int MaxResults { get; set; }
 		public string Locality { get; set; }
 		public string PostalCode { get; set; }
+		public Dictionary<string, string> CustomParamDict = new Dictionary<string, string>{};
 
 		#endregion
 
@@ -46,5 +48,8 @@
 		
 		internal string MaxSuggestionsString => this.MaxResults.ToString();
 
+		public void AddCustomParameter(string parameter, string value) {
+			CustomParamDict.Add(parameter, value);
+		}
 	}
 }

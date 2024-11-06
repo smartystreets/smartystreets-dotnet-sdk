@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections;
 	using System.IO;
+	using System.Collections.Generic;
 
 	/// <summary>
 	///     This client sends lookups to the SmartyStreets US Autocomplete API,
@@ -56,6 +57,10 @@
 			request.SetParameter("prefer_geolocation", lookup.PreferGeolocation);
 			request.SetParameter("selected", lookup.Selected);
 			request.SetParameter("source", lookup.Source);
+
+			foreach (KeyValuePair<string, string> line in lookup.CustomParamDict) {
+				request.SetParameter(line.Key, line.Value);
+			}
 
 			return request;
 		}

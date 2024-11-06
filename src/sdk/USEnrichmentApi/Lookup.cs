@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace SmartyStreets.USEnrichmentApi
 {
     using System;
@@ -15,6 +17,7 @@ namespace SmartyStreets.USEnrichmentApi
         private string zipcode;
         private string includeFields;
         private string excludeFields;
+        public Dictionary<string, string> CustomParamDict = new Dictionary<string, string>{};
         private string eTag;
 
         public Lookup(string smartyKey = null, string datasetName = null, string dataSubsetName = null, string freeform = null, string street = null,
@@ -141,6 +144,10 @@ namespace SmartyStreets.USEnrichmentApi
         }
 
         public abstract void DeserializeAndSetResults(SmartyStreets.ISerializer serializer, Stream payload);
+
+        public void AddCustomParameter(string parameter, string value) {
+			CustomParamDict.Add(parameter, value);
+		}
     }
 
 }

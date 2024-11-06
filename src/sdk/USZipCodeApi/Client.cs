@@ -59,6 +59,10 @@
 			request.SetParameter("state", lookup.State);
 			request.SetParameter("zipcode", lookup.ZipCode);
 			request.SetParameter("compatibility", lookup.Compatibility);
+
+			foreach (KeyValuePair<string, string> line in lookup.CustomParamDict) {
+				request.SetParameter(line.Key, line.Value);
+			}
 		}
 
 		private static void AssignResultsToLookups(Batch batch, IList<Result> results)

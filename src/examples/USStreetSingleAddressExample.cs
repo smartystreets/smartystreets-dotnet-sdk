@@ -44,11 +44,15 @@
 				City = "Mountain View",
 				State = "CA",
 				ZipCode = "21229",
+				CountySource = Lookup.GEOGRAPHIC,
 				MaxCandidates = 3,
 				MatchStrategy = Lookup.ENHANCED // "invalid" is the most permissive match,
                                                // this will always return at least one result even if the address is invalid.
                                                // Refer to the documentation for additional MatchStrategy options.
 			};
+
+			//uncomment the line below to add a custom parameter
+			//lookup.AddCustomParameter("county_source", "geographic");
 
 			try
 			{

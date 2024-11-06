@@ -32,6 +32,9 @@
 				AddressesHaveLineBreaks = false,
 				AddressesPerLine = 1
 			};
+
+			//uncomment the line below to add a custom parameter
+			//lookup.AddCustomParameter("addr_line_breaks", "false");
 			
             try
             {
