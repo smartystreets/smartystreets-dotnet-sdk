@@ -22,10 +22,7 @@
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			// The appropriate license values to be used for your subscriptions
-			// can be found on the Subscriptions page the account dashboard.
-			// https://www.smartystreets.com/docs/cloud/licensing
-			var client = new ClientBuilder(authId, authToken).WithLicense(new List<string>{"us-core-cloud"})
+			var client = new ClientBuilder(authId, authToken)
 				// NOTE: this is how to point the SDK at an alternate installation
 				// for example, this might be used to connect through "stunnel" to handle things like TLSv1.2 encryption
 				.WithCustomBaseUrl("http://127.0.0.1:8080/street-address") // point to local installation
