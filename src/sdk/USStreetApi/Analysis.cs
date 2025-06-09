@@ -46,6 +46,9 @@ namespace SmartyStreets.USStreetApi
 		[DataMember(Name = "enhanced_match")]
 		public string EnhancedMatch { get; set; }
 
+		[DataMember(Name = "components")]
+		public ComponentAnalysis Components { get; set; }
+
 		#endregion
 	}
 }
