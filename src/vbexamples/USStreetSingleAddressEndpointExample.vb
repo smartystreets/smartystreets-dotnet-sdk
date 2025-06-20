@@ -12,7 +12,7 @@ Module USStreetSingleAddressEndpointExample
 
         ' NOTE this Is how to point the SDK at an alternate installation
         ' for example, this might be used to connect through "stunnel" to handle things Like TLSv1.2 encryption
-        Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"us-core-cloud"}).WithCustomBaseUrl("http://127.0.0.1:8080/street-address").BuildUsStreetApiClient()
+        Dim client = New ClientBuilder(authID, authToken).WithCustomBaseUrl("http://127.0.0.1:8080/street-address").BuildUsStreetApiClient()
 
         Dim lookup As New Lookup()
         With lookup

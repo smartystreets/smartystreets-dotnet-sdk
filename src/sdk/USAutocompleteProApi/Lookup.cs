@@ -1,6 +1,4 @@
-﻿using SmartyStreets.USAutocompleteApi;
-
-namespace SmartyStreets.USAutocompleteProApi
+﻿namespace SmartyStreets.USAutocompleteProApi
 {
 	using System.Collections;
 	using System.Collections.Generic;
