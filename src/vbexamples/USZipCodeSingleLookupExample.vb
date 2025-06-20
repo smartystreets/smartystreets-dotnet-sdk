@@ -7,7 +7,7 @@ Module USZipCodeSingleLookupExample
     Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
     Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
 
-    Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"us-core-cloud"}).BuildUsZipCodeApiClient()
+    Dim client = New ClientBuilder(authID, authToken).BuildUsZipCodeApiClient()
 
     Sub USZipCodeSingleLookupExample()
 

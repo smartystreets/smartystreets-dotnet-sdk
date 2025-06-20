@@ -7,7 +7,7 @@ Module InternationalAutocompleteExample
     Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
     Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
 
-    Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"international-autocomplete-cloud"}).BuildInternationalAutocompleteApiClient()
+    Dim client = New ClientBuilder(authID, authToken).BuildInternationalAutocompleteApiClient()
 
     Sub InternationalAutocompleteExample()
 

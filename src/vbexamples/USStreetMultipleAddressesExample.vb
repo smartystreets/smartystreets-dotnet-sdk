@@ -11,7 +11,7 @@ Module USStreetMultipleAddressesExamples
         Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
         Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
 
-        Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"us-core-cloud"}).BuildUsStreetApiClient()
+        Dim client = New ClientBuilder(authID, authToken).BuildUsStreetApiClient()
         Dim batch = New Batch()
 
         Dim address0 As New Lookup()
