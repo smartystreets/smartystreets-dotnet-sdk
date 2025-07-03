@@ -25,11 +25,7 @@
 			var credentials = new StaticCredentials(id, token);
             ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-            // The appropriate license values to be used for your subscriptions
-            // can be found on the Subscriptions page the account dashboard.
-            // https://www.smartystreets.com/docs/cloud/licensing
-            var client = new ClientBuilder(credentials).WithLicense(new List<string>{"us-autocomplete-pro-cloud"})
-                .BuildUsAutocompleteProApiClient();
+            var client = new ClientBuilder(credentials).BuildUsAutocompleteProApiClient();
 
 			var lookup = new Lookup("1042 W Center");
 			lookup.PreferGeolocation = "none";

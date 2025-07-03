@@ -19,11 +19,7 @@
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			// The appropriate license values to be used for your subscriptions
-			// can be found on the Subscriptions page the account dashboard.
-			// https://www.smartystreets.com/docs/cloud/licensing
-			var client = new ClientBuilder(authId, authToken).WithLicense(new List<string>{"international-global-plus-cloud"})
-                .BuildInternationalStreetApiClient();
+			var client = new ClientBuilder(authId, authToken).BuildInternationalStreetApiClient();
 			
 			// Documentation for input fields can be found at:
 			// https://smartystreetscom/docs/cloud/international-street-api#http-input-fields

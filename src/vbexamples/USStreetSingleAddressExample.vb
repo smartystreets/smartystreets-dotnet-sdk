@@ -10,7 +10,7 @@ Module USStreetSingleAddressExample
         Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
         Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
 
-        Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"us-core-cloud"}).BuildUsStreetApiClient()
+        Dim client = New ClientBuilder(authID, authToken).BuildUsStreetApiClient()
 
         Dim lookup As New Lookup()
         With lookup

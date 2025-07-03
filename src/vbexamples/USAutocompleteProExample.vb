@@ -8,7 +8,7 @@ Module USAutocompleteProExample
     Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
     Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
 
-    Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"us-autocomplete-pro-cloud"}).BuildUsAutocompleteProApiClient()
+    Dim client = New ClientBuilder(authID, authToken).BuildUsAutocompleteProApiClient()
 
     Sub USAutocompleteProExample()
 
