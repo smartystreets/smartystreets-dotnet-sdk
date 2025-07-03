@@ -5,21 +5,22 @@
     using System.Net;
     using SmartyStreets;
 	using SmartyStreets.USZipCodeApi;
+    using System.Threading.Tasks;
 
 	internal static class USZipCodeSingleLookupExample
 	{
-		public static void Run()
+		public static async Task Run()
 		{
-            // specifies the TLS protocoll to use - this is TLS 1.2
-            const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
+			// specifies the TLS protocoll to use - this is TLS 1.2
+			const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
 
-            // You don't have to store your keys in environment variables, but we recommend it.
-            var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
+			// You don't have to store your keys in environment variables, but we recommend it.
+			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
-			
+
 			var client = new ClientBuilder(authId, authToken).BuildUsZipCodeApiClient();
-			
+
 			// Documentation for input fields can be found at:
 			// https://smartystreets.com/docs/us-zipcode-api#input-fields
 
@@ -36,7 +37,7 @@
 
 			try
 			{
-				client.Send(lookup);
+				await client.Send(lookup);
 			}
 			catch (SmartyException ex)
 			{
@@ -54,10 +55,11 @@
 			var cities = result.CityStates;
 			var zipCodes = result.ZipCodes;
 
-			if (cities == null || zipCodes == null) {
-                Console.WriteLine("No results.");
-                return;
-            }
+			if (cities == null || zipCodes == null)
+			{
+				Console.WriteLine("No results.");
+				return;
+			}
 
 			Console.WriteLine("Input ID: " + result.InputId);
 

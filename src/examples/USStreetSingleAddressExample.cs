@@ -4,12 +4,13 @@
 	using System.Collections.Generic;
 	using System.IO;
     using System.Net;
+    using System.Threading.Tasks;
     using SmartyStreets;
 	using SmartyStreets.USStreetApi;
 
 	internal static class USStreetSingleAddressExample
 	{
-		public static void Run()
+		public static async Task Run()
 		{
             // specifies the TLS protocoll to use - this is TLS 1.2
             const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
@@ -20,6 +21,7 @@
             // We recommend storing your keys in environment variables instead---it's safer!
             var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
+
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
 			var client = new ClientBuilder(authId, authToken)
@@ -53,7 +55,7 @@
 
 			try
 			{
-				client.Send(lookup);
+				await client.Send(lookup);
 			}
 			catch (SmartyException ex)
 			{

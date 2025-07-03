@@ -9,10 +9,11 @@ namespace Examples
 	using SmartyStreets.USEnrichmentApi;
     using System.Reflection;
     using System.Text;
+    using System.Threading.Tasks;
 
-	internal static class USEnrichmentSecondaryExample
+    internal static class USEnrichmentSecondaryExample
 	{
-		public static void Run()
+		public static async Task Run()
 		{
             // specifies the TLS protocoll to use - this is TLS 1.2
             const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
@@ -54,7 +55,7 @@ namespace Examples
                 // results = client.SendSecondaryLookup("325023201"); // simple call with just a SmartyKey
 
                 // Send a lookup using the line below
-                results = client.SendSecondaryLookup(lookup);
+                results = await client.SendSecondaryLookup(lookup);
             }
             catch (NotModifiedException ex) {
                 Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record
@@ -112,7 +113,7 @@ namespace Examples
                 // results = client.SendSecondaryCountLookup("325023201"); // simple call with just a SmartyKey
 
                 // Send a lookup using the line below
-                countResults = client.SendSecondaryCountLookup(countLookup);
+                countResults = await client.SendSecondaryCountLookup(countLookup);
             }
             catch (NotModifiedException ex) {
                 Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record

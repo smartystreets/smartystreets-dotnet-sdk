@@ -5,12 +5,13 @@ namespace Examples
     using System.IO;
     using System.Linq;
     using System.Net;
+    using System.Threading.Tasks;
     using SmartyStreets;
 	using SmartyStreets.InternationalAutocompleteApi;
 
     public class InternationalAutocompleteExample
     {
-        public static void Run()
+        public static async Task Run()
 		{
             // specifies the TLS protocoll to use - this is TLS 1.2
             const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
@@ -37,7 +38,7 @@ namespace Examples
 
             try
             {
-                client.Send(lookup);
+                await client.Send(lookup);
             }
             catch (SmartyException ex)
             {

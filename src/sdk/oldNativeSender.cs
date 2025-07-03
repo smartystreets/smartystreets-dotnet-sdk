@@ -132,16 +132,16 @@
 // 			}
 // 		}
 
-// 	private static byte[] GetResponseBody(WebResponse response)
-// 		{
-// 			var length = response.ContentLength >= 0 ? (int)response.ContentLength : 0;
+	// private static byte[] GetResponseBody(WebResponse response)
+	// 	{
+	// 		var length = response.ContentLength >= 0 ? (int)response.ContentLength : 0;
 
-// 			using (var targetStream = new MemoryStream(length))
-// 			using (var responseStream = response.GetResponseStream())
-// 			{
-// 				CopyStream(responseStream, targetStream);
-// 				return targetStream.ToArray();
-// 			}
-// 		}
-// 	}
+	// 		using (var targetStream = new MemoryStream(length))
+	// 		using (var responseStream = response.GetResponseStream())
+	// 		{
+	// 			CopyStream(responseStream, targetStream);
+	// 			return targetStream.ToArray();
+	// 		}
+	// 	}
+	// }
 // }

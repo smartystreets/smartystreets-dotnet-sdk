@@ -4,6 +4,8 @@ namespace SmartyStreets
     using System.IO;
     using System.Net;
     using System.Net.Http;
+    using System.Net.Http.Json;
+    using System.Text;
     using System.Threading.Tasks;
 
     public class NativeSender : ISender
@@ -21,16 +23,31 @@ namespace SmartyStreets
 
         public async Task<Response> Send(Request request)
         {
-            HttpResponseMessage response = await client.GetAsync(request.GetUrl());
+            foreach (var item in request.Headers)
+            {
+                if (item.Key == "Referer")
+                {
+                    client.DefaultRequestHeaders.Add(item.Key, item.Value);
+                }
+                else
+                {
+                    client.DefaultRequestHeaders.Add(item.Key, item.Value);
+                }
+            }
 
-            // var statusCode = GetResponseHeader(response);
-            // var payload = GetResponseBody(response);
-            // var retVal = new Response(statusCode, payload);
-            // return retVal;
+            var payload = new byte[] { };
+            HttpResponseMessage response; 
 
-            Console.WriteLine(response.ToString());
-            return new Response(200, new Byte[64]);
+            HttpRequestMessage httpRqeuest = new HttpRequestMessage(HttpMethod.Post, request.GetUrl());
+            httpRqeuest.Content = new StreamContent(new MemoryStream(request.Payload));
 
+            response = await client.SendAsync(httpRqeuest);
+
+            var statusCode = (int) response.StatusCode;
+
+            payload = await response.Content.ReadAsByteArrayAsync();
+
+            return new Response(200, payload);
         }
 
         private string BuildRequestURI(Request request)

@@ -8,10 +8,11 @@ namespace Examples
     using SmartyStreets;
 	using SmartyStreets.USEnrichmentApi;
     using System.Reflection;
+    using System.Threading.Tasks;
 
-	internal static class USEnrichmentPropertyExample
+    internal static class USEnrichmentPropertyExample
 	{
-		public static void Run()
+		public static async Task Run()
 		{
             // specifies the TLS protocoll to use - this is TLS 1.2
             const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
@@ -56,7 +57,7 @@ namespace Examples
                 // results = client.SendPropertyPrincipalLookup("325023201"); // simple call with just a SmartyKey
 
                 // Send a lookup using the line below
-                results = client.SendPropertyPrincipalLookup(lookup); // more flexible call to set other lookup options
+                results = await client.SendPropertyPrincipalLookup(lookup); // more flexible call to set other lookup options
             }
             catch (NotModifiedException ex) {
                 Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record
@@ -101,7 +102,7 @@ namespace Examples
                 // financialResults = client.SendPropertyFinancialLookup("325023201"); // simple call with just a SmartyKey
 
                 // Send a lookup using the line below
-                financialResults = client.SendPropertyFinancialLookup(financialLookup); // more flexible call to set other lookup options
+                financialResults = await client.SendPropertyFinancialLookup(financialLookup); // more flexible call to set other lookup options
             }
             catch (NotModifiedException ex) {
                 Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record

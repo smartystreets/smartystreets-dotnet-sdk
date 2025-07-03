@@ -16,74 +16,74 @@ namespace SmartyStreets.USEnrichmentApi
 			this.serializer = serializer;
 		}
 
-		public Property.Financial.Result[] SendPropertyFinancialLookup(string smartyKey)
+		public async Task<Property.Financial.Result[]> SendPropertyFinancialLookup(string smartyKey)
 		{
 			Property.Financial.Lookup lookup = new Property.Financial.Lookup(smartyKey);
-			Send(lookup);
+			await Send(lookup);
 			return lookup.GetResults();
 		}
 
-		public Property.Financial.Result[] SendPropertyFinancialLookup(Property.Financial.Lookup lookup)
+		public async Task<Property.Financial.Result[]> SendPropertyFinancialLookup(Property.Financial.Lookup lookup)
 		{
-			Send(lookup);
+			await Send(lookup);
 			return lookup.GetResults();
 		}
 
-		public Property.Principal.Result[] SendPropertyPrincipalLookup(string smartyKey)
+		public async Task<Property.Principal.Result[]> SendPropertyPrincipalLookup(string smartyKey)
 		{
 			Property.Principal.Lookup lookup = new Property.Principal.Lookup(smartyKey);
-			Send(lookup);
+			await Send(lookup);
 			return lookup.GetResults();
 		}
 
-		public Property.Principal.Result[] SendPropertyPrincipalLookup(Property.Principal.Lookup lookup)
+		public async Task<Property.Principal.Result[]> SendPropertyPrincipalLookup(Property.Principal.Lookup lookup)
 		{
-			Send(lookup);
+			await Send(lookup);
 			return lookup.GetResults();
 		}
 
-		public GeoReference.Result[] SendGeoReferenceLookup(string smartyKey)
+		public async Task<GeoReference.Result[]> SendGeoReferenceLookup(string smartyKey)
 		{
 			GeoReference.Lookup lookup = new GeoReference.Lookup(smartyKey);
-			Send(lookup);
+			await Send(lookup);
 			return lookup.GetResults();
 		}
 
-		public GeoReference.Result[] SendGeoReferenceLookup(GeoReference.Lookup lookup)
+		public async Task<GeoReference.Result[]> SendGeoReferenceLookup(GeoReference.Lookup lookup)
 		{
-			Send(lookup);
+			await Send(lookup);
 			return lookup.GetResults();
 		}
 
-		public Secondary.Result[] SendSecondaryLookup(string smartyKey)
+		public async Task<Secondary.Result[]> SendSecondaryLookup(string smartyKey)
 		{
 			Secondary.Lookup lookup = new Secondary.Lookup(smartyKey);
-			Send(lookup);
+			await Send(lookup);
 			return lookup.GetResults();
 		}
 
-		public Secondary.Result[] SendSecondaryLookup(Secondary.Lookup lookup)
+		public async Task<Secondary.Result[]> SendSecondaryLookup(Secondary.Lookup lookup)
 		{
-			Send(lookup);
+			await Send(lookup);
 			return lookup.GetResults();
 		}
 
-		public Secondary.Count.Result[] SendSecondaryCountLookup(string smartyKey)
+		public async Task<Secondary.Count.Result[]> SendSecondaryCountLookup(string smartyKey)
 		{
 			Secondary.Count.Lookup lookup = new Secondary.Count.Lookup(smartyKey);
-			Send(lookup);
+			await Send(lookup);
 			return lookup.GetResults();
 		}
 
-		public Secondary.Count.Result[] SendSecondaryCountLookup(Secondary.Count.Lookup lookup)
+		public async Task<Secondary.Count.Result[]> SendSecondaryCountLookup(Secondary.Count.Lookup lookup)
 		{
-			Send(lookup);
+			await Send(lookup);
 			return lookup.GetResults();
 		}
 
-		public byte[] SendUniversalLookup(Universal.Lookup lookup)
+		public async Task<byte[]> SendUniversalLookup(Universal.Lookup lookup)
 		{
-			Send(lookup);
+			await Send(lookup);
 			return lookup.GetResults();
 		}
 

@@ -4,12 +4,13 @@
 	using System.Collections.Generic;
     using System.IO;
     using System.Net;
+    using System.Threading.Tasks;
     using SmartyStreets;
 	using SmartyStreets.InternationalStreetApi;
 
 	internal static class InternationalStreetExample
 	{
-		public static void Run()
+		public static async Task Run()
 		{
             // specifies the TLS protocoll to use - this is TLS 1.2
             const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
@@ -43,7 +44,7 @@
 
             try
             {
-                client.Send(lookup);
+                await client.Send(lookup);
             }
             catch (SmartyException ex)
             {

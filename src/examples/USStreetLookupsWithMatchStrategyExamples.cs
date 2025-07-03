@@ -4,12 +4,13 @@
 	using System.Collections.Generic;
 	using System.IO;
     using System.Net;
+    using System.Threading.Tasks;
     using SmartyStreets;
 	using SmartyStreets.USStreetApi;
 
 	internal static class USStreetLookupsWithMatchStrategyExamples
 	{
-		public static void Run()
+		public static async Task Run()
 		{
             // specifies the TLS protocoll to use - this is TLS 1.2
             const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
@@ -58,7 +59,7 @@
 				batch.Add(addressWithEnhancedStrategy);
 				batch.Add(addressWithInvalidStrategy);
 
-				client.Send(batch);
+				await client.Send(batch);
 			}
 			catch (BatchFullException)
 			{

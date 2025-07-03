@@ -8,10 +8,11 @@ namespace Examples
     using SmartyStreets;
 	using SmartyStreets.USEnrichmentApi;
     using System.Reflection;
+    using System.Threading.Tasks;
 
-	internal static class USEnrichmentGeoReferenceExample
+    internal static class USEnrichmentGeoReferenceExample
 	{
-		public static void Run()
+		public static async Task Run()
 		{
             // specifies the TLS protocol to use - this is TLS 1.2
             const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
@@ -53,7 +54,7 @@ namespace Examples
                 // results = client.SendGeoReferenceLookup("325023201");  // simple call with just a SmartyKey
 
                 // Send a lookup using the line below
-                results = client.SendGeoReferenceLookup(lookup); // more flexible call to set other lookup options
+                results = await client.SendGeoReferenceLookup(lookup); // more flexible call to set other lookup options
             }
             catch (NotModifiedException ex) {
                 Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record
