@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace SmartyStreets
 {
@@ -12,9 +13,9 @@ namespace SmartyStreets
 			this.inner = inner;
 		}
 
-		public Response Send(Request request)
+		public async Task<Response> Send(Request request)
 		{
-			var response = this.inner.Send(request);
+			var response = await this.inner.Send(request);
 
 			switch (response.StatusCode)
 			{

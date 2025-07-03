@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SmartyStreets
 {
@@ -13,14 +14,14 @@ namespace SmartyStreets
             this.inner = inner;
         }
 
-        public Response Send(Request request)
+        public async Task<Response> Send(Request request)
         {
             foreach (var entry in this.headers)
             {
                 request.SetHeader(entry.Key, entry.Value);
             }
 
-            return this.inner.Send(request);
+            return await this.inner.Send(request);
         }
     }
 }

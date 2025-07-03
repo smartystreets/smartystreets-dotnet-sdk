@@ -6,8 +6,9 @@ namespace SmartyStreets.USStreetApi
 	using System.Collections.Generic;
     using System.Globalization;
 	using System.IO;
+    using System.Threading.Tasks;
 
-	public class Client : IUSStreetClient
+    public class Client : IUSStreetClient
 	{
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
@@ -18,18 +19,18 @@ namespace SmartyStreets.USStreetApi
 			this.serializer = serializer;
 		}
 
-		public void Send(Lookup lookup)
+		public async Task Send(Lookup lookup)
 		{
 			if (lookup == null)
 				throw new ArgumentNullException("lookup");
 
-			this.Send(new Batch {lookup});
+			await this.Send(new Batch {lookup});
 		}
 
 		/// <summary>
 		///     Sends a batch of up to 100 lookups for verification
 		/// </summary>
-		public void Send(Batch batch)
+		public async Task Send(Batch batch)
 		{
 			if (batch == null)
 				throw new ArgumentNullException("batch");
@@ -44,7 +45,7 @@ namespace SmartyStreets.USStreetApi
 			else
 				request.Payload = batch.Serialize(this.serializer);
 
-			var response = this.sender.Send(request);
+			var response = await this.sender.Send(request);
 
 			using (var payloadStream = new MemoryStream(response.Payload))
 			{

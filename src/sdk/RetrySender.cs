@@ -3,8 +3,9 @@
 namespace SmartyStreets
 {
 	using System;
+    using System.Threading.Tasks;
 
-	public class RetrySender : ISender
+    public class RetrySender : ISender
 	{
 		private readonly int maxRetries;
 		private readonly ISender inner;
@@ -39,11 +40,11 @@ namespace SmartyStreets
 			return true;
 		}
 
-		public Response Send(Request request)
+		public async Task<Response> Send(Request request)
 		{
 			for (var attempts = 0; BackOff(attempts); attempts++)
 			{
-				var response = this.TrySend(request, ref attempts);
+				var response = await this.TrySend(request, attempts);
 				if (response != null)
 					return response;
 			}
@@ -51,11 +52,11 @@ namespace SmartyStreets
 			return null;
 		}
 
-		private Response TrySend(Request request, ref int attempts)
+		private async Task<Response> TrySend(Request request, int attempts)
 		{
 			try
 			{
-				return this.inner.Send(request);
+				return await this.inner.Send(request);
 			}
 			catch (TooManyRequestsException e)
 			{

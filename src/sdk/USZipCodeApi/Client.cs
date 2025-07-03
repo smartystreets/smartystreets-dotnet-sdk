@@ -3,8 +3,9 @@
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
+    using System.Threading.Tasks;
 
-	public class Client : IUSZipCodeClient
+    public class Client : IUSZipCodeClient
 	{
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
@@ -15,18 +16,18 @@
 			this.serializer = serializer;
 		}
 
-		public void Send(Lookup lookup)
+		public async Task Send(Lookup lookup)
 		{
 			if (lookup == null)
 				throw new ArgumentNullException("lookup");
 
-			this.Send(new Batch {lookup});
+			await this.Send(new Batch {lookup});
 		}
 
 		/// <summary>
 		///     Sends a batch of up to 100 lookups for verification
 		/// </summary>
-		public void Send(Batch batch)
+		public async Task Send(Batch batch)
 		{
 			if (batch == null)
 				throw new ArgumentNullException("batch");
@@ -44,7 +45,7 @@
 				request.Payload = batch.Serialize(this.serializer);
 			}
 
-			var response = this.sender.Send(request);
+			var response = await this.sender.Send(request);
 			var payloadStream = new MemoryStream(response.Payload);
 
 			var results = this.serializer.Deserialize<Result[]>(payloadStream) ?? new Result[0];

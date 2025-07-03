@@ -3,6 +3,7 @@ namespace SmartyStreets.USEnrichmentApi
     using System;
 	using System.IO;
 	using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public class Client //: IUSEnrichmentClient
     {
@@ -86,12 +87,12 @@ namespace SmartyStreets.USEnrichmentApi
 			return lookup.GetResults();
 		}
 
-		private void Send(Lookup lookup)
+		private async Task Send(Lookup lookup)
 		{
 			if (lookup == null || (string.IsNullOrEmpty(lookup.GetSmartyKey()) && string.IsNullOrEmpty(lookup.GetStreet()) && string.IsNullOrEmpty(lookup.GetFreeform())))
 				throw new SmartyStreets.SmartyException("Client.Send() requires a Lookup with the 'smartyKey', 'street', or 'freeform' field set");
 			Request request = BuildRequest(lookup);
-			Response response = this.sender.Send(request);
+			Response response = await this.sender.Send(request);
 			foreach(var entry in response.HeaderInfo) {
 				if (entry.Key == "Etag") {
 					lookup.SetEtag(entry.Value);

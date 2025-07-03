@@ -5,12 +5,13 @@ namespace SmartyStreets.USExtractApi
 	using System;
 	using System.IO;
 	using System.Text;
+    using System.Threading.Tasks;
 
-	/// <summary>
-	///     This client sends lookups to the SmartyStreets US Extract API,
-	///     and attaches the results to the Lookup objects.
-	/// </summary>
-	public class Client : IUSExtractClient
+    /// <summary>
+    ///     This client sends lookups to the SmartyStreets US Extract API,
+    ///     and attaches the results to the Lookup objects.
+    /// </summary>
+    public class Client : IUSExtractClient
 	{
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
@@ -21,7 +22,7 @@ namespace SmartyStreets.USExtractApi
 			this.serializer = serializer;
 		}
 
-		public void Send(Lookup lookup)
+		public async Task Send(Lookup lookup)
 		{
 			if (lookup == null)
 				throw new ArgumentNullException("lookup");
@@ -30,7 +31,7 @@ namespace SmartyStreets.USExtractApi
 				throw new SmartyException("Client.send() requires a Lookup with the 'text' field set");
 
 			var request = BuildRequest(lookup);
-			var response = this.sender.Send(request);
+			var response = await this.sender.Send(request);
 
 			using (var payloadStream = new MemoryStream(response.Payload))
 			{

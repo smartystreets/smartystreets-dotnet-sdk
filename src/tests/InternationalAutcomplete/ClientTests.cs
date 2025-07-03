@@ -31,7 +31,7 @@
 
             client.Send(lookup);
 
-			Assert.AreEqual("http://localhost/lookup?search=1&country=2",
+			Assert.AreEqual("http://localhost/lookup?search=1&country=2&max_results=10",
 				this.capturingSender.Request.GetUrl());
 		}
 

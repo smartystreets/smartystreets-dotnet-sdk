@@ -1,5 +1,6 @@
 ﻿namespace SmartyStreets
 {
+    using System.Threading.Tasks;
 	public class MockSender : ISender
 	{
 		private readonly Response response;
@@ -10,7 +11,7 @@
 			this.response = response;
 		}
 
-		public Response Send(Request request)
+		public async Task<Response> Send(Request request)
 		{
 			this.Request = request;
 			return this.response;

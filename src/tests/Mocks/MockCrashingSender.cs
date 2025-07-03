@@ -1,6 +1,7 @@
 ﻿namespace SmartyStreets
 {
 	using System.IO;
+	using System.Threading.Tasks;
 
 	public class MockCrashingSender : ISender
 	{
@@ -19,7 +20,7 @@
 		public const string GatewayTimeout = "Gateway Timeout";
 
 		public int SendCount { get; private set; }
-		
+
 		public int FailCount { get; set; }
 
 		public MockCrashingSender()
@@ -27,7 +28,7 @@
 			this.SendCount = 0;
 		}
 
-		public Response Send(Request request)
+		public async Task<Response> Send(Request request)
 		{
 			this.SendCount++;
 
@@ -43,7 +44,7 @@
 			if (request.GetUrl().Contains(UnprocessableEntity))
 				if (this.SendCount == 1)
 					throw new UnprocessableEntityException("Unprocessable Entity. Sleeping...");
-			
+
 			// These exceptions should be retried until max is hit 
 			if (request.GetUrl().Contains(BadGateway))
 				if (this.SendCount < this.FailCount)
@@ -60,7 +61,7 @@
 			if (request.GetUrl().Contains(GatewayTimeout))
 				if (this.SendCount < this.FailCount)
 					throw new GatewayTimeoutException("Gateway Timeout. Retrying...");
-			
+
 			if (request.GetUrl().Contains(RetryThreeTimes))
 				if (this.SendCount <= 3)
 					throw new IOException("You need to retry");
@@ -68,7 +69,7 @@
 			if (request.GetUrl().Contains(RetryMaxTimes))
 				throw new IOException("Retrying won't help");
 
-			return new Response(StatusCode, new byte[] {});
+			return new Response(StatusCode, new byte[] { });
 		}
 	}
 }
