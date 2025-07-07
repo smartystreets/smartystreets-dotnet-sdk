@@ -2,14 +2,9 @@ namespace SmartyStreets
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.IO;
     using System.Linq;
-    using System.Net;
     using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Net.Http.Json;
-    using System.Text;
     using System.Threading.Tasks;
 
     public class NativeSender : ISender
@@ -37,7 +32,6 @@ namespace SmartyStreets
 
         public async Task<Response> Send(Request request)
         {
-            Console.WriteLine(request.GetUrl());
             foreach (var item in request.Headers)
             {
                 client.DefaultRequestHeaders.Add(item.Key, item.Value);

@@ -1,6 +1,7 @@
 ﻿namespace SmartyStreets
 {
-	using NUnit.Framework;
+    using System.Threading.Tasks;
+    using NUnit.Framework;
 
 	[TestFixture]
 	public class StatusCodeSenderTests
@@ -8,22 +9,21 @@
 		[Test]
 		public void TestThrowsOnNon200Reponse()
 		{
-			Assert.DoesNotThrow(() => Send(200));
-
-			Assert.Throws<BadCredentialsException>(() => Send(401));
-			Assert.Throws<PaymentRequiredException>(() => Send(402));
-			Assert.Throws<RequestEntityTooLargeException>(() => Send(413));
-			Assert.Throws<BadRequestException>(() => Send(400));
-			Assert.Throws<TooManyRequestsException>(() => Send(429));
-			Assert.Throws<InternalServerErrorException>(() => Send(500));
-			Assert.Throws<ServiceUnavailableException>(() => Send(503));
+			Assert.DoesNotThrowAsync(async () => await Send(200));
+			Assert.ThrowsAsync<BadCredentialsException>(async () => await Send(401));
+			Assert.ThrowsAsync<PaymentRequiredException>(async () => await Send(402));
+			Assert.ThrowsAsync<RequestEntityTooLargeException>(async () => await Send(413));
+			Assert.ThrowsAsync<BadRequestException>(async () => await Send(400));
+			Assert.ThrowsAsync<TooManyRequestsException>(async () => await Send(429));
+			Assert.ThrowsAsync<InternalServerErrorException>(async () => await Send(500));
+			Assert.ThrowsAsync<ServiceUnavailableException>(async () => await Send(503));
 		}
 
-		private static void Send(int statusCode)
+		private static async Task Send(int statusCode)
 		{
 			var inner = new MockStatusCodeSender(statusCode);
 			var sender = new StatusCodeSender(inner);
-			sender.Send(new Request());
+			await sender.Send(new Request());
 		}
 	}
 }

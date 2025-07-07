@@ -2,7 +2,8 @@
 {
 	using System.Collections.Generic;
 	using System.Text;
-	using NUnit.Framework;
+    using System.Threading.Tasks;
+    using NUnit.Framework;
 
 	[TestFixture]
 	public class ClientTests
@@ -10,19 +11,19 @@
 		#region [ Single Lookup ]
 
 		[Test]
-		public void TestSendingSingleFreeformLookup()
+		public async Task TestSendingSingleFreeformLookup()
 		{
 			var sender = new RequestCapturingSender();
 			var serializer = new FakeSerializer(null);
 			var client = new Client(sender, serializer);
 
-			client.Send(new Lookup("freeform"));
+			await client.Send(new Lookup("freeform"));
 
 			Assert.AreEqual("?street=freeform", sender.Request.GetUrl());
 		}
 
 		[Test]
-		public void TestSendingSingleFullyPopulatedLookup()
+		public async Task TestSendingSingleFullyPopulatedLookup()
 		{
 			var sender = new RequestCapturingSender();
 			var serializer = new FakeSerializer(null);
@@ -42,14 +43,14 @@
 				MatchStrategy = "enhanced"
 			};
 
-			client.Send(lookup);
+			await client.Send(lookup);
 
 			Assert.AreEqual("?input_id=1234&street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&" +
 			                "lastline=8&addressee=0&urbanization=4&match=enhanced&candidates=5", sender.Request.GetUrl());
 		}
 		
 		[Test]
-		public void TestSendingSingleFullyPopulatedLookupWithFormatOutput()
+		public async Task TestSendingSingleFullyPopulatedLookupWithFormatOutput()
 		{
 			var sender = new RequestCapturingSender();
 			var serializer = new FakeSerializer(null);
@@ -70,7 +71,7 @@
 				OutputFormat = Lookup.PROJECT_USA_FORMAT
 			};
 
-			client.Send(lookup);
+			await client.Send(lookup);
 
 			Assert.AreEqual("?input_id=1234&street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&" +
 			                "lastline=8&addressee=0&urbanization=4&match=enhanced&candidates=5&format=project-usa", sender.Request.GetUrl());
@@ -81,18 +82,18 @@
 		#region [ Batch Lookup ]
 
 		[Test]
-		public void TestEmptyBatchNotSent()
+		public async Task TestEmptyBatchNotSent()
 		{
 			var sender = new RequestCapturingSender();
 			var client = new Client(sender, null);
 
-			client.Send(new Batch());
+			await client.Send(new Batch());
 
 			Assert.Null(sender.Request);
 		}
 
 		[Test]
-		public void TestSuccessfullySendsBatchOfAddressLookups()
+		public async Task TestSuccessfullySendsBatchOfAddressLookups()
 		{
 			var sender = new RequestCapturingSender();
 			var expectedPayload = Encoding.ASCII.GetBytes("Hello World!");
@@ -100,7 +101,7 @@
 			var client = new Client(sender, serializer);
 			var batch = new Batch {new Lookup(), new Lookup()};
 
-			client.Send(batch);
+			await client.Send(batch);
 
 			Assert.AreEqual(expectedPayload, sender.Request.Payload);
 		}
@@ -110,20 +111,20 @@
 		#region [ Response Handling ]
 
 		[Test]
-		public void TestDeserializeCalledWithResponseBody()
+		public async Task TestDeserializeCalledWithResponseBody()
 		{
 			var response = new Response(0, Encoding.ASCII.GetBytes("Hello, world!"));
 			var sender = new MockSender(response);
 			var deserializer = new FakeDeserializer(null);
 			var client = new Client(sender, deserializer);
 
-			client.Send(new Lookup());
+			await client.Send(new Lookup());
 
 			Assert.AreEqual(response.Payload, deserializer.Payload);
 		}
 
 		[Test]
-		public void TestCandidatesCorrectlyAssignedToCorrespondingLookup()
+		public async Task TestCandidatesCorrectlyAssignedToCorrespondingLookup()
 		{
 			var expectedCandidates = new List<Candidate> {new Candidate(0), new Candidate(1), new Candidate(1)};
 			var batch = new Batch {new Lookup(), new Lookup()};
@@ -132,7 +133,7 @@
 			var deserializer = new FakeDeserializer(expectedCandidates);
 			var client = new Client(sender, deserializer);
 
-			client.Send(batch);
+			await client.Send(batch);
 
 			Assert.AreEqual(expectedCandidates[0], batch[0].Result[0]);
 			Assert.AreEqual(expectedCandidates[1], batch[1].Result[0]);
