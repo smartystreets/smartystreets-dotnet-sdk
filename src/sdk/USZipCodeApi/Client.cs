@@ -46,6 +46,7 @@
 			}
 
 			var response = await this.sender.Send(request);
+
 			var payloadStream = new MemoryStream(response.Payload);
 
 			var results = this.serializer.Deserialize<Result[]>(payloadStream) ?? new Result[0];

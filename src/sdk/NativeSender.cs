@@ -1,70 +1,95 @@
 namespace SmartyStreets
 {
     using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
     using System.IO;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.Net.Http.Json;
     using System.Text;
     using System.Threading.Tasks;
 
     public class NativeSender : ISender
     {
-        private HttpClient client = new HttpClient();
+        private HttpClient client;
 
         public NativeSender()
         {
+            client = new HttpClient();
+            client.Timeout = TimeSpan.FromSeconds(10);
         }
 
         public NativeSender(TimeSpan timeout, Proxy proxy = null)
         {
-            
+            var httpClientHandler = new HttpClientHandler();
+            httpClientHandler.Proxy = (proxy ?? new Proxy()).NativeProxy;
+            client = new HttpClient(httpClientHandler);
+            client.Timeout = timeout;
+        }
+
+        public NativeSender(HttpClient client)
+        {
+            this.client = client;
         }
 
         public async Task<Response> Send(Request request)
         {
+            Console.WriteLine(request.GetUrl());
             foreach (var item in request.Headers)
             {
-                if (item.Key == "Referer")
+                client.DefaultRequestHeaders.Add(item.Key, item.Value);
+            }
+
+            HttpResponseMessage response;
+            if (request.Payload != null)
+            {
+                HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Post, request.GetUrl());
+                httpRequest.Content = new StreamContent(new MemoryStream(request.Payload));
+                response = await client.SendAsync(httpRequest);
+            }
+            else
+            {
+                response = await client.GetAsync(request.GetUrl());
+            }
+
+
+            var statusCode = (int)response.StatusCode;
+
+            var payload = await response.Content.ReadAsByteArrayAsync();
+
+            var retVal = new Response(statusCode, payload);
+            // retrieve the etag header for enrichment api 
+            string headerValue = GetHeaderValue(response, "Etag");
+            if (headerValue != "")
+            {
+                retVal.HeaderInfo.Add("Etag", headerValue);
+            }
+
+            if (statusCode == 429)
+            {
+                string retryValue = GetHeaderValue(response, "Retry-After");
+                if ((retryValue != null) && (retryValue.Length != 0))
                 {
-                    client.DefaultRequestHeaders.Add(item.Key, item.Value);
-                }
-                else
-                {
-                    client.DefaultRequestHeaders.Add(item.Key, item.Value);
+                    retVal.HeaderInfo.Add("Retry-After", retryValue);
                 }
             }
 
-            var payload = new byte[] { };
-            HttpResponseMessage response; 
-
-            HttpRequestMessage httpRqeuest = new HttpRequestMessage(HttpMethod.Post, request.GetUrl());
-            httpRqeuest.Content = new StreamContent(new MemoryStream(request.Payload));
-
-            response = await client.SendAsync(httpRqeuest);
-
-            var statusCode = (int) response.StatusCode;
-
-            payload = await response.Content.ReadAsByteArrayAsync();
-
-            return new Response(200, payload);
+            return retVal;
         }
 
-        private string BuildRequestURI(Request request)
+        private static string GetHeaderValue(HttpResponseMessage response, string headerName)
         {
-            return null;
+            IEnumerable<string> values;
+            string headerValue = string.Empty;
+            if (response.Headers.TryGetValues(headerName, out values))
+            {
+                headerValue = values.FirstOrDefault();
+            }
+            return headerValue;
         }
-
-        private int GetResponseHeader(HttpResponseMessage response)
-        {
-            return 0;
-        }
-        
-         private byte[] GetResponseBody(HttpResponseMessage response) {
-            return null; 
-        }
-
-
-
+    
 	}
 }

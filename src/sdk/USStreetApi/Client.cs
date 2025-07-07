@@ -43,7 +43,6 @@ namespace SmartyStreets.USStreetApi
 			if (batch.Count == 1)
 				PopulateQueryString(batch[0], request);
 			else
-				Console.WriteLine("SERIALIZING BATCH");
 				request.Payload = batch.Serialize(this.serializer);
 
 			var response = await this.sender.Send(request);
