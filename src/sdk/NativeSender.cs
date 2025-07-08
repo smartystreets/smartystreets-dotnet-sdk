@@ -9,34 +9,36 @@ namespace SmartyStreets
 
     public class NativeSender : ISender
     {
+        private static readonly Version AssemblyVersion = typeof(NativeSender).Assembly.GetName().Version;
+        private static readonly string UserAgent = string.Format("smartystreets (sdk:dotnet@{0}.{1}.{2})",
+            AssemblyVersion.Major, AssemblyVersion.Minor, AssemblyVersion.Build);
         private HttpClient client;
 
         public NativeSender()
         {
             client = new HttpClient();
+
             client.Timeout = TimeSpan.FromSeconds(10);
+            client.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent);
         }
 
         public NativeSender(TimeSpan timeout, Proxy proxy = null)
         {
             var httpClientHandler = new HttpClientHandler();
             httpClientHandler.Proxy = (proxy ?? new Proxy()).NativeProxy;
+
             client = new HttpClient(httpClientHandler);
             client.Timeout = timeout;
-        }
-
-        public NativeSender(HttpClient client)
-        {
-            this.client = client;
+            client.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent);
         }
 
         public async Task<Response> Send(Request request)
         {
+            // Copy headers 
             foreach (var item in request.Headers)
             {
                 if (item.Key == "Referer")
                 {
-                    Console.WriteLine(item.Value);
                     client.DefaultRequestHeaders.Referrer = new Uri(item.Value);
                 }
                 else
@@ -45,23 +47,22 @@ namespace SmartyStreets
                 }
             }
 
+             
             HttpResponseMessage response;
             if (request.Payload != null)
             {
+                // Try write payload and get response 
                 HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Post, request.GetUrl());
                 httpRequest.Content = new StreamContent(new MemoryStream(request.Payload));
-
-                
                 response = await client.SendAsync(httpRequest);
             }
             else
             {
+                // Get response
                 response = await client.GetAsync(request.GetUrl());
             }
 
-
             var statusCode = (int)response.StatusCode;
-
             var payload = await response.Content.ReadAsByteArrayAsync();
 
             var retVal = new Response(statusCode, payload);
@@ -86,9 +87,8 @@ namespace SmartyStreets
 
         private static string GetHeaderValue(HttpResponseMessage response, string headerName)
         {
-            IEnumerable<string> values;
             string headerValue = string.Empty;
-            if (response.Headers.TryGetValues(headerName, out values))
+            if (response.Headers.TryGetValues(headerName, out IEnumerable<string> values))
             {
                 headerValue = values.FirstOrDefault();
             }
