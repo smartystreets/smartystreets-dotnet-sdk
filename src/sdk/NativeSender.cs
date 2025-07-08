@@ -34,7 +34,15 @@ namespace SmartyStreets
         {
             foreach (var item in request.Headers)
             {
-                client.DefaultRequestHeaders.Add(item.Key, item.Value);
+                if (item.Key == "Referer")
+                {
+                    Console.WriteLine(item.Value);
+                    client.DefaultRequestHeaders.Referrer = new Uri(item.Value);
+                }
+                else
+                {
+                    client.DefaultRequestHeaders.Add(item.Key, item.Value);
+                }
             }
 
             HttpResponseMessage response;
@@ -42,6 +50,8 @@ namespace SmartyStreets
             {
                 HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Post, request.GetUrl());
                 httpRequest.Content = new StreamContent(new MemoryStream(request.Payload));
+
+                
                 response = await client.SendAsync(httpRequest);
             }
             else

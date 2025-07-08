@@ -1,13 +1,14 @@
 namespace SmartyStreets
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using NUnit.Framework;
 
     [TestFixture]
     public class URLPrefixSenderTests 
     {
         [Test]
-        public void TestRequestURLPresent()
+        public async Task TestRequestURLPresent()
         {
             var mockSender = new MockSender(null);
             var urlPrefixSender = new URLPrefixSender("http://localhost/", mockSender);
@@ -15,26 +16,26 @@ namespace SmartyStreets
             var request = new Request();
             request.SetUrlComponents("jimbo");
 
-            urlPrefixSender.Send(request);
+            await urlPrefixSender.Send(request);
 
             Assert.AreEqual("http://localhost/jimbo?", request.GetUrl());
         }
 
         [Test]
-        public void TestRequestURLAbsent()
+        public async Task TestRequestURLAbsent()
         {
             var mockSender = new MockSender(null);
             var urlPrefixSender = new URLPrefixSender("http://localhost/", mockSender);
 
             var request = new Request();
 
-            urlPrefixSender.Send(request);
+            await urlPrefixSender.Send(request);
 
             Assert.AreEqual("http://localhost/?", request.GetUrl());
         }
 
         [Test]
-        public void TestMultipleSends()
+        public async Task TestMultipleSends()
         {
             var mockSender = new MockSender(null);
             var urlPrefixSender = new URLPrefixSender("http://localhost/", mockSender);
@@ -42,8 +43,8 @@ namespace SmartyStreets
             var request = new Request();
             request.SetUrlComponents("jimbo");
 
-            urlPrefixSender.Send(request);
-            urlPrefixSender.Send(request);
+            await urlPrefixSender.Send(request);
+            await urlPrefixSender.Send(request);
 
             Assert.AreEqual("http://localhost/jimbo?", request.GetUrl());
         }
