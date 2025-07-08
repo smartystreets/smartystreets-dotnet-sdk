@@ -1,10 +1,12 @@
-﻿namespace IntegrationTests
+﻿using System.Threading.Tasks;
+
+namespace IntegrationTests
 {
 	internal static class Program
 	{
-		private static void Main()
+		private static async Task Main()
 		{
-			Tests.RunAllApiIntegrationTests();
+			await Tests.RunAllApiIntegrationTests();
 		}
 	}
 }

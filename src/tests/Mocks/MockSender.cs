@@ -13,6 +13,7 @@
 
 		public async Task<Response> Send(Request request)
 		{
+			await Task.Delay(1); // Simulate minimal async delay
 			this.Request = request;
 			return this.response;
 		}
