@@ -21,5 +21,10 @@
 
 			return new Response(this.statusCode, null);
 		}
+
+		public void Dispose()
+		{
+			
+		}
 	}
 }

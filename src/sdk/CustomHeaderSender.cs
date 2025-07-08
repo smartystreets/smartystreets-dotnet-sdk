@@ -23,5 +23,9 @@ namespace SmartyStreets
 
             return await this.inner.Send(request);
         }
+
+        public void Dispose()
+        {
+        }
     }
 }

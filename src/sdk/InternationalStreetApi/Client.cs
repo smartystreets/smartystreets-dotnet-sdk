@@ -6,7 +6,8 @@
     using System.Threading.Tasks;
 
     public class Client : IInternationalStreetClient
-	{
+    {
+	    private bool senderIsDisposed;
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
 
@@ -82,6 +83,15 @@
 			if (lookup.MissingLocalityOrAdministrativeArea())
 				throw new UnprocessableEntityException("Insufficient information: One or more required fields " +
 				                                       "were not set on the lookup.");
+		}
+
+		public void Dispose()
+		{
+			if (!this.senderIsDisposed)
+			{
+				this.sender.Dispose();
+				this.senderIsDisposed = true;
+			}
 		}
 	}
 }

@@ -95,5 +95,10 @@ namespace SmartyStreets
 
 			return defaultErrorMessage;
 		}
+
+		public void Dispose()
+		{
+			
+		}
 	}
 }

@@ -15,5 +15,10 @@
 
 			return new Response(200, new byte[0]);
 		}
+
+		public void Dispose()
+		{
+			
+		}
 	}
 }

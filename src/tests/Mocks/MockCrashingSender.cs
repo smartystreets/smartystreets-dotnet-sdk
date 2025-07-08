@@ -74,5 +74,10 @@
 
 			return new Response(StatusCode, new byte[] { });
 		}
+
+		public void Dispose()
+		{
+			
+		}
 	}
 }

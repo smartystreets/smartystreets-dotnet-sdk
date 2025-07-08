@@ -17,5 +17,10 @@
 			this.Request = request;
 			return this.response;
 		}
+
+		public void Dispose()
+		{
+			
+		}
 	}
 }

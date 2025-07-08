@@ -1,8 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace SmartyStreets
 {
-	public interface ISender
+	public interface ISender : IDisposable
 	{
 		Task<Response> Send(Request request);
 	}

@@ -6,7 +6,8 @@
     using System.Threading.Tasks;
 
     public class Client : IUSZipCodeClient
-	{
+    {
+	    private bool senderWasDisposed;
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
 
@@ -21,7 +22,7 @@
 			if (lookup == null)
 				throw new ArgumentNullException("lookup");
 
-			await this.Send(new Batch {lookup});
+			await Send(new Batch { lookup });
 		}
 
 		/// <summary>
@@ -72,5 +73,15 @@
 			for (var i = 0; i < results.Count; i++)
 				batch[i].Result = results[i];
 		}
-	}
+
+		public void Dispose()
+		{
+			if (!senderWasDisposed)
+			{
+				sender.Dispose();
+				senderWasDisposed = true;
+			}
+		}
+
+    }
 }

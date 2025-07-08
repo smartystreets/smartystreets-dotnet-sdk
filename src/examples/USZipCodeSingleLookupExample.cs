@@ -19,7 +19,7 @@
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			var client = new ClientBuilder(authId, authToken).BuildUsZipCodeApiClient();
+			using var client = new ClientBuilder(authId, authToken).BuildUsZipCodeApiClient();
 
 			// Documentation for input fields can be found at:
 			// https://smartystreets.com/docs/us-zipcode-api#input-fields
@@ -34,10 +34,13 @@
 
 			//uncomment the line below to add a custom parameter
 			//lookup.AddCustomParameter("zipcode", "94039");
-
+			
+			var batch = new Batch();
+			batch.Add(lookup);
+			
 			try
 			{
-				await client.Send(lookup);
+				await client.Send(batch);
 			}
 			catch (SmartyException ex)
 			{

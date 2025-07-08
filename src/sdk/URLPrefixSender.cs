@@ -18,5 +18,10 @@ namespace SmartyStreets
 			request.SetUrlPrefix(this.urlPrefix);
 			return await this.inner.Send(request);
 		}
+
+		public void Dispose()
+		{
+			
+		}
 	}
 }

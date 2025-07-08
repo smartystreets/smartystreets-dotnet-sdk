@@ -1,6 +1,4 @@
-﻿using SmartyStreets.USReverseGeoApi;
-
-namespace SmartyStreets.USStreetApi
+﻿namespace SmartyStreets.USStreetApi
 {
 	using System;
 	using System.Collections.Generic;
@@ -9,7 +7,8 @@ namespace SmartyStreets.USStreetApi
     using System.Threading.Tasks;
 
     public class Client : IUSStreetClient
-	{
+    {
+	    private bool senderWasDisposed;
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
 
@@ -24,7 +23,7 @@ namespace SmartyStreets.USStreetApi
 			if (lookup == null)
 				throw new ArgumentNullException("lookup");
 
-			await this.Send(new Batch {lookup});
+			await this.Send(new Batch { lookup });
 		}
 
 		/// <summary>
@@ -87,5 +86,14 @@ namespace SmartyStreets.USStreetApi
 			foreach (var candidate in candidates)
 				batch[candidate.InputIndex].AddToResult(candidate);
 		}
-	}
+
+        public void Dispose()
+        {
+			if (!senderWasDisposed)
+			{
+				sender.Dispose();
+				senderWasDisposed = true;
+			}
+        }
+    }
 }

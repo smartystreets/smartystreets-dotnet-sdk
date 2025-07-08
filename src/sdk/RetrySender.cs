@@ -74,5 +74,9 @@ namespace SmartyStreets
 			// all other exceptions are just allowed to be caught by the caller
 			return null;
 		}
+
+		public void Dispose()
+		{
+		}
 	}
 }

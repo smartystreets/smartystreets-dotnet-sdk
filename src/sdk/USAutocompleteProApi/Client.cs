@@ -11,7 +11,8 @@
     ///     and attaches the results to the appropriate Lookup objects.
     /// </summary>
     public class Client : IUSAutoCompleteProClient
-	{
+    {
+	    private bool senderWasDisposed;
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
 
@@ -80,6 +81,15 @@
 				filterList = filterList.Substring(0, filterList.Length - 1);
 
 			return filterList;
+		}
+
+		public void Dispose()
+		{
+			if (!this.senderWasDisposed)
+			{
+				this.sender.Dispose();
+				this.senderWasDisposed = true;
+			}
 		}
 	}
 }

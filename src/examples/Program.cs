@@ -50,8 +50,6 @@ namespace Examples
                         await USEnrichmentSecondaryExample.Run();
                         await USEnrichmentUniversalExample.Run();
                         break;
-                    default:
-                        break;
                 }
             }
         }

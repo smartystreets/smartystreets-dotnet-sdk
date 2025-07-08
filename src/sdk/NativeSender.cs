@@ -94,6 +94,14 @@ namespace SmartyStreets
             }
             return headerValue;
         }
-    
-	}
+
+        public void Dispose()
+        {
+            if (this.client != null)
+            {
+                this.client.Dispose();
+                this.client = null;
+            }
+        }
+    }
 }

@@ -5,8 +5,9 @@ namespace SmartyStreets.USEnrichmentApi
 	using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public class Client //: IUSEnrichmentClient
+    public class Client : IDisposable //: IUSEnrichmentClient 
     {
+	    private bool senderWasDisposed;
         private readonly ISender sender;
 		private readonly ISerializer serializer;
 
@@ -157,6 +158,15 @@ namespace SmartyStreets.USEnrichmentApi
 			}
 
 			return request;
+		}
+
+		public void Dispose()
+		{
+			if (!this.senderWasDisposed)
+			{
+				this.sender.Dispose();
+				senderWasDisposed = true;
+			}
 		}
     }
 }

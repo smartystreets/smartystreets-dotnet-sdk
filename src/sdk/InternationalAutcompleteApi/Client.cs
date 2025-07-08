@@ -1,7 +1,6 @@
 ﻿namespace SmartyStreets.InternationalAutocompleteApi
 {
 	using System;
-	using System.Collections;
 	using System.IO;
 	using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -11,7 +10,8 @@
     ///     and attaches the results to the appropriate Lookup objects.
     /// </summary>
     public class Client : IInternationalAutoCompleteClient
-	{
+    {
+	    private bool senderWasDisposed; 
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
 
@@ -66,6 +66,15 @@
 			}
 			
 			return request;
+		}
+
+		public void Dispose()
+		{
+			if (!this.senderWasDisposed)
+			{
+				this.sender.Dispose();
+				this.senderWasDisposed = true;
+			}
 		}
 	}
 }

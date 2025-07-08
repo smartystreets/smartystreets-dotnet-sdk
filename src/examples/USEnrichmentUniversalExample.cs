@@ -26,7 +26,7 @@ namespace Examples
             var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
             ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-            var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
+            using var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
 
             byte[] results = null;
             // See the US Enrichment API documenation for all available datasets and data subsets https://www.smarty.com/docs/cloud/us-address-enrichment-api#data-sets

@@ -21,5 +21,10 @@ namespace SmartyStreets
             request.SetParameter("license", String.Join(",", this.licenses.ToArray()));
             return await this.inner.Send(request);
         }
+
+        public void Dispose()
+        {
+            
+        }
     }
 }

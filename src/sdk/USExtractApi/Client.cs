@@ -12,7 +12,8 @@ namespace SmartyStreets.USExtractApi
     ///     and attaches the results to the Lookup objects.
     /// </summary>
     public class Client : IUSExtractClient
-	{
+    {
+	    private bool senderWasDisposed; 
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
 
@@ -60,6 +61,15 @@ namespace SmartyStreets.USExtractApi
 			}
 
 			return request;
+		}
+
+		public void Dispose()
+		{
+			if (!this.senderWasDisposed)
+			{
+				sender.Dispose();
+				this.senderWasDisposed = true;
+			}
 		}
 	}
 }

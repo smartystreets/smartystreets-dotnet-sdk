@@ -6,7 +6,8 @@
     using System.Threading.Tasks;
 
     public class Client : IUSReverseGeoClient
-	{
+    {
+	    private bool senderWasDisposed; 
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
 
@@ -45,6 +46,15 @@
 			}
 
 			return request;
+		}
+
+		public void Dispose()
+		{
+			if (!senderWasDisposed)
+			{
+				sender.Dispose();
+				senderWasDisposed = true;
+			}
 		}
 	}
 }

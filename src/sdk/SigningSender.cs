@@ -18,5 +18,10 @@ namespace SmartyStreets
 			this.signer.Sign(request);
 			return await this.inner.Send(request);
 		}
+
+		public void Dispose()
+		{
+			
+		}
 	}
 }
