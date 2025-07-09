@@ -4,6 +4,7 @@ namespace SmartyStreets
 {
 	public class URLPrefixSender : ISender
 	{
+		private bool senderWasDisposed; 
 		private readonly string urlPrefix;
 		private readonly ISender inner;
 
@@ -21,7 +22,11 @@ namespace SmartyStreets
 
 		public void Dispose()
 		{
-			
+			if (!senderWasDisposed)
+			{
+				this.inner.Dispose();
+				this.senderWasDisposed = true;
+			}
 		}
 
 		public void EnableLogging()

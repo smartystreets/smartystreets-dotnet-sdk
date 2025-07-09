@@ -6,6 +6,7 @@ namespace SmartyStreets
 {
 	public class StatusCodeSender : ISender
 	{
+		private bool senderWasDisposed; 
 		private readonly ISender inner;
 
 		public StatusCodeSender(ISender inner)
@@ -98,7 +99,11 @@ namespace SmartyStreets
 
 		public void Dispose()
 		{
-			
+			if (!senderWasDisposed)
+			{
+				this.inner.Dispose();
+				this.senderWasDisposed = true;
+			}
 		}
 
 		public void EnableLogging()

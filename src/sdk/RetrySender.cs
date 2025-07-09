@@ -6,7 +6,8 @@ namespace SmartyStreets
     using System.Threading.Tasks;
 
     public class RetrySender : ISender
-	{
+    {
+	    private bool senderWasDisposed;
 		private readonly int maxRetries;
 		private readonly ISender inner;
 		private Action<int> sleep;
@@ -77,6 +78,11 @@ namespace SmartyStreets
 
 		public void Dispose()
 		{
+			if (!senderWasDisposed)
+			{
+				this.inner.Dispose();
+				this.senderWasDisposed = true;
+			}
 		}
 
 		public void EnableLogging()

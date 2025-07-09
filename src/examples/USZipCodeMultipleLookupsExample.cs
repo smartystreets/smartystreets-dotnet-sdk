@@ -20,7 +20,6 @@
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
 			using var client = new ClientBuilder(authId, authToken)
-				.WithDebug()
 				.BuildUsZipCodeApiClient();
 
 			var lookup1 = new Lookup

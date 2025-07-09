@@ -4,6 +4,7 @@ namespace SmartyStreets
 {
 	public class SigningSender : ISender
 	{
+		private bool senderWasDisposed; 
 		private readonly ICredentials signer;
 		private readonly ISender inner;
 
@@ -21,7 +22,11 @@ namespace SmartyStreets
 
 		public void Dispose()
 		{
-			
+			if (!senderWasDisposed)
+			{
+				this.inner.Dispose();
+				this.senderWasDisposed = true;
+			}
 		}
 
 		public void EnableLogging()

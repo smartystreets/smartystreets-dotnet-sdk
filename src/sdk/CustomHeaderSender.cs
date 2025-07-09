@@ -5,6 +5,7 @@ namespace SmartyStreets
 {
     public class CustomHeaderSender : ISender
     {
+        private bool senderWasDisposed;
         private readonly Dictionary<string, string> headers;
         private readonly ISender inner;
 
@@ -26,6 +27,11 @@ namespace SmartyStreets
 
         public void Dispose()
         {
+            if (!senderWasDisposed)
+            {
+                this.inner.Dispose();
+                this.senderWasDisposed = true;
+            }
         }
 
         public void EnableLogging()
