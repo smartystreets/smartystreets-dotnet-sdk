@@ -30,7 +30,7 @@
                 Country = "2"
             };
 
-            await client.Send(lookup);
+            client.Send(lookup);
 
 			Assert.AreEqual("http://localhost/lookup?search=1&country=2&max_results=10",
 				this.capturingSender.Request.GetUrl());
@@ -53,7 +53,7 @@
 				AddressID = "myID"
 			};
 			
-			await client.Send(lookup);
+			client.Send(lookup);
 
 			Assert.AreEqual(expectedURL, this.capturingSender.Request.GetUrl());
 		}
@@ -74,7 +74,7 @@
 				PostalCode = "6",
 			};
 			
-			await client.Send(lookup);
+			client.Send(lookup);
 
 			Assert.AreEqual(expectedURL, this.capturingSender.Request.GetUrl());
 		}
@@ -95,7 +95,7 @@
 				PostalCode = "6",
 			};
 			
-			await client.Send(lookup);
+			client.Send(lookup);
 
 			Assert.AreEqual(expectedURL, this.capturingSender.Request.GetUrl());
 		}
@@ -116,7 +116,7 @@
 			var lookup = new Lookup("1");
 			lookup.Country = "2";
 
-			await client.Send(lookup);
+			client.Send(lookup);
 
 			Assert.AreEqual(response.Payload, deserializer.Payload);
 		}
@@ -127,7 +127,7 @@
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
 
-			Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Send(null));
+			Assert.Throws<ArgumentNullException>(() => client.Send(null));
 		}
 
 		[Test]
@@ -136,7 +136,7 @@
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
 
-			Assert.ThrowsAsync<SmartyException>(async () => await client.Send(new Lookup()));
+			Assert.Throws<SmartyException>(() => client.Send(new Lookup()));
 		}
 
 		[Test]
@@ -145,7 +145,7 @@
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
 
-			Assert.ThrowsAsync<SmartyException>(async () => await client.Send(new Lookup("")));
+			Assert.Throws<SmartyException>(() => client.Send(new Lookup("")));
 		}
 
 
@@ -161,7 +161,7 @@
 			var deserializer = new FakeDeserializer(expectedResult);
 			var client = new Client(sender, deserializer);
 
-			await client.Send(lookup);
+			client.Send(lookup);
 
 			Assert.AreEqual(expectedResult.Candidates, lookup.Result);
 		}

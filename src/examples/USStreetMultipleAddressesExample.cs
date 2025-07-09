@@ -3,13 +3,12 @@
 	using System;
 	using System.IO;
     using System.Net;
-    using System.Threading.Tasks;
     using SmartyStreets;
 	using SmartyStreets.USStreetApi;
 
 	internal static class USStreetMultipleAddressesExample
 	{
-		public static async Task Run()
+		public static void Run()
 		{
             // specifies the TLS protocoll to use - this is TLS 1.2
             const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
@@ -69,7 +68,7 @@
 				batch.Add(address3);
 				batch.Add(address4);
 
-				await client.Send(batch);
+				client.Send(batch);
 			}
 			catch (BatchFullException)
 			{

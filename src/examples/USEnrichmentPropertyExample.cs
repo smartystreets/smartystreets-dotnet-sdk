@@ -4,11 +4,10 @@ namespace Examples
 	using System.Net;
     using SmartyStreets;
     using System.Reflection;
-    using System.Threading.Tasks;
 
     internal static class USEnrichmentPropertyExample
 	{
-		public static async Task Run()
+		public static void Run()
 		{
             // specifies the TLS protocoll to use - this is TLS 1.2
             const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
@@ -21,7 +20,7 @@ namespace Examples
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
+			using var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
 			
 
 			SmartyStreets.USEnrichmentApi.Property.Principal.Result[] results = null;
@@ -53,7 +52,7 @@ namespace Examples
                 // results = client.SendPropertyPrincipalLookup("325023201"); // simple call with just a SmartyKey
 
                 // Send a lookup using the line below
-                results = await client.SendPropertyPrincipalLookup(lookup); // more flexible call to set other lookup options
+                results = client.SendPropertyPrincipalLookup(lookup); // more flexible call to set other lookup options
             }
             catch (NotModifiedException ex) {
                 Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record
@@ -98,7 +97,7 @@ namespace Examples
                 // financialResults = client.SendPropertyFinancialLookup("325023201"); // simple call with just a SmartyKey
 
                 // Send a lookup using the line below
-                financialResults = await client.SendPropertyFinancialLookup(financialLookup); // more flexible call to set other lookup options
+                financialResults = client.SendPropertyFinancialLookup(financialLookup); // more flexible call to set other lookup options
             }
             catch (NotModifiedException ex) {
                 Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record

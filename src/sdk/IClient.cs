@@ -5,6 +5,7 @@ namespace SmartyStreets
 {
 	public interface IClient<in TLookup> : IDisposable
 	{
-		Task Send(TLookup lookup);
+		void Send(TLookup lookup);
+		Task SendAsync(TLookup lookup);
 	}
 }

@@ -8,7 +8,7 @@ namespace Examples
 
     internal static class USEnrichmentSecondaryExample
 	{
-		public static async Task Run()
+		public static void Run()
 		{
             // specifies the TLS protocoll to use - this is TLS 1.2
             const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
@@ -21,7 +21,7 @@ namespace Examples
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
+			using var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
 			
             // See the US Enrichment API documenation for all available datasets and data subsets https://www.smarty.com/docs/cloud/us-address-enrichment-api#data-sets
             SmartyStreets.USEnrichmentApi.Secondary.Result[] results = null;
@@ -50,7 +50,7 @@ namespace Examples
                 // results = client.SendSecondaryLookup("325023201"); // simple call with just a SmartyKey
 
                 // Send a lookup using the line below
-                results = await client.SendSecondaryLookup(lookup);
+                results = client.SendSecondaryLookup(lookup);
             }
             catch (NotModifiedException ex) {
                 Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record
@@ -108,7 +108,7 @@ namespace Examples
                 // results = client.SendSecondaryCountLookup("325023201"); // simple call with just a SmartyKey
 
                 // Send a lookup using the line below
-                countResults = await client.SendSecondaryCountLookup(countLookup);
+                countResults = client.SendSecondaryCountLookup(countLookup);
             }
             catch (NotModifiedException ex) {
                 Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record

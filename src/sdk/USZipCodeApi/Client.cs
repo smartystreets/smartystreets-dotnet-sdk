@@ -16,19 +16,29 @@
 			this.sender = sender;
 			this.serializer = serializer;
 		}
+		
+		public void Send(Lookup lookup)
+		{
+			SendAsync(lookup).GetAwaiter().GetResult();
+		}
 
-		public async Task Send(Lookup lookup)
+		public void Send(Batch batch)
+		{
+			SendAsync(batch).GetAwaiter().GetResult();
+		}
+
+		public async Task SendAsync(Lookup lookup)
 		{
 			if (lookup == null)
 				throw new ArgumentNullException("lookup");
 
-			await Send(new Batch { lookup });
+			await SendAsync(new Batch { lookup });
 		}
-
+		
 		/// <summary>
 		///     Sends a batch of up to 100 lookups for verification
 		/// </summary>
-		public async Task Send(Batch batch)
+		public async Task SendAsync(Batch batch)
 		{
 			if (batch == null)
 				throw new ArgumentNullException("batch");

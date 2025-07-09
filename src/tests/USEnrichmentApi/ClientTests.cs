@@ -1,8 +1,5 @@
 namespace SmartyStreets.USEnrichmentApi
 {
-	using System;
-	using System.Text;
-    using System.Threading.Tasks;
     using NUnit.Framework;
 
 	[TestFixture]
@@ -21,18 +18,18 @@ namespace SmartyStreets.USEnrichmentApi
 		//Property Principal Lookup Tests:
 
 		[Test]
-		public async Task TestSendingFullyPopulatedPrincipalLookup()
+		public void TestSendingFullyPopulatedPrincipalLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
 			const string expectedUrl= "http://localhost/1/property/principal?";
 
-			await client.SendPropertyPrincipalLookup("1");
+			client.SendPropertyPrincipalLookup("1");
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
-		public async Task TestSendingFullyPopulatedPrincipalComponenetsLookup()
+		public void TestSendingFullyPopulatedPrincipalComponenetsLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
@@ -44,12 +41,12 @@ namespace SmartyStreets.USEnrichmentApi
 			lookup.SetState("state");
 			lookup.SetZipcode("zipcode");
 
-			await client.SendPropertyPrincipalLookup(lookup);
+			client.SendPropertyPrincipalLookup(lookup);
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
-		public async Task TestSendingFullyPopulatedPrincipalFreeformLookup()
+		public void TestSendingFullyPopulatedPrincipalFreeformLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
@@ -58,7 +55,7 @@ namespace SmartyStreets.USEnrichmentApi
 			var lookup = new Property.Principal.Lookup();
 			lookup.SetFreeform("freeform");
 
-			await client.SendPropertyPrincipalLookup(lookup);
+			client.SendPropertyPrincipalLookup(lookup);
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
@@ -66,18 +63,18 @@ namespace SmartyStreets.USEnrichmentApi
 		//Property Financial Lookup Tests:
 
 		[Test]
-		public async Task TestSendingFullyPopulatedFinancialLookup()
+		public void TestSendingFullyPopulatedFinancialLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
 			const string expectedUrl= "http://localhost/1/property/financial?";
 
-			await client.SendPropertyFinancialLookup("1");
+			client.SendPropertyFinancialLookup("1");
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
-		public async Task TestSendingFullyPopulatedFinancialComponenetsLookup()
+		public void TestSendingFullyPopulatedFinancialComponenetsLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
@@ -89,12 +86,12 @@ namespace SmartyStreets.USEnrichmentApi
 			lookup.SetState("state");
 			lookup.SetZipcode("zipcode");
 
-			await client.SendPropertyFinancialLookup(lookup);
+			client.SendPropertyFinancialLookup(lookup);
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
-		public async Task TestSendingFullyPopulatedFinancialFreeformLookup()
+		public void TestSendingFullyPopulatedFinancialFreeformLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
@@ -103,7 +100,7 @@ namespace SmartyStreets.USEnrichmentApi
 			var lookup = new Property.Financial.Lookup();
 			lookup.SetFreeform("freeform");
 
-			await client.SendPropertyFinancialLookup(lookup);
+			client.SendPropertyFinancialLookup(lookup);
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
@@ -111,18 +108,18 @@ namespace SmartyStreets.USEnrichmentApi
 		//GeoReference Lookup Tests:
 
 		[Test]
-		public async Task TestSendingFullyPopulatedGeoReferenceLookup()
+		public void TestSendingFullyPopulatedGeoReferenceLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
 			const string expectedUrl= "http://localhost/1/geo-reference?";
 
-			await client.SendGeoReferenceLookup("1");
+			client.SendGeoReferenceLookup("1");
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
-		public async Task TestSendingFullyPopulatedGeoReferenceComponenetsLookup()
+		public void TestSendingFullyPopulatedGeoReferenceComponenetsLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
@@ -134,12 +131,12 @@ namespace SmartyStreets.USEnrichmentApi
 			lookup.SetState("state");
 			lookup.SetZipcode("zipcode");
 
-			await client.SendGeoReferenceLookup(lookup);
+			client.SendGeoReferenceLookup(lookup);
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
-		public async Task TestSendingFullyPopulatedGeoReferenceFreeformLookup()
+		public void TestSendingFullyPopulatedGeoReferenceFreeformLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
@@ -148,7 +145,7 @@ namespace SmartyStreets.USEnrichmentApi
 			var lookup = new GeoReference.Lookup();
 			lookup.SetFreeform("freeform");
 
-			await client.SendGeoReferenceLookup(lookup);
+			client.SendGeoReferenceLookup(lookup);
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
@@ -156,18 +153,18 @@ namespace SmartyStreets.USEnrichmentApi
 		//Secondary Lookup Tests:
 
 		[Test]
-		public async Task TestSendingFullyPopulatedSecondaryLookup()
+		public void TestSendingFullyPopulatedSecondaryLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
 			const string expectedUrl= "http://localhost/1/secondary?";
 
-			await client.SendSecondaryLookup("1");
+			client.SendSecondaryLookup("1");
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
-		public async Task TestSendingFullyPopulatedSecondaryComponenetsLookup()
+		public void TestSendingFullyPopulatedSecondaryComponenetsLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
@@ -179,12 +176,12 @@ namespace SmartyStreets.USEnrichmentApi
 			lookup.SetState("state");
 			lookup.SetZipcode("zipcode");
 
-			await client.SendSecondaryLookup(lookup);
+			client.SendSecondaryLookup(lookup);
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
-		public async Task TestSendingFullyPopulatedSecondaryFreeformLookup()
+		public void TestSendingFullyPopulatedSecondaryFreeformLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
@@ -193,7 +190,7 @@ namespace SmartyStreets.USEnrichmentApi
 			var lookup = new Secondary.Lookup();
 			lookup.SetFreeform("freeform");
 
-			await client.SendSecondaryLookup(lookup);
+			client.SendSecondaryLookup(lookup);
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
@@ -201,18 +198,18 @@ namespace SmartyStreets.USEnrichmentApi
 		//Secondary Count Lookup Tests:
 
 		[Test]
-		public async Task TestSendingFullyPopulatedSecondaryCountLookup()
+		public void TestSendingFullyPopulatedSecondaryCountLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
 			const string expectedUrl= "http://localhost/1/secondary/count?";
 
-			await client.SendSecondaryCountLookup("1");
+			client.SendSecondaryCountLookup("1");
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
-		public async Task TestSendingFullyPopulatedSecondaryCountComponenetsLookup()
+		public void TestSendingFullyPopulatedSecondaryCountComponenetsLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
@@ -224,12 +221,12 @@ namespace SmartyStreets.USEnrichmentApi
 			lookup.SetState("state");
 			lookup.SetZipcode("zipcode");
 
-			await client.SendSecondaryCountLookup(lookup);
+			client.SendSecondaryCountLookup(lookup);
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
-		public async Task TestSendingFullyPopulatedSecondaryCountFreeformLookup()
+		public void TestSendingFullyPopulatedSecondaryCountFreeformLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
@@ -238,7 +235,7 @@ namespace SmartyStreets.USEnrichmentApi
 			var lookup = new Secondary.Count.Lookup();
 			lookup.SetFreeform("freeform");
 
-			await client.SendSecondaryCountLookup(lookup);
+			client.SendSecondaryCountLookup(lookup);
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
@@ -250,7 +247,7 @@ namespace SmartyStreets.USEnrichmentApi
 			var client = new Client(this.urlSender, serializer);
 			string smartyKey = null;
 
-			Assert.ThrowsAsync<SmartyStreets.SmartyException>(async () => await client.SendPropertyFinancialLookup(smartyKey));
+			Assert.Throws<SmartyStreets.SmartyException>(() => client.SendPropertyFinancialLookup(smartyKey));
 		}
 	}
 }

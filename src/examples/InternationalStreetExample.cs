@@ -3,13 +3,12 @@
 	using System;
     using System.IO;
     using System.Net;
-    using System.Threading.Tasks;
     using SmartyStreets;
 	using SmartyStreets.InternationalStreetApi;
 
 	internal static class InternationalStreetExample
 	{
-		public static async Task Run()
+		public static void Run()
 		{
             // specifies the TLS protocoll to use - this is TLS 1.2
             const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
@@ -19,7 +18,7 @@
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			var client = new ClientBuilder(authId, authToken).BuildInternationalStreetApiClient();
+			using var client = new ClientBuilder(authId, authToken).BuildInternationalStreetApiClient();
 			
 			// Documentation for input fields can be found at:
 			// https://smartystreetscom/docs/cloud/international-street-api#http-input-fields
@@ -43,7 +42,7 @@
 
             try
             {
-                await client.Send(lookup);
+	            client.Send(lookup);
             }
             catch (SmartyException ex)
             {

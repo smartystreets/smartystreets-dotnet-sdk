@@ -3,13 +3,12 @@
 	using System;
     using System.IO;
     using System.Net;
-    using System.Threading.Tasks;
     using SmartyStreets;
 	using SmartyStreets.USExtractApi;
 
 	internal static class USExtractExample
 	{
-		public static async Task Run()
+		public static void  Run()
 		{
             // specifies the TLS protocoll to use - this is TLS 1.2
             const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
@@ -39,7 +38,7 @@
 			
             try
             {
-                await client.Send(lookup);
+                client.Send(lookup);
             }
             catch (SmartyException ex)
             {

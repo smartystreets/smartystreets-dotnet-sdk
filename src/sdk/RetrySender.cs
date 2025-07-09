@@ -87,7 +87,7 @@ namespace SmartyStreets
 
 		public void EnableLogging()
 		{
-			
+			this.inner.EnableLogging();
 		}
 	}
 }

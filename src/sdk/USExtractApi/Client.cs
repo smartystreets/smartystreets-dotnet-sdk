@@ -23,7 +23,12 @@ namespace SmartyStreets.USExtractApi
 			this.serializer = serializer;
 		}
 
-		public async Task Send(Lookup lookup)
+		public void Send(Lookup lookup)
+		{
+			SendAsync(lookup).GetAwaiter().GetResult();
+		}
+
+		public async Task SendAsync(Lookup lookup)
 		{
 			if (lookup == null)
 				throw new ArgumentNullException("lookup");

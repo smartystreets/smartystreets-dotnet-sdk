@@ -19,13 +19,13 @@
 		}
 
 		[Test]
-		public async Task TestSendingLookup()
+		public void TestSendingLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.sender, serializer);
 			var lookup = new Lookup(44.888888888, -111.111111111);
 
-			await client.Send(lookup);
+			client.Send(lookup);
 
 			Assert.AreEqual("http://localhost/?latitude=44.88888889&longitude=-111.11111111", this.capturingSender.Request.GetUrl());
 		}

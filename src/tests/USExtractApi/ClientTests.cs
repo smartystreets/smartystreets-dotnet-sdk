@@ -2,7 +2,6 @@
 {
 	using System;
 	using System.Text;
-    using System.Threading.Tasks;
     using NUnit.Framework;
 
 	[TestFixture]
@@ -19,14 +18,14 @@
 		}
 
 		[Test]
-		public async Task TestSendingBodyOnlyLookup()
+		public void TestSendingBodyOnlyLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
 			const string expectedUrl = "http://localhost/?aggressive=false&addr_line_breaks=true&addr_per_line=0";
 			var expectedPayload = Encoding.ASCII.GetBytes("Hello, World!");
 
-			await client.Send(new Lookup("Hello, World!"));
+			client.Send(new Lookup("Hello, World!"));
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 			Assert.AreEqual(expectedPayload, this.capturingSender.Request.Payload);
@@ -34,7 +33,7 @@
 
 		[TestCase(Lookup.ENHANCED)]
 		[TestCase(Lookup.INVALID)]
-		public async Task TestSendingFullyPopulatedLookup(string matchStrategy)
+		public void TestSendingFullyPopulatedLookup(string matchStrategy)
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
@@ -47,7 +46,7 @@
 			lookup.AddressesPerLine = 2;
 			lookup.MatchStrategy = matchStrategy;
 
-			await client.Send(lookup);
+			client.Send(lookup);
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
@@ -58,24 +57,24 @@
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
 
-			Assert.ThrowsAsync<ArgumentNullException>(async () => await client.Send(null));
+			Assert.Throws<ArgumentNullException>(() => client.Send(null));
 		}
 
 		[Test]
-		public async Task TestDeserializeCalledWithResponseBody()
+		public void TestDeserializeCalledWithResponseBody()
 		{
 			var response = new Response(0, Encoding.ASCII.GetBytes("Hello, World!"));
 			var sender = new MockSender(response);
 			var deserializer = new FakeDeserializer(null);
 			var client = new Client(sender, deserializer);
 
-			await client.Send(new Lookup("Hello, World!"));
+			client.Send(new Lookup("Hello, World!"));
 
 			Assert.AreEqual(response.Payload, deserializer.Payload);
 		}
 
 		[Test]
-		public async Task TestResultCorrectlyAssignedToCorrespondingLookup()
+		public void TestResultCorrectlyAssignedToCorrespondingLookup()
 		{
 			var expectedResult = new Result();
 			var lookup = new Lookup("Hello, World!");
@@ -84,19 +83,19 @@
 			var deserializer = new FakeDeserializer(expectedResult);
 			var client = new Client(sender, deserializer);
 
-			await client.Send(lookup);
+			client.Send(lookup);
 
 			Assert.AreEqual(expectedResult, lookup.Result);
 		}
 
 		[Test]
-		public async Task TestContentTypeSetCorrectly()
+		public void TestContentTypeSetCorrectly()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
 			var lookup = new Lookup("Hello, World!");
 
-			await client.Send(lookup);
+			client.Send(lookup);
 
 			Assert.AreEqual("text/plain", this.capturingSender.Request.ContentType);
 		}

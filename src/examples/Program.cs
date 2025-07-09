@@ -4,12 +4,12 @@ namespace Examples
 {
     internal static class Program
     {
-        private static async Task Main(string[] args)
+        private static void Main(string[] args)
         {
             if (args.Length == 0)
             {
                 // If no arguments, run all examples (default behavior)
-                await RunAllExamples();
+                RunAllExamples();
                 return;
             }
 
@@ -18,58 +18,58 @@ namespace Examples
                 switch (arg.ToLowerInvariant())
                 {
                     case "us_street_single":
-                        await USStreetSingleAddressExample.Run();
+                        USStreetSingleAddressExample.Run();
                         break;
                     case "us_street_multiple":
-                        await USStreetMultipleAddressesExample.Run();
+                        USStreetMultipleAddressesExample.Run();
                         break;
                     case "us_zipcode_single":
-                        await USZipCodeSingleLookupExample.Run();
+                        USZipCodeSingleLookupExample.Run();
                         break;
                     case "us_zipcode_multiple":
-                        await USZipCodeMultipleLookupsExample.Run();
+                        USZipCodeMultipleLookupsExample.Run();
                         break;
                     case "international_street":
-                        await InternationalStreetExample.Run();
+                        InternationalStreetExample.Run();
                         break;
                     case "international_autocomplete":
-                        await InternationalAutocompleteExample.Run();
+                        InternationalAutocompleteExample.Run();
                         break;
                     case "us_extract":
-                        await USExtractExample.Run();
+                        USExtractExample.Run();
                         break;
                     case "us_autocomplete_pro":
-                        await USAutocompleteProExample.Run();
+                        USAutocompleteProExample.Run();
                         break;
                     case "us_reverse_geo":
-                        await USReverseGeoExample.Run();
+                        USReverseGeoExample.Run();
                         break;
                     case "us_enrichment":
-                        await USEnrichmentPropertyExample.Run();
-                        await USEnrichmentGeoReferenceExample.Run();
-                        await USEnrichmentSecondaryExample.Run();
-                        await USEnrichmentUniversalExample.Run();
+                        USEnrichmentPropertyExample.Run();
+                        USEnrichmentGeoReferenceExample.Run();
+                        USEnrichmentSecondaryExample.Run();
+                        USEnrichmentUniversalExample.Run();
                         break;
                 }
             }
         }
 
-        private static async Task RunAllExamples()
+        private static void RunAllExamples()
         {
-            await USStreetSingleAddressExample.Run();
-            await USStreetLookupsWithMatchStrategyExamples.Run();
-            await USStreetMultipleAddressesExample.Run();
-            await USZipCodeSingleLookupExample.Run();
-            await USZipCodeMultipleLookupsExample.Run();
-            await InternationalStreetExample.Run();
-            await InternationalAutocompleteExample.Run();
-            await USExtractExample.Run();
-            await USAutocompleteProExample.Run();
-            await USReverseGeoExample.Run();
-            await USEnrichmentPropertyExample.Run();
-            await USEnrichmentGeoReferenceExample.Run();
-            await USEnrichmentSecondaryExample.Run();
-            await USEnrichmentUniversalExample.Run();
+            USStreetSingleAddressExample.Run();
+            USStreetLookupsWithMatchStrategyExamples.Run();
+            USStreetMultipleAddressesExample.Run();
+            USZipCodeSingleLookupExample.Run();
+            USZipCodeMultipleLookupsExample.Run();
+            InternationalStreetExample.Run();
+            InternationalAutocompleteExample.Run();
+            USExtractExample.Run();
+            USAutocompleteProExample.Run();
+            USReverseGeoExample.Run();
+            USEnrichmentPropertyExample.Run();
+            USEnrichmentGeoReferenceExample.Run();
+            USEnrichmentSecondaryExample.Run();
+            USEnrichmentUniversalExample.Run();
         }
     }
 }

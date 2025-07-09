@@ -33,7 +33,7 @@ namespace SmartyStreets
 
         public void EnableLogging()
         {
-            
+            inner.EnableLogging();
         }
     }
 }

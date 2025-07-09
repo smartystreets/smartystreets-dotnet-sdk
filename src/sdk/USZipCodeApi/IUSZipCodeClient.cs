@@ -5,6 +5,7 @@ namespace SmartyStreets.USZipCodeApi
     // marker interface for easy dependency injection and unit test mocking
     public interface IUSZipCodeClient : IClient<Lookup>
     {
-        Task Send(Batch batch);
+        void Send(Batch batch);
+        Task SendAsync(Batch batch);
     }
 }

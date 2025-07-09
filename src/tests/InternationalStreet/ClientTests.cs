@@ -27,7 +27,7 @@
 			var client = new Client(this.sender, serializer);
 			var lookup = new Lookup("freeform", "USA");
 
-			await client.Send(lookup);
+			client.Send(lookup);
 
 			Assert.AreEqual("http://localhost/?country=USA&freeform=freeform", this.capturingSender.Request.GetUrl());
 		}
@@ -56,7 +56,7 @@
 				PostalCode = "9"
 			};
 
-			await client.Send(lookup);
+			client.Send(lookup);
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
@@ -67,7 +67,7 @@
 			var crashSender = new MockCrashingSender();
 			var client = new Client(crashSender, null);
 
-			Assert.ThrowsAsync<UnprocessableEntityException>(async () => await client.Send(new Lookup()));
+			Assert.Throws<UnprocessableEntityException>(() => client.Send(new Lookup()));
 		}
 
 		[Test]
@@ -77,7 +77,7 @@
 			var client = new Client(crashSender, null);
 			var lookup = new Lookup {Country = "0"};
 
-			Assert.ThrowsAsync<UnprocessableEntityException>(async () => await client.Send(lookup));
+			Assert.Throws<UnprocessableEntityException>(() => client.Send(lookup));
 		}
 
 		[Test]
@@ -91,7 +91,7 @@
 				Address1 = "1"
 			};
 
-			Assert.ThrowsAsync<UnprocessableEntityException>(async () => await client.Send(lookup));
+			Assert.Throws<UnprocessableEntityException>(() => client.Send(lookup));
 		}
 
 		[Test]
@@ -106,7 +106,7 @@
 				Locality = "2"
 			};
 
-			Assert.ThrowsAsync<UnprocessableEntityException>(async () => await client.Send(lookup));
+			Assert.Throws<UnprocessableEntityException>(() => client.Send(lookup));
 		}
 
 		[Test]
@@ -121,11 +121,11 @@
 				AdministrativeArea = "2"
 			};
 
-    		Assert.ThrowsAsync<UnprocessableEntityException>(async () => await client.Send(lookup));
+    		Assert.Throws<UnprocessableEntityException>(() => client.Send(lookup));
 		}
 
 		[Test]
-		public async Task TestAcceptsLookupsWithEnoughInfo()
+		public void TestAcceptsLookupsWithEnoughInfo()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(new RequestCapturingSender(), serializer);
@@ -135,34 +135,34 @@
 				Freeform = "1"
 			};
 
-			await client.Send(lookup);
+			client.Send(lookup);
 
 			lookup.Freeform = null;
 			lookup.Address1 = "1";
 			lookup.PostalCode = "2";
-			await client.Send(lookup);
+			client.Send(lookup);
 
 			lookup.PostalCode = null;
 			lookup.Locality = "3";
 			lookup.AdministrativeArea = "4";
-			await client.Send(lookup);
+			client.Send(lookup);
 		}
 
 		[Test]
-		public async Task TestDeserializeCalledWithResponseBody()
+		public void TestDeserializeCalledWithResponseBody()
 		{
 			var response = new Response(0, Encoding.ASCII.GetBytes("Hello, World!"));
 			var mockSender = new MockSender(response);
 			var deserializer = new FakeDeserializer(null);
 			var client = new Client(mockSender, deserializer);
 
-			await client.Send(new Lookup("1", "2"));
+			client.Send(new Lookup("1", "2"));
 
 			Assert.AreEqual(response.Payload, deserializer.Payload);
 		}
 
 		[Test]
-		public async Task TestCandidatesCorrectlyAssignedToLookup()
+		public void TestCandidatesCorrectlyAssignedToLookup()
 		{
 			var expectedCandidates = new List<Candidate> {new Candidate(), new Candidate()};
 			var lookup = new Lookup("1", "2");
@@ -171,7 +171,7 @@
 			var deserializer = new FakeDeserializer(expectedCandidates);
 			var client = new Client(mockSender, deserializer);
 
-			await client.Send(lookup);
+			client.Send(lookup);
 
 			Assert.AreEqual(expectedCandidates[0], lookup.Result[0]);
 			Assert.AreEqual(expectedCandidates[1], lookup.Result[1]);

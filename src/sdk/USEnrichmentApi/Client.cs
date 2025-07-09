@@ -5,7 +5,7 @@ namespace SmartyStreets.USEnrichmentApi
 	using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public class Client : IDisposable //: IUSEnrichmentClient 
+    public class Client : IDisposable //, IUSEnrichmentClient 
     {
 	    private bool senderWasDisposed;
         private readonly ISender sender;
@@ -16,79 +16,134 @@ namespace SmartyStreets.USEnrichmentApi
 			this.sender = sender;
 			this.serializer = serializer;
 		}
+		
+		public Property.Financial.Result[] SendPropertyFinancialLookup(string smartyKey)
+		{
+			return SendPropertyFinancialLookupAsync(smartyKey).GetAwaiter().GetResult();
+		}
 
-		public async Task<Property.Financial.Result[]> SendPropertyFinancialLookup(string smartyKey)
+		public async Task<Property.Financial.Result[]> SendPropertyFinancialLookupAsync(string smartyKey)
 		{
 			Property.Financial.Lookup lookup = new Property.Financial.Lookup(smartyKey);
-			await Send(lookup);
+			await SendAsync(lookup);
 			return lookup.GetResults();
 		}
-
-		public async Task<Property.Financial.Result[]> SendPropertyFinancialLookup(Property.Financial.Lookup lookup)
+		
+		public Property.Financial.Result[] SendPropertyFinancialLookup(Property.Financial.Lookup lookup)
 		{
-			await Send(lookup);
-			return lookup.GetResults();
+			return SendPropertyFinancialLookupAsync(lookup).GetAwaiter().GetResult();
 		}
 
-		public async Task<Property.Principal.Result[]> SendPropertyPrincipalLookup(string smartyKey)
+		public async Task<Property.Financial.Result[]> SendPropertyFinancialLookupAsync(Property.Financial.Lookup lookup)
+		{
+			await SendAsync(lookup);
+			return lookup.GetResults();
+		}
+		
+		public Property.Principal.Result[] SendPropertyPrincipalLookup(string smartyKey)
+		{
+			return SendPropertyPrincipalLookupAsync(smartyKey).GetAwaiter().GetResult();
+		}
+
+		public async Task<Property.Principal.Result[]> SendPropertyPrincipalLookupAsync(string smartyKey)
 		{
 			Property.Principal.Lookup lookup = new Property.Principal.Lookup(smartyKey);
-			await Send(lookup);
+			await SendAsync(lookup);
 			return lookup.GetResults();
 		}
-
-		public async Task<Property.Principal.Result[]> SendPropertyPrincipalLookup(Property.Principal.Lookup lookup)
+		
+		public Property.Principal.Result[] SendPropertyPrincipalLookup(Property.Principal.Lookup lookup)
 		{
-			await Send(lookup);
-			return lookup.GetResults();
+			return SendPropertyPrincipalLookupAsync(lookup).GetAwaiter().GetResult();
 		}
 
-		public async Task<GeoReference.Result[]> SendGeoReferenceLookup(string smartyKey)
+		public async Task<Property.Principal.Result[]> SendPropertyPrincipalLookupAsync(Property.Principal.Lookup lookup)
+		{
+			await SendAsync(lookup);
+			return lookup.GetResults();
+		}
+		
+		public GeoReference.Result[] SendGeoReferenceLookup(string smartyKey)
+		{
+			return SendGeoReferenceLookupAsync(smartyKey).GetAwaiter().GetResult();
+		}
+
+		public async Task<GeoReference.Result[]> SendGeoReferenceLookupAsync(string smartyKey)
 		{
 			GeoReference.Lookup lookup = new GeoReference.Lookup(smartyKey);
-			await Send(lookup);
+			await SendAsync(lookup);
 			return lookup.GetResults();
 		}
-
-		public async Task<GeoReference.Result[]> SendGeoReferenceLookup(GeoReference.Lookup lookup)
+		
+		public GeoReference.Result[] SendGeoReferenceLookup(GeoReference.Lookup lookup)
 		{
-			await Send(lookup);
-			return lookup.GetResults();
+			return SendGeoReferenceLookupAsync(lookup).GetAwaiter().GetResult();
 		}
 
-		public async Task<Secondary.Result[]> SendSecondaryLookup(string smartyKey)
+		public async Task<GeoReference.Result[]> SendGeoReferenceLookupAsync(GeoReference.Lookup lookup)
+		{
+			await SendAsync(lookup);
+			return lookup.GetResults();
+		}
+		
+		public Secondary.Result[] SendSecondaryLookup(string smartyKey)
+		{
+			return SendSecondaryLookupAsync(smartyKey).GetAwaiter().GetResult();
+		}
+
+		public async Task<Secondary.Result[]> SendSecondaryLookupAsync(string smartyKey)
 		{
 			Secondary.Lookup lookup = new Secondary.Lookup(smartyKey);
-			await Send(lookup);
+			await SendAsync(lookup);
 			return lookup.GetResults();
 		}
-
-		public async Task<Secondary.Result[]> SendSecondaryLookup(Secondary.Lookup lookup)
+		
+		public Secondary.Result[] SendSecondaryLookup(Secondary.Lookup lookup)
 		{
-			await Send(lookup);
-			return lookup.GetResults();
+			return SendSecondaryLookupAsync(lookup).GetAwaiter().GetResult();
 		}
 
-		public async Task<Secondary.Count.Result[]> SendSecondaryCountLookup(string smartyKey)
+		public async Task<Secondary.Result[]> SendSecondaryLookupAsync(Secondary.Lookup lookup)
+		{
+			await SendAsync(lookup);
+			return lookup.GetResults();
+		}
+		
+		public Secondary.Count.Result[] SendSecondaryCountLookup(string smartyKey)
+		{
+			return SendSecondaryCountLookupAsync(smartyKey).GetAwaiter().GetResult();
+		}
+
+		public async Task<Secondary.Count.Result[]> SendSecondaryCountLookupAsync(string smartyKey)
 		{
 			Secondary.Count.Lookup lookup = new Secondary.Count.Lookup(smartyKey);
-			await Send(lookup);
+			await SendAsync(lookup);
 			return lookup.GetResults();
 		}
-
-		public async Task<Secondary.Count.Result[]> SendSecondaryCountLookup(Secondary.Count.Lookup lookup)
+		
+		public Secondary.Count.Result[] SendSecondaryCountLookup(Secondary.Count.Lookup lookup)
 		{
-			await Send(lookup);
-			return lookup.GetResults();
+			return SendSecondaryCountLookupAsync(lookup).GetAwaiter().GetResult();
 		}
 
-		public async Task<byte[]> SendUniversalLookup(Universal.Lookup lookup)
+		public async Task<Secondary.Count.Result[]> SendSecondaryCountLookupAsync(Secondary.Count.Lookup lookup)
 		{
-			await Send(lookup);
+			await SendAsync(lookup);
+			return lookup.GetResults();
+		}
+		
+		public byte[] SendUniversalLookup(Universal.Lookup lookup)
+		{
+			return  SendUniversalLookupAsync(lookup).GetAwaiter().GetResult();
+		}
+
+		public async Task<byte[]> SendUniversalLookupAsync(Universal.Lookup lookup)
+		{
+			await SendAsync(lookup);
 			return lookup.GetResults();
 		}
 
-		private async Task Send(Lookup lookup)
+		private async Task SendAsync(Lookup lookup)
 		{
 			if (lookup == null || (string.IsNullOrEmpty(lookup.GetSmartyKey()) && string.IsNullOrEmpty(lookup.GetStreet()) && string.IsNullOrEmpty(lookup.GetFreeform())))
 				throw new SmartyStreets.SmartyException("Client.Send() requires a Lookup with the 'smartyKey', 'street', or 'freeform' field set");
