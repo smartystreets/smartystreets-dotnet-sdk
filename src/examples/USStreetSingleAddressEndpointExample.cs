@@ -2,7 +2,6 @@
 {
 	using System;
 	using System.Net;
-	using System.Collections.Generic;
 	using System.IO;
     using SmartyStreets;
 	using SmartyStreets.USStreetApi;

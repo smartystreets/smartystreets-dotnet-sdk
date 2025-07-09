@@ -2,13 +2,8 @@ namespace Examples
 {
 	using System;
 	using System.Net;
-	using System.Collections.Generic;
-	using System.IO;
-    using System.Linq;
     using SmartyStreets;
-	using SmartyStreets.USEnrichmentApi;
     using System.Reflection;
-    using System.Text;
     using System.Threading.Tasks;
 
     internal static class USEnrichmentSecondaryExample
