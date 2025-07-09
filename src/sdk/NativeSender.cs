@@ -1,3 +1,5 @@
+using System.Xml;
+
 namespace SmartyStreets
 {
     using System;
@@ -13,6 +15,8 @@ namespace SmartyStreets
         private static readonly string UserAgent = string.Format("smartystreets (sdk:dotnet@{0}.{1}.{2})",
             AssemblyVersion.Major, AssemblyVersion.Minor, AssemblyVersion.Build);
         private HttpClient client;
+
+        private bool logHttpRequestAndResponse; 
 
         public NativeSender()
         {
@@ -46,14 +50,15 @@ namespace SmartyStreets
                     client.DefaultRequestHeaders.Add(item.Key, item.Value);
                 }
             }
-
-             
+            
             HttpResponseMessage response;
             if (request.Payload != null)
             {
                 // Try write payload and get response 
                 HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Post, request.GetUrl());
+                
                 httpRequest.Content = new StreamContent(new MemoryStream(request.Payload));
+                
                 response = await client.SendAsync(httpRequest);
             }
             else
@@ -62,6 +67,11 @@ namespace SmartyStreets
                 response = await client.GetAsync(request.GetUrl());
             }
 
+            if (this.logHttpRequestAndResponse)
+            {
+                await PrintRequestAndResponse(response);
+            }
+            
             var statusCode = (int)response.StatusCode;
             var payload = await response.Content.ReadAsByteArrayAsync();
 
@@ -76,7 +86,7 @@ namespace SmartyStreets
             if (statusCode == 429)
             {
                 string retryValue = GetHeaderValue(response, "Retry-After");
-                if ((retryValue != null) && (retryValue.Length != 0))
+                if (!string.IsNullOrEmpty(retryValue))
                 {
                     retVal.HeaderInfo.Add("Retry-After", retryValue);
                 }
@@ -95,6 +105,11 @@ namespace SmartyStreets
             return headerValue;
         }
 
+        public void EnableLogging()
+        {
+            this.logHttpRequestAndResponse = true;
+        }
+
         public void Dispose()
         {
             if (this.client != null)
@@ -102,6 +117,27 @@ namespace SmartyStreets
                 this.client.Dispose();
                 this.client = null;
             }
+        }
+
+        private async Task PrintRequestAndResponse(HttpResponseMessage response)
+        {
+            Console.WriteLine("HTTP Request: ");
+            Console.WriteLine(response.RequestMessage);
+            Console.WriteLine();
+            Console.WriteLine("HTTP Response: ");
+            Console.WriteLine($"Status: {response.StatusCode} - {response.ReasonPhrase}");
+            Console.WriteLine("Headers:");
+            foreach (var header in response.Headers)
+            {
+                Console.WriteLine($"  {header.Key}: {string.Join(", ", header.Value)}");
+            }
+            foreach (var header in response.Content.Headers)
+            {
+                Console.WriteLine($"  {header.Key}: {string.Join(", ", header.Value)}");
+            }
+            Console.WriteLine("Content: ");
+            Console.Write(await response.Content.ReadAsStringAsync());
+            Console.WriteLine();
         }
     }
 }

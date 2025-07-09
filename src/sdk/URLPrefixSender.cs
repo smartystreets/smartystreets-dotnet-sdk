@@ -23,5 +23,10 @@ namespace SmartyStreets
 		{
 			
 		}
+
+		public void EnableLogging()
+		{
+			
+		}
 	}
 }

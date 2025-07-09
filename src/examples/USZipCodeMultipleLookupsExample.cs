@@ -19,7 +19,9 @@
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			using var client = new ClientBuilder(authId, authToken).BuildUsZipCodeApiClient();
+			using var client = new ClientBuilder(authId, authToken)
+				.WithDebug()
+				.BuildUsZipCodeApiClient();
 
 			var lookup1 = new Lookup
 			{

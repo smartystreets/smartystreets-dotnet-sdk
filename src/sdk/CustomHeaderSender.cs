@@ -27,5 +27,10 @@ namespace SmartyStreets
         public void Dispose()
         {
         }
+
+        public void EnableLogging()
+        {
+            
+        }
     }
 }

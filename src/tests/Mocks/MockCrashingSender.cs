@@ -79,5 +79,10 @@
 		{
 			
 		}
+
+		public void EnableLogging()
+		{
+			
+		}
 	}
 }

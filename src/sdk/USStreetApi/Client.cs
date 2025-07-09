@@ -86,6 +86,7 @@
 			foreach (var candidate in candidates)
 				batch[candidate.InputIndex].AddToResult(candidate);
 		}
+		
 
         public void Dispose()
         {

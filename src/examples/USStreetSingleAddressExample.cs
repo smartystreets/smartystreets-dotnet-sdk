@@ -26,7 +26,9 @@
 			using var client = new ClientBuilder(authId, authToken)
 				//.WithCustomBaseUrl("us-street.api.smarty.com")
 				//.ViaProxy("http://localhost:8080", "username", "password") // uncomment this line to point to the specified proxy.
+				.WithDebug() 
 				.BuildUsStreetApiClient();
+			
 			
 			// Documentation for input fields can be found at:
 			// https://smartystreets.com/docs/us-street-api#input-fields

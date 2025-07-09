@@ -22,5 +22,10 @@
 		{
 			
 		}
+		
+		public void EnableLogging()
+		{
+			
+		}
 	}
 }
