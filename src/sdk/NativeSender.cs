@@ -1,5 +1,3 @@
-using System.Xml;
-
 namespace SmartyStreets
 {
     using System;
@@ -122,7 +120,17 @@ namespace SmartyStreets
         private async Task PrintRequestAndResponse(HttpResponseMessage response)
         {
             Console.WriteLine("HTTP Request: ");
-            Console.WriteLine(response.RequestMessage);
+            var request = response.RequestMessage;
+            Console.WriteLine($"Method: {request.Method}");
+            Console.WriteLine($"Request URI: {request.RequestUri}");
+            Console.WriteLine("Headers: ");
+            foreach (var header in request.Headers)
+            {
+                Console.WriteLine($"  {header.Key}: {string.Join(", ", header.Value)}");
+            }
+            Console.WriteLine("Content: ");
+            var requestContent = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(requestContent);
             Console.WriteLine();
             Console.WriteLine("HTTP Response: ");
             Console.WriteLine($"Status: {response.StatusCode} - {response.ReasonPhrase}");
@@ -136,7 +144,8 @@ namespace SmartyStreets
                 Console.WriteLine($"  {header.Key}: {string.Join(", ", header.Value)}");
             }
             Console.WriteLine("Content: ");
-            Console.Write(await response.Content.ReadAsStringAsync());
+            var responseContent = await response.Content.ReadAsStringAsync();
+            Console.Write(responseContent);
             Console.WriteLine();
         }
     }

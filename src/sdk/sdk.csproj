@@ -22,5 +22,4 @@
   <ItemGroup>
     <Reference Include="System.ServiceModel.Web" Condition="'$(TargetFramework)' == 'net35' OR '$(TargetFramework)' == 'net40'" />
   </ItemGroup>
-
 </Project>
