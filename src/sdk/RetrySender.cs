@@ -41,7 +41,12 @@ namespace SmartyStreets
 			return true;
 		}
 
-		public async Task<Response> Send(Request request)
+		public Response Send(Request request)
+		{
+			return SendAsync(request).GetAwaiter().GetResult();
+		}
+
+		public async Task<Response> SendAsync(Request request)
 		{
 			for (var attempts = 0; BackOff(attempts); attempts++)
 			{
@@ -57,7 +62,7 @@ namespace SmartyStreets
 		{
 			try
 			{
-				return await this.inner.Send(request);
+				return await this.inner.SendAsync(request);
 			}
 			catch (TooManyRequestsException e)
 			{

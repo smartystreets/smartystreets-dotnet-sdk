@@ -21,7 +21,7 @@ namespace SmartyStreets
             var urlPrefixSender = new URLPrefixSender("http://localhost/", mockSender);
             var sender = new CustomHeaderSender(headers, urlPrefixSender);
 
-            await sender.Send(new Request());
+            await sender.SendAsync(new Request());
 
             Assert.AreEqual("value1", mockSender.Request.Headers["Test1"]);
             Assert.AreEqual("value2", mockSender.Request.Headers["Test2"]);

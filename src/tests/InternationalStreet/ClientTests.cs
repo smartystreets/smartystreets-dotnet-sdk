@@ -21,7 +21,7 @@
 		}
 
 		[Test]
-		public async Task TestSendingFreeformLookup()
+		public void TestSendingFreeformLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.sender, serializer);
@@ -33,7 +33,7 @@
 		}
 
 		[Test]
-		public async Task TestSendingSingleFullyPopulatedLookup()
+		public void TestSendingSingleFullyPopulatedLookup()
 		{
 			const string expectedUrl = "http://localhost/?input_id=1234&country=0&geocode=true&language=native&freeform=1" +
 			                           "&address1=2&address2=3&address3=4&address4=5&organization=6&locality=7&administrative_area=8&postal_code=9";

@@ -56,7 +56,7 @@
 				request.Payload = batch.Serialize(this.serializer);
 			}
 
-			var response = await this.sender.Send(request);
+			var response = await this.sender.SendAsync(request);
 
 			var payloadStream = new MemoryStream(response.Payload);
 

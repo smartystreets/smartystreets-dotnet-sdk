@@ -21,7 +21,7 @@
 		#region [ Single Lookup ]
 
 		[Test]
-		public async Task TestSendingSinglePrefixOnlyLookup()
+		public void TestSendingSinglePrefixOnlyLookup()
 		{
 			var serializer = new FakeSerializer(new byte[0]);
 			var client = new Client(this.urlSender, serializer);
@@ -37,7 +37,7 @@
 		}
 
 		[Test]
-		public async Task TestSendingSingleFullyPopulatedLookup()
+		public void TestSendingSingleFullyPopulatedLookup()
 		{
 			var serializer = new FakeSerializer(new byte[0]);
 			var client = new Client(this.urlSender, serializer);
@@ -59,7 +59,7 @@
 		}
 
 		[Test]
-		public async Task TestSendingSinglePopulatedLookupWithNoGeolocation()
+		public void TestSendingSinglePopulatedLookupWithNoGeolocation()
 		{
 			var serializer = new FakeSerializer(new byte[0]);
 			var client = new Client(this.urlSender, serializer);
@@ -80,7 +80,7 @@
 		}
 
 		[Test]
-		public async Task TestSendingSinglePopulatedLookupWithEmptyGeolocation()
+		public void TestSendingSinglePopulatedLookupWithEmptyGeolocation()
 		{
 			var serializer = new FakeSerializer(new byte[0]);
 			var client = new Client(this.urlSender, serializer);
@@ -105,7 +105,7 @@
 		#region [ Response Handling ]
 
 		[Test]
-		public async Task TestDeserializeCalledWithResponseBody()
+		public void TestDeserializeCalledWithResponseBody()
 		{
 			var response = new Response(0, Encoding.ASCII.GetBytes("Hello, World!"));
 			var mockSender = new MockSender(response);
@@ -150,7 +150,7 @@
 
 
 		[Test]
-		public async Task TestResultCorrectlyAssignedToLookup()
+		public void TestResultCorrectlyAssignedToLookup()
 		{
 			var lookup = new Lookup("1");
 			lookup.Country = "2";

@@ -148,7 +148,7 @@ namespace SmartyStreets.USEnrichmentApi
 			if (lookup == null || (string.IsNullOrEmpty(lookup.GetSmartyKey()) && string.IsNullOrEmpty(lookup.GetStreet()) && string.IsNullOrEmpty(lookup.GetFreeform())))
 				throw new SmartyStreets.SmartyException("Client.Send() requires a Lookup with the 'smartyKey', 'street', or 'freeform' field set");
 			Request request = BuildRequest(lookup);
-			Response response = await this.sender.Send(request);
+			Response response = await this.sender.SendAsync(request);
 			foreach(var entry in response.HeaderInfo) {
 				if (entry.Key == "Etag") {
 					lookup.SetEtag(entry.Value);

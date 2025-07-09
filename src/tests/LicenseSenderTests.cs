@@ -20,7 +20,7 @@ namespace SmartyStreets
             var urlPrefixSender = new URLPrefixSender("http://localhost/", mockSender);
             var sender = new LicenseSender(licenses, urlPrefixSender);
 
-            await sender.Send(new Request());
+            await sender.SendAsync(new Request());
 
             Assert.AreEqual("license=one%2Ctwo%2Cthree", mockSender.Request.GetUrl().Split('?')[1]);
         }
@@ -32,7 +32,7 @@ namespace SmartyStreets
             var urlPrefixSender = new URLPrefixSender("http://localhost/", mockSender);
             var sender = new LicenseSender(new List<string>(), urlPrefixSender);
 
-            await sender.Send(new Request());
+            await sender.SendAsync(new Request());
             
             Assert.False(mockSender.Request.GetUrl().Contains("license="));
         }

@@ -21,7 +21,7 @@
 			var urlPrefixSender = new URLPrefixSender("http://localhost/", mockSender);
 			var sender = new SigningSender(this.signer, urlPrefixSender);
 
-			await sender.Send(new Request());
+			await sender.SendAsync(new Request());
 
 			Assert.AreEqual(
 				"http://localhost/?auth-id=id&auth-token=secret",
@@ -37,7 +37,7 @@
 
 			Assert.AreEqual(
 				expectedResponse,
-				await sender.Send(new Request()));
+				await sender.SendAsync(new Request()));
 		}
 	}
 }

@@ -14,10 +14,15 @@ namespace SmartyStreets
 			this.inner = inner;
 		}
 
-		public async Task<Response> Send(Request request)
+		public Response Send(Request request)
+		{
+			return SendAsync(request).GetAwaiter().GetResult();
+		}
+
+		public async Task<Response> SendAsync(Request request)
 		{
 			this.signer.Sign(request);
-			return await this.inner.Send(request);
+			return await this.inner.SendAsync(request);
 		}
 
 		public void Dispose()

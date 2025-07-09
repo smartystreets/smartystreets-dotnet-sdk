@@ -34,7 +34,12 @@ namespace SmartyStreets
             client.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent);
         }
 
-        public async Task<Response> Send(Request request)
+        public Response Send(Request request)
+        {
+            return SendAsync(request).GetAwaiter().GetResult();
+        }
+
+        public async Task<Response> SendAsync(Request request)
         {
             // Copy headers 
             foreach (var item in request.Headers)

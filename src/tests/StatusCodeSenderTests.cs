@@ -23,7 +23,7 @@
 		{
 			var inner = new MockStatusCodeSender(statusCode);
 			var sender = new StatusCodeSender(inner);
-			await sender.Send(new Request());
+			await sender.SendAsync(new Request());
 		}
 	}
 }

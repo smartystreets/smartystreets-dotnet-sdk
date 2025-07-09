@@ -5,7 +5,8 @@ namespace SmartyStreets
 {
 	public interface ISender : IDisposable
 	{
-		Task<Response> Send(Request request);
+		Response Send(Request request);
+		Task<Response> SendAsync(Request request);
 		void EnableLogging();
 	}
 }

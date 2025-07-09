@@ -37,7 +37,7 @@ namespace SmartyStreets.USExtractApi
 				throw new SmartyException("Client.send() requires a Lookup with the 'text' field set");
 
 			var request = BuildRequest(lookup);
-			var response = await this.sender.Send(request);
+			var response = await this.sender.SendAsync(request);
 
 			using (var payloadStream = new MemoryStream(response.Payload))
 			{

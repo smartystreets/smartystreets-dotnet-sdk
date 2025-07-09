@@ -16,7 +16,7 @@ namespace SmartyStreets
             var request = new Request();
             request.SetUrlComponents("jimbo");
 
-            await urlPrefixSender.Send(request);
+            await urlPrefixSender.SendAsync(request);
 
             Assert.AreEqual("http://localhost/jimbo?", request.GetUrl());
         }
@@ -29,7 +29,7 @@ namespace SmartyStreets
 
             var request = new Request();
 
-            await urlPrefixSender.Send(request);
+            await urlPrefixSender.SendAsync(request);
 
             Assert.AreEqual("http://localhost/?", request.GetUrl());
         }
@@ -43,8 +43,8 @@ namespace SmartyStreets
             var request = new Request();
             request.SetUrlComponents("jimbo");
 
-            await urlPrefixSender.Send(request);
-            await urlPrefixSender.Send(request);
+            await urlPrefixSender.SendAsync(request);
+            await urlPrefixSender.SendAsync(request);
 
             Assert.AreEqual("http://localhost/jimbo?", request.GetUrl());
         }

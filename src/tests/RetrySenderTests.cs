@@ -82,7 +82,7 @@ namespace SmartyStreets
 			request.SetUrlPrefix(requestBehavior);
 			var retrySender = new RetrySender(MaxRetries, this.mockCrashingSender, this.sleep, fakeRandomNumberGenerator);
 
-			await retrySender.Send(request);
+			await retrySender.SendAsync(request);
 		}
 
 		public void sleep(int milliseconds)

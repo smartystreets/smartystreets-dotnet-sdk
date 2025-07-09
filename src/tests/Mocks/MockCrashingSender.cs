@@ -28,7 +28,12 @@
 			this.SendCount = 0;
 		}
 
-		public async Task<Response> Send(Request request)
+		public Response Send(Request request)
+		{
+			return SendAsync(request).GetAwaiter().GetResult();
+		}
+
+		public async Task<Response> SendAsync(Request request)
 		{
 			// await something so that this function signature matches the ISender.Send signature
 			await Task.Delay(1); 

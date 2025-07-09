@@ -11,7 +11,12 @@
 			this.response = response;
 		}
 
-		public async Task<Response> Send(Request request)
+		public Response Send(Request request)
+		{
+			return SendAsync(request).GetAwaiter().GetResult();
+		}
+
+		public async Task<Response> SendAsync(Request request)
 		{
 			await Task.Delay(1); // Simulate minimal async delay
 			this.Request = request;
