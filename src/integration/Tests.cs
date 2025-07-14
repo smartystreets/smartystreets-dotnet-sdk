@@ -1,7 +1,7 @@
 ﻿namespace IntegrationTests
 {
 	using System;
-	using SmartyStreets;
+    using SmartyStreets;
 	using SmartyStreets.InternationalStreetApi;
 
 	internal static class Tests

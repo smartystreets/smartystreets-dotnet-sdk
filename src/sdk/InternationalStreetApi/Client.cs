@@ -3,9 +3,11 @@
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
+    using System.Threading.Tasks;
 
-	public class Client : IInternationalStreetClient
-	{
+    public class Client : IInternationalStreetClient
+    {
+	    private bool senderIsDisposed;
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
 
@@ -17,13 +19,18 @@
 
 		public void Send(Lookup lookup)
 		{
+			SendAsync(lookup).GetAwaiter().GetResult();
+		}
+
+		public async Task SendAsync(Lookup lookup)
+		{
 			if (lookup == null)
 				throw new ArgumentNullException("lookup");
 
 			EnsureEnoughInfo(lookup);
 			var request = BuildRequest(lookup);
 
-			var response = this.sender.Send(request);
+			var response = await this.sender.SendAsync(request);
 
 			using (var payloadStream = new MemoryStream(response.Payload))
 			{
@@ -81,6 +88,15 @@
 			if (lookup.MissingLocalityOrAdministrativeArea())
 				throw new UnprocessableEntityException("Insufficient information: One or more required fields " +
 				                                       "were not set on the lookup.");
+		}
+
+		public void Dispose()
+		{
+			if (!this.senderIsDisposed)
+			{
+				this.sender.Dispose();
+				this.senderIsDisposed = true;
+			}
 		}
 	}
 }

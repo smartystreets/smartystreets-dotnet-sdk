@@ -23,6 +23,7 @@ namespace SmartyStreets
         private Proxy proxy;
         private Dictionary<string, string> customHeaders;
         private List<string> licenses;
+        private bool logHttpRequestAndResponse; 
         private const string InternationalStreetApiUrl = "https://international-street.api.smarty.com/verify";
         private const string InternationalAutocompleteApiUrl = "https://international-autocomplete.api.smarty.com/v2/lookup";
         private const string UsAutocompleteProApiUrl = "https://us-autocomplete-pro.api.smarty.com/lookup";
@@ -129,6 +130,17 @@ namespace SmartyStreets
             this.licenses.AddRange(licenses);
             return this;
         }
+        
+        /// <summary>
+        /// Enables debug mode, which will print information about the HTTP request and response
+        /// to the console. 
+        /// </summary>
+        /// <returns> Returns 'this' to accomodate chaining.</returns>
+        public ClientBuilder WithDebug()
+        {
+            this.logHttpRequestAndResponse = true;
+            return this;
+        }
 
         public InternationalStreetApi.Client BuildInternationalStreetApiClient()
         {
@@ -157,7 +169,9 @@ namespace SmartyStreets
         public USStreetApi.Client BuildUsStreetApiClient()
         {
             this.EnsureURLPrefixNotNull(UsStreetApiUrl);
-            return new USStreetApi.Client(this.BuildSender(), this.serializer);
+            
+            var client = new USStreetApi.Client(this.BuildSender(), this.serializer);
+            return client;
         }
 
         public USZipCodeApi.Client BuildUsZipCodeApiClient()
@@ -184,6 +198,10 @@ namespace SmartyStreets
                 return this.httpSender;
 
             ISender sender = new NativeSender(this.maxTimeout, this.proxy);
+            if (this.logHttpRequestAndResponse)
+            {
+                sender.EnableLogging();
+            }
             sender = new StatusCodeSender(sender);
             
             if (this.customHeaders != null)

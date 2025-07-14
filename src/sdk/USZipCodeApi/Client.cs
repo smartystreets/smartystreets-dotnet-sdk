@@ -3,9 +3,11 @@
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
+    using System.Threading.Tasks;
 
-	public class Client : IUSZipCodeClient
-	{
+    public class Client : IUSZipCodeClient
+    {
+	    private bool senderWasDisposed;
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
 
@@ -14,19 +16,29 @@
 			this.sender = sender;
 			this.serializer = serializer;
 		}
-
+		
 		public void Send(Lookup lookup)
+		{
+			SendAsync(lookup).GetAwaiter().GetResult();
+		}
+
+		public void Send(Batch batch)
+		{
+			SendAsync(batch).GetAwaiter().GetResult();
+		}
+
+		public async Task SendAsync(Lookup lookup)
 		{
 			if (lookup == null)
 				throw new ArgumentNullException("lookup");
 
-			this.Send(new Batch {lookup});
+			await SendAsync(new Batch { lookup });
 		}
-
+		
 		/// <summary>
 		///     Sends a batch of up to 100 lookups for verification
 		/// </summary>
-		public void Send(Batch batch)
+		public async Task SendAsync(Batch batch)
 		{
 			if (batch == null)
 				throw new ArgumentNullException("batch");
@@ -44,7 +56,8 @@
 				request.Payload = batch.Serialize(this.serializer);
 			}
 
-			var response = this.sender.Send(request);
+			var response = await this.sender.SendAsync(request);
+
 			var payloadStream = new MemoryStream(response.Payload);
 
 			var results = this.serializer.Deserialize<Result[]>(payloadStream) ?? new Result[0];
@@ -70,5 +83,15 @@
 			for (var i = 0; i < results.Count; i++)
 				batch[i].Result = results[i];
 		}
-	}
+
+		public void Dispose()
+		{
+			if (!senderWasDisposed)
+			{
+				sender.Dispose();
+				senderWasDisposed = true;
+			}
+		}
+
+    }
 }

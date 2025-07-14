@@ -2,7 +2,7 @@
 {
 	using System;
 	using System.Text;
-	using NUnit.Framework;
+    using NUnit.Framework;
 
 	[TestFixture]
 	public class ClientTests

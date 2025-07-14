@@ -2,14 +2,11 @@ namespace Examples
 {
 	using System;
 	using System.Net;
-	using System.Collections.Generic;
-	using System.IO;
-    using System.Linq;
     using SmartyStreets;
-	using SmartyStreets.USEnrichmentApi;
     using System.Reflection;
+    using System.Threading.Tasks;
 
-	internal static class USEnrichmentGeoReferenceExample
+    internal static class USEnrichmentGeoReferenceExample
 	{
 		public static void Run()
 		{
@@ -24,11 +21,10 @@ namespace Examples
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
+			using var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
 			
 			SmartyStreets.USEnrichmentApi.GeoReference.Result[] results = null;
             
-
             // Create a lookup with a smarty key using the line below
             var lookup = new SmartyStreets.USEnrichmentApi.GeoReference.Lookup("325023201");
             

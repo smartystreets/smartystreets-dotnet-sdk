@@ -3,7 +3,8 @@
 namespace SmartyStreets
 {
 	using System.IO;
-	using NUnit.Framework;
+    using System.Threading.Tasks;
+    using NUnit.Framework;
 
 	[TestFixture]
 	public class RetrySenderTests
@@ -22,9 +23,9 @@ namespace SmartyStreets
 		}
 
 		[Test]
-		public void TestSuccessDoesNotRetry()
+		public async Task TestSuccessDoesNotRetry()
 		{
-			this.SendRequest(MockCrashingSender.DoNotRetry);
+			await this.SendRequest(MockCrashingSender.DoNotRetry);
 
 			Assert.AreEqual(1, this.mockCrashingSender.SendCount);
 		}
@@ -34,7 +35,7 @@ namespace SmartyStreets
 		[TestCase(typeof(UnprocessableEntityException), MockCrashingSender.UnprocessableEntity)]
 		public void TestSpecificErrorThrowsExceptionAndDoesNotRetry(Type exceptionType, string requestBehavior)
 		{
-			Assert.Throws(exceptionType, () => this.SendRequest(requestBehavior));
+			Assert.ThrowsAsync(exceptionType, async () => await this.SendRequest(requestBehavior));
 			Assert.AreEqual(1, this.mockCrashingSender.SendCount);
 		}
 
@@ -43,17 +44,17 @@ namespace SmartyStreets
 		[TestCase(typeof(BadGatewayException), MockCrashingSender.BadGateway)]
 		[TestCase(typeof(ServiceUnavailableException), MockCrashingSender.ServiceUnavailable)]
 		[TestCase(typeof(GatewayTimeoutException), MockCrashingSender.GatewayTimeout)]
-		public void TestSpecificErrorThrowsExceptionAndRetries(Type exceptionType, string requestBehavior)
+		public async Task TestSpecificErrorThrowsExceptionAndRetries(Type exceptionType, string requestBehavior)
 		{
 			this.mockCrashingSender.FailCount = 3;
-			this.SendRequest(requestBehavior);
+			await this.SendRequest(requestBehavior);
 			Assert.AreEqual(3, this.mockCrashingSender.SendCount);
 		}
 
 		[Test]
-		public void TestRetryUntilSuccess()
+		public async Task TestRetryUntilSuccess()
 		{
-			this.SendRequest(MockCrashingSender.RetryThreeTimes);
+			await this.SendRequest(MockCrashingSender.RetryThreeTimes);
 
 			Assert.AreEqual(4, this.mockCrashingSender.SendCount);
 		}
@@ -61,27 +62,27 @@ namespace SmartyStreets
 		[Test]
 		public void TestRetryUntilMaxAttempts()
 		{
-			Assert.Throws<IOException>(() => this.SendRequest(MockCrashingSender.RetryMaxTimes));
+			Assert.ThrowsAsync<IOException>(async () => await this.SendRequest(MockCrashingSender.RetryMaxTimes));
 		}
 
 		[TestCase(3)]
 		[TestCase(2)]
 		[TestCase(4)]
-		public void TestSleepOnRateLimit(int pseudoRandomNumber)
+		public async Task TestSleepOnRateLimit(int pseudoRandomNumber)
 		{
 			fakeRandomNumberGenerator.SetNextRandomNumber(pseudoRandomNumber);
-			this.SendRequest(MockCrashingSender.TooManyRequests);
+			await this.SendRequest(MockCrashingSender.TooManyRequests);
 			
 			Assert.AreEqual(pseudoRandomNumber*1000, this.milliseconds);
 		}
 
-		private void SendRequest(string requestBehavior)
+		private async Task SendRequest(string requestBehavior)
 		{
 			var request = new Request();
 			request.SetUrlPrefix(requestBehavior);
 			var retrySender = new RetrySender(MaxRetries, this.mockCrashingSender, this.sleep, fakeRandomNumberGenerator);
 
-			retrySender.Send(request);
+			await retrySender.SendAsync(request);
 		}
 
 		public void sleep(int milliseconds)

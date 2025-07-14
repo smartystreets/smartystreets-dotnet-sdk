@@ -4,6 +4,7 @@
 	using System.Text;
 	using InternationalStreetApi;
 	using NUnit.Framework;
+    using System.Threading.Tasks;
 
 	[TestFixture]
 	public class ClientTests
@@ -120,7 +121,7 @@
 				AdministrativeArea = "2"
 			};
 
-			Assert.Throws<UnprocessableEntityException>(() => client.Send(lookup));
+    		Assert.Throws<UnprocessableEntityException>(() => client.Send(lookup));
 		}
 
 		[Test]

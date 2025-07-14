@@ -2,14 +2,10 @@ namespace Examples
 {
 	using System;
 	using System.Net;
-	using System.Collections.Generic;
-	using System.IO;
-    using System.Linq;
     using SmartyStreets;
-	using SmartyStreets.USEnrichmentApi;
     using System.Reflection;
 
-	internal static class USEnrichmentPropertyExample
+    internal static class USEnrichmentPropertyExample
 	{
 		public static void Run()
 		{
@@ -24,7 +20,7 @@ namespace Examples
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
+			using var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
 			
 
 			SmartyStreets.USEnrichmentApi.Property.Principal.Result[] results = null;

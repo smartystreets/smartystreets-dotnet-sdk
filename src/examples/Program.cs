@@ -1,4 +1,6 @@
-﻿namespace Examples
+﻿using System.Threading.Tasks;
+
+namespace Examples
 {
     internal static class Program
     {
@@ -47,8 +49,6 @@
                         USEnrichmentGeoReferenceExample.Run();
                         USEnrichmentSecondaryExample.Run();
                         USEnrichmentUniversalExample.Run();
-                        break;
-                    default:
                         break;
                 }
             }

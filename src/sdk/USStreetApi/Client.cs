@@ -1,14 +1,14 @@
-﻿using SmartyStreets.USReverseGeoApi;
-
-namespace SmartyStreets.USStreetApi
+﻿namespace SmartyStreets.USStreetApi
 {
 	using System;
 	using System.Collections.Generic;
     using System.Globalization;
 	using System.IO;
+    using System.Threading.Tasks;
 
-	public class Client : IUSStreetClient
-	{
+    public class Client : IUSStreetClient
+    {
+	    private bool senderWasDisposed;
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
 
@@ -17,19 +17,29 @@ namespace SmartyStreets.USStreetApi
 			this.sender = sender;
 			this.serializer = serializer;
 		}
-
+		
 		public void Send(Lookup lookup)
 		{
-			if (lookup == null)
-				throw new ArgumentNullException("lookup");
-
-			this.Send(new Batch {lookup});
+			SendAsync(lookup).GetAwaiter().GetResult();
 		}
 
 		/// <summary>
 		///     Sends a batch of up to 100 lookups for verification
 		/// </summary>
 		public void Send(Batch batch)
+		{
+			SendAsync(batch).GetAwaiter().GetResult();
+		}
+		
+		public async Task SendAsync(Lookup lookup)
+		{
+			if (lookup == null)
+				throw new ArgumentNullException("lookup");
+
+			await SendAsync(new Batch { lookup });
+		}
+		
+		public async Task SendAsync(Batch batch)
 		{
 			if (batch == null)
 				throw new ArgumentNullException("batch");
@@ -44,7 +54,7 @@ namespace SmartyStreets.USStreetApi
 			else
 				request.Payload = batch.Serialize(this.serializer);
 
-			var response = this.sender.Send(request);
+			var response = await this.sender.SendAsync(request);
 
 			using (var payloadStream = new MemoryStream(response.Payload))
 			{
@@ -86,5 +96,15 @@ namespace SmartyStreets.USStreetApi
 			foreach (var candidate in candidates)
 				batch[candidate.InputIndex].AddToResult(candidate);
 		}
-	}
+		
+
+        public void Dispose()
+        {
+			if (!senderWasDisposed)
+			{
+				sender.Dispose();
+				senderWasDisposed = true;
+			}
+        }
+    }
 }

@@ -1,7 +1,6 @@
 ﻿namespace Examples
 {
 	using System;
-	using System.Collections.Generic;
     using System.IO;
     using System.Net;
     using SmartyStreets;
@@ -19,7 +18,7 @@
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			var client = new ClientBuilder(authId, authToken).BuildInternationalStreetApiClient();
+			using var client = new ClientBuilder(authId, authToken).BuildInternationalStreetApiClient();
 			
 			// Documentation for input fields can be found at:
 			// https://smartystreetscom/docs/cloud/international-street-api#http-input-fields
@@ -43,7 +42,7 @@
 
             try
             {
-                client.Send(lookup);
+	            client.Send(lookup);
             }
             catch (SmartyException ex)
             {

@@ -1,7 +1,6 @@
 ﻿namespace Examples
 {
 	using System;
-	using System.Collections.Generic;
 	using System.IO;
     using System.Net;
     using SmartyStreets;
@@ -22,7 +21,7 @@
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			var client = new ClientBuilder(authId, authToken)
+			using var client = new ClientBuilder(authId, authToken)
 				//.WithCustomBaseUrl("us-street-reverse-geo.api.smarty.com")
 				//.ViaProxy("http://localhost:8080", "username", "password") // uncomment this line to point to the specified proxy.
 				.BuildUsReverseGeoApiClient();

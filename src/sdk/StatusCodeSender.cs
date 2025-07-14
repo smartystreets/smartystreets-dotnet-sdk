@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace SmartyStreets
 {
 	public class StatusCodeSender : ISender
 	{
+		private bool senderWasDisposed; 
 		private readonly ISender inner;
 
 		public StatusCodeSender(ISender inner)
@@ -14,7 +16,12 @@ namespace SmartyStreets
 
 		public Response Send(Request request)
 		{
-			var response = this.inner.Send(request);
+			return SendAsync(request).GetAwaiter().GetResult();
+		}
+
+		public async Task<Response> SendAsync(Request request)
+		{
+			var response = await this.inner.SendAsync(request);
 
 			switch (response.StatusCode)
 			{
@@ -93,6 +100,20 @@ namespace SmartyStreets
 			}
 
 			return defaultErrorMessage;
+		}
+
+		public void Dispose()
+		{
+			if (!senderWasDisposed)
+			{
+				this.inner.Dispose();
+				this.senderWasDisposed = true;
+			}
+		}
+
+		public void EnableLogging()
+		{
+			this.inner.EnableLogging();
 		}
 	}
 }

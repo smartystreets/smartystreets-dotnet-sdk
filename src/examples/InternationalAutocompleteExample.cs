@@ -1,9 +1,7 @@
 namespace Examples
 {
 	using System;
-	using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Net;
     using SmartyStreets;
 	using SmartyStreets.InternationalAutocompleteApi;
@@ -20,7 +18,7 @@ namespace Examples
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			var client = new ClientBuilder(authId, authToken).BuildInternationalAutocompleteApiClient();
+			using var client = new ClientBuilder(authId, authToken).BuildInternationalAutocompleteApiClient();
 			
 			// Documentation for input fields can be found at:
 			// https://smartystreetscom/docs/cloud/international-street-api#http-input-fields
@@ -36,8 +34,8 @@ namespace Examples
 			//lookup.AddCustomParameter("max_results", "3");
 
             try
-            {
-                client.Send(lookup);
+            { 
+	            client.Send(lookup);
             }
             catch (SmartyException ex)
             {

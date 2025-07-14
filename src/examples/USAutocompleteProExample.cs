@@ -1,9 +1,7 @@
 ﻿namespace Examples
 {
 	using System;
-	using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Net;
     using SmartyStreets;
 	using SmartyStreets.USAutocompleteProApi;
@@ -12,6 +10,7 @@
 	{
 		public static void Run()
 		{
+			
             // specifies the TLS protocoll to use - this is TLS 1.2
             const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
 
@@ -25,14 +24,14 @@
 			var credentials = new StaticCredentials(id, token);
             ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-            var client = new ClientBuilder(credentials).BuildUsAutocompleteProApiClient();
+            using var client = new ClientBuilder(credentials).BuildUsAutocompleteProApiClient();
 
 			var lookup = new Lookup("1042 W Center");
 			lookup.PreferGeolocation = "none";
 
             try
-            {
-                client.Send(lookup);
+            { 
+	            client.Send(lookup);
             }
             catch (SmartyException ex)
             {

@@ -1,16 +1,17 @@
 ﻿namespace SmartyStreets.InternationalAutocompleteApi
 {
 	using System;
-	using System.Collections;
 	using System.IO;
 	using System.Collections.Generic;
+    using System.Threading.Tasks;
 
-	/// <summary>
-	///     This client sends lookups to the SmartyStreets US Autocomplete API,
-	///     and attaches the results to the appropriate Lookup objects.
-	/// </summary>
-	public class Client : IInternationalAutoCompleteClient
-	{
+    /// <summary>
+    ///     This client sends lookups to the SmartyStreets US Autocomplete API,
+    ///     and attaches the results to the appropriate Lookup objects.
+    /// </summary>
+    public class Client : IInternationalAutoCompleteClient
+    {
+	    private bool senderWasDisposed; 
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
 
@@ -22,7 +23,11 @@
 
 		public void Send(Lookup lookup)
 		{
+			SendAsync(lookup).GetAwaiter().GetResult();
+		}
 
+		public async Task SendAsync(Lookup lookup)
+		{
 			if (lookup == null)
 				throw new ArgumentNullException("lookup");
 
@@ -35,7 +40,7 @@
 
 			var request = BuildRequest(lookup);
 
-			var response = this.sender.Send(request);
+			var response = await this.sender.SendAsync(request);
 
 			using (var payloadStream = new MemoryStream(response.Payload))
 			{
@@ -65,6 +70,15 @@
 			}
 			
 			return request;
+		}
+
+		public void Dispose()
+		{
+			if (!this.senderWasDisposed)
+			{
+				this.sender.Dispose();
+				this.senderWasDisposed = true;
+			}
 		}
 	}
 }

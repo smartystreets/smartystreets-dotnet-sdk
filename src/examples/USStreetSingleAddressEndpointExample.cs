@@ -2,12 +2,11 @@
 {
 	using System;
 	using System.Net;
-	using System.Collections.Generic;
 	using System.IO;
     using SmartyStreets;
 	using SmartyStreets.USStreetApi;
 
-	internal static class USStreetSingleAddressEndpointExample
+    internal static class USStreetSingleAddressEndpointExample
 	{
 		public static void Run()
 		{
@@ -22,7 +21,7 @@
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			var client = new ClientBuilder(authId, authToken)
+			using var client = new ClientBuilder(authId, authToken)
 				// NOTE: this is how to point the SDK at an alternate installation
 				// for example, this might be used to connect through "stunnel" to handle things like TLSv1.2 encryption
 				.WithCustomBaseUrl("http://127.0.0.1:8080/street-address") // point to local installation

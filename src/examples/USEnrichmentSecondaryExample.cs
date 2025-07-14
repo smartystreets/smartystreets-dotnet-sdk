@@ -2,15 +2,11 @@ namespace Examples
 {
 	using System;
 	using System.Net;
-	using System.Collections.Generic;
-	using System.IO;
-    using System.Linq;
     using SmartyStreets;
-	using SmartyStreets.USEnrichmentApi;
     using System.Reflection;
-    using System.Text;
+    using System.Threading.Tasks;
 
-	internal static class USEnrichmentSecondaryExample
+    internal static class USEnrichmentSecondaryExample
 	{
 		public static void Run()
 		{
@@ -25,7 +21,7 @@ namespace Examples
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
+			using var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
 			
             // See the US Enrichment API documenation for all available datasets and data subsets https://www.smarty.com/docs/cloud/us-address-enrichment-api#data-sets
             SmartyStreets.USEnrichmentApi.Secondary.Result[] results = null;

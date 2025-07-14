@@ -3,9 +3,11 @@
 	using System;
 	using System.IO;
 	using System.Collections.Generic;
+    using System.Threading.Tasks;
 
-	public class Client : IUSReverseGeoClient
-	{
+    public class Client : IUSReverseGeoClient
+    {
+	    private bool senderWasDisposed; 
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
 
@@ -14,15 +16,20 @@
 			this.sender = sender;
 			this.serializer = serializer;
 		}
-
+		
 		public void Send(Lookup lookup)
+		{
+			SendAsync(lookup).GetAwaiter().GetResult();
+		}
+		
+		public async Task SendAsync(Lookup lookup)
 		{
 			if (lookup == null)
 				throw new ArgumentNullException("lookup");
 
 			var request = BuildRequest(lookup);
 
-			var response = this.sender.Send(request);
+			var response = await this.sender.SendAsync(request);
 
 			using (var payloadStream = new MemoryStream(response.Payload))
 			{
@@ -44,6 +51,15 @@
 			}
 
 			return request;
+		}
+
+		public void Dispose()
+		{
+			if (!senderWasDisposed)
+			{
+				sender.Dispose();
+				senderWasDisposed = true;
+			}
 		}
 	}
 }
