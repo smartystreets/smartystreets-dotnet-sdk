@@ -57,7 +57,7 @@ namespace Examples
                 // results = client.SendUniversalLookup("325023201", "property", "principal"); // simple call with just a SmartyKey and Dataset info
 
                 // Send a lookup using the line below
-                results = client.SendUniversalLookup(lookup);
+                results = client.SendUniversalLookup(freeformLookup);
             }
             catch (NotModifiedException ex)
             {

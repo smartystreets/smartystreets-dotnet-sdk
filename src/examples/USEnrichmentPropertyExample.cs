@@ -52,7 +52,7 @@ namespace Examples
                 // results = client.SendPropertyPrincipalLookup("325023201"); // simple call with just a SmartyKey
 
                 // Send a lookup using the line below
-                results = client.SendPropertyPrincipalLookup(lookup); // more flexible call to set other lookup options
+                results = client.SendPropertyPrincipalLookup(freeformLookup); // more flexible call to set other lookup options
             }
             catch (NotModifiedException ex) {
                 Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record
@@ -120,8 +120,10 @@ namespace Examples
             Type type = obj.GetType();
 
             foreach (PropertyInfo property in type.GetProperties()) {
-                if (property.Name == "Attributes" ){
-                    PrintResult(property.GetValue(obj, null));
+                if (property.Name == "Attributes" || property.Name == "MatchedAddress" ){
+                    if (property.GetValue(obj, null) != null) {
+                        PrintResult(property.GetValue(obj, null));
+                    }
                 }
                 if (property.GetValue(obj, null) != null) {
                     Console.WriteLine($"{property.Name}: {property.GetValue(obj, null)}");

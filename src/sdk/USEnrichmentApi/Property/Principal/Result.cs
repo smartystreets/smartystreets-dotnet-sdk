@@ -17,6 +17,9 @@ namespace SmartyStreets.USEnrichmentApi.Property.Principal
         [DataMember(Name = "etag")]
         public string Etag { get; set; }
 
+        [DataMember(Name = "matched_address")]
+        public MatchedAddress MatchedAddress { get; set; }
+
         [DataMember(Name = "attributes")]
         public Attributes Attributes { get; set; }
     }

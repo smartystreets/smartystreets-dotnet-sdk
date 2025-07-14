@@ -1,4 +1,4 @@
-namespace SmartyStreets.USEnrichmentApi.GeoReference
+namespace SmartyStreets.USEnrichmentApi.Risk
 {
     using System.Runtime.Serialization;
 

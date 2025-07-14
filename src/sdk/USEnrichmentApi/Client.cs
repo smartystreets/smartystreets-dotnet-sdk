@@ -86,6 +86,29 @@ namespace SmartyStreets.USEnrichmentApi
 			return lookup.GetResults();
 		}
 		
+		public Risk.Result[] SendRiskLookup(string smartyKey)
+		{
+			return SendRiskLookupAsync(smartyKey).GetAwaiter().GetResult();
+		}
+
+		public async Task<Risk.Result[]> SendRiskLookupAsync(string smartyKey)
+		{
+			Risk.Lookup lookup = new Risk.Lookup(smartyKey);
+			await SendAsync(lookup);
+			return lookup.GetResults();
+		}
+
+		public Risk.Result[] SendRiskLookup(Risk.Lookup lookup)
+		{
+			return SendRiskLookupAsync(lookup).GetAwaiter().GetResult();
+		}
+
+		public async Task<Risk.Result[]> SendRiskLookupAsync(Risk.Lookup lookup)
+		{
+			await SendAsync(lookup);
+			return lookup.GetResults();
+		}
+
 		public Secondary.Result[] SendSecondaryLookup(string smartyKey)
 		{
 			return SendSecondaryLookupAsync(smartyKey).GetAwaiter().GetResult();
