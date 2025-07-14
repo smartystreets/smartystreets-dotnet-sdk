@@ -29,6 +29,7 @@ namespace SmartyStreets.USEnrichmentApi
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
+		[Test]
 		public void TestSendingFullyPopulatedPrincipalComponenetsLookup()
 		{
 			var serializer = new FakeSerializer(null);
@@ -46,6 +47,7 @@ namespace SmartyStreets.USEnrichmentApi
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
+		[Test]
 		public void TestSendingFullyPopulatedPrincipalFreeformLookup()
 		{
 			var serializer = new FakeSerializer(null);
@@ -74,6 +76,7 @@ namespace SmartyStreets.USEnrichmentApi
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
+		[Test]
 		public void TestSendingFullyPopulatedFinancialComponentsLookup()
 		{
 			var serializer = new FakeSerializer(null);
@@ -91,6 +94,7 @@ namespace SmartyStreets.USEnrichmentApi
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
+		[Test]
 		public void TestSendingFullyPopulatedFinancialFreeformLookup()
 		{
 			var serializer = new FakeSerializer(null);
@@ -119,6 +123,7 @@ namespace SmartyStreets.USEnrichmentApi
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
+		[Test]
 		public void TestSendingFullyPopulatedGeoReferenceComponenetsLookup()
 		{
 			var serializer = new FakeSerializer(null);
@@ -136,6 +141,7 @@ namespace SmartyStreets.USEnrichmentApi
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
+		[Test]
 		public void TestSendingFullyPopulatedGeoReferenceFreeformLookup()
 		{
 			var serializer = new FakeSerializer(null);
@@ -164,6 +170,7 @@ namespace SmartyStreets.USEnrichmentApi
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
+		[Test]
 		public void TestSendingFullyPopulatedRiskComponenetsLookup()
 		{
 			var serializer = new FakeSerializer(null);
@@ -181,6 +188,7 @@ namespace SmartyStreets.USEnrichmentApi
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
+		[Test]
 		public void TestSendingFullyPopulatedRiskFreeformLookup()
 		{
 			var serializer = new FakeSerializer(null);
@@ -209,7 +217,8 @@ namespace SmartyStreets.USEnrichmentApi
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
-		public void TestSendingFullyPopulatedSecondaryComponenetsLookup()
+		[Test]
+		public void TestSendingFullyPopulatedSecondaryComponentsLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
@@ -226,6 +235,7 @@ namespace SmartyStreets.USEnrichmentApi
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
+		[Test]
 		public void TestSendingFullyPopulatedSecondaryFreeformLookup()
 		{
 			var serializer = new FakeSerializer(null);
@@ -254,6 +264,7 @@ namespace SmartyStreets.USEnrichmentApi
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
+		[Test]
 		public void TestSendingFullyPopulatedSecondaryCountComponenetsLookup()
 		{
 			var serializer = new FakeSerializer(null);
