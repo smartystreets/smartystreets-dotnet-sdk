@@ -163,6 +163,9 @@
 		[DataMember(Name = "route_type")]
 		public string RouteType { get; set; }
 
+		[DataMember(Name = "use_indicator")]
+		public string UseIndicator { get; set; }
+
 		#endregion
 	}
 }

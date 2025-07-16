@@ -31,7 +31,7 @@
 			                               "\"post_box\":\"49\",\"post_box_type\":\"50\"," +
 			                               "\"post_box_number\":\"51\",\"additional_content\":\"112\",\"delivery_installation\":\"113\"," +
                 						   "\"delivery_installation_type\":\"114\",\"delivery_installation_qualifier_name\":\"115\",\"route\":\"116\"," +
-               							   "\"route_number\":\"117\",\"route_type\":\"118\"},\"metadata\":{\"latitude\":52.0,\"longitude\":53.0," +
+               							   "\"route_number\":\"117\",\"route_type\":\"118\",\"use_indicator\":\"119\"},\"metadata\":{\"latitude\":52.0,\"longitude\":53.0," +
 			                               "\"geocode_precision\":\"54\",\"max_geocode_precision\":\"55\",\"address_format\":\"56\"}," +
 			                               "\"analysis\":{\"verification_status\":\"57\",\"address_precision\":\"58\",\"max_address_precision\":\"59\"," +
 										   "\"changes\":{\"organization\":\"60\",\"address1\":\"61\",\"address2\":\"62\",\"address3\":\"63\"," +
@@ -135,6 +135,7 @@
 			Assert.AreEqual("116", components.Route);
 			Assert.AreEqual("117", components.RouteNumber);
 			Assert.AreEqual("118", components.RouteType);
+			Assert.AreEqual("119", components.UseIndicator);
 
 			#endregion
 
