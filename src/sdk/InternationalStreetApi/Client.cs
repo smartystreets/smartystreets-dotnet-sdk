@@ -63,6 +63,7 @@
 			request.SetParameter("locality", lookup.Locality);
 			request.SetParameter("administrative_area", lookup.AdministrativeArea);
 			request.SetParameter("postal_code", lookup.PostalCode);
+			request.SetParameter("features", lookup.Features);
 
 			foreach (KeyValuePair<string, string> line in lookup.CustomParamDict) {
 				request.SetParameter(line.Key, line.Value);

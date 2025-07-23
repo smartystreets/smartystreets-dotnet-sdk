@@ -42,6 +42,7 @@
 		public string Locality { get; set; }
 		public string AdministrativeArea { get; set; }
 		public string PostalCode { get; set; }
+		public string Features { get; set; }
 		public Dictionary<string, string> CustomParamDict = new Dictionary<string, string>{};
 
 		#endregion
