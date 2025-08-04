@@ -47,6 +47,7 @@ namespace Examples
                     case "us_enrichment":
                         USEnrichmentPropertyExample.Run();
                         USEnrichmentGeoReferenceExample.Run();
+                        USEnrichmentRiskExample.Run();
                         USEnrichmentSecondaryExample.Run();
                         USEnrichmentUniversalExample.Run();
                         break;
