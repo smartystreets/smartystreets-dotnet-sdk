@@ -10,13 +10,9 @@
 	{
 		public static void  Run()
 		{
-            // specifies the TLS protocoll to use - this is TLS 1.2
-            const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
-
             // We recommend storing your secret keys in environment variables.
             var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
 			using var client = new ClientBuilder(authId, authToken).BuildUsExtractApiClient();
 			var text = "Here is some text.\r\nMy address is 3785 Las Vegs Av." +
