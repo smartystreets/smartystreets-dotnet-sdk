@@ -30,17 +30,18 @@ namespace SmartyStreets.USEnrichmentApi
 		}
 
 		[Test]
-		public void TestSendingFullyPopulatedPrincipalComponenetsLookup()
+		public void TestSendingFullyPopulatedPrincipalComponentsLookup()
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
-			const string expectedUrl= "http://localhost/search/property/principal?street=street&city=city&state=state&zipcode=zipcode";
+			const string expectedUrl= "http://localhost/search/property/principal?features=feature&street=street&city=city&state=state&zipcode=zipcode";
 
 			var lookup = new Property.Principal.Lookup();
 			lookup.SetStreet("street");
 			lookup.SetCity("city");
 			lookup.SetState("state");
 			lookup.SetZipcode("zipcode");
+			lookup.SetFeatures("feature");
 
 			client.SendPropertyPrincipalLookup(lookup);
 

@@ -26,7 +26,8 @@ namespace Examples
 			SmartyStreets.USEnrichmentApi.Property.Principal.Result[] results = null;
 
             // Create a lookup with a smarty key using the line below
-            var lookup = new SmartyStreets.USEnrichmentApi.Property.Principal.Lookup("325023201");
+            var lookup = new SmartyStreets.USEnrichmentApi.Property.Principal.Lookup("87844267");
+            lookup.SetFeatures("financial");
             
             // Create a lookup with address components using the lines below
             var componentsLookup = new SmartyStreets.USEnrichmentApi.Property.Principal.Lookup();
@@ -52,7 +53,7 @@ namespace Examples
                 // results = client.SendPropertyPrincipalLookup("325023201"); // simple call with just a SmartyKey
 
                 // Send a lookup using the line below
-                results = client.SendPropertyPrincipalLookup(freeformLookup); // more flexible call to set other lookup options
+                results = client.SendPropertyPrincipalLookup(lookup); // more flexible call to set other lookup options
             }
             catch (NotModifiedException ex) {
                 Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record
@@ -73,7 +74,7 @@ namespace Examples
             SmartyStreets.USEnrichmentApi.Property.Financial.Result[] financialResults = null;
 
             // Create a lookup with a smarty key using the line below
-            var financialLookup = new SmartyStreets.USEnrichmentApi.Property.Financial.Lookup("325023201");
+            var financialLookup = new SmartyStreets.USEnrichmentApi.Property.Financial.Lookup("87844267");
 
             // Create a lookup with address components using the lines below
             var financialComponentsLookup = new SmartyStreets.USEnrichmentApi.Property.Financial.Lookup();
@@ -120,7 +121,7 @@ namespace Examples
             Type type = obj.GetType();
 
             foreach (PropertyInfo property in type.GetProperties()) {
-                if (property.Name == "Attributes" || property.Name == "MatchedAddress" ){
+                if (property.Name == "Attributes" || property.Name == "MatchedAddress"){
                     if (property.GetValue(obj, null) != null) {
                         PrintResult(property.GetValue(obj, null));
                     }

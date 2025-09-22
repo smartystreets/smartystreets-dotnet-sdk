@@ -1,6 +1,7 @@
 namespace SmartyStreets.USEnrichmentApi.Property.Principal
 {
     using System.Runtime.Serialization;
+    using System.Collections.Generic;
 
 	[DataContract]
     public class Attributes
@@ -352,6 +353,9 @@ namespace SmartyStreets.USEnrichmentApi.Property.Principal
 
         [DataMember(Name = "fence_area")]
         public string FenceArea { get; set; }
+
+        [DataMember(Name = "financial_history")]
+        public List<HistoryEntry> FinancialHistory { get; set; }
 
         [DataMember(Name = "fips_code")]
         public string FipsCode { get; set; }

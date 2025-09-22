@@ -212,6 +212,9 @@ namespace SmartyStreets.USEnrichmentApi
 			if (lookup.GetExcludeFields() != null) {
 				request.SetParameter("exclude", lookup.GetExcludeFields());
 			}
+			if (lookup.GetFeatures() != null) {
+				request.SetParameter("features", lookup.GetFeatures());
+			}
 			if (lookup.GetFreeform() != null) {
 				request.SetParameter("freeform", lookup.GetFreeform());
 			}
