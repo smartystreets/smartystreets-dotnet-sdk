@@ -25,6 +25,9 @@
 		[DataMember(Name = "address_format")]
 		public string AddressFormat { get; set; }
 
+		[DataMember(Name = "occupant_use")]
+		public string OccupantUse { get; set; }
+
 		#endregion
 	}
 }

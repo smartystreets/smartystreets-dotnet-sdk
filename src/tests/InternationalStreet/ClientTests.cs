@@ -36,7 +36,7 @@
 		public void TestSendingSingleFullyPopulatedLookup()
 		{
 			const string expectedUrl = "http://localhost/?input_id=1234&country=0&geocode=true&language=native&freeform=1" +
-			                           "&address1=2&address2=3&address3=4&address4=5&organization=6&locality=7&administrative_area=8&postal_code=9";
+			                           "&address1=2&address2=3&address3=4&address4=5&organization=6&locality=7&administrative_area=8&postal_code=9&features=10";
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.sender, serializer);
 			var lookup = new Lookup
@@ -53,7 +53,8 @@
 				Organization = "6",
 				Locality = "7",
 				AdministrativeArea = "8",
-				PostalCode = "9"
+				PostalCode = "9",
+				Features = "10"
 			};
 
 			client.Send(lookup);
