@@ -3,6 +3,7 @@
 namespace SmartyStreets
 {
     using System;
+    using System.Security.Cryptography;
 
     /// <summary>
     ///     The ClientBuilder class helps you build a client object for one of the supported SmartyStreets APIs.
@@ -23,6 +24,7 @@ namespace SmartyStreets
         private Proxy proxy;
         private Dictionary<string, string> customHeaders;
         private List<string> licenses;
+        private Dictionary<string, string> customQueries;
         private bool logHttpRequestAndResponse; 
         private const string InternationalStreetApiUrl = "https://international-street.api.smarty.com/verify";
         private const string InternationalAutocompleteApiUrl = "https://international-autocomplete.api.smarty.com/v2/lookup";
@@ -39,6 +41,7 @@ namespace SmartyStreets
             this.maxTimeout = TimeSpan.FromSeconds(10);
             this.serializer = new NativeSerializer();
             this.licenses = new List<string>();
+            this.customQueries = new Dictionary<string, string>();
         }
 
         public ClientBuilder(ICredentials signer) : this()
@@ -130,7 +133,7 @@ namespace SmartyStreets
             this.licenses.AddRange(licenses);
             return this;
         }
-        
+
         /// <summary>
         /// Enables debug mode, which will print information about the HTTP request and response
         /// to the console. 
@@ -140,6 +143,23 @@ namespace SmartyStreets
         {
             this.logHttpRequestAndResponse = true;
             return this;
+        }
+
+        public ClientBuilder WithCustomQuery(string key, string value)
+        {
+            this.customQueries.Add(key, value);
+            return this;
+        }
+
+        public ClientBuilder WithCustomCommaSeparatedQuery(string key, string value)
+        {
+            this.customQueries[key] = this.customQueries.TryGetValue(key, out var current) ? current + "," + value : value;
+            return this;
+        }
+        
+        public ClientBuilder WithFeatureComponentAnalysis()
+        {
+            return this.WithCustomCommaSeparatedQuery("features", "component-analysis");
         }
 
         public InternationalStreetApi.Client BuildInternationalStreetApiClient()
@@ -214,9 +234,11 @@ namespace SmartyStreets
 
             if (this.maxRetries > 0)
                 sender = new RetrySender(this.maxRetries, sender, this.Sleep, new RandomGenerator());
-            
+
             sender = new LicenseSender(this.licenses, sender);
 
+            sender = new CustomQuerySender(this.customQueries, sender);
+            
             return sender;
         }
 
