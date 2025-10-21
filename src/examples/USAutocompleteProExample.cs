@@ -10,10 +10,6 @@
 	{
 		public static void Run()
 		{
-			
-            // specifies the TLS protocoll to use - this is TLS 1.2
-            const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
-
             //var key = Environment.GetEnvironmentVariable("SMARTY_AUTH_WEB");
 			//var hostname = Environment.GetEnvironmentVariable("SMARTY_WEBSITE_DOMAIN");
 			//var credentials = new SharedCredentials(key, hostname);
@@ -22,7 +18,6 @@
             var id = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var token = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			var credentials = new StaticCredentials(id, token);
-            ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
             using var client = new ClientBuilder(credentials).BuildUsAutocompleteProApiClient();
 

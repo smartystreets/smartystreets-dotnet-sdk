@@ -10,8 +10,6 @@ namespace Examples
 	{
 		public static void Run()
 		{
-            // specifies the TLS protocol to use - this is TLS 1.2
-            const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
 
             // var authId = "Your SmartyStreets Auth ID here";
             // var authToken = "Your SmartyStreets Auth Token here";
@@ -19,7 +17,6 @@ namespace Examples
             // We recommend storing your keys in environment variables instead---it's safer!
             var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
 			using var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
 			
