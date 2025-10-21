@@ -33,8 +33,8 @@ namespace SmartyStreets
         {
             if (!senderWasDisposed)
             {
-                this.inner.Dispose();
                 this.senderWasDisposed = true;
+                this.inner.Dispose();
             }
         }
 
