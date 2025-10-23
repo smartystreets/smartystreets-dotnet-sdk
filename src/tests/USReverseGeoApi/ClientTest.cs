@@ -2,8 +2,9 @@
 {
 	using USReverseGeoApi;
 	using NUnit.Framework;
+    using System.Threading.Tasks;
 
-	[TestFixture]
+    [TestFixture]
 	public class ClientTests
 	{
 		private RequestCapturingSender capturingSender;

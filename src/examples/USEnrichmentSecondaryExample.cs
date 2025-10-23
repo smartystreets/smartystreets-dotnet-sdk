@@ -2,15 +2,11 @@ namespace Examples
 {
 	using System;
 	using System.Net;
-	using System.Collections.Generic;
-	using System.IO;
-    using System.Linq;
     using SmartyStreets;
-	using SmartyStreets.USEnrichmentApi;
     using System.Reflection;
-    using System.Text;
+    using System.Threading.Tasks;
 
-	internal static class USEnrichmentSecondaryExample
+    internal static class USEnrichmentSecondaryExample
 	{
 		public static void Run()
 		{
@@ -25,7 +21,7 @@ namespace Examples
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
+			using var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
 			
             // See the US Enrichment API documenation for all available datasets and data subsets https://www.smarty.com/docs/cloud/us-address-enrichment-api#data-sets
             SmartyStreets.USEnrichmentApi.Secondary.Result[] results = null;
@@ -39,6 +35,9 @@ namespace Examples
             componentsLookup.SetCity("Somerville");
             componentsLookup.SetState("NJ");
             componentsLookup.SetZipcode("08876");
+
+            //uncomment the below line to add a custom parameter
+            //componentsLookup.AddCustomParameter("zipcode", "08876");
 
             // Create a lookup with a single line address using the line below
             var freeformLookup = new SmartyStreets.USEnrichmentApi.Secondary.Lookup();
@@ -60,10 +59,10 @@ namespace Examples
                 Console.WriteLine(ex.Message + ex.StackTrace);
             }
             
-            if (results is not null) {
+            if (!(results is null)) {
                 foreach (SmartyStreets.USEnrichmentApi.Secondary.Result result in results) {
                     PrintResult(result);
-                    if (result.Aliases is not null) {
+                    if (!(result.Aliases is null)) {
                         Console.WriteLine("Aliases: {");
                         foreach (SmartyStreets.USEnrichmentApi.Secondary.Aliases alias in result.Aliases) {
                             PrintResult(alias);
@@ -95,6 +94,9 @@ namespace Examples
             countComponentsLookup.SetState("NJ");
             countComponentsLookup.SetZipcode("08876");
 
+            //uncomment the below line to add a custom parameter
+            //countComponentsLookup.AddCustomParameter("zipcode", "08876");
+
             // Create a lookup with a single line address using the line below
             var countFreeformLookup = new SmartyStreets.USEnrichmentApi.Secondary.Count.Lookup();
             countFreeformLookup.SetFreeform("56 Union Ave Somerville NJ 08876");
@@ -115,7 +117,7 @@ namespace Examples
                 Console.WriteLine(ex.Message + ex.StackTrace);
             }
             
-            if (countResults is not null) {
+            if (!(countResults is null)) {
                 Console.WriteLine("Count: {");
                 foreach (SmartyStreets.USEnrichmentApi.Secondary.Count.Result result in countResults) {
                     PrintResult(result);
@@ -137,7 +139,7 @@ namespace Examples
                     PrintResult(property.GetValue(obj, null));
                     Console.WriteLine("}\n");
                 }
-                else if (property.GetValue(obj, null) is not null && property.Name != "Aliases" && property.Name != "Secondaries") {
+                else if (!(property.GetValue(obj, null) is null) && property.Name != "Aliases" && property.Name != "Secondaries") {
                     Console.WriteLine($"{property.Name}: {property.GetValue(obj, null)}");
                 }
             }

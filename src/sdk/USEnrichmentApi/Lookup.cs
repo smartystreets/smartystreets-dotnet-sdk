@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace SmartyStreets.USEnrichmentApi
 {
     using System;
@@ -15,10 +17,12 @@ namespace SmartyStreets.USEnrichmentApi
         private string zipcode;
         private string includeFields;
         private string excludeFields;
+        private string features;
+        public Dictionary<string, string> CustomParamDict = new Dictionary<string, string>{};
         private string eTag;
 
         public Lookup(string smartyKey = null, string datasetName = null, string dataSubsetName = null, string freeform = null, string street = null,
-        string city = null, string state = null, string zipcode = null)
+        string city = null, string state = null, string zipcode = null, string features = null)
         {
             this.smartyKey = smartyKey;
             this.datasetName = datasetName;
@@ -28,6 +32,7 @@ namespace SmartyStreets.USEnrichmentApi
             this.city = city;
             this.state = state;
             this.zipcode = zipcode;
+            this.features = features;
         }
 
         public string GetSmartyKey()
@@ -80,6 +85,11 @@ namespace SmartyStreets.USEnrichmentApi
             return excludeFields;
         }
 
+        public string GetFeatures()
+        {
+            return features;
+        }
+
         public string GetEtag()
         {
             return eTag;
@@ -93,6 +103,11 @@ namespace SmartyStreets.USEnrichmentApi
         public void SetExcludeFields(string excludeFields)
         {
             this.excludeFields = excludeFields;
+        }
+
+        public void SetFeatures(string features)
+        {
+            this.features = features;
         }
 
         public void SetEtag(string eTag)
@@ -141,6 +156,10 @@ namespace SmartyStreets.USEnrichmentApi
         }
 
         public abstract void DeserializeAndSetResults(SmartyStreets.ISerializer serializer, Stream payload);
+
+        public void AddCustomParameter(string parameter, string value) {
+			CustomParamDict.Add(parameter, value);
+		}
     }
 
 }

@@ -1,6 +1,7 @@
 ﻿namespace SmartyStreets.USZipCodeApi
 {
 	using System.Runtime.Serialization;
+	using System.Collections.Generic;
 
 	[DataContract]
 	public class Lookup : ILookup
@@ -22,6 +23,9 @@
 
 		[DataMember(Name = "compatibility")]
 		public string Compatibility { get; set; }
+
+		[DataMember(Name = "custom_param_dict")]
+		public Dictionary<string, string> CustomParamDict = new Dictionary<string, string>{};
 
 		#endregion
 
@@ -59,5 +63,9 @@
 		}
 
 		#endregion
+
+		public void AddCustomParameter(string parameter, string value) {
+			CustomParamDict.Add(parameter, value);
+		}
 	}
 }

@@ -3,6 +3,7 @@
 namespace SmartyStreets
 {
     using System;
+    using System.Security.Cryptography;
 
     /// <summary>
     ///     The ClientBuilder class helps you build a client object for one of the supported SmartyStreets APIs.
@@ -23,9 +24,10 @@ namespace SmartyStreets
         private Proxy proxy;
         private Dictionary<string, string> customHeaders;
         private List<string> licenses;
+        private Dictionary<string, string> customQueries;
+        private bool logHttpRequestAndResponse; 
         private const string InternationalStreetApiUrl = "https://international-street.api.smarty.com/verify";
         private const string InternationalAutocompleteApiUrl = "https://international-autocomplete.api.smarty.com/v2/lookup";
-        private const string UsAutocompleteApiUrl = "https://us-autocomplete.api.smarty.com/suggest";
         private const string UsAutocompleteProApiUrl = "https://us-autocomplete-pro.api.smarty.com/lookup";
         private const string UsExtractApiUrl = "https://us-extract.api.smarty.com/";
         private const string UsStreetApiUrl = "https://us-street.api.smarty.com/street-address";
@@ -39,6 +41,7 @@ namespace SmartyStreets
             this.maxTimeout = TimeSpan.FromSeconds(10);
             this.serializer = new NativeSerializer();
             this.licenses = new List<string>();
+            this.customQueries = new Dictionary<string, string>();
         }
 
         public ClientBuilder(ICredentials signer) : this()
@@ -131,6 +134,34 @@ namespace SmartyStreets
             return this;
         }
 
+        /// <summary>
+        /// Enables debug mode, which will print information about the HTTP request and response
+        /// to the console. 
+        /// </summary>
+        /// <returns> Returns 'this' to accomodate chaining.</returns>
+        public ClientBuilder WithDebug()
+        {
+            this.logHttpRequestAndResponse = true;
+            return this;
+        }
+
+        public ClientBuilder WithCustomQuery(string key, string value)
+        {
+            this.customQueries.Add(key, value);
+            return this;
+        }
+
+        public ClientBuilder WithCustomCommaSeparatedQuery(string key, string value)
+        {
+            this.customQueries[key] = this.customQueries.TryGetValue(key, out var current) ? current + "," + value : value;
+            return this;
+        }
+        
+        public ClientBuilder WithFeatureComponentAnalysis()
+        {
+            return this.WithCustomCommaSeparatedQuery("features", "component-analysis");
+        }
+
         public InternationalStreetApi.Client BuildInternationalStreetApiClient()
         {
             this.EnsureURLPrefixNotNull(InternationalStreetApiUrl);
@@ -141,12 +172,6 @@ namespace SmartyStreets
         {
             this.EnsureURLPrefixNotNull(InternationalAutocompleteApiUrl);
             return new InternationalAutocompleteApi.Client(this.BuildSender(), this.serializer);
-        }
-
-        public USAutocompleteApi.Client BuildUsAutocompleteApiClient()
-        {
-            this.EnsureURLPrefixNotNull(UsAutocompleteApiUrl);
-            return new USAutocompleteApi.Client(this.BuildSender(), this.serializer);
         }
 
         public USAutocompleteProApi.Client BuildUsAutocompleteProApiClient()
@@ -164,7 +189,9 @@ namespace SmartyStreets
         public USStreetApi.Client BuildUsStreetApiClient()
         {
             this.EnsureURLPrefixNotNull(UsStreetApiUrl);
-            return new USStreetApi.Client(this.BuildSender(), this.serializer);
+            
+            var client = new USStreetApi.Client(this.BuildSender(), this.serializer);
+            return client;
         }
 
         public USZipCodeApi.Client BuildUsZipCodeApiClient()
@@ -191,6 +218,10 @@ namespace SmartyStreets
                 return this.httpSender;
 
             ISender sender = new NativeSender(this.maxTimeout, this.proxy);
+            if (this.logHttpRequestAndResponse)
+            {
+                sender.EnableLogging();
+            }
             sender = new StatusCodeSender(sender);
             
             if (this.customHeaders != null)
@@ -203,9 +234,11 @@ namespace SmartyStreets
 
             if (this.maxRetries > 0)
                 sender = new RetrySender(this.maxRetries, sender, this.Sleep, new RandomGenerator());
-            
+
             sender = new LicenseSender(this.licenses, sender);
 
+            sender = new CustomQuerySender(this.customQueries, sender);
+            
             return sender;
         }
 

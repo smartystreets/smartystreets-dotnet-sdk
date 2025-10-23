@@ -1,13 +1,14 @@
 ﻿namespace Examples
 {
 	using System;
+    using System.IO;
     using System.Net;
     using SmartyStreets;
 	using SmartyStreets.USExtractApi;
 
 	internal static class USExtractExample
 	{
-		public static void Run()
+		public static void  Run()
 		{
             // specifies the TLS protocoll to use - this is TLS 1.2
             const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
@@ -17,7 +18,7 @@
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			var client = new ClientBuilder(authId, authToken).BuildUsExtractApiClient();
+			using var client = new ClientBuilder(authId, authToken).BuildUsExtractApiClient();
 			var text = "Here is some text.\r\nMy address is 3785 Las Vegs Av." +
 			           "\r\nLos Vegas, Nevada." +
 			           "\r\nMeet me at 1 Rosedale Baltimore Maryland, not at 123 Phony Street, Boise Idaho.";
@@ -32,10 +33,34 @@
 				AddressesPerLine = 1
 			};
 
-			client.Send(lookup);
+			//uncomment the line below to add a custom parameter
+			//lookup.AddCustomParameter("addr_line_breaks", "false");
+			
+            try
+            {
+                client.Send(lookup);
+            }
+            catch (SmartyException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+				return;
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+				return;
+            }
 
 			var result = lookup.Result;
-			var metadata = result.Metadata;
+
+            if (result.Metadata == null)
+            {
+                Console.WriteLine("No candidates. This means the address is not valid.");
+                return;
+            }
+
+            var metadata = result.Metadata;
 			Console.WriteLine("Found " + metadata.AddressCount + " addresses.");
 			Console.WriteLine(metadata.VerifiedCount + " of them were valid.");
 			Console.WriteLine();

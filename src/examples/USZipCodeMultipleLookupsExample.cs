@@ -10,21 +10,26 @@
 	{
 		public static void Run()
 		{
-            // specifies the TLS protocoll to use - this is TLS 1.2
-            const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
+			// specifies the TLS protocoll to use - this is TLS 1.2
+			const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
 
-            // You don't have to store your keys in environment variables, but we recommend it.
-            var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
+			// You don't have to store your keys in environment variables, but we recommend it.
+			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			var client = new ClientBuilder(authId, authToken).BuildUsZipCodeApiClient();
+			using var client = new ClientBuilder(authId, authToken)
+				.BuildUsZipCodeApiClient();
 
 			var lookup1 = new Lookup
 			{
 				InputId = "dfc33cb6-829e-4fea-aa1b-b6d6580f0817", // Optional ID from your system
 				ZipCode = "12345"
 			};
+
+			//uncomment the lines below to add custom parameters
+			// lookup1.AddCustomParameter("city", "Schenectady");
+			// lookup1.AddCustomParameter("state", "NY");
 
 			var lookup2 = new Lookup
 			{
@@ -50,15 +55,18 @@
 			catch (BatchFullException)
 			{
 				Console.WriteLine("Error. The batch is already full.");
+				return;
 			}
 			catch (SmartyException ex)
 			{
 				Console.WriteLine(ex.Message);
 				Console.WriteLine(ex.StackTrace);
+				return;
 			}
 			catch (IOException ex)
 			{
 				Console.WriteLine(ex.StackTrace);
+				return;
 			}
 
 			for (var i = 0; i < batch.Count; i++)
@@ -76,6 +84,14 @@
 				Console.WriteLine("Input ID: " + result.InputId);
 
 				var cityStates = result.CityStates;
+				var zipCodes = result.ZipCodes;
+
+				if (cityStates == null || zipCodes == null)
+				{
+					Console.WriteLine("Lookup " + i + " is invalid.\n");
+					continue;
+				}
+
 				Console.WriteLine(cityStates.Length + " City and State match" + (cityStates.Length == 1 ? ":" : "es:"));
 
 				foreach (var cityState in cityStates)
@@ -86,7 +102,6 @@
 					Console.WriteLine();
 				}
 
-				var zipCodes = result.ZipCodes;
 				Console.WriteLine(zipCodes.Length + " ZIP Code match" + (cityStates.Length == 1 ? ":" : "es:"));
 
 				foreach (var zipCode in zipCodes)

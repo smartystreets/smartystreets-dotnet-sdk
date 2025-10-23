@@ -1,7 +1,6 @@
 ﻿namespace Examples
 {
 	using System;
-	using System.Collections.Generic;
 	using System.IO;
     using System.Net;
     using SmartyStreets;
@@ -22,10 +21,7 @@
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			// The appropriate license values to be used for your subscriptions
-			// can be found on the Subscriptions page the account dashboard.
-			// https://www.smartystreets.com/docs/cloud/licensing
-			var client = new ClientBuilder(authId, authToken).WithLicense(new List<string>{"us-reverse-geocoding-cloud"})
+			using var client = new ClientBuilder(authId, authToken)
 				//.WithCustomBaseUrl("us-street-reverse-geo.api.smarty.com")
 				//.ViaProxy("http://localhost:8080", "username", "password") // uncomment this line to point to the specified proxy.
 				.BuildUsReverseGeoApiClient();
@@ -35,6 +31,9 @@
 
 			var lookup = new Lookup(40.111111, -111.111111);
 
+			//uncomment the line below to add a custom parameter
+			//lookup.AddCustomParameter("source", "all");
+
 			try
 			{
 				client.Send(lookup);
@@ -43,10 +42,18 @@
 			{
 				Console.WriteLine(ex.Message);
 				Console.WriteLine(ex.StackTrace);
+				return;
 			}
 			catch (IOException ex)
 			{
 				Console.WriteLine(ex.StackTrace);
+				return;
+			}
+
+			if (lookup.SmartyResponse == null)
+			{
+				Console.WriteLine("No candidates.");
+				return;
 			}
 
 			var results = lookup.SmartyResponse.Results;
@@ -71,6 +78,7 @@
 				Console.WriteLine("State Abbreviation: " + address.StateAbbreviation);
 				Console.WriteLine("ZIP Code: " + address.ZipCode);
 				Console.WriteLine("License: " + coordinate.License);
+				Console.WriteLine("Smartykey: " + address.Smartykey);
 			}
 		}
 	}

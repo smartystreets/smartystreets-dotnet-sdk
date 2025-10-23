@@ -29,8 +29,10 @@
 			                               "\"building_trailing_type\":\"44\",\"sub_building_type\":\"45\",\"sub_building_number\":\"46\"," +
 			                               "\"sub_building_name\":\"47\",\"sub_building\":\"48\",\"level_type\":\"48.1\",\"level_number\":\"48.2\"," +
 			                               "\"post_box\":\"49\",\"post_box_type\":\"50\"," +
-			                               "\"post_box_number\":\"51\"},\"metadata\":{\"latitude\":52.0,\"longitude\":53.0," +
-			                               "\"geocode_precision\":\"54\",\"max_geocode_precision\":\"55\",\"address_format\":\"56\"}," +
+			                               "\"post_box_number\":\"51\",\"additional_content\":\"112\",\"delivery_installation\":\"113\"," +
+                						   "\"delivery_installation_type\":\"114\",\"delivery_installation_qualifier_name\":\"115\",\"route\":\"116\"," +
+               							   "\"route_number\":\"117\",\"route_type\":\"118\"},\"metadata\":{\"latitude\":52.0,\"longitude\":53.0," +
+			                               "\"geocode_precision\":\"54\",\"max_geocode_precision\":\"55\",\"address_format\":\"56\",\"occupant_use\":\"56.1\"}," +
 			                               "\"analysis\":{\"verification_status\":\"57\",\"address_precision\":\"58\",\"max_address_precision\":\"59\"," +
 										   "\"changes\":{\"organization\":\"60\",\"address1\":\"61\",\"address2\":\"62\",\"address3\":\"63\"," +
 			                               "\"address4\":\"64\",\"address5\":\"65\",\"address6\":\"66\",\"address7\":\"67\",\"address8\":\"68\"," +
@@ -126,6 +128,13 @@
 			Assert.AreEqual("49", components.PostBox);
 			Assert.AreEqual("50", components.PostBoxType);
 			Assert.AreEqual("51", components.PostBoxNumber);
+			Assert.AreEqual("112", components.AdditionalContent);
+			Assert.AreEqual("113", components.DeliveryInstallation);
+			Assert.AreEqual("114", components.DeliveryInstallationType);
+			Assert.AreEqual("115", components.DeliveryInstallationQualifierName);
+			Assert.AreEqual("116", components.Route);
+			Assert.AreEqual("117", components.RouteNumber);
+			Assert.AreEqual("118", components.RouteType);
 
 			#endregion
 
@@ -138,6 +147,7 @@
 			Assert.AreEqual("54", metadata.GeocodePrecision);
 			Assert.AreEqual("55", metadata.MaxGeocodePrecision);
 			Assert.AreEqual("56", metadata.AddressFormat);
+			Assert.AreEqual("56.1", metadata.OccupantUse);
 
 			#endregion
 

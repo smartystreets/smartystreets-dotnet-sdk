@@ -3,9 +3,11 @@
 namespace SmartyStreets
 {
 	using System;
+    using System.Threading.Tasks;
 
-	public class RetrySender : ISender
-	{
+    public class RetrySender : ISender
+    {
+	    private bool senderWasDisposed;
 		private readonly int maxRetries;
 		private readonly ISender inner;
 		private Action<int> sleep;
@@ -41,9 +43,14 @@ namespace SmartyStreets
 
 		public Response Send(Request request)
 		{
+			return SendAsync(request).GetAwaiter().GetResult();
+		}
+
+		public async Task<Response> SendAsync(Request request)
+		{
 			for (var attempts = 0; BackOff(attempts); attempts++)
 			{
-				var response = this.TrySend(request, ref attempts);
+				var response = await this.TrySend(request, attempts);
 				if (response != null)
 					return response;
 			}
@@ -51,11 +58,11 @@ namespace SmartyStreets
 			return null;
 		}
 
-		private Response TrySend(Request request, ref int attempts)
+		private async Task<Response> TrySend(Request request, int attempts)
 		{
 			try
 			{
-				return this.inner.Send(request);
+				return await this.inner.SendAsync(request);
 			}
 			catch (TooManyRequestsException e)
 			{
@@ -72,6 +79,20 @@ namespace SmartyStreets
 			}
 			// all other exceptions are just allowed to be caught by the caller
 			return null;
+		}
+
+		public void Dispose()
+		{
+			if (!senderWasDisposed)
+			{
+				this.inner.Dispose();
+				this.senderWasDisposed = true;
+			}
+		}
+
+		public void EnableLogging()
+		{
+			this.inner.EnableLogging();
 		}
 	}
 }

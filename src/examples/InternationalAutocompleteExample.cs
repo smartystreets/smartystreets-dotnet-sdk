@@ -1,7 +1,7 @@
 namespace Examples
 {
 	using System;
-	using System.Collections.Generic;
+    using System.IO;
     using System.Net;
     using SmartyStreets;
 	using SmartyStreets.InternationalAutocompleteApi;
@@ -18,11 +18,7 @@ namespace Examples
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			// The appropriate license values to be used for your subscriptions
-			// can be found on the Subscriptions page the account dashboard.
-			// https://www.smartystreets.com/docs/cloud/licensing
-			var client = new ClientBuilder(authId, authToken).WithLicense(new List<string>{"international-autocomplete-v2-cloud"})
-				.BuildInternationalAutocompleteApiClient();
+			using var client = new ClientBuilder(authId, authToken).BuildInternationalAutocompleteApiClient();
 			
 			// Documentation for input fields can be found at:
 			// https://smartystreetscom/docs/cloud/international-street-api#http-input-fields
@@ -34,10 +30,34 @@ namespace Examples
 				Locality = "Paris",
 			};
 
-			client.Send(lookup);
+			//uncomment the line below to add a custom parameter
+			//lookup.AddCustomParameter("max_results", "3");
 
-			var candidates = lookup.Result;
-			Console.WriteLine();
+            try
+            { 
+	            client.Send(lookup);
+            }
+            catch (SmartyException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                return;
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return;
+            }
+
+            var candidates = lookup.Result;
+            
+            if (candidates == null)
+            {
+                Console.WriteLine("No candidates. This means the address is not valid.");
+                return;
+            }
+            
+            Console.WriteLine();
 			Console.WriteLine("*** Results ***");
 			foreach (var candidate in candidates)
 			{

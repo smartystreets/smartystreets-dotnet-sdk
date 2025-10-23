@@ -1,7 +1,10 @@
-﻿namespace SmartyStreets
+﻿using System.Threading.Tasks;
+
+namespace SmartyStreets
 {
 	public class SigningSender : ISender
 	{
+		private bool senderWasDisposed; 
 		private readonly ICredentials signer;
 		private readonly ISender inner;
 
@@ -13,8 +16,27 @@
 
 		public Response Send(Request request)
 		{
+			return SendAsync(request).GetAwaiter().GetResult();
+		}
+
+		public async Task<Response> SendAsync(Request request)
+		{
 			this.signer.Sign(request);
-			return this.inner.Send(request);
+			return await this.inner.SendAsync(request);
+		}
+
+		public void Dispose()
+		{
+			if (!senderWasDisposed)
+			{
+				this.inner.Dispose();
+				this.senderWasDisposed = true;
+			}
+		}
+
+		public void EnableLogging()
+		{
+			this.inner.EnableLogging();
 		}
 	}
 }

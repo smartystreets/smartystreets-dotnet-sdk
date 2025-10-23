@@ -1,7 +1,6 @@
 ﻿namespace Examples
 {
 	using System;
-	using System.Collections.Generic;
 	using System.IO;
     using System.Net;
     using SmartyStreets;
@@ -19,11 +18,7 @@
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-            // The appropriate license values to be used for your subscriptions
-            // can be found on the Subscriptions page the account dashboard.
-            // https://www.smartystreets.com/docs/cloud/licensing
-			var client = new ClientBuilder(authId, authToken).WithLicense(new List<string>{"us-core-cloud"})
-                .BuildUsStreetApiClient();
+			using var client = new ClientBuilder(authId, authToken).BuildUsStreetApiClient();
 			var batch = new Batch();
 			
 			// Documentation for input fields can be found at:
@@ -45,6 +40,9 @@
                                                // this will always return at least one result even if the address is invalid.
                                                // Refer to the documentation for additional MatchStrategy options.
 			};
+
+			//uncomment the line below to add a custom parameter
+			//address1.AddCustomParameter("InputId", "24601");
 
 			var address2 = new Lookup("1 Rosedale, Baltimore, Maryland")
 			{
@@ -75,15 +73,18 @@
 			catch (BatchFullException)
 			{
 				Console.WriteLine("Error. The batch is already full.");
+				return;
 			}
 			catch (SmartyException ex)
 			{
 				Console.WriteLine(ex.Message);
 				Console.WriteLine(ex.StackTrace);
+				return;
 			}
 			catch (IOException ex)
 			{
 				Console.WriteLine(ex.StackTrace);
+				return;
 			}
 
 			for (var i = 0; i < batch.Count; i++)

@@ -1,7 +1,7 @@
 ﻿namespace Examples
 {
 	using System;
-	using System.Collections.Generic;
+    using System.IO;
     using System.Net;
     using SmartyStreets;
 	using SmartyStreets.InternationalStreetApi;
@@ -18,11 +18,7 @@
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			// The appropriate license values to be used for your subscriptions
-			// can be found on the Subscriptions page the account dashboard.
-			// https://www.smartystreets.com/docs/cloud/licensing
-			var client = new ClientBuilder(authId, authToken).WithLicense(new List<string>{"international-global-plus-cloud"})
-                .BuildInternationalStreetApiClient();
+			using var client = new ClientBuilder(authId, authToken).BuildInternationalStreetApiClient();
 			
 			// Documentation for input fields can be found at:
 			// https://smartystreetscom/docs/cloud/international-street-api#http-input-fields
@@ -40,11 +36,35 @@
 				Country = "Brazil",
 				PostalCode = "02516-050"
 			};
+			
+			//uncomment the line below to add a custom parameter
+			//lookup.AddCustomParameter("input_id", "ID-8675309");
 
-			client.Send(lookup);
+            try
+            {
+	            client.Send(lookup);
+            }
+            catch (SmartyException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                return;
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return;
+            }
 
-			var candidates = lookup.Result;
-			var firstCandidate = candidates[0];
+            var candidates = lookup.Result;
+
+            if (candidates.Count == 0)
+            {
+                Console.WriteLine("No candidates. This means the address is not valid.");
+                return;
+            }
+
+            var firstCandidate = candidates[0];
 			Console.WriteLine("Input ID: " + firstCandidate.InputId);
 			Console.WriteLine("Address is " + firstCandidate.Analysis.VerificationStatus);
 			Console.WriteLine("Address precision: " + firstCandidate.Analysis.AddressPrecision + "\n");

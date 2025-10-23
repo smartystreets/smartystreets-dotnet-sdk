@@ -3,13 +3,16 @@
 	using System;
 	using System.Collections;
 	using System.IO;
+	using System.Collections.Generic;
+    using System.Threading.Tasks;
 
-	/// <summary>
-	///     This client sends lookups to the SmartyStreets US Autocomplete API,
-	///     and attaches the results to the appropriate Lookup objects.
-	/// </summary>
-	public class Client : IUSAutoCompleteProClient
-	{
+    /// <summary>
+    ///     This client sends lookups to the SmartyStreets US Autocomplete API,
+    ///     and attaches the results to the appropriate Lookup objects.
+    /// </summary>
+    public class Client : IUSAutoCompleteProClient
+    {
+	    private bool senderWasDisposed;
 		private readonly ISender sender;
 		private readonly ISerializer serializer;
 
@@ -21,6 +24,11 @@
 
 		public void Send(Lookup lookup)
 		{
+			SendAsync(lookup).GetAwaiter().GetResult();
+		}
+
+		public async Task SendAsync(Lookup lookup)
+		{
 			if (lookup == null)
 				throw new ArgumentNullException("lookup");
 
@@ -29,7 +37,7 @@
 
 			var request = BuildRequest(lookup);
 
-			var response = this.sender.Send(request);
+			var response = await this.sender.SendAsync(request);
 
 			using (var payloadStream = new MemoryStream(response.Payload))
 			{
@@ -57,6 +65,10 @@
 			request.SetParameter("selected", lookup.Selected);
 			request.SetParameter("source", lookup.Source);
 
+			foreach (KeyValuePair<string, string> line in lookup.CustomParamDict) {
+				request.SetParameter(line.Key, line.Value);
+			}
+
 			return request;
 		}
 
@@ -74,6 +86,15 @@
 				filterList = filterList.Substring(0, filterList.Length - 1);
 
 			return filterList;
+		}
+
+		public void Dispose()
+		{
+			if (!this.senderWasDisposed)
+			{
+				this.sender.Dispose();
+				this.senderWasDisposed = true;
+			}
 		}
 	}
 }

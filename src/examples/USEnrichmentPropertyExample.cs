@@ -2,14 +2,10 @@ namespace Examples
 {
 	using System;
 	using System.Net;
-	using System.Collections.Generic;
-	using System.IO;
-    using System.Linq;
     using SmartyStreets;
-	using SmartyStreets.USEnrichmentApi;
     using System.Reflection;
 
-	internal static class USEnrichmentPropertyExample
+    internal static class USEnrichmentPropertyExample
 	{
 		public static void Run()
 		{
@@ -24,13 +20,14 @@ namespace Examples
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
+			using var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
 			
 
 			SmartyStreets.USEnrichmentApi.Property.Principal.Result[] results = null;
 
             // Create a lookup with a smarty key using the line below
-            var lookup = new SmartyStreets.USEnrichmentApi.Property.Principal.Lookup("325023201");
+            var lookup = new SmartyStreets.USEnrichmentApi.Property.Principal.Lookup("87844267");
+            lookup.SetFeatures("financial");
             
             // Create a lookup with address components using the lines below
             var componentsLookup = new SmartyStreets.USEnrichmentApi.Property.Principal.Lookup();
@@ -38,6 +35,9 @@ namespace Examples
             componentsLookup.SetCity("Somerville");
             componentsLookup.SetState("NJ");
             componentsLookup.SetZipcode("08876");
+
+            //uncomment the below line to add a custom parameter
+            //componentsLookup.AddCustomParameter("zipcode", "08876");
 
             // Create a lookup with a single line address using the line below
             var freeformLookup = new SmartyStreets.USEnrichmentApi.Property.Principal.Lookup();
@@ -74,7 +74,7 @@ namespace Examples
             SmartyStreets.USEnrichmentApi.Property.Financial.Result[] financialResults = null;
 
             // Create a lookup with a smarty key using the line below
-            var financialLookup = new SmartyStreets.USEnrichmentApi.Property.Financial.Lookup("325023201");
+            var financialLookup = new SmartyStreets.USEnrichmentApi.Property.Financial.Lookup("87844267");
 
             // Create a lookup with address components using the lines below
             var financialComponentsLookup = new SmartyStreets.USEnrichmentApi.Property.Financial.Lookup();
@@ -82,6 +82,9 @@ namespace Examples
             financialComponentsLookup.SetCity("Somerville");
             financialComponentsLookup.SetState("NJ");
             financialComponentsLookup.SetZipcode("08876");
+
+            //uncomment the below line to add a custom parameter
+            //financialComponentsLookup.AddCustomParameter("zipcode", "08876");
 
             // Create a lookup with a single line address using the line below
             var financialFreeformLookup = new SmartyStreets.USEnrichmentApi.Property.Financial.Lookup();
@@ -118,8 +121,10 @@ namespace Examples
             Type type = obj.GetType();
 
             foreach (PropertyInfo property in type.GetProperties()) {
-                if (property.Name == "Attributes" ){
-                    PrintResult(property.GetValue(obj, null));
+                if (property.Name == "Attributes" || property.Name == "MatchedAddress"){
+                    if (property.GetValue(obj, null) != null) {
+                        PrintResult(property.GetValue(obj, null));
+                    }
                 }
                 if (property.GetValue(obj, null) != null) {
                     Console.WriteLine($"{property.Name}: {property.GetValue(obj, null)}");

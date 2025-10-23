@@ -1,18 +1,17 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace SmartyStreets
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-
-    public class LicenseSender : ISender
+    public class CustomQuerySender : ISender
     {
         private bool senderWasDisposed;
-        private readonly List<string> licenses;
+        private readonly Dictionary<string, string> queries;
         private readonly ISender inner;
 
-        public LicenseSender(List<string> licenses, ISender inner)
+        public CustomQuerySender(Dictionary<string, string> queries, ISender inner)
         {
-            this.licenses = licenses;
+            this.queries = queries;
             this.inner = inner;
         }
 
@@ -23,7 +22,10 @@ namespace SmartyStreets
 
         public async Task<Response> SendAsync(Request request)
         {
-            request.SetParameter("license", String.Join(",", this.licenses.ToArray()));
+            foreach (var query  in this.queries)
+            {
+                request.SetParameter(query.Key, query.Value);
+            }
             return await this.inner.SendAsync(request);
         }
 
@@ -31,14 +33,14 @@ namespace SmartyStreets
         {
             if (!senderWasDisposed)
             {
-                this.inner.Dispose();
                 this.senderWasDisposed = true;
+                this.inner.Dispose();
             }
         }
 
         public void EnableLogging()
         {
-            inner.EnableLogging();
+            this.inner.EnableLogging();
         }
     }
 }

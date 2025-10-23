@@ -1,7 +1,6 @@
 ﻿namespace Examples
 {
 	using System;
-	using System.Collections.Generic;
 	using System.IO;
     using System.Net;
     using SmartyStreets;
@@ -11,24 +10,24 @@
 	{
 		public static void Run()
 		{
-            // specifies the TLS protocoll to use - this is TLS 1.2
-            const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
+			// specifies the TLS protocol to use - this is TLS 1.2
+			const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
 
-            // var authId = "Your SmartyStreets Auth ID here";
-            // var authToken = "Your SmartyStreets Auth Token here";
+			// var authId = "Your SmartyStreets Auth ID here";
+			// var authToken = "Your SmartyStreets Auth Token here";
 
-            // We recommend storing your keys in environment variables instead---it's safer!
-            var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
+			// We recommend storing your keys in environment variables instead---it's safer!
+			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
+
 			ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-			// The appropriate license values to be used for your subscriptions
-			// can be found on the Subscriptions page the account dashboard.
-			// https://www.smartystreets.com/docs/cloud/licensing
-			var client = new ClientBuilder(authId, authToken).WithLicense(new List<string>{"us-core-cloud"})
+			using var client = new ClientBuilder(authId, authToken)
 				//.WithCustomBaseUrl("us-street.api.smarty.com")
 				//.ViaProxy("http://localhost:8080", "username", "password") // uncomment this line to point to the specified proxy.
+				// .WithDebug()  // uncomment this line to print out the HTTP request and response 
 				.BuildUsStreetApiClient();
+			
 			
 			// Documentation for input fields can be found at:
 			// https://smartystreets.com/docs/us-street-api#input-fields
@@ -44,11 +43,15 @@
 				City = "Mountain View",
 				State = "CA",
 				ZipCode = "21229",
+				CountySource = Lookup.GEOGRAPHIC,
 				MaxCandidates = 3,
 				MatchStrategy = Lookup.ENHANCED // "invalid" is the most permissive match,
-                                               // this will always return at least one result even if the address is invalid.
-                                               // Refer to the documentation for additional MatchStrategy options.
+												// this will always return at least one result even if the address is invalid.
+												// Refer to the documentation for additional MatchStrategy options.
 			};
+
+			//uncomment the line below to add a custom parameter
+			//lookup.AddCustomParameter("county_source", "geographic");
 
 			try
 			{
@@ -58,10 +61,12 @@
 			{
 				Console.WriteLine(ex.Message);
 				Console.WriteLine(ex.StackTrace);
+				return;
 			}
 			catch (IOException ex)
 			{
 				Console.WriteLine(ex.StackTrace);
+				return;
 			}
 
 			var candidates = lookup.Result;

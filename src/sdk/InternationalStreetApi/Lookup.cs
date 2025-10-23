@@ -42,6 +42,8 @@
 		public string Locality { get; set; }
 		public string AdministrativeArea { get; set; }
 		public string PostalCode { get; set; }
+		public string Features { get; set; }
+		public Dictionary<string, string> CustomParamDict = new Dictionary<string, string>{};
 
 		#endregion
 
@@ -117,6 +119,10 @@
 		public void AddToResult(Candidate newCandidate)
 		{
 			this.Result.Add(newCandidate);
+		}
+
+		public void AddCustomParameter(string parameter, string value) {
+			CustomParamDict.Add(parameter, value);
 		}
 	}
 }

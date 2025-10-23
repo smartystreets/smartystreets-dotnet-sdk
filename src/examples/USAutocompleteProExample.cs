@@ -1,7 +1,7 @@
 ﻿namespace Examples
 {
 	using System;
-	using System.Collections.Generic;
+    using System.IO;
     using System.Net;
     using SmartyStreets;
 	using SmartyStreets.USAutocompleteProApi;
@@ -10,6 +10,7 @@
 	{
 		public static void Run()
 		{
+			
             // specifies the TLS protocoll to use - this is TLS 1.2
             const SecurityProtocolType tlsProtocol1_2 = (SecurityProtocolType)3072;
 
@@ -23,18 +24,36 @@
 			var credentials = new StaticCredentials(id, token);
             ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-            // The appropriate license values to be used for your subscriptions
-            // can be found on the Subscriptions page the account dashboard.
-            // https://www.smartystreets.com/docs/cloud/licensing
-            var client = new ClientBuilder(credentials).WithLicense(new List<string>{"us-autocomplete-pro-cloud"})
-                .BuildUsAutocompleteProApiClient();
+            using var client = new ClientBuilder(credentials).BuildUsAutocompleteProApiClient();
 
 			var lookup = new Lookup("1042 W Center");
 			lookup.PreferGeolocation = "none";
 
-			client.Send(lookup);
+            try
+            { 
+	            client.Send(lookup);
+            }
+            catch (SmartyException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                return;
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return;
+            }
 
-			Console.WriteLine("*** Result with no filter ***");
+            var suggestions = lookup.Result;
+
+            if (suggestions == null)
+            {
+                Console.WriteLine("No suggestions.");
+                return;
+            }
+
+            Console.WriteLine("*** Result with no filter ***");
 			Console.WriteLine();
 			foreach (var suggestion in lookup.Result)
 				Console.WriteLine(suggestion.Street, suggestion.City, ", ", suggestion.State);
@@ -54,11 +73,34 @@
 			lookup.PreferRatio = 4;
 			lookup.Source = "all";
 
-			client.Send(lookup);
+			//uncomment the below line to add a custom parameter
+			//lookup.AddCustomParameter("source", "all");
 
-			var suggestions = lookup.Result;
+            try
+            {
+                client.Send(lookup);
+            }
+            catch (SmartyException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                //return;
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return;
+            }
 
-			Console.WriteLine();
+            suggestions = lookup.Result;
+
+            if (suggestions == null)
+            {
+                Console.WriteLine("No suggestions.");
+                return;
+            }
+
+            Console.WriteLine();
 			Console.WriteLine("*** Result with some filters ***");
 			foreach (var suggestion in suggestions)
 				Console.WriteLine(suggestion.Street + " " + suggestion.City + ", " + suggestion.State);

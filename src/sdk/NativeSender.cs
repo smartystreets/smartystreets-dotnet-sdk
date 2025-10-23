@@ -1,146 +1,157 @@
-﻿namespace SmartyStreets
+namespace SmartyStreets
 {
-	using System;
-	using System.IO;
-	using System.Net;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Threading.Tasks;
 
-	public class NativeSender : ISender
-	{
-		private static readonly Version AssemblyVersion = typeof(NativeSender).Assembly.GetName().Version;
+    public class NativeSender : ISender
+    {
+        private static readonly Version AssemblyVersion = typeof(NativeSender).Assembly.GetName().Version;
+        private static readonly string UserAgent = string.Format("smartystreets (sdk:dotnet@{0}.{1}.{2})",
+            AssemblyVersion.Major, AssemblyVersion.Minor, AssemblyVersion.Build);
+        private HttpClient client;
 
-		private static readonly string UserAgent = string.Format("smartystreets (sdk:dotnet@{0}.{1}.{2})",
-			AssemblyVersion.Major, AssemblyVersion.Minor, AssemblyVersion.Build);
+        private bool logHttpRequestAndResponse; 
 
-		private readonly TimeSpan timeout;
-		private readonly IWebProxy proxy;
+        public NativeSender()
+        {
+            client = new HttpClient();
 
-		public NativeSender()
-		{
-			this.timeout = TimeSpan.FromSeconds(10);
-		}
+            client.Timeout = TimeSpan.FromSeconds(10);
+            client.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent);
+        }
 
-		public NativeSender(TimeSpan timeout, Proxy proxy = null) : this()
-		{
-			this.timeout = timeout;
-			this.proxy = (proxy ?? new Proxy()).NativeProxy;
-		}
+        public NativeSender(TimeSpan timeout, Proxy proxy = null)
+        {
+            var httpClientHandler = new HttpClientHandler();
+            httpClientHandler.Proxy = (proxy ?? new Proxy()).NativeProxy;
 
-		public Response Send(Request request)
-		{
-			var frameworkRequest = this.BuildRequest(request);
-			CopyHeaders(request, frameworkRequest);
+            client = new HttpClient(httpClientHandler);
+            client.Timeout = timeout;
+            client.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent);
+        }
 
-			TryWritePayload(request, frameworkRequest);
+        public Response Send(Request request)
+        {
+            return SendAsync(request).GetAwaiter().GetResult();
+        }
 
-			var frameworkResponse = GetResponse(frameworkRequest);
-			var statusCode = (int)frameworkResponse.StatusCode;
-			var payload = GetResponseBody(frameworkResponse);
+        public async Task<Response> SendAsync(Request request)
+        {
+            // Copy headers 
+            foreach (var item in request.Headers)
+            {
+                if (item.Key == "Referer")
+                {
+                    client.DefaultRequestHeaders.Referrer = new Uri(item.Value);
+                }
+                else
+                {
+                    client.DefaultRequestHeaders.Add(item.Key, item.Value);
+                }
+            }
+            
+            HttpResponseMessage response;
+            if (request.Payload != null)
+            {
+                // Try write payload and get response 
+                HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Post, request.GetUrl());
+                
+                httpRequest.Content = new StreamContent(new MemoryStream(request.Payload));
+                
+                response = await client.SendAsync(httpRequest);
+            }
+            else
+            {
+                // Get response
+                response = await client.GetAsync(request.GetUrl());
+            }
 
-			var retVal = new Response(statusCode, payload);
-			// retrieve the etag header for enrichment api
-			retVal.HeaderInfo.Add("Etag", frameworkResponse.Headers.Get("Etag"));
+            if (this.logHttpRequestAndResponse)
+            {
+                await PrintRequestAndResponse(response);
+            }
+            
+            var statusCode = (int)response.StatusCode;
+            var payload = await response.Content.ReadAsByteArrayAsync();
 
-			if (statusCode == 429)
-			{
-				string retryValue = frameworkResponse.Headers.Get("Retry-After");
-				if ((retryValue != null) && (retryValue.Length != 0))
-				{
-					retVal.HeaderInfo.Add("Retry-After", retryValue);
-				}
-			}
+            var retVal = new Response(statusCode, payload);
+            // retrieve the etag header for enrichment api 
+            string headerValue = GetHeaderValue(response, "Etag");
+            if (headerValue != "")
+            {
+                retVal.HeaderInfo.Add("Etag", headerValue);
+            }
 
-			return retVal;
-		}
+            if (statusCode == 429)
+            {
+                string retryValue = GetHeaderValue(response, "Retry-After");
+                if (!string.IsNullOrEmpty(retryValue))
+                {
+                    retVal.HeaderInfo.Add("Retry-After", retryValue);
+                }
+            }
 
-		private HttpWebRequest BuildRequest(Request request)
-		{
-			var frameworkRequest = (HttpWebRequest)WebRequest.Create(request.GetUrl());
-			frameworkRequest.Timeout = (int)this.timeout.TotalMilliseconds;
-			frameworkRequest.Method = request.Method;
-			frameworkRequest.Proxy = this.proxy;
-			frameworkRequest.AutomaticDecompression = DecompressionMethods.GZip;
-			return frameworkRequest;
-		}
+            return retVal;
+        }
 
-		private static void CopyHeaders(Request request, HttpWebRequest frameworkRequest)
-		{
-			foreach (var item in request.Headers)
-				if (item.Key == "Referer")
-					frameworkRequest.Referer = item.Value;
-				else
-					frameworkRequest.Headers.Add(item.Key, item.Value);
+        private static string GetHeaderValue(HttpResponseMessage response, string headerName)
+        {
+            string headerValue = string.Empty;
+            if (response.Headers.TryGetValues(headerName, out IEnumerable<string> values))
+            {
+                headerValue = values.FirstOrDefault();
+            }
+            return headerValue;
+        }
 
-			frameworkRequest.UserAgent = UserAgent;
-		}
+        public void EnableLogging()
+        {
+            this.logHttpRequestAndResponse = true;
+        }
 
-		private static void TryWritePayload(Request request, WebRequest frameworkRequest)
-		{
-			if (request.Method != "POST" || request.Payload == null)
-				return;
+        public void Dispose()
+        {
+            if (this.client != null)
+            {
+                this.client.Dispose();
+                this.client = null;
+            }
+        }
 
-			using (var sourceStream = new MemoryStream(request.Payload))
-				CopyStream(sourceStream, GetRequestStream(frameworkRequest));
-		}
-
-		private static void CopyStream(Stream source, Stream target)
-		{
-			try
-			{
-#if NET35
-			    byte[] buffer = new byte[16 * 1024]; // Fairly arbitrary size
-			    int bytesRead;
-
-			    while ((bytesRead = source.Read(buffer, 0, buffer.Length)) > 0)
-			    {
-			        target.Write(buffer, 0, bytesRead);
-			    }
-#else
-				source.CopyTo(target);
-#endif
-			}
-			catch (IOException ex)
-			{
-				throw new SmartyException("Unable to write to request stream.", ex);
-			}
-		}
-
-		private static Stream GetRequestStream(WebRequest request)
-		{
-			try
-			{
-				return request.GetRequestStream();
-			}
-			catch (WebException ex)
-			{
-				throw new SmartyException("Failed to make request.", ex);
-			}
-		}
-
-		private static HttpWebResponse GetResponse(WebRequest request)
-		{
-			try
-			{
-				return (HttpWebResponse)request.GetResponse();
-			}
-			catch (WebException e)
-			{
-				if (e.Response == null)
-					throw;
-
-				return (HttpWebResponse)e.Response;
-			}
-		}
-
-		private static byte[] GetResponseBody(WebResponse response)
-		{
-			var length = response.ContentLength >= 0 ? (int)response.ContentLength : 0;
-
-			using (var targetStream = new MemoryStream(length))
-			using (var responseStream = response.GetResponseStream())
-			{
-				CopyStream(responseStream, targetStream);
-				return targetStream.ToArray();
-			}
-		}
-	}
+        private async Task PrintRequestAndResponse(HttpResponseMessage response)
+        {
+            Console.WriteLine("HTTP Request: ");
+            var request = response.RequestMessage;
+            Console.WriteLine($"Method: {request.Method}");
+            Console.WriteLine($"Request URI: {request.RequestUri}");
+            Console.WriteLine("Headers: ");
+            foreach (var header in request.Headers)
+            {
+                Console.WriteLine($"  {header.Key}: {string.Join(", ", header.Value)}");
+            }
+            Console.WriteLine("Content: ");
+            var requestContent = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(requestContent);
+            Console.WriteLine();
+            Console.WriteLine("HTTP Response: ");
+            Console.WriteLine($"Status: {response.StatusCode} - {response.ReasonPhrase}");
+            Console.WriteLine("Headers:");
+            foreach (var header in response.Headers)
+            {
+                Console.WriteLine($"  {header.Key}: {string.Join(", ", header.Value)}");
+            }
+            foreach (var header in response.Content.Headers)
+            {
+                Console.WriteLine($"  {header.Key}: {string.Join(", ", header.Value)}");
+            }
+            Console.WriteLine("Content: ");
+            var responseContent = await response.Content.ReadAsStringAsync();
+            Console.Write(responseContent);
+            Console.WriteLine();
+        }
+    }
 }

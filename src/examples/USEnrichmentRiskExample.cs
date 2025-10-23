@@ -6,7 +6,7 @@ namespace Examples
     using System.Reflection;
     using System.Threading.Tasks;
 
-    internal static class USEnrichmentGeoReferenceExample
+    internal static class USEnrichmentRiskExample
 	{
 		public static void Run()
 		{
@@ -23,13 +23,13 @@ namespace Examples
 
 			using var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
 			
-			SmartyStreets.USEnrichmentApi.GeoReference.Result[] results = null;
+			SmartyStreets.USEnrichmentApi.Risk.Result[] results = null;
             
             // Create a lookup with a smarty key using the line below
-            var lookup = new SmartyStreets.USEnrichmentApi.GeoReference.Lookup("325023201");
+            var lookup = new SmartyStreets.USEnrichmentApi.Risk.Lookup("325023201");
             
             // Create a lookup with address components using the lines below
-            var componentsLookup = new SmartyStreets.USEnrichmentApi.GeoReference.Lookup();
+            var componentsLookup = new SmartyStreets.USEnrichmentApi.Risk.Lookup();
             componentsLookup.SetStreet("56 Union Ave");
             componentsLookup.SetCity("Somerville");
             componentsLookup.SetState("NJ");
@@ -39,17 +39,17 @@ namespace Examples
             //componentsLookup.AddCustomParameter("zipcode", "08876");
 
             // Create a lookup with a single line address using the line below
-            var freeformLookup = new SmartyStreets.USEnrichmentApi.GeoReference.Lookup();
+            var freeformLookup = new SmartyStreets.USEnrichmentApi.Risk.Lookup();
             freeformLookup.SetFreeform("56 Union Ave Somerville NJ 08876");
 
-            // Options available for the GeoReference Lookup
+            // Options available for the Risk Lookup
             // lookup.SetEtag("GEZDSNBUHE3DEMQ");
     
             try {
-                // results = client.SendGeoReferenceLookup("325023201");  // simple call with just a SmartyKey
+                // results = client.SendRiskLookup("325023201");  // simple call with just a SmartyKey
 
                 // Send a lookup using the line below
-                results = client.SendGeoReferenceLookup(lookup); // more flexible call to set other lookup options
+                results = client.SendRiskLookup(freeformLookup); // more flexible call to set other lookup options
             }
             catch (NotModifiedException ex) {
                 Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record
@@ -59,20 +59,8 @@ namespace Examples
             }
             
             if (results != null) {
-                foreach (SmartyStreets.USEnrichmentApi.GeoReference.Result result in results) {
-                    Console.WriteLine("SmartyKey: " +result.SmartyKey);
-                    Console.WriteLine("DataSet: " +result.DataSetName);
-                    Console.WriteLine("Etag: " +result.Etag);
-                    Console.WriteLine("CensusBlock");
-                    PrintObjectAttributes(result.Attributes.CensusBlock, 4);
-                    Console.WriteLine("CensusCountyDivision");
-                    PrintObjectAttributes(result.Attributes.CensusCountyDivision, 4);
-                    Console.WriteLine("CensusTract");
-                    PrintObjectAttributes(result.Attributes.CensusTract, 4);
-                    Console.WriteLine("CoreBasedStatArea");
-                    PrintObjectAttributes(result.Attributes.CoreBasedStatArea, 4);
-                    Console.WriteLine("Place");
-                    PrintObjectAttributes(result.Attributes.Place, 4);
+                foreach (SmartyStreets.USEnrichmentApi.Risk.Result result in results) {
+                    PrintResult(result);
                 }
             }
             else {
@@ -80,19 +68,20 @@ namespace Examples
             }
 		}
 
-        private static void PrintObjectAttributes(object obj, int indent){
-            if (obj == null) {
-                Console.WriteLine(new string(' ', indent) + "No attributes are available for this object.");
-                return;
-            }
-            
+        private static void PrintResult(object obj){
             Type type = obj.GetType();
 
             foreach (PropertyInfo property in type.GetProperties()) {
+                if (property.Name == "Attributes" || property.Name == "MatchedAddress" ){
+                    if (property.GetValue(obj, null) != null) {
+                        PrintResult(property.GetValue(obj, null));
+                    }
+                }
                 if (property.GetValue(obj, null) != null) {
-                    Console.WriteLine(new string(' ',indent) + $"{property.Name}: {property.GetValue(obj, null)}");
+                    Console.WriteLine($"{property.Name}: {property.GetValue(obj, null)}");
                 }
             }
+            Console.WriteLine();
         }
 	}
 }

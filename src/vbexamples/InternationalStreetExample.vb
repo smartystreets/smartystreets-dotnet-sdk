@@ -10,7 +10,7 @@ Module InternationalStreetExample
 	Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
 	Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
 
-	Dim client = New ClientBuilder(authID, authToken).WithLicense(New List(Of String) From {"international-global-plus-cloud"}).BuildInternationalStreetApiClient()
+	Dim client = New ClientBuilder(authID, authToken).BuildInternationalStreetApiClient()
 
 	Sub InternationalStreetExample()
 

@@ -19,6 +19,9 @@
 		[DataMember(Name = "administrative_area")]
 		public string AdministrativeArea { get; set; }
 
+		[DataMember(Name = "administrative_area_iso2")]
+		public string AdministrativeAreaISO2 { get; set; }
+
 		[DataMember(Name = "administrative_area_short")]
 		public string AdministrativeAreaShort { get; set; }
 
@@ -138,6 +141,27 @@
 
 		[DataMember(Name = "post_box_number")]
 		public string PostBoxNumber { get; set; }
+
+		[DataMember(Name = "additional_content")]
+		public string AdditionalContent { get; set; }
+
+		[DataMember(Name = "delivery_installation")]
+		public string DeliveryInstallation { get; set; }
+
+		[DataMember(Name = "delivery_installation_type")]
+		public string DeliveryInstallationType { get; set; }
+
+		[DataMember(Name = "delivery_installation_qualifier_name")]
+		public string DeliveryInstallationQualifierName { get; set; }
+
+		[DataMember(Name = "route")]
+		public string Route { get; set; }
+
+		[DataMember(Name = "route_number")]
+		public string RouteNumber { get; set; }
+
+		[DataMember(Name = "route_type")]
+		public string RouteType { get; set; }
 
 		#endregion
 	}
