@@ -23,6 +23,9 @@ namespace Examples
                     case "us_street_multiple":
                         USStreetMultipleAddressesExample.Run();
                         break;
+                    case "us_street_component_analysis":
+                        USStreetComponentAnalysisExample.Run();
+                        break;
                     case "us_zipcode_single":
                         USZipCodeSingleLookupExample.Run();
                         break;
@@ -60,6 +63,7 @@ namespace Examples
             USStreetSingleAddressExample.Run();
             USStreetLookupsWithMatchStrategyExamples.Run();
             USStreetMultipleAddressesExample.Run();
+            USStreetComponentAnalysisExample.Run();
             USZipCodeSingleLookupExample.Run();
             USZipCodeMultipleLookupsExample.Run();
             InternationalStreetExample.Run();

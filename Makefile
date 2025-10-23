@@ -50,8 +50,9 @@ us_reverse_geo_api:
 
 us_street_api:
 	dotnet run --project $(EXAMPLES_PROJECT) -- us_street_single && \
-	dotnet run --project $(EXAMPLES_PROJECT) -- us_street_multiple
-
+	dotnet run --project $(EXAMPLES_PROJECT) -- us_street_multiple && \
+	dotnet run --project $(EXAMPLES_PROJECT) -- us_street_component_analysis
+	
 us_zipcode_api:
 	dotnet run --project $(EXAMPLES_PROJECT) -- us_zipcode_single && \
 	dotnet run --project $(EXAMPLES_PROJECT) -- us_zipcode_multiple

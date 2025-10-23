@@ -74,14 +74,71 @@ namespace SmartyStreets.USStreetApi
                     ""lacslink_code"": ""lacslink_code"",
                     ""lacslink_indicator"": ""lacslink_indicator"",
                     ""suitelink_match"": true,
-                    ""enhanced_match"": ""enhanced_match""
+                    ""enhanced_match"": ""enhanced_match"",
+                    ""components"": {
+                        ""primary_number"": {
+                            ""status"": ""confirmed"",
+                            ""change"": [""added""]
+                        },
+                        ""street_predirection"": {
+                            ""status"": ""confirmed"",
+                            ""change"": [""added""]
+                        },
+                        ""street_postdirection"": {
+                            ""status"": ""confirmed"",
+                            ""change"": [""added""]
+                        },
+                        ""street_name"": {
+                            ""status"": ""confirmed"",
+                            ""change"": [""added""]
+                        },
+                        ""street_suffix"": {
+                            ""status"": ""confirmed"",
+                            ""change"": [""added""]
+                        },
+                        ""secondary_number"": {
+                            ""status"": ""confirmed"",
+                            ""change"": [""added""]
+                        },
+                        ""secondary_designator"": {
+                            ""status"": ""confirmed"",
+                            ""change"": [""added""]
+                        },
+                        ""extra_secondary_number"": {
+                            ""status"": ""unconfirmed"",
+                            ""change"": [""replaced""]
+                        },
+                        ""extra_secondary_designator"": {
+                            ""status"": ""unconfirmed""
+                        },
+                        ""city_name"": {
+                            ""status"": ""confirmed"",
+                            ""change"": [""added""]
+                        },
+                        ""zipcode"": {
+                            ""status"": ""confirmed"",
+                            ""change"": [""added""]
+                        },
+                        ""plus4_code"": {
+                            ""status"": ""confirmed"",
+                            ""change"": [""added""]
+                        },
+                        ""state_abbreviation"": {
+                            ""status"": ""confirmed"",
+                            ""change"": [""added""]
+                        },
+                        ""urbanization"": {
+                            ""status"": ""confirmed"",
+                            ""change"": [""added""]
+                        },
+                    }
                 }
             }
             ]";
-    
+
             var Bytes = Encoding.ASCII.GetBytes(RawJSON);
             var Stream = new MemoryStream(Bytes);
-            
+
             var actual = nativeserializer.Deserialize<List<Candidate>>(Stream);
             var components = actual[0].Components;
             var metadata = actual[0].Metadata;
@@ -143,6 +200,34 @@ namespace SmartyStreets.USStreetApi
             Assert.AreEqual("lacslink_indicator", analysis.LacsLinkIndicator);
             Assert.AreEqual(true, analysis.IsSuiteLinkMatch);
             Assert.AreEqual("enhanced_match", analysis.EnhancedMatch);
+            Assert.AreEqual("confirmed", analysis.Components.PrimaryNumber.Status);
+            Assert.AreEqual("added", analysis.Components.PrimaryNumber.Change[0]);
+            Assert.AreEqual("confirmed", analysis.Components.StreetPredirection.Status);
+            Assert.AreEqual("added", analysis.Components.StreetPredirection.Change[0]);
+            Assert.AreEqual("confirmed", analysis.Components.StreetName.Status);
+            Assert.AreEqual("added", analysis.Components.StreetName.Change[0]);
+            Assert.AreEqual("confirmed", analysis.Components.StreetPostdirection.Status);
+            Assert.AreEqual("added", analysis.Components.StreetPostdirection.Change[0]);
+            Assert.AreEqual("confirmed", analysis.Components.StreetSuffix.Status);
+            Assert.AreEqual("added", analysis.Components.StreetSuffix.Change[0]);
+            Assert.AreEqual("confirmed", analysis.Components.SecondaryNumber.Status);
+            Assert.AreEqual("added", analysis.Components.SecondaryNumber.Change[0]);
+            Assert.AreEqual("confirmed", analysis.Components.SecondaryDesignator.Status);
+            Assert.AreEqual("added", analysis.Components.SecondaryDesignator.Change[0]);
+            Assert.AreEqual("unconfirmed", analysis.Components.ExtraSecondaryNumber.Status);
+            Assert.AreEqual("replaced", analysis.Components.ExtraSecondaryNumber.Change[0]);
+            Assert.AreEqual("unconfirmed", analysis.Components.ExtraSecondaryDesignator.Status);
+            Assert.AreEqual(null, analysis.Components.ExtraSecondaryDesignator.Change);
+            Assert.AreEqual("confirmed", analysis.Components.CityName.Status);
+            Assert.AreEqual("added", analysis.Components.CityName.Change[0]);
+            Assert.AreEqual("confirmed", analysis.Components.StateAbbreviation.Status);
+            Assert.AreEqual("added", analysis.Components.StateAbbreviation.Change[0]);
+            Assert.AreEqual("confirmed", analysis.Components.ZIPCode.Status);
+            Assert.AreEqual("added", analysis.Components.ZIPCode.Change[0]);
+            Assert.AreEqual("confirmed", analysis.Components.Plus4Code.Status);
+            Assert.AreEqual("added", analysis.Components.Plus4Code.Change[0]);
+            Assert.AreEqual("confirmed", analysis.Components.Urbanization.Status);
+            Assert.AreEqual("added", analysis.Components.Urbanization.Change[0]);
         }
     }
 
