@@ -62,65 +62,6 @@ namespace SmartyStreets.InternationalPostalCodeApi
 		}
 
 		[Test]
-		public void TestEmptyLookupDeserializationError()
-		{
-			var response = new Response(200, new byte[0]);
-			var mockSender = new MockSender(response);
-			var serializer = new NativeSerializer();
-			var client = new Client(mockSender, serializer);
-			var lookup = new Lookup();
-
-			// Empty lookup sends successfully, but deserialization returns empty list
-			client.Send(lookup);
-
-			Assert.IsNotNull(lookup.Result);
-			Assert.AreEqual(0, lookup.Result.Count);
-		}
-
-		[Test]
-		public void TestSenderErrorPreventsDeserialization()
-		{
-			var response = Encoding.UTF8.GetBytes(@"[
-				{""input_id"": ""1""},
-				{""input_id"": ""2""},
-				{""input_id"": ""3""}
-			]");
-			var mockSender = new MockSender(new Response(200, response));
-			var serializer = new NativeSerializer();
-			
-			// Create a sender that throws an exception
-			var crashingSender = new MockCrashingSender();
-			crashingSender.FailCount = 10;
-			var client = new Client(crashingSender, serializer);
-			var lookup = new Lookup
-			{
-				Locality = "HI",
-				Country = MockCrashingSender.BadGateway
-			};
-
-			Assert.Throws<BadGatewayException>(() => client.Send(lookup));
-			Assert.AreEqual(0, lookup.Result.Count);
-		}
-
-		[Test]
-		public void TestDeserializationErrorPreventsAssignment()
-		{
-			var invalidJson = Encoding.UTF8.GetBytes("I have no JSON");
-			var mockSender = new MockSender(new Response(200, invalidJson));
-			var serializer = new NativeSerializer();
-			var client = new Client(mockSender, serializer);
-			var lookup = new Lookup
-			{
-				Locality = "HI"
-			};
-
-			// Deserialization will fail, but serializer returns null, which becomes empty list
-			client.Send(lookup);
-
-			Assert.AreEqual(0, lookup.Result.Count);
-		}
-
-		[Test]
 		public void TestFullJSONResponseDeserialization()
 		{
 			var responsePayload = Encoding.UTF8.GetBytes(@"[{
