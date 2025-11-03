@@ -28,6 +28,7 @@ namespace SmartyStreets
         private bool logHttpRequestAndResponse; 
         private const string InternationalStreetApiUrl = "https://international-street.api.smarty.com/verify";
         private const string InternationalAutocompleteApiUrl = "https://international-autocomplete.api.smarty.com/v2/lookup";
+        private const string InternationalPostalCodeApiUrl = "https://international-postal-code.api.smarty.com/lookup";
         private const string UsAutocompleteProApiUrl = "https://us-autocomplete-pro.api.smarty.com/lookup";
         private const string UsExtractApiUrl = "https://us-extract.api.smarty.com/";
         private const string UsStreetApiUrl = "https://us-street.api.smarty.com/street-address";
@@ -172,6 +173,12 @@ namespace SmartyStreets
         {
             this.EnsureURLPrefixNotNull(InternationalAutocompleteApiUrl);
             return new InternationalAutocompleteApi.Client(this.BuildSender(), this.serializer);
+        }
+
+        public InternationalPostalCodeApi.Client BuildInternationalPostalCodeApiClient()
+        {
+            this.EnsureURLPrefixNotNull(InternationalPostalCodeApiUrl);
+            return new InternationalPostalCodeApi.Client(this.BuildSender(), this.serializer);
         }
 
         public USAutocompleteProApi.Client BuildUsAutocompleteProApiClient()

@@ -38,6 +38,9 @@ namespace Examples
                     case "international_autocomplete":
                         InternationalAutocompleteExample.Run();
                         break;
+                    case "international_postal_code":
+                        InternationalPostalCodeExample.Run();
+                        break;
                     case "us_extract":
                         USExtractExample.Run();
                         break;
@@ -68,6 +71,7 @@ namespace Examples
             USZipCodeMultipleLookupsExample.Run();
             InternationalStreetExample.Run();
             InternationalAutocompleteExample.Run();
+            InternationalPostalCodeExample.Run();
             USExtractExample.Run();
             USAutocompleteProExample.Run();
             USReverseGeoExample.Run();
