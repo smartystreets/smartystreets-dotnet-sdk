@@ -4,8 +4,6 @@ namespace SmartyStreets.InternationalPostalCodeApi
 	using System.Collections.Generic;
 	using System.Text;
 	using NUnit.Framework;
-	using System.Threading.Tasks;
-	using System.IO;
 	using SmartyStreets;
 
 	[TestFixture]
@@ -174,7 +172,7 @@ namespace SmartyStreets.InternationalPostalCodeApi
 			Assert.IsTrue(url.Contains("country=CAN"));
 			Assert.IsTrue(url.Contains("locality=Toronto"));
 			Assert.IsTrue(url.Contains("administrative_area=ON"));
-			Assert.IsTrue(url.Contains("postal_code=M5H+2N2"));
+			Assert.IsTrue(url.Contains("postal_code=M5H%202N2"));
 		}
 
 		[Test]
