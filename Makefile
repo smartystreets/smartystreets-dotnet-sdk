@@ -36,6 +36,9 @@ international_autocomplete_api:
 international_street_api:
 	dotnet run --project $(EXAMPLES_PROJECT) -- international_street
 
+international_postal_code_api:
+	dotnet run --project $(EXAMPLES_PROJECT) -- international_postal_code
+
 us_autocomplete_pro_api:
 	dotnet run --project $(EXAMPLES_PROJECT) -- us_autocomplete_pro
 
