@@ -19,6 +19,9 @@
 		[DataMember(Name = "geocode_precision")]
 		public string GeocodePrecision { get; set; }
 
+		[DataMember(Name = "geocode_classification")]
+		public string GeocodeClassification { get; set; }
+
 		[DataMember(Name = "max_geocode_precision")]
 		public string MaxGeocodePrecision { get; set; }
 
