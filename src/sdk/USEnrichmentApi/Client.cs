@@ -16,30 +16,7 @@ namespace SmartyStreets.USEnrichmentApi
 			this.sender = sender;
 			this.serializer = serializer;
 		}
-		
-		public Property.Financial.Result[] SendPropertyFinancialLookup(string smartyKey)
-		{
-			return SendPropertyFinancialLookupAsync(smartyKey).GetAwaiter().GetResult();
-		}
 
-		public async Task<Property.Financial.Result[]> SendPropertyFinancialLookupAsync(string smartyKey)
-		{
-			Property.Financial.Lookup lookup = new Property.Financial.Lookup(smartyKey);
-			await SendAsync(lookup);
-			return lookup.GetResults();
-		}
-		
-		public Property.Financial.Result[] SendPropertyFinancialLookup(Property.Financial.Lookup lookup)
-		{
-			return SendPropertyFinancialLookupAsync(lookup).GetAwaiter().GetResult();
-		}
-
-		public async Task<Property.Financial.Result[]> SendPropertyFinancialLookupAsync(Property.Financial.Lookup lookup)
-		{
-			await SendAsync(lookup);
-			return lookup.GetResults();
-		}
-		
 		public Property.Principal.Result[] SendPropertyPrincipalLookup(string smartyKey)
 		{
 			return SendPropertyPrincipalLookupAsync(smartyKey).GetAwaiter().GetResult();

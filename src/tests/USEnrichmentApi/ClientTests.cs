@@ -63,53 +63,6 @@ namespace SmartyStreets.USEnrichmentApi
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
-		//Property Financial Lookup Tests:
-
-		[Test]
-		public void TestSendingFullyPopulatedFinancialLookup()
-		{
-			var serializer = new FakeSerializer(null);
-			var client = new Client(this.urlSender, serializer);
-			const string expectedUrl= "http://localhost/1/property/financial?";
-
-			client.SendPropertyFinancialLookup("1");
-
-			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
-		}
-
-		[Test]
-		public void TestSendingFullyPopulatedFinancialComponentsLookup()
-		{
-			var serializer = new FakeSerializer(null);
-			var client = new Client(this.urlSender, serializer);
-			const string expectedUrl= "http://localhost/search/property/financial?street=street&city=city&state=state&zipcode=zipcode";
-
-			var lookup = new Property.Financial.Lookup();
-			lookup.SetStreet("street");
-			lookup.SetCity("city");
-			lookup.SetState("state");
-			lookup.SetZipcode("zipcode");
-
-			client.SendPropertyFinancialLookup(lookup);
-
-			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
-		}
-
-		[Test]
-		public void TestSendingFullyPopulatedFinancialFreeformLookup()
-		{
-			var serializer = new FakeSerializer(null);
-			var client = new Client(this.urlSender, serializer);
-			const string expectedUrl= "http://localhost/search/property/financial?freeform=freeform";
-
-			var lookup = new Property.Financial.Lookup();
-			lookup.SetFreeform("freeform");
-
-			client.SendPropertyFinancialLookup(lookup);
-
-			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
-		}
-
 		//GeoReference Lookup Tests:
 
 		[Test]
@@ -304,7 +257,7 @@ namespace SmartyStreets.USEnrichmentApi
 			var client = new Client(this.urlSender, serializer);
 			string smartyKey = null;
 
-			Assert.Throws<SmartyStreets.SmartyException>(() => client.SendPropertyFinancialLookup(smartyKey));
+			Assert.Throws<SmartyStreets.SmartyException>(() => client.SendPropertyPrincipalLookup(smartyKey));
 		}
 	}
 }
