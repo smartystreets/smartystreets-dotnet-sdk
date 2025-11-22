@@ -66,51 +66,6 @@ namespace Examples
             else {
                 Console.WriteLine("Result was null");
             }
-
-            SmartyStreets.USEnrichmentApi.Property.Financial.Result[] financialResults = null;
-
-            // Create a lookup with a smarty key using the line below
-            var financialLookup = new SmartyStreets.USEnrichmentApi.Property.Financial.Lookup("87844267");
-
-            // Create a lookup with address components using the lines below
-            var financialComponentsLookup = new SmartyStreets.USEnrichmentApi.Property.Financial.Lookup();
-            financialComponentsLookup.SetStreet("56 Union Ave");
-            financialComponentsLookup.SetCity("Somerville");
-            financialComponentsLookup.SetState("NJ");
-            financialComponentsLookup.SetZipcode("08876");
-
-            //uncomment the below line to add a custom parameter
-            //financialComponentsLookup.AddCustomParameter("zipcode", "08876");
-
-            // Create a lookup with a single line address using the line below
-            var financialFreeformLookup = new SmartyStreets.USEnrichmentApi.Property.Financial.Lookup();
-            financialFreeformLookup.SetFreeform("56 Union Ave Somerville NJ 08876");
-
-            // Options available for the Property Lookup
-            // financialLookup.SetEtag("AIDAIAQCAIEQKAIC");
-            // financialLookup.SetIncludeFields("assessed_value,assessor_last_update");
-            // financialLookup.SetExcludeFields("tax_fiscal_year,tax_jurisdiction");
-            try {
-                // financialResults = client.SendPropertyFinancialLookup("325023201"); // simple call with just a SmartyKey
-
-                // Send a lookup using the line below
-                financialResults = client.SendPropertyFinancialLookup(financialLookup); // more flexible call to set other lookup options
-            }
-            catch (NotModifiedException ex) {
-                Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record
-            }
-            catch (Exception ex) {
-                Console.WriteLine(ex.Message + ex.StackTrace);
-            }
-
-            if (financialResults != null) {
-                foreach (SmartyStreets.USEnrichmentApi.Property.Financial.Result result in financialResults) {
-                    PrintResult(result);
-                }
-            }
-            else {
-                Console.WriteLine("Result was null");
-            }
 		}
 
         private static void PrintResult(object obj){
