@@ -50,7 +50,7 @@ namespace SmartyStreets
             this.signer = signer;
         }
 
-        public ClientBuilder(string authId, string authToken) : this(new StaticCredentials(authId, authToken))
+        public ClientBuilder(string authId, string authToken) : this(new BasicAuthCredential(authId, authToken))
         {
         }
 

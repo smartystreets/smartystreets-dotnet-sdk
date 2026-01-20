@@ -17,7 +17,7 @@
             // We recommend storing your secret keys in environment variables.
             var id = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var token = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			var credentials = new StaticCredentials(id, token);
+			var credentials = new BasicAuthCredential(id, token);
 
             using var client = new ClientBuilder(credentials).BuildUsAutocompleteProApiClient();
 

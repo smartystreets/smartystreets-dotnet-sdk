@@ -10,7 +10,7 @@
 		{
 			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			var credentials = new StaticCredentials(authId, authToken);
+			var credentials = new BasicAuthCredential(authId, authToken);
 
 			var key = Environment.GetEnvironmentVariable("SMARTY_AUTH_WEB");
 			var hostname = Environment.GetEnvironmentVariable("SMARTY_WEBSITE_DOMAIN");

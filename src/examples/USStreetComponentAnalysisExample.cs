@@ -22,7 +22,7 @@ namespace Examples
             // For server-to-server requests, use this code:
             var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-            var credentials = new StaticCredentials(authId, authToken);
+            var credentials = new BasicAuthCredential(authId, authToken);
 
             ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
