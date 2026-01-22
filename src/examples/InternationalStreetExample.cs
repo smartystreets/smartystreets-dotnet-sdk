@@ -15,7 +15,7 @@
             var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 
-			using var client = new ClientBuilder(authId, authToken).BuildInternationalStreetApiClient();
+			using var client = new ClientBuilder(new BasicAuthCredentials(authId, authToken)).BuildInternationalStreetApiClient();
 			
 			// Documentation for input fields can be found at:
 			// https://smartystreetscom/docs/cloud/international-street-api#http-input-fields

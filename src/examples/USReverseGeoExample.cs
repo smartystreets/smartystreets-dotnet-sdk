@@ -17,7 +17,7 @@
             var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 
-			using var client = new ClientBuilder(authId, authToken)
+			using var client = new ClientBuilder(new BasicAuthCredentials(authId, authToken))
 				//.WithCustomBaseUrl("us-street-reverse-geo.api.smarty.com")
 				//.ViaProxy("http://localhost:8080", "username", "password") // uncomment this line to point to the specified proxy.
 				.BuildUsReverseGeoApiClient();

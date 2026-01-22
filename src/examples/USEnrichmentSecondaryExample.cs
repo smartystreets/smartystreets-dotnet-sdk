@@ -17,7 +17,7 @@ namespace Examples
             var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 
-			using var client = new ClientBuilder(authId, authToken).BuildUsEnrichmentApiClient();
+			using var client = new ClientBuilder(new BasicAuthCredentials(authId, authToken)).BuildUsEnrichmentApiClient();
 			
             // See the US Enrichment API documenation for all available datasets and data subsets https://www.smarty.com/docs/cloud/us-address-enrichment-api#data-sets
             SmartyStreets.USEnrichmentApi.Secondary.Result[] results = null;

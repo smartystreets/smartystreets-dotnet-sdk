@@ -22,11 +22,10 @@ namespace Examples
             // For server-to-server requests, use this code:
             var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-            var credentials = new StaticCredentials(authId, authToken);
 
             ServicePointManager.SecurityProtocol = tlsProtocol1_2;
 
-            using var client = new ClientBuilder(credentials)
+            using var client = new ClientBuilder(new BasicAuthCredentials(authId, authToken))
                 .WithFeatureComponentAnalysis() // To add component analysis feature you need to specify when you create the client.
 				.BuildUsStreetApiClient();
 

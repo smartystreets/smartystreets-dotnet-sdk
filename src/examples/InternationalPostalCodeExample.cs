@@ -14,7 +14,7 @@ namespace Examples
 			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 
-			using var client = new ClientBuilder(authId, authToken).BuildInternationalPostalCodeApiClient();
+			using var client = new ClientBuilder(new BasicAuthCredentials(authId, authToken)).BuildInternationalPostalCodeApiClient();
 
 			// Documentation for input fields can be found at:
 			// https://smartystreets.com/docs/cloud/international-postal-code-api

@@ -15,11 +15,10 @@
 			//var credentials = new SharedCredentials(key, hostname);
 
             // We recommend storing your secret keys in environment variables.
-            var id = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
-			var token = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
-			var credentials = new StaticCredentials(id, token);
+            var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
+			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 
-            using var client = new ClientBuilder(credentials).BuildUsAutocompleteProApiClient();
+            using var client = new ClientBuilder(new BasicAuthCredentials(authId, authToken)).BuildUsAutocompleteProApiClient();
 
 			var lookup = new Lookup("1042 W Center");
 			lookup.PreferGeolocation = "none";
