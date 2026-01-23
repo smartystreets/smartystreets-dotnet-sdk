@@ -86,10 +86,10 @@
 				request.SetParameter(line.Key, line.Value);
 			}
 
-			if (address.MaxCandidates != 1)
-				request.SetParameter("candidates", address.MaxCandidates.ToString(CultureInfo.InvariantCulture));
-			else if (matchStrategy == Lookup.ENHANCED)
+			if (address.MaxCandidates == 0 && matchStrategy == Lookup.ENHANCED)
 				request.SetParameter("candidates", "5");
+			else if (address.MaxCandidates != 0)
+				request.SetParameter("candidates", address.MaxCandidates.ToString(CultureInfo.InvariantCulture));
 
 			if (matchStrategy != Lookup.STRICT)
 				request.SetParameter("match", matchStrategy);

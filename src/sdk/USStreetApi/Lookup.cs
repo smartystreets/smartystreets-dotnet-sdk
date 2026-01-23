@@ -76,10 +76,10 @@ namespace SmartyStreets.USStreetApi
 			get => this.maxCandidates;
 			set
 			{
-				if (value > 0)
+				if (value >= 0)
 					this.maxCandidates = value;
 				else
-					throw new ArgumentOutOfRangeException(nameof(value), "Max candidates must be a positive integer.");
+					throw new ArgumentOutOfRangeException(nameof(value), "Max candidates must be a non-negative integer.");
 			}
 		}
 
@@ -89,7 +89,7 @@ namespace SmartyStreets.USStreetApi
 
 		public Lookup()
 		{
-			this.maxCandidates = 1;
+			this.maxCandidates = 0;
 			this.Result = new List<Candidate>();
 		}
 
