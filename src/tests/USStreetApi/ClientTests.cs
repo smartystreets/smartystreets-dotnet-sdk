@@ -19,7 +19,7 @@
 
 			client.Send(new Lookup("freeform"));
 
-			Assert.AreEqual("?street=freeform", sender.Request.GetUrl());
+			Assert.AreEqual("?street=freeform&candidates=5&match=enhanced", sender.Request.GetUrl());
 		}
 
 		[Test]
@@ -40,13 +40,13 @@
 				State = "6",
 				ZipCode = "7",
 				Lastline = "8",
-				MatchStrategy = "enhanced"
+				MatchStrategy = Lookup.ENHANCED
 			};
 
 			client.Send(lookup);
 
 			Assert.AreEqual("?input_id=1234&street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&" +
-			                "lastline=8&addressee=0&urbanization=4&match=enhanced&candidates=5", sender.Request.GetUrl());
+			                "lastline=8&addressee=0&urbanization=4&candidates=5&match=enhanced", sender.Request.GetUrl());
 		}
 		
 		[Test]
@@ -67,16 +67,54 @@
 				State = "6",
 				ZipCode = "7",
 				Lastline = "8",
-				MatchStrategy = "enhanced",
+				MatchStrategy = Lookup.ENHANCED,
 				OutputFormat = Lookup.PROJECT_USA_FORMAT
 			};
 
 			client.Send(lookup);
 
 			Assert.AreEqual("?input_id=1234&street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&" +
-			                "lastline=8&addressee=0&urbanization=4&match=enhanced&candidates=5&format=project-usa", sender.Request.GetUrl());
+			                "lastline=8&addressee=0&urbanization=4&candidates=5&match=enhanced&format=project-usa", sender.Request.GetUrl());
 		}
-		
+
+		[Test]
+		public void TestDefaultMatchStrategyIsEnhanced()
+		{
+			var sender = new RequestCapturingSender();
+			var serializer = new FakeSerializer(null);
+			var client = new Client(sender, serializer);
+
+			client.Send(new Lookup());
+
+			Assert.AreEqual("?candidates=5&match=enhanced", sender.Request.GetUrl());
+		}
+
+		[Test]
+		public void TestExplicitMatchStrict()
+		{
+			var sender = new RequestCapturingSender();
+			var serializer = new FakeSerializer(null);
+			var client = new Client(sender, serializer);
+			var lookup = new Lookup { MatchStrategy = Lookup.STRICT };
+
+			client.Send(lookup);
+
+			Assert.AreEqual("?", sender.Request.GetUrl());
+		}
+
+		[Test]
+		public void TestExplicitMatchStrictWithCandidates()
+		{
+			var sender = new RequestCapturingSender();
+			var serializer = new FakeSerializer(null);
+			var client = new Client(sender, serializer);
+			var lookup = new Lookup { MatchStrategy = Lookup.STRICT, MaxCandidates = 3 };
+
+			client.Send(lookup);
+
+			Assert.AreEqual("?candidates=3", sender.Request.GetUrl());
+		}
+
 		#endregion
 
 		#region [ Batch Lookup ]

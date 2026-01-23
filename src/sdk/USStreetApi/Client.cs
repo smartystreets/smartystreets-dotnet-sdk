@@ -65,9 +65,11 @@
 
 		private static void PopulateQueryString(Lookup address, Request request)
 		{
-			if (address.MatchStrategy == "enhanced" && address.MaxCandidates == 1)
-				address.MaxCandidates = 5;
-		    request.SetParameter("input_id", address.InputId);
+			var matchStrategy = address.MatchStrategy;
+			if (string.IsNullOrEmpty(matchStrategy))
+				matchStrategy = Lookup.ENHANCED;
+
+			request.SetParameter("input_id", address.InputId);
 			request.SetParameter("street", address.Street);
 			request.SetParameter("street2", address.Street2);
 			request.SetParameter("secondary", address.Secondary);
@@ -77,7 +79,6 @@
 			request.SetParameter("lastline", address.Lastline);
 			request.SetParameter("addressee", address.Addressee);
 			request.SetParameter("urbanization", address.Urbanization);
-			request.SetParameter("match", address.MatchStrategy);
 			request.SetParameter("compatibility", address.Compatibility);
 			request.SetParameter("county_source", address.CountySource);
 
@@ -85,9 +86,14 @@
 				request.SetParameter(line.Key, line.Value);
 			}
 
-			if (address.MaxCandidates != 1) 
+			if (address.MaxCandidates != 1)
 				request.SetParameter("candidates", address.MaxCandidates.ToString(CultureInfo.InvariantCulture));
-			
+			else if (matchStrategy == Lookup.ENHANCED)
+				request.SetParameter("candidates", "5");
+
+			if (matchStrategy != Lookup.STRICT)
+				request.SetParameter("match", matchStrategy);
+
 			request.SetParameter("format", address.OutputFormat);
 		}
 
