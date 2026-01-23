@@ -14,7 +14,7 @@
             var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 
-			using var client = new ClientBuilder(authId, authToken).BuildUsExtractApiClient();
+			using var client = new ClientBuilder(new BasicAuthCredentials(authId, authToken)).BuildUsExtractApiClient();
 			var text = "Here is some text.\r\nMy address is 3785 Las Vegs Av." +
 			           "\r\nLos Vegas, Nevada." +
 			           "\r\nMeet me at 1 Rosedale Baltimore Maryland, not at 123 Phony Street, Boise Idaho.";

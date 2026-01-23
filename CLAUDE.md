@@ -39,7 +39,7 @@ The order of sender wrapping matters - it's constructed in `ClientBuilder.BuildS
 
 ## Project Structure
 
-- **src/sdk/** - Main library (multi-targets: net5.0, net7.0, netstandard2.0)
+- **src/sdk/** - Main library (multi-targets: net8.0, netstandard2.0)
 - **src/tests/** - NUnit tests with mock implementations in `Mocks/`
 - **src/examples/** - Runnable C# examples
 - **src/integration/** - Integration tests

@@ -17,7 +17,7 @@
             var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 
-			using var client = new ClientBuilder(authId, authToken)
+			using var client = new ClientBuilder(new BasicAuthCredentials(authId, authToken))
 				// NOTE: this is how to point the SDK at an alternate installation
 				// for example, this might be used to connect through "stunnel" to handle things like TLSv1.2 encryption
 				.WithCustomBaseUrl("http://127.0.0.1:8080/street-address") // point to local installation

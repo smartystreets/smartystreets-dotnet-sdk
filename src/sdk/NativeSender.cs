@@ -41,34 +41,33 @@ namespace SmartyStreets
 
         public async Task<Response> SendAsync(Request request)
         {
-            // Copy headers 
+            HttpRequestMessage httpRequest;
+            if (request.Payload != null)
+            {
+                // POST request with payload
+                httpRequest = new HttpRequestMessage(HttpMethod.Post, request.GetUrl());
+                httpRequest.Content = new StreamContent(new MemoryStream(request.Payload));
+            }
+            else
+            {
+                // GET request
+                httpRequest = new HttpRequestMessage(HttpMethod.Get, request.GetUrl());
+            }
+
+            // Copy headers to the request (not DefaultRequestHeaders to avoid persistence issues)
             foreach (var item in request.Headers)
             {
                 if (item.Key == "Referer")
                 {
-                    client.DefaultRequestHeaders.Referrer = new Uri(item.Value);
+                    httpRequest.Headers.Referrer = new Uri(item.Value);
                 }
                 else
                 {
-                    client.DefaultRequestHeaders.Add(item.Key, item.Value);
+                    httpRequest.Headers.Add(item.Key, item.Value);
                 }
             }
-            
-            HttpResponseMessage response;
-            if (request.Payload != null)
-            {
-                // Try write payload and get response 
-                HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Post, request.GetUrl());
-                
-                httpRequest.Content = new StreamContent(new MemoryStream(request.Payload));
-                
-                response = await client.SendAsync(httpRequest);
-            }
-            else
-            {
-                // Get response
-                response = await client.GetAsync(request.GetUrl());
-            }
+
+            HttpResponseMessage response = await client.SendAsync(httpRequest);
 
             if (this.logHttpRequestAndResponse)
             {

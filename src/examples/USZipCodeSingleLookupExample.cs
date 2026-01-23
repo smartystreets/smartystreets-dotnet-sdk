@@ -14,7 +14,7 @@
 			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 
-			using var client = new ClientBuilder(authId, authToken).BuildUsZipCodeApiClient();
+			using var client = new ClientBuilder(new BasicAuthCredentials(authId, authToken)).BuildUsZipCodeApiClient();
 
 			// Documentation for input fields can be found at:
 			// https://smartystreets.com/docs/us-zipcode-api#input-fields

@@ -14,7 +14,7 @@
             var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 
-			using var client = new ClientBuilder(authId, authToken).BuildUsStreetApiClient();
+			using var client = new ClientBuilder(new BasicAuthCredentials(authId, authToken)).BuildUsStreetApiClient();
 			var batch = new Batch();
 			
 			// Documentation for input fields can be found at:
