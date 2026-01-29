@@ -8,5 +8,9 @@
       "Bash(make *)",
       "Bash(dotnet *)"
     ]
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
   }
 }
