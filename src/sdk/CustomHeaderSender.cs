@@ -7,7 +7,7 @@ namespace SmartyStreets
     {
         private bool senderWasDisposed;
         private readonly Dictionary<string, string> headers;
-        private readonly Dictionary<string, string> appendHeaders;
+        private readonly Dictionary<string, AppendedHeader> appendHeaders;
         private readonly ISender inner;
 
         public CustomHeaderSender(Dictionary<string, string> headers, ISender inner)
@@ -15,10 +15,10 @@ namespace SmartyStreets
         {
         }
 
-        public CustomHeaderSender(Dictionary<string, string> headers, Dictionary<string, string> appendHeaders, ISender inner)
+        public CustomHeaderSender(Dictionary<string, string> headers, Dictionary<string, AppendedHeader> appendHeaders, ISender inner)
         {
             this.headers = headers;
-            this.appendHeaders = appendHeaders ?? new Dictionary<string, string>();
+            this.appendHeaders = appendHeaders ?? new Dictionary<string, AppendedHeader>();
             this.inner = inner;
         }
 
@@ -30,18 +30,14 @@ namespace SmartyStreets
         public async Task<Response> SendAsync(Request request)
         {
             foreach (var entry in this.headers)
+                request.SetHeader(entry.Key, entry.Value);
+
+            foreach (var entry in this.appendHeaders)
             {
-                if (this.appendHeaders.TryGetValue(entry.Key, out var separator))
-                {
-                    if (request.Headers.TryGetValue(entry.Key, out var existing))
-                        request.SetHeader(entry.Key, existing + separator + entry.Value);
-                    else
-                        request.SetHeader(entry.Key, entry.Value);
-                }
+                if (request.Headers.TryGetValue(entry.Key, out var existing))
+                    request.SetHeader(entry.Key, existing + entry.Value.Separator + entry.Value.Value);
                 else
-                {
-                    request.SetHeader(entry.Key, entry.Value);
-                }
+                    request.SetHeader(entry.Key, entry.Value.Value);
             }
 
             return await this.inner.SendAsync(request);

@@ -23,7 +23,7 @@ namespace SmartyStreets
         private ISender httpSender;
         private Proxy proxy;
         private Dictionary<string, string> customHeaders;
-        private Dictionary<string, string> appendHeaders;
+        private Dictionary<string, AppendedHeader> appendHeaders;
         private List<string> licenses;
         private Dictionary<string, string> customQueries;
         private bool logHttpRequestAndResponse; 
@@ -44,7 +44,8 @@ namespace SmartyStreets
             this.serializer = new NativeSerializer();
             this.licenses = new List<string>();
             this.customQueries = new Dictionary<string, string>();
-            this.appendHeaders = new Dictionary<string, string>();
+            this.customHeaders = new Dictionary<string, string>();
+            this.appendHeaders = new Dictionary<string, AppendedHeader>();
         }
 
         public ClientBuilder(ICredentials signer) : this()
@@ -89,7 +90,8 @@ namespace SmartyStreets
         /// <returns>Returns 'this' to accommodate method chaining.</returns>
         public ClientBuilder WithCustomHeaders(Dictionary<string, string> headers)
         {
-            this.customHeaders = headers;
+            foreach (var entry in headers)
+                this.customHeaders[entry.Key] = entry.Value;
             return this;
         }
 
@@ -101,10 +103,7 @@ namespace SmartyStreets
         /// <returns>Returns 'this' to accommodate method chaining.</returns>
         public ClientBuilder WithAppendedHeader(string key, string value, string separator)
         {
-            this.appendHeaders[key] = separator;
-            if (this.customHeaders == null)
-                this.customHeaders = new Dictionary<string, string>();
-            this.customHeaders[key] = value;
+            this.appendHeaders[key] = new AppendedHeader(value, separator);
             return this;
         }
 
@@ -248,7 +247,7 @@ namespace SmartyStreets
             }
             sender = new StatusCodeSender(sender);
             
-            if (this.customHeaders != null)
+            if (this.customHeaders.Count > 0 || this.appendHeaders.Count > 0)
                 sender = new CustomHeaderSender(this.customHeaders, this.appendHeaders, sender);
 
             if (this.signer != null)
