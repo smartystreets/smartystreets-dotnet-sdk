@@ -23,6 +23,7 @@ namespace SmartyStreets
         private ISender httpSender;
         private Proxy proxy;
         private Dictionary<string, string> customHeaders;
+        private Dictionary<string, AppendedHeader> appendHeaders;
         private List<string> licenses;
         private Dictionary<string, string> customQueries;
         private bool logHttpRequestAndResponse; 
@@ -43,6 +44,8 @@ namespace SmartyStreets
             this.serializer = new NativeSerializer();
             this.licenses = new List<string>();
             this.customQueries = new Dictionary<string, string>();
+            this.customHeaders = new Dictionary<string, string>();
+            this.appendHeaders = new Dictionary<string, AppendedHeader>();
         }
 
         public ClientBuilder(ICredentials signer) : this()
@@ -87,7 +90,23 @@ namespace SmartyStreets
         /// <returns>Returns 'this' to accommodate method chaining.</returns>
         public ClientBuilder WithCustomHeaders(Dictionary<string, string> headers)
         {
-            this.customHeaders = headers;
+            foreach (var entry in headers)
+                this.customHeaders[entry.Key] = entry.Value;
+            return this;
+        }
+
+        /// <remarks>Appends the provided value to any existing header value using the specified separator,
+        /// rather than replacing the header value. This is useful for single-value headers like User-Agent.</remarks>
+        /// <param name="key">The header name.</param>
+        /// <param name="value">The header value to append.</param>
+        /// <param name="separator">The separator to use when joining values.</param>
+        /// <returns>Returns 'this' to accommodate method chaining.</returns>
+        public ClientBuilder WithAppendedHeader(string key, string value, string separator)
+        {
+            if (this.appendHeaders.TryGetValue(key, out var existing))
+                this.appendHeaders[key] = new AppendedHeader(existing.Value + separator + value, separator);
+            else
+                this.appendHeaders[key] = new AppendedHeader(value, separator);
             return this;
         }
 
@@ -231,8 +250,8 @@ namespace SmartyStreets
             }
             sender = new StatusCodeSender(sender);
             
-            if (this.customHeaders != null)
-                sender = new CustomHeaderSender(this.customHeaders, sender);
+            if (this.customHeaders.Count > 0 || this.appendHeaders.Count > 0)
+                sender = new CustomHeaderSender(this.customHeaders, this.appendHeaders, sender);
 
             if (this.signer != null)
                 sender = new SigningSender(this.signer, sender);
