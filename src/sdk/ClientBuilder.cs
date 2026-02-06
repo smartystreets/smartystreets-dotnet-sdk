@@ -23,6 +23,7 @@ namespace SmartyStreets
         private ISender httpSender;
         private Proxy proxy;
         private Dictionary<string, string> customHeaders;
+        private Dictionary<string, string> appendHeaders;
         private List<string> licenses;
         private Dictionary<string, string> customQueries;
         private bool logHttpRequestAndResponse; 
@@ -43,6 +44,7 @@ namespace SmartyStreets
             this.serializer = new NativeSerializer();
             this.licenses = new List<string>();
             this.customQueries = new Dictionary<string, string>();
+            this.appendHeaders = new Dictionary<string, string>();
         }
 
         public ClientBuilder(ICredentials signer) : this()
@@ -88,6 +90,21 @@ namespace SmartyStreets
         public ClientBuilder WithCustomHeaders(Dictionary<string, string> headers)
         {
             this.customHeaders = headers;
+            return this;
+        }
+
+        /// <remarks>Appends the provided value to any existing header value using the specified separator,
+        /// rather than replacing the header value. This is useful for single-value headers like User-Agent.</remarks>
+        /// <param name="key">The header name.</param>
+        /// <param name="value">The header value to append.</param>
+        /// <param name="separator">The separator to use when joining values.</param>
+        /// <returns>Returns 'this' to accommodate method chaining.</returns>
+        public ClientBuilder WithAppendedHeader(string key, string value, string separator)
+        {
+            this.appendHeaders[key] = separator;
+            if (this.customHeaders == null)
+                this.customHeaders = new Dictionary<string, string>();
+            this.customHeaders[key] = value;
             return this;
         }
 
@@ -232,7 +249,7 @@ namespace SmartyStreets
             sender = new StatusCodeSender(sender);
             
             if (this.customHeaders != null)
-                sender = new CustomHeaderSender(this.customHeaders, sender);
+                sender = new CustomHeaderSender(this.customHeaders, this.appendHeaders, sender);
 
             if (this.signer != null)
                 sender = new SigningSender(this.signer, sender);
