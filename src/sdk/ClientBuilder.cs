@@ -103,7 +103,10 @@ namespace SmartyStreets
         /// <returns>Returns 'this' to accommodate method chaining.</returns>
         public ClientBuilder WithAppendedHeader(string key, string value, string separator)
         {
-            this.appendHeaders[key] = new AppendedHeader(value, separator);
+            if (this.appendHeaders.TryGetValue(key, out var existing))
+                this.appendHeaders[key] = new AppendedHeader(existing.Value + separator + value, separator);
+            else
+                this.appendHeaders[key] = new AppendedHeader(value, separator);
             return this;
         }
 
