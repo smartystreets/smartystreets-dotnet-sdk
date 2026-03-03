@@ -182,6 +182,11 @@ namespace SmartyStreets
             return this.WithCustomCommaSeparatedQuery("features", "component-analysis");
         }
 
+        public ClientBuilder WithFeatureIANATimeZone()
+        {
+            return this.WithCustomCommaSeparatedQuery("features", "iana-timezone");
+        }
+
         public InternationalStreetApi.Client BuildInternationalStreetApiClient()
         {
             this.EnsureURLPrefixNotNull(InternationalStreetApiUrl);
