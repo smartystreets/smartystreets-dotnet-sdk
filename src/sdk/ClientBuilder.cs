@@ -182,6 +182,9 @@ namespace SmartyStreets
             return this.WithCustomCommaSeparatedQuery("features", "component-analysis");
         }
 
+        /// <summary>
+        ///     WithFeatureIanaTimeZone turns on the IANA timezone feature for the request.
+        /// </summary>
         public ClientBuilder WithFeatureIanaTimeZone()
         {
             return this.WithCustomCommaSeparatedQuery("features", "iana-timezone");
