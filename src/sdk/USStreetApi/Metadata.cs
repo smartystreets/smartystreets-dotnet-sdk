@@ -56,13 +56,13 @@
 		public bool ObeysDst { get; set; }
 
 		[DataMember(Name = "iana_time_zone")]
-		public string IANATimeZone { get; set; }
+		public string IanaTimeZone { get; set; }
 
 		[DataMember(Name = "iana_utc_offset")]
-		public float IANAUTCOffset { get; set; }
+		public double IanaUtcOffset { get; set; }
 
 		[DataMember(Name = "iana_dst")]
-		public bool IANADST { get; set; }
+		public bool IanaObeysDst { get; set; }
 
 		[DataMember(Name = "ews_match")]
 		public bool IsEwsMatch { get; set; }

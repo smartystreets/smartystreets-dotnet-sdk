@@ -182,7 +182,7 @@ namespace SmartyStreets
             return this.WithCustomCommaSeparatedQuery("features", "component-analysis");
         }
 
-        public ClientBuilder WithFeatureIANATimeZone()
+        public ClientBuilder WithFeatureIanaTimeZone()
         {
             return this.WithCustomCommaSeparatedQuery("features", "iana-timezone");
         }

@@ -15,19 +15,19 @@ namespace SmartyStreets
         }
 
         [Test]
-        public void TestWithFeatureIANATimeZone()
+        public void TestWithFeatureIanaTimeZone()
         {
-            var builder = new ClientBuilder().WithFeatureIANATimeZone();
+            var builder = new ClientBuilder().WithFeatureIanaTimeZone();
 
             Assert.AreEqual("iana-timezone", GetCustomQueries(builder)["features"]);
         }
 
         [Test]
-        public void TestWithFeatureIANATimeZoneAndComponentAnalysis_ShouldAppend()
+        public void TestWithFeatureIanaTimeZoneAndComponentAnalysis_ShouldAppend()
         {
             var builder = new ClientBuilder()
                 .WithFeatureComponentAnalysis()
-                .WithFeatureIANATimeZone();
+                .WithFeatureIanaTimeZone();
 
             Assert.AreEqual("component-analysis,iana-timezone", GetCustomQueries(builder)["features"]);
         }
