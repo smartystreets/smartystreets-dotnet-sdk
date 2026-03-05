@@ -9,6 +9,7 @@ make compile        # Clean and build full solution (Release config)
 make test           # Run unit tests
 make integrate      # Run integration tests
 dotnet test src/tests/tests.csproj --filter "FullyQualifiedName~ClassName"  # Run specific test class
+dotnet test src/tests/tests.csproj --filter "FullyQualifiedName~ClassName.MethodName"  # Run single test
 ```
 
 Running examples (requires `SMARTY_AUTH_ID` and `SMARTY_AUTH_TOKEN` environment variables):
@@ -54,9 +55,30 @@ Each API has its own namespace under `SmartyStreets.*Api/` with consistent struc
 
 **Async-first design**: Sync methods wrap async internally via `SendAsync().GetAwaiter().GetResult()`
 
-**Batch handling**: Single lookup uses query string (GET); multiple lookups use JSON payload (POST)
+**Batch handling**: Single lookup uses query string (GET); multiple lookups use JSON payload (POST). Batch max size is 100 items.
 
-**Testing**: Uses mock senders (`RequestCapturingSender`, `MockSender`, `FakeSerializer`) to test without network calls
+**Testing**: Uses mock senders (`RequestCapturingSender`, `MockSender`, `FakeSerializer`) to test without network calls.
+
+**Serialization**: Uses `DataContractJsonSerializer` with no external dependencies. All serializable types must have `[DataContract]` and `[DataMember(Name = "...")]` attributes.
+
+**Credentials**: Three implementations of `ICredentials`:
+- `StaticCredentials` - auth-id/auth-token as query params (most common)
+- `SharedCredentials` - key + Referer header (browser/client-side)
+- `BasicAuthCredentials` - HTTP Basic auth header
+
+**Custom parameters**: All Lookup classes support `AddCustomParameter()` for forward-compatible extensibility without code changes.
+
+**Interface markers**: Each API defines an interface (e.g., `IUSStreetClient` extends `IClient<Lookup>`) for dependency injection.
+
+**URL construction**: `Request.GetUrl()` combines urlPrefix (set by `URLPrefixSender`) + urlComponents (set by API clients) + query parameters. Setting `Request.Payload` automatically switches method to POST.
+
+## US Enrichment API Differences
+
+The Enrichment API diverges from the standard pattern:
+- Uses abstract `Lookup` base class with per-dataset subclasses (PropertyPrincipal, GeoReference, etc.)
+- Dynamic URL paths: `/search/{dataset}/{subset}` or `/{smartyKey}/{dataset}/{subset}`
+- Supports ETag-based conditional requests (304 Not Modified)
+- Universal dataset returns raw `byte[]` instead of typed results
 
 ## Adding a New API
 

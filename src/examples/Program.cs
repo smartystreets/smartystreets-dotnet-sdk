@@ -50,6 +50,9 @@ namespace Examples
                     case "us_reverse_geo":
                         USReverseGeoExample.Run();
                         break;
+                    case "us_street_iana_timezone":
+                        USStreetIanaTimezoneExample.Run();
+                        break;
                     case "us_enrichment":
                         USEnrichmentPropertyExample.Run();
                         USEnrichmentGeoReferenceExample.Run();
@@ -67,6 +70,7 @@ namespace Examples
             USStreetLookupsWithMatchStrategyExamples.Run();
             USStreetMultipleAddressesExample.Run();
             USStreetComponentAnalysisExample.Run();
+            USStreetIanaTimezoneExample.Run();
             USZipCodeSingleLookupExample.Run();
             USZipCodeMultipleLookupsExample.Run();
             InternationalStreetExample.Run();
