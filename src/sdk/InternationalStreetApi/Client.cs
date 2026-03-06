@@ -77,18 +77,8 @@
 			if (lookup.MissingCountry())
 				throw new UnprocessableEntityException("Country field is required.");
 
-			if (lookup.HasFreeform())
-				return;
-
-			if (lookup.MissingAddress1())
+			if (!lookup.HasFreeform() && lookup.MissingAddress1())
 				throw new UnprocessableEntityException("Either freeform or address1 is required.");
-
-			if (lookup.HasPostalCode())
-				return;
-
-			if (lookup.MissingLocalityOrAdministrativeArea())
-				throw new UnprocessableEntityException("Insufficient information: One or more required fields " +
-				                                       "were not set on the lookup.");
 		}
 
 		public void Dispose()
