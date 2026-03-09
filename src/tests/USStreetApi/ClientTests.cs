@@ -180,6 +180,46 @@
 			Assert.AreEqual(0, batch[1].MaxCandidates);
 		}
 
+		[Test]
+		public void TestBatchSerializationWithMixedStrategies()
+		{
+			var sender = new RequestCapturingSender();
+			var serializer = new FakeSerializer(null);
+			var client = new Client(sender, serializer);
+			var batch = new Batch
+			{
+				new Lookup(),
+				new Lookup { MatchStrategy = Lookup.STRICT }
+			};
+
+			client.Send(batch);
+
+			Assert.AreEqual(Lookup.ENHANCED, batch[0].MatchStrategy);
+			Assert.AreEqual(5, batch[0].MaxCandidates);
+			Assert.AreEqual(Lookup.STRICT, batch[1].MatchStrategy);
+			Assert.AreEqual(0, batch[1].MaxCandidates);
+		}
+
+		[Test]
+		public void TestBatchSerializationPreservesExplicitCandidates()
+		{
+			var sender = new RequestCapturingSender();
+			var serializer = new FakeSerializer(null);
+			var client = new Client(sender, serializer);
+			var batch = new Batch
+			{
+				new Lookup { MaxCandidates = 3 },
+				new Lookup { MatchStrategy = Lookup.ENHANCED, MaxCandidates = 10 }
+			};
+
+			client.Send(batch);
+
+			Assert.AreEqual(Lookup.ENHANCED, batch[0].MatchStrategy);
+			Assert.AreEqual(3, batch[0].MaxCandidates);
+			Assert.AreEqual(Lookup.ENHANCED, batch[1].MatchStrategy);
+			Assert.AreEqual(10, batch[1].MaxCandidates);
+		}
+
 		#endregion
 
 		#region [ Response Handling ]

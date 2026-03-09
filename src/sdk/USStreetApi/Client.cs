@@ -49,13 +49,12 @@
 			if (batch.Count == 0)
 				return;
 
+			ApplyDefaults(batch);
+
 			if (batch.Count == 1)
 				PopulateQueryString(batch[0], request);
 			else
-			{
-				ApplyDefaults(batch);
 				request.Payload = batch.Serialize(this.serializer);
-			}
 
 			var response = await this.sender.SendAsync(request);
 
@@ -68,10 +67,6 @@
 
 		private static void PopulateQueryString(Lookup address, Request request)
 		{
-			var matchStrategy = address.MatchStrategy;
-			if (string.IsNullOrEmpty(matchStrategy))
-				matchStrategy = Lookup.ENHANCED;
-
 			request.SetParameter("input_id", address.InputId);
 			request.SetParameter("street", address.Street);
 			request.SetParameter("street2", address.Street2);
@@ -89,12 +84,10 @@
 				request.SetParameter(line.Key, line.Value);
 			}
 
-			if (address.MaxCandidates == 0 && matchStrategy == Lookup.ENHANCED)
-				request.SetParameter("candidates", "5");
-			else if (address.MaxCandidates != 0)
+			if (address.MaxCandidates != 0)
 				request.SetParameter("candidates", address.MaxCandidates.ToString(CultureInfo.InvariantCulture));
 
-			request.SetParameter("match", matchStrategy);
+			request.SetParameter("match", address.MatchStrategy);
 
 			request.SetParameter("format", address.OutputFormat);
 		}
