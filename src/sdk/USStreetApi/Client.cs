@@ -52,7 +52,10 @@
 			if (batch.Count == 1)
 				PopulateQueryString(batch[0], request);
 			else
+			{
+				ApplyDefaults(batch);
 				request.Payload = batch.Serialize(this.serializer);
+			}
 
 			var response = await this.sender.SendAsync(request);
 
@@ -91,10 +94,21 @@
 			else if (address.MaxCandidates != 0)
 				request.SetParameter("candidates", address.MaxCandidates.ToString(CultureInfo.InvariantCulture));
 
-			if (matchStrategy != Lookup.STRICT)
-				request.SetParameter("match", matchStrategy);
+			request.SetParameter("match", matchStrategy);
 
 			request.SetParameter("format", address.OutputFormat);
+		}
+
+		private static void ApplyDefaults(Batch batch)
+		{
+			for (int i = 0; i < batch.Count; i++)
+			{
+				var lookup = batch[i];
+				if (string.IsNullOrEmpty(lookup.MatchStrategy))
+					lookup.MatchStrategy = Lookup.ENHANCED;
+				if (lookup.MaxCandidates == 0 && lookup.MatchStrategy == Lookup.ENHANCED)
+					lookup.MaxCandidates = 5;
+			}
 		}
 
 		private static void AssignCandidatesToLookups(Batch batch, IEnumerable<Candidate> candidates)

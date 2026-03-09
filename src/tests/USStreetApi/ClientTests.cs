@@ -99,7 +99,7 @@
 
 			client.Send(lookup);
 
-			Assert.AreEqual("?", sender.Request.GetUrl());
+			Assert.AreEqual("?match=strict", sender.Request.GetUrl());
 		}
 
 		[Test]
@@ -112,7 +112,7 @@
 
 			client.Send(lookup);
 
-			Assert.AreEqual("?candidates=3", sender.Request.GetUrl());
+			Assert.AreEqual("?candidates=3&match=strict", sender.Request.GetUrl());
 		}
 
 		#endregion
@@ -142,6 +142,42 @@
 			client.Send(batch);
 
 			Assert.AreEqual(expectedPayload, sender.Request.Payload);
+		}
+
+		[Test]
+		public void TestBatchSerializationIncludesDefaults()
+		{
+			var sender = new RequestCapturingSender();
+			var serializer = new FakeSerializer(null);
+			var client = new Client(sender, serializer);
+			var batch = new Batch { new Lookup(), new Lookup() };
+
+			client.Send(batch);
+
+			Assert.AreEqual(Lookup.ENHANCED, batch[0].MatchStrategy);
+			Assert.AreEqual(5, batch[0].MaxCandidates);
+			Assert.AreEqual(Lookup.ENHANCED, batch[1].MatchStrategy);
+			Assert.AreEqual(5, batch[1].MaxCandidates);
+		}
+
+		[Test]
+		public void TestBatchSerializationWithStrictMatch()
+		{
+			var sender = new RequestCapturingSender();
+			var serializer = new FakeSerializer(null);
+			var client = new Client(sender, serializer);
+			var batch = new Batch
+			{
+				new Lookup { MatchStrategy = Lookup.STRICT },
+				new Lookup { MatchStrategy = Lookup.STRICT }
+			};
+
+			client.Send(batch);
+
+			Assert.AreEqual(Lookup.STRICT, batch[0].MatchStrategy);
+			Assert.AreEqual(0, batch[0].MaxCandidates);
+			Assert.AreEqual(Lookup.STRICT, batch[1].MatchStrategy);
+			Assert.AreEqual(0, batch[1].MaxCandidates);
 		}
 
 		#endregion
