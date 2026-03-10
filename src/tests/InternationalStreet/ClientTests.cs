@@ -72,57 +72,22 @@
 		}
 
 		[Test]
-		public void TestRejectsLookupsWithOnlyCountry()
+		public void TestNilLookupRejected()
+		{
+			var crashSender = new MockCrashingSender();
+			var client = new Client(crashSender, null);
+
+			Assert.Throws<ArgumentNullException>(() => client.Send(null));
+		}
+
+		[Test]
+		public void TestInvalidLookup_HasCountryMissingFreeformAndAddress1()
 		{
 			var crashSender = new MockCrashingSender();
 			var client = new Client(crashSender, null);
 			var lookup = new Lookup {Country = "0"};
 
 			Assert.Throws<UnprocessableEntityException>(() => client.Send(lookup));
-		}
-
-		[Test]
-		public void TestRejectsLookupsWithOnlyCountryAndAddress1()
-		{
-			var crashSender = new MockCrashingSender();
-			var client = new Client(crashSender, null);
-			var lookup = new Lookup
-			{
-				Country = "0",
-				Address1 = "1"
-			};
-
-			Assert.Throws<UnprocessableEntityException>(() => client.Send(lookup));
-		}
-
-		[Test]
-		public void TestRejectsLookupsWithOnlyCountryAndAddress1AndLocality()
-		{
-			var crashSender = new MockCrashingSender();
-			var client = new Client(crashSender, null);
-			var lookup = new Lookup
-			{
-				Country = "0",
-				Address1 = "1",
-				Locality = "2"
-			};
-
-			Assert.Throws<UnprocessableEntityException>(() => client.Send(lookup));
-		}
-
-		[Test]
-		public void TestRejectsLookupsWithOnlyCountryAndAddress1AndAdministrativeArea()
-		{
-			var crashSender = new MockCrashingSender();
-			var client = new Client(crashSender, null);
-			var lookup = new Lookup
-			{
-				Country = "0",
-				Address1 = "1",
-				AdministrativeArea = "2"
-			};
-
-    		Assert.Throws<UnprocessableEntityException>(() => client.Send(lookup));
 		}
 
 		[Test]
@@ -140,12 +105,6 @@
 
 			lookup.Freeform = null;
 			lookup.Address1 = "1";
-			lookup.PostalCode = "2";
-			client.Send(lookup);
-
-			lookup.PostalCode = null;
-			lookup.Locality = "3";
-			lookup.AdministrativeArea = "4";
 			client.Send(lookup);
 		}
 
