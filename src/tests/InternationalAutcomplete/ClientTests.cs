@@ -32,7 +32,7 @@
 
             client.Send(lookup);
 
-			Assert.AreEqual("http://localhost/lookup?search=1&country=2&max_results=10",
+			Assert.AreEqual("http://localhost/lookup?search=1&country=2&max_results=10&max_group_results=100",
 				this.capturingSender.Request.GetUrl());
 		}
 
@@ -42,7 +42,7 @@
 			var serializer = new FakeSerializer(new byte[0]);
 			var client = new Client(this.urlSender, serializer);
 			const string expectedURL =
-				"http://localhost/lookup/myID?search=1&country=2&max_results=3&include_only_locality=5&include_only_postal_code=6";
+				"http://localhost/lookup/myID?search=1&country=2&max_results=3&max_group_results=100&include_only_locality=5&include_only_postal_code=6";
 			var lookup = new Lookup
 			{
 				Search = "1",
@@ -64,7 +64,7 @@
 			var serializer = new FakeSerializer(new byte[0]);
 			var client = new Client(this.urlSender, serializer);
 			const string expectedURL =
-				"http://localhost/lookup?search=1&country=2&max_results=3&include_only_locality=5&include_only_postal_code=6";
+				"http://localhost/lookup?search=1&country=2&max_results=3&max_group_results=100&include_only_locality=5&include_only_postal_code=6";
 			var lookup = new Lookup
 			{
 				Search = "1",
@@ -85,7 +85,7 @@
 			var serializer = new FakeSerializer(new byte[0]);
 			var client = new Client(this.urlSender, serializer);
 			const string expectedURL =
-				"http://localhost/lookup?search=1&country=2&max_results=3&include_only_locality=5&include_only_postal_code=6";
+				"http://localhost/lookup?search=1&country=2&max_results=3&max_group_results=100&include_only_locality=5&include_only_postal_code=6";
 			var lookup = new Lookup
 			{
 				Search = "1",
@@ -98,6 +98,34 @@
 			client.Send(lookup);
 
 			Assert.AreEqual(expectedURL, this.capturingSender.Request.GetUrl());
+		}
+
+		[Test]
+		public void TestSendingSingleLookupWithGeolocation()
+		{
+			var serializer = new FakeSerializer(new byte[0]);
+			var client = new Client(this.urlSender, serializer);
+			var lookup = new Lookup("1") { Country = "2", Geolocation = true };
+			client.Send(lookup);
+			Assert.That(this.capturingSender.Request.GetUrl(), Does.Contain("geolocation=on"));
+		}
+
+		[Test]
+		public void TestSendingSingleLookupWithCustomMaxGroupResults()
+		{
+			var serializer = new FakeSerializer(new byte[0]);
+			var client = new Client(this.urlSender, serializer);
+			var lookup = new Lookup("1") { Country = "2", MaxGroupResults = 50 };
+			client.Send(lookup);
+			Assert.That(this.capturingSender.Request.GetUrl(), Does.Contain("max_group_results=50"));
+		}
+
+		[Test]
+		public void TestDefaultValuesForNewFields()
+		{
+			var lookup = new Lookup("test");
+			Assert.AreEqual(100, lookup.MaxGroupResults);
+			Assert.IsFalse(lookup.Geolocation);
 		}
 
 		#endregion

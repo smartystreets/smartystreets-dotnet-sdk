@@ -15,12 +15,15 @@
 		#region [ Fields ]
 
 		private const int MAX_RESULTS_DEFAULT = 10;
-		
+		private const int MAX_GROUP_RESULTS_DEFAULT = 100;
+
 		public Candidate[] Result { get; set; }
 		public string Search { get; set; }
 		public string Country { get; set; }
 		public string AddressID {get; set; }
 		public int MaxResults { get; set; }
+		public int MaxGroupResults { get; set; }
+		public bool Geolocation { get; set; }
 		public string Locality { get; set; }
 		public string PostalCode { get; set; }
 		public Dictionary<string, string> CustomParamDict = new Dictionary<string, string>{};
@@ -36,6 +39,7 @@
 		public Lookup()
 		{
 			this.MaxResults = MAX_RESULTS_DEFAULT;
+			this.MaxGroupResults = MAX_GROUP_RESULTS_DEFAULT;
 		}
 
 		/// <param name="search">The beginning of an address.</param>
@@ -47,6 +51,7 @@
 		#endregion
 		
 		internal string MaxSuggestionsString => this.MaxResults.ToString();
+		internal string MaxGroupResultsString => this.MaxGroupResults.ToString();
 
 		public void AddCustomParameter(string parameter, string value) {
 			CustomParamDict.Add(parameter, value);

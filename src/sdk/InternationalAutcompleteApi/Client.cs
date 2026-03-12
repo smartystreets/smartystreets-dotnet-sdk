@@ -62,6 +62,9 @@
 			request.SetParameter("search", lookup.Search);
 			request.SetParameter("country", lookup.Country);
 			request.SetParameter("max_results", lookup.MaxSuggestionsString);
+			request.SetParameter("max_group_results", lookup.MaxGroupResultsString);
+			if (lookup.Geolocation)
+				request.SetParameter("geolocation", "on");
 			request.SetParameter("include_only_locality", lookup.Locality);
 			request.SetParameter("include_only_postal_code", lookup.PostalCode);
 

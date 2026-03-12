@@ -24,6 +24,8 @@ namespace Examples
 			{
 				Country = "FRA",
 				Locality = "Paris",
+				MaxGroupResults = 5,
+				Geolocation = true,
 			};
 
 			//uncomment the line below to add a custom parameter
