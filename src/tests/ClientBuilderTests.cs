@@ -33,11 +33,11 @@ namespace SmartyStreets
         }
 
         [Test]
-        public void TestWithWrappedSender_WrapsWithMiddlewareChain()
+        public void TestWithSender_WrapsWithMiddlewareChain()
         {
             var capturingSender = new RequestCapturingSender();
             var client = new ClientBuilder("test-id", "test-token")
-                .WithWrappedSender(capturingSender)
+                .WithSender(capturingSender)
                 .WithSerializer(new FakeSerializer(null))
                 .BuildUsStreetApiClient();
 

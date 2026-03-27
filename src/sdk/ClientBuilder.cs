@@ -21,7 +21,6 @@ namespace SmartyStreets
         private readonly ICredentials signer;
         private ISerializer serializer;
         private ISender httpSender;
-        private ISender wrappedHttpSender;
         private Proxy proxy;
         private Dictionary<string, string> customHeaders;
         private Dictionary<string, AppendedHeader> appendHeaders;
@@ -144,14 +143,6 @@ namespace SmartyStreets
             return this;
         }
 
-        /// <param name="sender">Replaces the innermost NativeSender while keeping the rest of the sender chain intact.</param>
-        /// <returns>Returns 'this' to accommodate method chaining.</returns>
-        public ClientBuilder WithWrappedSender(ISender sender)
-        {
-            this.wrappedHttpSender = sender;
-            return this;
-        }
-
         /// <summary>
         ///     Allows the caller to specify the subscription license(s) (aka "track") they wish to use.
         /// </summary>
@@ -257,10 +248,7 @@ namespace SmartyStreets
 
         private ISender BuildSender()
         {
-            if (this.httpSender != null)
-                return this.httpSender;
-
-            ISender sender = this.wrappedHttpSender ?? new NativeSender(this.maxTimeout, this.proxy);
+            ISender sender = this.httpSender ?? new NativeSender(this.maxTimeout, this.proxy);
             if (this.logHttpRequestAndResponse)
             {
                 sender.EnableLogging();
