@@ -248,6 +248,14 @@ namespace SmartyStreets
 
         private ISender BuildSender()
         {
+            if (this.httpSender != null)
+            {
+                var conflicts = new System.Collections.Generic.List<string>();
+                if (this.maxTimeout != System.TimeSpan.FromSeconds(10)) conflicts.Add("WithMaxTimeout()");
+                if (this.proxy != null) conflicts.Add("ViaProxy()");
+                if (conflicts.Count > 0)
+                    throw new System.InvalidOperationException($"WithSender() cannot be combined with: {string.Join(", ", conflicts)}. These options only apply to the built-in HTTP transport.");
+            }
             ISender sender = this.httpSender ?? new NativeSender(this.maxTimeout, this.proxy);
             if (this.logHttpRequestAndResponse)
             {

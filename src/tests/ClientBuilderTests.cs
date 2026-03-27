@@ -33,6 +33,30 @@ namespace SmartyStreets
         }
 
         [Test]
+        public void TestWithSender_ThrowsWhenCombinedWithMaxTimeout()
+        {
+            var capturingSender = new RequestCapturingSender();
+            var builder = new ClientBuilder("test-id", "test-token")
+                .WithSender(capturingSender)
+                .WithMaxTimeout(System.TimeSpan.FromSeconds(5))
+                .WithSerializer(new FakeSerializer(null));
+
+            Assert.Throws<System.InvalidOperationException>(() => builder.BuildUsStreetApiClient());
+        }
+
+        [Test]
+        public void TestWithSender_ThrowsWhenCombinedWithProxy()
+        {
+            var capturingSender = new RequestCapturingSender();
+            var builder = new ClientBuilder("test-id", "test-token")
+                .WithSender(capturingSender)
+                .ViaProxy("http://localhost:8080", "", "")
+                .WithSerializer(new FakeSerializer(null));
+
+            Assert.Throws<System.InvalidOperationException>(() => builder.BuildUsStreetApiClient());
+        }
+
+        [Test]
         public void TestWithSender_WrapsWithMiddlewareChain()
         {
             var capturingSender = new RequestCapturingSender();
