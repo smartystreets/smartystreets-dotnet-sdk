@@ -34,6 +34,9 @@
 		[DataMember(Name = "smarty_key")]
 		public string SmartyKey{ get; set; }
 
+		[DataMember(Name = "smarty_key_ext")]
+		public string SmartyKeyEXT { get; set; }
+
 		[DataMember(Name = "components")]
 		public Components Components { get; set; }
 
