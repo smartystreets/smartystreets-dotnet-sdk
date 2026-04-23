@@ -44,7 +44,7 @@ namespace Examples
             freeformLookup.SetFreeform("56 Union Ave Somerville NJ 08876");
 
             // Options available for Lookup
-            // lookup.SetEtag("AIDAIAQCAIEQKAIC");
+            // lookup.SetRequestEtag("AIDAIAQCAIEQKAIC");
             // lookup.SetIncludeFields("assessed_value,assessor_last_update"); // applicable to Property lookups only
             // lookup.SetExcludeFields("tax_fiscal_year,tax_jurisdiction"); // applicable to Property lookups only
 
@@ -66,6 +66,7 @@ namespace Examples
 
             if (results != null)
             {
+                Console.WriteLine("Etag: " + freeformLookup.GetResponseEtag());
                 // results is the JSON response from the API
                 Console.WriteLine(Encoding.UTF8.GetString(results));
             }

@@ -40,7 +40,7 @@ namespace Examples
             freeformLookup.SetFreeform("56 Union Ave Somerville NJ 08876");
 
             // Options available for the Risk Lookup
-            // lookup.SetEtag("GEZDSNBUHE3DEMQ");
+            // lookup.SetRequestEtag("GEZDSNBUHE3DEMQ");
     
             try {
                 // results = client.SendRiskLookup("325023201");  // simple call with just a SmartyKey

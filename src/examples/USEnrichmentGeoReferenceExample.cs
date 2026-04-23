@@ -39,7 +39,7 @@ namespace Examples
             freeformLookup.SetFreeform("56 Union Ave Somerville NJ 08876");
 
             // Options available for the GeoReference Lookup
-            // lookup.SetEtag("GEZDSNBUHE3DEMQ");
+            // lookup.SetRequestEtag("GEZDSNBUHE3DEMQ");
     
             try {
                 // results = client.SendGeoReferenceLookup("325023201");  // simple call with just a SmartyKey
@@ -55,10 +55,10 @@ namespace Examples
             }
             
             if (results != null) {
+                Console.WriteLine("Etag: " + lookup.GetResponseEtag());
                 foreach (SmartyStreets.USEnrichmentApi.GeoReference.Result result in results) {
                     Console.WriteLine("SmartyKey: " +result.SmartyKey);
                     Console.WriteLine("DataSet: " +result.DataSetName);
-                    Console.WriteLine("Etag: " +result.Etag);
                     Console.WriteLine("CensusBlock");
                     PrintObjectAttributes(result.Attributes.CensusBlock, 4);
                     Console.WriteLine("CensusCountyDivision");

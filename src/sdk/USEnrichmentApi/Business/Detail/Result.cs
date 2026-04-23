@@ -1,8 +1,8 @@
-namespace SmartyStreets.USEnrichmentApi.Property.Principal
+namespace SmartyStreets.USEnrichmentApi.Business.Detail
 {
     using System.Runtime.Serialization;
 
-	[DataContract]
+    [DataContract]
     public class Result
     {
         [DataMember(Name = "smarty_key")]
@@ -11,11 +11,8 @@ namespace SmartyStreets.USEnrichmentApi.Property.Principal
         [DataMember(Name = "data_set_name")]
         public string DataSetName { get; set; }
 
-        [DataMember(Name = "data_subset_name")]
-        public string DataSubsetName { get; set; }
-
-        [DataMember(Name = "matched_address")]
-        public MatchedAddress MatchedAddress { get; set; }
+        [DataMember(Name = "business_id")]
+        public string BusinessId { get; set; }
 
         [DataMember(Name = "attributes")]
         public Attributes Attributes { get; set; }

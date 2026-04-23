@@ -8,9 +8,6 @@ namespace SmartyStreets.USEnrichmentApi.Secondary.Count
         [DataMember(Name = "smarty_key")]
         public string SmartyKey { get; set; }
 
-        [DataMember(Name = "etag")]
-        public string Etag { get; set; }
-
         [DataMember(Name = "count")]
         public string count { get; set; }
     }

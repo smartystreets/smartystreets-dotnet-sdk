@@ -8,9 +8,6 @@ namespace SmartyStreets.USEnrichmentApi.Secondary
         [DataMember(Name = "smarty_key")]
         public string SmartyKey { get; set; }
 
-        [DataMember(Name = "etag")]
-        public string Etag { get; set; }
-
         [DataMember(Name = "matched_address")]
         public MatchedAddress MatchedAddress { get; set; }
 

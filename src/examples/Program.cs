@@ -20,6 +20,13 @@ namespace Examples
                     case "us_street_single":
                         USStreetSingleAddressExample.Run();
                         break;
+                    case "us_street_single_endpoint":
+                        // Points at a local installation (http://127.0.0.1:8080); not part of RunAllExamples.
+                        USStreetSingleAddressEndpointExample.Run();
+                        break;
+                    case "us_street_match_strategy":
+                        USStreetLookupsWithMatchStrategyExamples.Run();
+                        break;
                     case "us_street_multiple":
                         USStreetMultipleAddressesExample.Run();
                         break;
@@ -56,9 +63,12 @@ namespace Examples
                     case "us_enrichment":
                         USEnrichmentPropertyExample.Run();
                         USEnrichmentGeoReferenceExample.Run();
-                        USEnrichmentRiskExample.Run();
                         USEnrichmentSecondaryExample.Run();
                         USEnrichmentUniversalExample.Run();
+                        USEnrichmentBusinessExample.Run();
+                        break;
+                    case "us_enrichment_etag":
+                        USEnrichmentEtagExample.Run();
                         break;
                 }
             }
@@ -83,6 +93,7 @@ namespace Examples
             USEnrichmentGeoReferenceExample.Run();
             USEnrichmentSecondaryExample.Run();
             USEnrichmentUniversalExample.Run();
+            USEnrichmentBusinessExample.Run();
         }
     }
 }

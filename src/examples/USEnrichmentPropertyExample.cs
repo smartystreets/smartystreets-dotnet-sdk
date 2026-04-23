@@ -41,7 +41,7 @@ namespace Examples
 
             // See the US Enrichment API documenation for available lookup properties https://www.smarty.com/docs/cloud/us-address-enrichment-api#http-request-input-fields
             // Options available for the Property Lookup
-            // lookup.SetEtag("AIDAIAQCAIEQKAIC");
+            // lookup.SetRequestEtag("AIDAIAQCAIEQKAIC");
             // lookup.SetIncludeFields("assessed_value,assessor_last_update");
             // lookup.SetExcludeFields("tax_fiscal_year,tax_jurisdiction");
 

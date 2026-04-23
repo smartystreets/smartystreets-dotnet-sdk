@@ -77,8 +77,9 @@ Each API has its own namespace under `SmartyStreets.*Api/` with consistent struc
 The Enrichment API diverges from the standard pattern:
 - Uses abstract `Lookup` base class with per-dataset subclasses (PropertyPrincipal, GeoReference, etc.)
 - Dynamic URL paths: `/search/{dataset}/{subset}` or `/{smartyKey}/{dataset}/{subset}`
-- Supports ETag-based conditional requests (304 Not Modified)
+- Supports ETag-based conditional requests (304 Not Modified) via a non-standard `Etag` request header (the us-enrichment-api server reads and writes a header literally named `Etag`, not RFC 7232's `If-None-Match`)
 - Universal dataset returns raw `byte[]` instead of typed results
+- Business Detail (`Business.Detail.Lookup`) is a **standalone** class that does NOT inherit from the abstract `Lookup`. Its URL is `/business/{url-encoded-businessId}` (a third URL shape, distinct from the smartyKey and `/search/` shapes). Send it via `SendBusinessDetailLookup(...)`, which has its own request-building path on the Client and returns a single `Business.Detail.Result` (the endpoint always returns 0 or 1; >1 throws `SmartyException`).
 
 ## Adding a New API
 

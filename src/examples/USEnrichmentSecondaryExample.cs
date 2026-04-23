@@ -40,7 +40,7 @@ namespace Examples
             freeformLookup.SetFreeform("56 Union Ave Somerville NJ 08876");
 
             // Options available for Lookup
-            // lookup.SetEtag("HAYDKMJXHA4DKNA");
+            // lookup.SetRequestEtag("HAYDKMJXHA4DKNA");
 
             try {
                 // results = client.SendSecondaryLookup("325023201"); // simple call with just a SmartyKey
@@ -98,7 +98,7 @@ namespace Examples
             countFreeformLookup.SetFreeform("56 Union Ave Somerville NJ 08876");
 
             // Options available for Lookup
-            // lookup.SetEtag("HAYDKMJXHA4DKNA");
+            // lookup.SetRequestEtag("HAYDKMJXHA4DKNA");
 
             try {
                 // results = client.SendSecondaryCountLookup("325023201"); // simple call with just a SmartyKey

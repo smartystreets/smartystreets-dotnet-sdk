@@ -25,9 +25,6 @@ namespace SmartyStreets.USEnrichmentApi.Secondary.Count
         public override void DeserializeAndSetResults(SmartyStreets.ISerializer serializer, Stream payload)
         {
             this.results = serializer.Deserialize<Result[]>(payload);
-            if (this.results != null) {
-                this.results[0].Etag = this.GetEtag();
-            }
         }
     }
 }

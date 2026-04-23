@@ -1,13 +1,12 @@
-namespace SmartyStreets.USEnrichmentApi.Risk
+namespace SmartyStreets.USEnrichmentApi.Business.Summary
 {
-    using System;
     using System.IO;
-    using SmartyStreets.USEnrichmentApi.Risk;
 
     public class Lookup : SmartyStreets.USEnrichmentApi.Lookup
     {
         private Result[] results;
-        public Lookup(string smartyKey = null) : base(smartyKey, "risk", "")
+
+        public Lookup(string smartyKey = null) : base(smartyKey, "business", "")
         {
         }
 

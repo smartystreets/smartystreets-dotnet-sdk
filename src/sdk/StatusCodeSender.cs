@@ -29,7 +29,8 @@ namespace SmartyStreets
 					return response;
 				case 304:
 					throw new NotModifiedException(
-						"Not Modified: The requested record has not been modified since the previous request with the Etag value.");
+						"Not Modified: The requested record has not been modified since the previous request with the Etag value.",
+						ExtractResponseEtag(response));
 				case 401:
 					throw new BadCredentialsException(
 						"Unauthorized: The credentials were provided incorrectly or did not match any existing, active credentials.");
@@ -74,6 +75,18 @@ namespace SmartyStreets
 				default:
 					return null;
 			}
+		}
+
+		private static string ExtractResponseEtag(Response response)
+		{
+			if (response.HeaderInfo == null)
+				return null;
+			foreach (var entry in response.HeaderInfo)
+			{
+				if (string.Equals(entry.Key, "Etag", StringComparison.OrdinalIgnoreCase))
+					return entry.Value;
+			}
+			return null;
 		}
 
 		private string ExtractErrorMsgFromResponse(Response response, string defaultErrorMessage)

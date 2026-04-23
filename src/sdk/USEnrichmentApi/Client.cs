@@ -143,31 +143,108 @@ namespace SmartyStreets.USEnrichmentApi
 			return lookup.GetResults();
 		}
 
+		public Business.Summary.Result[] SendBusinessLookup(string smartyKey)
+		{
+			return SendBusinessLookupAsync(smartyKey).GetAwaiter().GetResult();
+		}
+
+		public async Task<Business.Summary.Result[]> SendBusinessLookupAsync(string smartyKey)
+		{
+			Business.Summary.Lookup lookup = new Business.Summary.Lookup(smartyKey);
+			await SendAsync(lookup);
+			return lookup.GetResults();
+		}
+
+		public Business.Summary.Result[] SendBusinessLookup(Business.Summary.Lookup lookup)
+		{
+			return SendBusinessLookupAsync(lookup).GetAwaiter().GetResult();
+		}
+
+		public async Task<Business.Summary.Result[]> SendBusinessLookupAsync(Business.Summary.Lookup lookup)
+		{
+			await SendAsync(lookup);
+			return lookup.GetResults();
+		}
+
+		public Business.Detail.Result SendBusinessDetailLookup(string businessId)
+		{
+			return SendBusinessDetailLookupAsync(businessId).GetAwaiter().GetResult();
+		}
+
+		public async Task<Business.Detail.Result> SendBusinessDetailLookupAsync(string businessId)
+		{
+			Business.Detail.Lookup lookup = new Business.Detail.Lookup(businessId);
+			await SendBusinessDetailAsync(lookup);
+			return lookup.GetResult();
+		}
+
+		public Business.Detail.Result SendBusinessDetailLookup(Business.Detail.Lookup lookup)
+		{
+			return SendBusinessDetailLookupAsync(lookup).GetAwaiter().GetResult();
+		}
+
+		public async Task<Business.Detail.Result> SendBusinessDetailLookupAsync(Business.Detail.Lookup lookup)
+		{
+			await SendBusinessDetailAsync(lookup);
+			return lookup.GetResult();
+		}
+
+		private async Task SendBusinessDetailAsync(Business.Detail.Lookup lookup)
+		{
+			if (lookup == null || string.IsNullOrWhiteSpace(lookup.GetBusinessId()))
+				throw new SmartyStreets.SmartyException("Business.Detail.Lookup requires a non-empty 'businessId'");
+
+			Request request = new Request();
+			request.SetUrlComponents("/business/" + Uri.EscapeDataString(lookup.GetBusinessId()));
+			ApplyCommonRequestFields(request, lookup);
+
+			await DispatchAsync(request, lookup);
+		}
+
 		private async Task SendAsync(Lookup lookup)
 		{
-			if (lookup == null || (string.IsNullOrEmpty(lookup.GetSmartyKey()) && string.IsNullOrEmpty(lookup.GetStreet()) && string.IsNullOrEmpty(lookup.GetFreeform())))
-				throw new SmartyStreets.SmartyException("Client.Send() requires a Lookup with the 'smartyKey', 'street', or 'freeform' field set");
+			if (lookup == null || (string.IsNullOrWhiteSpace(lookup.GetSmartyKey()) && string.IsNullOrWhiteSpace(lookup.GetStreet()) && string.IsNullOrWhiteSpace(lookup.GetFreeform())))
+				throw new SmartyStreets.SmartyException("Lookup requires one of 'smartyKey', 'street', or 'freeform' to be set");
 			Request request = BuildRequest(lookup);
+			await DispatchAsync(request, lookup);
+		}
+
+		private async Task DispatchAsync(Request request, EnrichmentLookupBase lookup)
+		{
 			Response response = await this.sender.SendAsync(request);
-			foreach(var entry in response.HeaderInfo) {
-				if (entry.Key == "Etag") {
-					lookup.SetEtag(entry.Value);
+			if (response.HeaderInfo != null)
+			{
+				foreach (var entry in response.HeaderInfo)
+				{
+					if (string.Equals(entry.Key, "Etag", StringComparison.OrdinalIgnoreCase))
+						lookup.SetResponseEtag(entry.Value);
 				}
 			}
-			if (response.Payload != null){
-				using (var payloadStream = new MemoryStream(response.Payload)){
-					if (serializer == null) {
-						Console.WriteLine("true");
-					}
+			if (response.Payload != null)
+			{
+				using (var payloadStream = new MemoryStream(response.Payload))
+				{
 					lookup.DeserializeAndSetResults(serializer, payloadStream);
 				}
 			}
 		}
 
+		private static void ApplyCommonRequestFields(Request request, EnrichmentLookupBase lookup)
+		{
+			if (lookup.GetIncludeFields() != null)
+				request.SetParameter("include", lookup.GetIncludeFields());
+			if (lookup.GetExcludeFields() != null)
+				request.SetParameter("exclude", lookup.GetExcludeFields());
+			if (lookup.GetRequestEtag() != null)
+				request.SetHeader("Etag", lookup.GetRequestEtag());
+			foreach (KeyValuePair<string, string> line in lookup.GetCustomParameters())
+				request.SetParameter(line.Key, line.Value);
+		}
+
 		private SmartyStreets.Request BuildRequest(Lookup lookup)
 		{
 			SmartyStreets.Request request = new SmartyStreets.Request();
-			
+
 			// some datasets have no data subset
 			if (string.IsNullOrEmpty(lookup.GetSmartyKey())) {
 				if (lookup.GetDataSubsetName() == "") {
@@ -183,12 +260,6 @@ namespace SmartyStreets.USEnrichmentApi
 				}
 			}
 
-			if (lookup.GetIncludeFields() != null) {
-				request.SetParameter("include", lookup.GetIncludeFields());
-			}
-			if (lookup.GetExcludeFields() != null) {
-				request.SetParameter("exclude", lookup.GetExcludeFields());
-			}
 			if (lookup.GetFeatures() != null) {
 				request.SetParameter("features", lookup.GetFeatures());
 			}
@@ -207,13 +278,8 @@ namespace SmartyStreets.USEnrichmentApi
 			if (lookup.GetZipcode() != null) {
 				request.SetParameter("zipcode", lookup.GetZipcode());
 			}
-			if (lookup.GetEtag() != null) {
-				request.SetHeader("Etag", lookup.GetEtag());
-			}
 
-			foreach (KeyValuePair<string, string> line in lookup.CustomParamDict) {
-				request.SetParameter(line.Key, line.Value);
-			}
+			ApplyCommonRequestFields(request, lookup);
 
 			return request;
 		}

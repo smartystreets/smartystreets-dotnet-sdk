@@ -1,8 +1,8 @@
-namespace SmartyStreets.USEnrichmentApi.Risk
+namespace SmartyStreets.USEnrichmentApi.Business.Summary
 {
     using System.Runtime.Serialization;
 
-	[DataContract]
+    [DataContract]
     public class Result
     {
         [DataMember(Name = "smarty_key")]
@@ -11,10 +11,7 @@ namespace SmartyStreets.USEnrichmentApi.Risk
         [DataMember(Name = "data_set_name")]
         public string DataSetName { get; set; }
 
-        [DataMember(Name = "matched_address")]
-        public MatchedAddress MatchedAddress { get; set; }
-
-        [DataMember(Name = "attributes")]
-        public Attributes Attributes { get; set; }
+        [DataMember(Name = "businesses")]
+        public BusinessEntry[] Businesses { get; set; }
     }
 }
