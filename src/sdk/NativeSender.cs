@@ -13,12 +13,14 @@ namespace SmartyStreets
         private static readonly string UserAgent = string.Format("smartystreets (sdk:dotnet@{0}.{1}.{2})",
             AssemblyVersion.Major, AssemblyVersion.Minor, AssemblyVersion.Build);
         private HttpClient client;
+        private readonly bool ownsClient;
 
-        private bool logHttpRequestAndResponse; 
+        private bool logHttpRequestAndResponse;
 
         public NativeSender()
         {
             client = new HttpClient();
+            ownsClient = true;
 
             client.Timeout = TimeSpan.FromSeconds(10);
             client.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent);
@@ -30,8 +32,24 @@ namespace SmartyStreets
             httpClientHandler.Proxy = (proxy ?? new Proxy()).NativeProxy;
 
             client = new HttpClient(httpClientHandler);
+            ownsClient = true;
             client.Timeout = timeout;
             client.DefaultRequestHeaders.UserAgent.ParseAdd(UserAgent);
+        }
+
+        /// <summary>
+        ///     Wraps an externally-managed <see cref="HttpClient"/> (e.g. one resolved from
+        ///     <c>IHttpClientFactory</c>). The sender will not dispose the client, and will
+        ///     not modify its <c>Timeout</c> or <c>DefaultRequestHeaders</c>; attach
+        ///     <see cref="DelegatingHandler"/>s or configure the client externally instead.
+        ///     The SDK User-Agent is added per-request, unless the caller has already set one
+        ///     on the client's default headers.
+        /// </summary>
+        /// <param name="client">An HttpClient whose lifecycle is managed by the caller.</param>
+        public NativeSender(HttpClient client)
+        {
+            this.client = client ?? throw new ArgumentNullException(nameof(client));
+            this.ownsClient = false;
         }
 
         public Response Send(Request request)
@@ -65,6 +83,13 @@ namespace SmartyStreets
                 {
                     httpRequest.Headers.Add(item.Key, item.Value);
                 }
+            }
+
+            // For injected clients we don't mutate DefaultRequestHeaders; set UA per-request
+            // unless the caller has already configured one on the client.
+            if (!ownsClient && !client.DefaultRequestHeaders.UserAgent.Any())
+            {
+                httpRequest.Headers.UserAgent.ParseAdd(UserAgent);
             }
 
             HttpResponseMessage response = await client.SendAsync(httpRequest);
@@ -114,11 +139,11 @@ namespace SmartyStreets
 
         public void Dispose()
         {
-            if (this.client != null)
+            if (this.client != null && this.ownsClient)
             {
                 this.client.Dispose();
-                this.client = null;
             }
+            this.client = null;
         }
 
         private async Task PrintRequestAndResponse(HttpResponseMessage response)

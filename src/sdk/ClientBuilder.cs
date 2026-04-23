@@ -3,6 +3,7 @@
 namespace SmartyStreets
 {
     using System;
+    using System.Net.Http;
     using System.Security.Cryptography;
 
     /// <summary>
@@ -21,6 +22,7 @@ namespace SmartyStreets
         private readonly ICredentials signer;
         private ISerializer serializer;
         private ISender httpSender;
+        private HttpClient httpClient;
         private Proxy proxy;
         private Dictionary<string, string> customHeaders;
         private Dictionary<string, AppendedHeader> appendHeaders;
@@ -144,6 +146,37 @@ namespace SmartyStreets
         }
 
         /// <summary>
+        ///     Supplies an externally-managed <see cref="HttpClient"/> (e.g. one resolved from
+        ///     <c>IHttpClientFactory</c> or configured with <see cref="DelegatingHandler"/>s for
+        ///     Polly, OpenTelemetry, logging, or custom proxies). The SDK will not dispose the
+        ///     client and will not modify its <c>Timeout</c> or <c>DefaultRequestHeaders</c>.
+        ///     The SDK middleware chain (retries, signing, headers, etc.) is still applied on top.
+        /// </summary>
+        /// <remarks>
+        ///     Cannot be combined with <see cref="WithMaxTimeout"/>, <see cref="ViaProxy"/>, or
+        ///     <see cref="WithSender"/>, which configure the built-in transport. The injected
+        ///     client is responsible for its own timeout (<c>HttpClient.Timeout</c>) and proxy
+        ///     configuration (via <c>HttpClientHandler</c> or a <see cref="DelegatingHandler"/>).
+        ///
+        ///     Retry compounding: the SDK's retry layer still runs on top of the injected
+        ///     transport (default 5 retries on transient failures). If the injected handler
+        ///     pipeline already owns retries — e.g. a Polly policy attached via
+        ///     <c>AddPolicyHandler</c> — call <see cref="RetryAtMost"/> with <c>0</c> to
+        ///     disable the SDK's retry layer and avoid N-by-M retry compounding.
+        ///
+        ///     User-Agent: the SDK adds its User-Agent per request only when the injected
+        ///     client has not set one on <c>HttpClient.DefaultRequestHeaders.UserAgent</c>.
+        ///     Set a UA on the injected client if you want to override the SDK's.
+        /// </remarks>
+        /// <param name="client">An HttpClient whose lifecycle is managed by the caller.</param>
+        /// <returns>Returns 'this' to accommodate method chaining.</returns>
+        public ClientBuilder WithHttpClient(HttpClient client)
+        {
+            this.httpClient = client ?? throw new ArgumentNullException(nameof(client));
+            return this;
+        }
+
+        /// <summary>
         ///     Allows the caller to specify the subscription license(s) (aka "track") they wish to use.
         /// </summary>
         /// <param name="licenses">A List of license strings</param>
@@ -248,15 +281,29 @@ namespace SmartyStreets
 
         private ISender BuildSender()
         {
+            if (this.httpSender != null && this.httpClient != null)
+                throw new InvalidOperationException("WithSender() and WithHttpClient() cannot be combined. Choose one transport.");
+
             if (this.httpSender != null)
             {
-                var conflicts = new System.Collections.Generic.List<string>();
-                if (this.maxTimeout != System.TimeSpan.FromSeconds(10)) conflicts.Add("WithMaxTimeout()");
+                var conflicts = new List<string>();
+                if (this.maxTimeout != TimeSpan.FromSeconds(10)) conflicts.Add("WithMaxTimeout()");
                 if (this.proxy != null) conflicts.Add("ViaProxy()");
                 if (conflicts.Count > 0)
-                    throw new System.InvalidOperationException($"WithSender() cannot be combined with: {string.Join(", ", conflicts)}. These options only apply to the built-in HTTP transport.");
+                    throw new InvalidOperationException($"WithSender() cannot be combined with: {string.Join(", ", conflicts)}. These options only apply to the built-in HTTP transport.");
             }
-            ISender sender = this.httpSender ?? new NativeSender(this.maxTimeout, this.proxy);
+
+            if (this.httpClient != null)
+            {
+                var conflicts = new List<string>();
+                if (this.maxTimeout != TimeSpan.FromSeconds(10)) conflicts.Add("WithMaxTimeout()");
+                if (this.proxy != null) conflicts.Add("ViaProxy()");
+                if (conflicts.Count > 0)
+                    throw new InvalidOperationException($"WithHttpClient() cannot be combined with: {string.Join(", ", conflicts)}. Configure the injected HttpClient directly instead.");
+            }
+
+            ISender sender = this.httpSender
+                ?? (this.httpClient != null ? new NativeSender(this.httpClient) : new NativeSender(this.maxTimeout, this.proxy));
             if (this.logHttpRequestAndResponse)
             {
                 sender.EnableLogging();

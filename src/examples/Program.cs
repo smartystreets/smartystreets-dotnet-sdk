@@ -24,6 +24,10 @@ namespace Examples
                         // Points at a local installation (http://127.0.0.1:8080); not part of RunAllExamples.
                         USStreetSingleAddressEndpointExample.Run();
                         break;
+                    case "us_street_with_http_factory":
+                        // Demonstrates IHttpClientFactory + DelegatingHandler composition; not part of RunAllExamples.
+                        USStreetWithHttpClientFactoryExample.Run();
+                        break;
                     case "us_street_match_strategy":
                         USStreetLookupsWithMatchStrategyExamples.Run();
                         break;
