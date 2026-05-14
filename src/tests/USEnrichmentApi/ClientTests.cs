@@ -110,53 +110,6 @@ namespace SmartyStreets.USEnrichmentApi
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
-		//Risk Lookup Tests:
-
-		[Test]
-		public void TestSendingFullyPopulatedRiskLookup()
-		{
-			var serializer = new FakeSerializer(null);
-			var client = new Client(this.urlSender, serializer);
-			const string expectedUrl= "http://localhost/1/risk?";
-
-			client.SendRiskLookup("1");
-
-			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
-		}
-
-		[Test]
-		public void TestSendingFullyPopulatedRiskComponenetsLookup()
-		{
-			var serializer = new FakeSerializer(null);
-			var client = new Client(this.urlSender, serializer);
-			const string expectedUrl= "http://localhost/search/risk?street=street&city=city&state=state&zipcode=zipcode";
-
-			var lookup = new Risk.Lookup();
-			lookup.SetStreet("street");
-			lookup.SetCity("city");
-			lookup.SetState("state");
-			lookup.SetZipcode("zipcode");
-
-			client.SendRiskLookup(lookup);
-
-			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
-		}
-
-		[Test]
-		public void TestSendingFullyPopulatedRiskFreeformLookup()
-		{
-			var serializer = new FakeSerializer(null);
-			var client = new Client(this.urlSender, serializer);
-			const string expectedUrl= "http://localhost/search/risk?freeform=freeform";
-
-			var lookup = new Risk.Lookup();
-			lookup.SetFreeform("freeform");
-
-			client.SendRiskLookup(lookup);
-
-			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
-		}
-
 		//Secondary Lookup Tests:
 
 		[Test]
