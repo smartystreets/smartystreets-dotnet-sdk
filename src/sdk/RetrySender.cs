@@ -12,8 +12,9 @@ namespace SmartyStreets
 		private readonly ISender inner;
 		private Action<int> sleep;
 		private readonly IRandomGenerator randomNumGenerator;
+		private int pendingSleepMs;
 
-		private const int BackOffRateLimit = 5;
+		private const int DefaultRateLimitSleepSeconds = 10;
 		private const int MaxBackOffDuration = 10;
 
 		public RetrySender(int maxRetries, ISender inner, Action<int> sleep, IRandomGenerator generator)
@@ -35,6 +36,15 @@ namespace SmartyStreets
 				return false;
 			}
 
+			if (this.pendingSleepMs > 0)
+			{
+				this.sleep(this.pendingSleepMs);
+				this.pendingSleepMs = 0;
+				return true;
+			}
+
+			// Randomized exponential backoff for non-429 retryable errors (500, 503, 504, etc.)
+			// Sleep duration grows with each attempt (0–attempt seconds), capped at MaxBackOffDuration
 			var backOffCap = Math.Max(0, Math.Min(MaxBackOffDuration, attempt));
 			var backOff = this.randomNumGenerator.Next(backOffCap) * 1000;
 			this.sleep(backOff);
@@ -48,6 +58,7 @@ namespace SmartyStreets
 
 		public async Task<Response> SendAsync(Request request)
 		{
+			this.pendingSleepMs = 0;
 			for (var attempts = 0; BackOff(attempts); attempts++)
 			{
 				var response = await this.TrySend(request, attempts);
@@ -66,11 +77,12 @@ namespace SmartyStreets
 			}
 			catch (TooManyRequestsException e)
 			{
-				attempts = 0;
-				int sleepDurationInMilliseconds = (int)e.RetryAfterInSeconds*1000;
-					if (sleepDurationInMilliseconds == 0)
-						sleepDurationInMilliseconds= randomNumGenerator.Next(BackOffRateLimit)*1000;
-				this.sleep(sleepDurationInMilliseconds);
+				if (attempts >= this.maxRetries)
+					throw;
+				int sleepDurationInMilliseconds = (int)e.RetryAfterInSeconds * 1000;
+				if (sleepDurationInMilliseconds == 0)
+					sleepDurationInMilliseconds = DefaultRateLimitSleepSeconds * 1000;
+				this.pendingSleepMs = sleepDurationInMilliseconds;
 			}
 			catch (Exception ex) when ((ex is InternalServerErrorException) || (ex is ServiceUnavailableException) || (ex is GatewayTimeoutException) || (ex is RequestTimeoutException) || (ex is BadGatewayException) || (ex is IOException))
 			{
