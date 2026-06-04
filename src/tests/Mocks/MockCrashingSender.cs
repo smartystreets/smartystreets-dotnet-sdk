@@ -10,6 +10,8 @@
 		public const string RetryThreeTimes = "Retry Three Times";
 		public const string RetryMaxTimes = "Retry Max Times";
 		public const string TooManyRequests = "Too Many Requests";
+		public const string TooManyRequestsWithRetryAfter = "Too Many Requests With Retry After";
+		public const string TooManyRequestsAlways = "Too Many Requests Always";
 		public const string BadRequest = "Bad Request";
 		public const string RequestEntityTooLarge = "Request Entity Too Large";
 		public const string UnprocessableEntity = "Unprocessable Entity";
@@ -40,6 +42,11 @@
 
 			this.SendCount++;
 
+			if (request.GetUrl().Contains(TooManyRequestsAlways))
+				throw new TooManyRequestsException("Too many requests. Sleeping...");
+			if (request.GetUrl().Contains(TooManyRequestsWithRetryAfter))
+				if (this.SendCount == 1)
+					throw new TooManyRequestsException("Too many requests. Sleeping...", 5);
 			if (request.GetUrl().Contains(TooManyRequests))
 				if (this.SendCount == 1)
 					throw new TooManyRequestsException("Too many requests. Sleeping...");

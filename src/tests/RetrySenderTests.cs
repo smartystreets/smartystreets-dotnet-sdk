@@ -11,6 +11,7 @@ namespace SmartyStreets
 	{
 		private MockCrashingSender mockCrashingSender;
 		private int milliseconds;
+		private int sleepCount;
 		private FakeRandomNumberGenerator fakeRandomNumberGenerator;
 		private int MaxRetries = 5;
 
@@ -20,6 +21,7 @@ namespace SmartyStreets
 			this.mockCrashingSender = new MockCrashingSender();
 			fakeRandomNumberGenerator = new FakeRandomNumberGenerator();
 			this.mockCrashingSender.FailCount = 1;
+			this.sleepCount = 0;
 		}
 
 		[Test]
@@ -65,15 +67,35 @@ namespace SmartyStreets
 			Assert.ThrowsAsync<IOException>(async () => await this.SendRequest(MockCrashingSender.RetryMaxTimes));
 		}
 
-		[TestCase(3)]
-		[TestCase(2)]
-		[TestCase(4)]
-		public async Task TestSleepOnRateLimit(int pseudoRandomNumber)
+		[Test]
+		public async Task TestDefaultSleepOnRateLimit()
 		{
-			fakeRandomNumberGenerator.SetNextRandomNumber(pseudoRandomNumber);
 			await this.SendRequest(MockCrashingSender.TooManyRequests);
-			
-			Assert.AreEqual(pseudoRandomNumber*1000, this.milliseconds);
+
+			Assert.AreEqual(10000, this.milliseconds);
+		}
+
+		[Test]
+		public async Task TestRetryAfterSleepOnRateLimit()
+		{
+			await this.SendRequest(MockCrashingSender.TooManyRequestsWithRetryAfter);
+
+			Assert.AreEqual(5000, this.milliseconds);
+		}
+
+		[Test]
+		public async Task TestOnlyOneSleepOnRateLimit()
+		{
+			await this.SendRequest(MockCrashingSender.TooManyRequests);
+
+			Assert.AreEqual(1, this.sleepCount);
+		}
+
+		[Test]
+		public void TestRateLimitMaxRetriesThrows()
+		{
+			Assert.ThrowsAsync<TooManyRequestsException>(async () => await this.SendRequest(MockCrashingSender.TooManyRequestsAlways));
+			Assert.AreEqual(MaxRetries + 1, this.mockCrashingSender.SendCount);
 		}
 
 		private async Task SendRequest(string requestBehavior)
@@ -88,6 +110,7 @@ namespace SmartyStreets
 		public void sleep(int milliseconds)
 		{
 			this.milliseconds = milliseconds;
+			this.sleepCount++;
 		}
 	}
 }
