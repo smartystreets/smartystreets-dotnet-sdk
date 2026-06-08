@@ -243,6 +243,9 @@ namespace SmartyStreets.USEnrichmentApi
 			if (lookup.GetFreeform() != null) {
 				request.SetParameter("freeform", lookup.GetFreeform());
 			}
+			if (lookup.GetBusinessName() != null) {
+				request.SetParameter("business_name", lookup.GetBusinessName());
+			}
 			if (lookup.GetStreet() != null) {
 				request.SetParameter("street", lookup.GetStreet());
 			}

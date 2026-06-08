@@ -260,6 +260,38 @@ namespace SmartyStreets.USEnrichmentApi
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
 		}
 
+		[Test]
+		public void TestSendingBusinessNameSearchLookup()
+		{
+			var serializer = new FakeSerializer(null);
+			var client = new Client(this.urlSender, serializer);
+			const string expectedUrl = "http://localhost/search/business?freeform=freeform&business_name=Smarty&city=city";
+
+			var lookup = new Business.Summary.Lookup();
+			lookup.SetFreeform("freeform");
+			lookup.SetBusinessName("Smarty");
+			lookup.SetCity("city");
+
+			client.SendBusinessLookup(lookup);
+
+			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
+		}
+
+		[Test]
+		public void TestBusinessNameOmittedWhenNotSet()
+		{
+			var serializer = new FakeSerializer(null);
+			var client = new Client(this.urlSender, serializer);
+			const string expectedUrl = "http://localhost/search/business?freeform=freeform";
+
+			var lookup = new Business.Summary.Lookup();
+			lookup.SetFreeform("freeform");
+
+			client.SendBusinessLookup(lookup);
+
+			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
+		}
+
 		//Business Detail Lookup Tests:
 
 		[Test]

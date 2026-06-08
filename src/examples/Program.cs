@@ -70,6 +70,7 @@ namespace Examples
                         USEnrichmentSecondaryExample.Run();
                         USEnrichmentUniversalExample.Run();
                         USEnrichmentBusinessExample.Run();
+                        USEnrichmentBusinessNameSearchExample.Run();
                         break;
                     case "us_enrichment_etag":
                         USEnrichmentEtagExample.Run();
@@ -98,6 +99,7 @@ namespace Examples
             USEnrichmentSecondaryExample.Run();
             USEnrichmentUniversalExample.Run();
             USEnrichmentBusinessExample.Run();
+            USEnrichmentBusinessNameSearchExample.Run();
         }
     }
 }
