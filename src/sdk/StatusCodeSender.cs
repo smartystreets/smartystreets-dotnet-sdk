@@ -33,24 +33,32 @@ namespace SmartyStreets
 						ExtractResponseEtag(response));
 				case 401:
 					throw new BadCredentialsException(
-						"Unauthorized: The credentials were provided incorrectly or did not match any existing, active credentials.");
+						ExtractErrorMsgFromResponse(response,
+							"Unauthorized: The credentials were provided incorrectly or did not match any existing, active credentials."));
 				case 402:
 					throw new PaymentRequiredException(
-						"Payment Required: There is no active subscription for the account associated with the credentials submitted with the request.");
+						ExtractErrorMsgFromResponse(response,
+							"Payment Required: There is no active subscription for the account associated with the credentials submitted with the request."));
 				case 403:
 					throw new ForbiddenException(
-						"Because the international service is currently in a limited release phase, only approved accounts may access the service.");
+						ExtractErrorMsgFromResponse(response,
+							"Because the international service is currently in a limited release phase, only approved accounts may access the service."));
 				case 408:
 					throw new RequestTimeoutException(
-						"Request timeout error.");
+						ExtractErrorMsgFromResponse(response,
+							"Request timeout error."));
 				case 413:
 					throw new RequestEntityTooLargeException(
-						"Request Entity Too Large: The request body has exceeded the maximum size.");
+						ExtractErrorMsgFromResponse(response,
+							"Request Entity Too Large: The request body has exceeded the maximum size."));
 				case 400:
 					throw new BadRequestException(
-						"Bad Request (Malformed Payload): A GET request lacked a street field or the request body of a POST request contained malformed JSON.");
+						ExtractErrorMsgFromResponse(response,
+							"Bad Request (Malformed Payload): A GET request lacked a street field or the request body of a POST request contained malformed JSON."));
 				case 422:
-					throw new UnprocessableEntityException("GET request lacked required fields.");
+					throw new UnprocessableEntityException(
+						ExtractErrorMsgFromResponse(response,
+							"GET request lacked required fields."));
 				case 429:
 					string retry;
 					Int64 retryVal = 0;
