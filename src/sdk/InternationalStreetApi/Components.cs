@@ -22,11 +22,8 @@
 		[DataMember(Name = "administrative_area_iso2")]
 		public string AdministrativeAreaISO2 { get; set; }
 
-		[DataMember(Name = "administrative_area_short")]
-		public string AdministrativeAreaShort { get; set; }
-
-		[DataMember(Name = "administrative_area_long")]
-		public string AdministrativeAreaLong { get; set; }
+		[DataMember(Name = "attention")]
+		public string Attention { get; set; }
 
 		[DataMember(Name = "sub_administrative_area")]
 		public string SubAdministrativeArea { get; set; }
@@ -66,6 +63,21 @@
 
 		[DataMember(Name = "premise_type")]
 		public string PremiseType { get; set; }
+
+		[DataMember(Name = "short_address_code")]
+		public string ShortAddressCode { get; set; }
+
+		[DataMember(Name = "sub_building_leading_type")]
+		public string SubBuildingLeadingType { get; set; }
+
+		[DataMember(Name = "sub_building_block")]
+		public string SubBuildingBlock { get; set; }
+
+		[DataMember(Name = "sub_building_door")]
+		public string SubBuildingDoor { get; set; }
+
+		[DataMember(Name = "sub_building_staircase")]
+		public string SubBuildingStaircase { get; set; }
 
 		[DataMember(Name = "thoroughfare")]
 		public string Thoroughfare { get; set; }
