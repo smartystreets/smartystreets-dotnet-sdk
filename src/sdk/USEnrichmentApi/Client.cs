@@ -180,8 +180,8 @@ namespace SmartyStreets.USEnrichmentApi
 
 		private async Task SendAsync(Lookup lookup)
 		{
-			if (lookup == null || (string.IsNullOrWhiteSpace(lookup.GetSmartyKey()) && string.IsNullOrWhiteSpace(lookup.GetStreet()) && string.IsNullOrWhiteSpace(lookup.GetFreeform())))
-				throw new SmartyStreets.SmartyException("Lookup requires one of 'smartyKey', 'street', or 'freeform' to be set");
+			if (lookup == null || (string.IsNullOrWhiteSpace(lookup.GetSmartyKey()) && string.IsNullOrWhiteSpace(lookup.GetStreet()) && string.IsNullOrWhiteSpace(lookup.GetFreeform()) && string.IsNullOrWhiteSpace(lookup.GetBusinessName())))
+				throw new SmartyStreets.SmartyException("Lookup requires one of 'smartyKey', 'street', 'freeform', or 'business_name' to be set");
 			Request request = BuildRequest(lookup);
 			await DispatchAsync(request, lookup);
 		}

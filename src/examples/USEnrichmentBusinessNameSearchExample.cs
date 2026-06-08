@@ -17,11 +17,10 @@ namespace Examples
 
             using var client = new ClientBuilder(new BasicAuthCredentials(authId, authToken)).BuildUsEnrichmentApiClient();
 
-            // Step 1: business summary SEARCH by address freeform + business name (no smartyKey).
+            const string businessName = "delta air";
             var lookup = new SmartyStreets.USEnrichmentApi.Business.Summary.Lookup();
-            lookup.SetFreeform("3214 N University Ave, Provo, UT");
-            lookup.SetBusinessName("Smarty");
-            lookup.SetCity("Provo");
+            lookup.SetBusinessName(businessName);
+            lookup.SetCity("atlanta");
 
             SmartyStreets.USEnrichmentApi.Business.Summary.Result[] summaryResults = null;
             try
@@ -36,24 +35,23 @@ namespace Examples
 
             if (summaryResults == null || summaryResults.Length == 0)
             {
-                Console.WriteLine("No response returned for business name search");
+                Console.WriteLine($"No response returned for business name {businessName}");
                 return;
             }
 
             var summary = summaryResults[0];
             if (summary.Businesses == null || summary.Businesses.Length == 0)
             {
-                Console.WriteLine("No matching businesses found");
+                Console.WriteLine($"Business name {businessName} has no business tenants");
                 return;
             }
 
-            Console.WriteLine("Matching businesses:");
+            Console.WriteLine($"Summary results for business name: {businessName}");
             foreach (var biz in summary.Businesses)
             {
                 Console.WriteLine($"  - {biz.CompanyName} (ID: {biz.BusinessId})");
             }
 
-            // Step 2: take the first match's business ID and look up its details.
             var first = summary.Businesses[0];
             Console.WriteLine($"\nFetching details for business: {first.CompanyName} (ID: {first.BusinessId})");
 

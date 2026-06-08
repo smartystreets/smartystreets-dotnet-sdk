@@ -265,10 +265,9 @@ namespace SmartyStreets.USEnrichmentApi
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
-			const string expectedUrl = "http://localhost/search/business?freeform=freeform&business_name=Smarty&city=city";
+			const string expectedUrl = "http://localhost/search/business?business_name=Smarty&city=city";
 
 			var lookup = new Business.Summary.Lookup();
-			lookup.SetFreeform("freeform");
 			lookup.SetBusinessName("Smarty");
 			lookup.SetCity("city");
 
@@ -442,6 +441,7 @@ namespace SmartyStreets.USEnrichmentApi
 			var lookup = new Business.Summary.Lookup("   ");
 			lookup.SetStreet("   ");
 			lookup.SetFreeform("   ");
+			lookup.SetBusinessName("   ");
 
 			Assert.Throws<SmartyStreets.SmartyException>(() => client.SendBusinessLookup(lookup));
 		}
