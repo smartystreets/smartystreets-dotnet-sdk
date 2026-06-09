@@ -1,10 +1,12 @@
-name: Publish NuGet Package
+name: .NET Tests
 
 on:
   push:
-    tags:
-      - '*'
-
+    branches:
+      - master
+  pull_request:
+    branches:
+      - '**'
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -24,17 +26,3 @@ jobs:
 
       - name: Test
         run: make test
-
-  publish:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-
-      - name: Publish
-        run: NUGET_KEY=${{ secrets.NUGET_API_KEY }} VERSION=${GITHUB_REF#refs/tags/} make release
