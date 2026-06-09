@@ -37,7 +37,7 @@
 			                               "\"analysis\":{\"verification_status\":\"57\",\"address_precision\":\"58\",\"max_address_precision\":\"59\"," +
 										   "\"changes\":{\"organization\":\"60\",\"address1\":\"61\",\"address2\":\"62\",\"address3\":\"63\"," +
 			                               "\"address4\":\"64\",\"address5\":\"65\",\"address6\":\"66\",\"address7\":\"67\",\"address8\":\"68\"," +
-			                               "\"country\":\"125\",\"components\":{" +
+			                               "\"components\":{" +
 			                               "\"super_administrative_area\":\"73\"," +
 			                               "\"administrative_area\":\"74\",\"attention\":\"126\"," +
 			                               "\"sub_administrative_area\":\"75\"," +
@@ -176,8 +176,7 @@
 			Assert.AreEqual("66", changes.Address6);
 			Assert.AreEqual("67", changes.Address7);
 			Assert.AreEqual("68", changes.Address8);
-			Assert.AreEqual("125", changes.Country);
-			
+
 			#region [ Changes.Components ]
 
 			var ccomponents = changes.Components;
