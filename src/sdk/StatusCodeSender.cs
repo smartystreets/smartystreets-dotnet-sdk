@@ -42,7 +42,7 @@ namespace SmartyStreets
 				case 403:
 					throw new ForbiddenException(
 						ExtractErrorMsgFromResponse(response,
-							"Because the international service is currently in a limited release phase, only approved accounts may access the service."));
+							"Forbidden: The request contained valid data and was understood by the server, but the server is refusing action."));
 				case 408:
 					throw new RequestTimeoutException(
 						ExtractErrorMsgFromResponse(response,
@@ -54,7 +54,7 @@ namespace SmartyStreets
 				case 400:
 					throw new BadRequestException(
 						ExtractErrorMsgFromResponse(response,
-							"Bad Request (Malformed Payload): A GET request lacked a street field or the request body of a POST request contained malformed JSON."));
+							"Bad Request (Malformed Payload): A GET request lacked a required field or the request body of a POST request contained malformed JSON."));
 				case 422:
 					throw new UnprocessableEntityException(
 						ExtractErrorMsgFromResponse(response,
@@ -68,20 +68,26 @@ namespace SmartyStreets
 						Int64.TryParse(retry, out retryVal);
 					}
 
-					var errorMsg = ExtractErrorMsgFromResponse(response, "When using public \"website key\" authentication, we restrict the number of requests coming from a given source over too short of a time.");
+					var errorMsg = ExtractErrorMsgFromResponse(response, "Too Many Requests: The rate limit for your account has been exceeded.");
 
 					throw new TooManyRequestsException(errorMsg, retryVal);
 				case 500:
-					throw new InternalServerErrorException("Internal Server Error.");
+					throw new InternalServerErrorException(
+						ExtractErrorMsgFromResponse(response, "Internal Server Error."));
 				case 502:
-					throw new BadGatewayException("Bad Gateway error.");
+					throw new BadGatewayException(
+						ExtractErrorMsgFromResponse(response, "Bad Gateway error."));
 				case 503:
-					throw new ServiceUnavailableException("Service Unavailable. Try again later.");
+					throw new ServiceUnavailableException(
+						ExtractErrorMsgFromResponse(response, "Service Unavailable. Try again later."));
 				case 504:
 					throw new GatewayTimeoutException(
-						"The upstream data provider did not respond in a timely fashion and the request failed. A serious, yet rare occurrence indeed.");
+						ExtractErrorMsgFromResponse(response,
+							"The upstream data provider did not respond in a timely fashion and the request failed. A serious, yet rare occurrence indeed."));
 				default:
-					return null;
+					throw new SmartyException(
+						ExtractErrorMsgFromResponse(response,
+							"The server returned an unexpected HTTP status code: " + response.StatusCode));
 			}
 		}
 

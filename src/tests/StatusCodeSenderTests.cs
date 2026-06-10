@@ -20,7 +20,48 @@ namespace SmartyStreets
 			Assert.ThrowsAsync<UnprocessableEntityException>(async () => await Send(422));
 			Assert.ThrowsAsync<TooManyRequestsException>(async () => await Send(429));
 			Assert.ThrowsAsync<InternalServerErrorException>(async () => await Send(500));
+			Assert.ThrowsAsync<BadGatewayException>(async () => await Send(502));
 			Assert.ThrowsAsync<ServiceUnavailableException>(async () => await Send(503));
+			Assert.ThrowsAsync<GatewayTimeoutException>(async () => await Send(504));
+			Assert.ThrowsAsync<SmartyException>(async () => await Send(418));
+		}
+
+		[Test]
+		public void TestFallsBackToStandardMessages()
+		{
+			AssertFallbackMessage<BadRequestException>(400,
+				"Bad Request (Malformed Payload): A GET request lacked a required field or the request body of a POST request contained malformed JSON.");
+			AssertFallbackMessage<ForbiddenException>(403,
+				"Forbidden: The request contained valid data and was understood by the server, but the server is refusing action.");
+			AssertFallbackMessage<TooManyRequestsException>(429,
+				"Too Many Requests: The rate limit for your account has been exceeded.");
+			AssertFallbackMessage<InternalServerErrorException>(500, "Internal Server Error.");
+			AssertFallbackMessage<BadGatewayException>(502, "Bad Gateway error.");
+			AssertFallbackMessage<ServiceUnavailableException>(503, "Service Unavailable. Try again later.");
+			AssertFallbackMessage<GatewayTimeoutException>(504,
+				"The upstream data provider did not respond in a timely fashion and the request failed. A serious, yet rare occurrence indeed.");
+			AssertFallbackMessage<SmartyException>(418,
+				"The server returned an unexpected HTTP status code: 418");
+		}
+
+		[Test]
+		public void TestSurfacesApiErrorMessageOn500()
+		{
+			var payload = Encoding.UTF8.GetBytes("{\"errors\":[{\"message\":\"API broke.\"}]}");
+			var sender = new StatusCodeSender(new MockSender(new Response(500, payload)));
+
+			var ex = Assert.Throws<InternalServerErrorException>(() => sender.Send(new Request()));
+			Assert.AreEqual("API broke.", ex.Message);
+		}
+
+		[Test]
+		public void TestSurfacesApiErrorMessageOnUnexpectedStatusCode()
+		{
+			var payload = Encoding.UTF8.GetBytes("{\"errors\":[{\"message\":\"API teapot message.\"}]}");
+			var sender = new StatusCodeSender(new MockSender(new Response(418, payload)));
+
+			var ex = Assert.Throws<SmartyException>(() => sender.Send(new Request()));
+			Assert.AreEqual("API teapot message.", ex.Message);
 		}
 
 		[Test]
@@ -89,6 +130,15 @@ namespace SmartyStreets
 			var inner = new MockStatusCodeSender(statusCode);
 			var sender = new StatusCodeSender(inner);
 			await sender.SendAsync(new Request());
+		}
+
+		private static void AssertFallbackMessage<TException>(int statusCode, string expectedMessage)
+			where TException : SmartyException
+		{
+			var sender = new StatusCodeSender(new MockSender(new Response(statusCode, null)));
+
+			var ex = Assert.Throws<TException>(() => sender.Send(new Request()));
+			Assert.AreEqual(expectedMessage, ex.Message);
 		}
 	}
 }
