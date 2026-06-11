@@ -1,12 +1,8 @@
-name: .NET Tests
+name: Reusable Test
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - '**'
+  workflow_call:
+
 jobs:
   test:
     runs-on: ubuntu-latest

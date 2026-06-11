@@ -7,23 +7,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet-version: ['8.0.x', '9.0.x', '10.0.x']
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup .NET ${{ matrix.dotnet-version }}
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: ${{ matrix.dotnet-version }}
-
-      - name: Build
-        run: make compile
-
-      - name: Test
-        run: make test
+    uses: ./.github/workflows/test.yml
 
   publish:
     needs: test
