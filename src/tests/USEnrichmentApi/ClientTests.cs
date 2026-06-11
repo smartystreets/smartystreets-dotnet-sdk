@@ -265,7 +265,7 @@ namespace SmartyStreets.USEnrichmentApi
 		{
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.urlSender, serializer);
-			const string expectedUrl = "http://localhost/search/business?business_name=Smarty&city=city";
+			const string expectedUrl = "http://localhost/search/business?city=city&business_name=Smarty";
 
 			var lookup = new Business.Summary.Lookup();
 			lookup.SetBusinessName("Smarty");

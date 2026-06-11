@@ -6,26 +6,26 @@ namespace SmartyStreets.USEnrichmentApi
         private string datasetName;
         private string dataSubsetName;
         private string freeform;
-        private string businessName;
         private string street;
         private string city;
         private string state;
         private string zipcode;
         private string features;
+        private string businessName;
 
-        public Lookup(string smartyKey = null, string datasetName = null, string dataSubsetName = null, string freeform = null, string businessName = null,
-        string street = null, string city = null, string state = null, string zipcode = null, string features = null)
+        public Lookup(string smartyKey = null, string datasetName = null, string dataSubsetName = null, string freeform = null,
+        string street = null, string city = null, string state = null, string zipcode = null, string features = null, string businessName = null)
         {
             this.smartyKey = smartyKey;
             this.datasetName = datasetName;
             this.dataSubsetName = dataSubsetName;
             this.freeform = freeform;
-            this.businessName = businessName;
             this.street = street;
             this.city = city;
             this.state = state;
             this.zipcode = zipcode;
             this.features = features;
+            this.businessName = businessName;
         }
 
         public string GetSmartyKey()
@@ -46,11 +46,6 @@ namespace SmartyStreets.USEnrichmentApi
         public string GetFreeform()
         {
             return freeform;
-        }
-
-        public string GetBusinessName()
-        {
-            return businessName;
         }
 
         public string GetStreet()
@@ -76,6 +71,11 @@ namespace SmartyStreets.USEnrichmentApi
         public string GetFeatures()
         {
             return features;
+        }
+
+        public string GetBusinessName()
+        {
+            return businessName;
         }
 
         public void SetFeatures(string features)
