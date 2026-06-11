@@ -21,6 +21,8 @@ make international_street_api  # International Street API example
 
 ## Architecture Overview
 
+Compatible with .NET 8.0 and later.
+
 This SDK uses a **decorator/pipeline pattern** for HTTP request handling. The `ClientBuilder` constructs a chain of `ISender` implementations that wrap each other:
 
 ```
