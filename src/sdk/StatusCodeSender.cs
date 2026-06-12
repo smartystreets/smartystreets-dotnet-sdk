@@ -1,5 +1,9 @@
 ﻿using System;
-using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 
 namespace SmartyStreets
@@ -103,22 +107,25 @@ namespace SmartyStreets
 			return null;
 		}
 
-		private string ExtractErrorMsgFromResponse(Response response, string defaultErrorMessage)
+		private static string ExtractErrorMsgFromResponse(Response response, string defaultErrorMessage)
 		{
+			string payloadString = null;
 			try
 			{
 				// do this in a try-catch to ensure any exception is caught.  Don't need to handle any error since we have a generic error message
-				var payloadString = System.Text.Encoding.UTF8.GetString(response.Payload);
-				var exp = new Regex("\"message\" *: *\"[^\"]*\""); // look for "message":"<some error text>"
-				var innerExp = new Regex("\"[^\"]*\""); // look for text that is included inside of double quotes
-				var matches = exp.Matches(payloadString);
-				foreach (Match match in matches)
+				payloadString = System.Text.Encoding.UTF8.GetString(response.Payload);
+				using (var stream = new MemoryStream(response.Payload))
 				{
-					string errorPair = match.Value.Substring(9); // skip over "message"
-					string error = innerExp.Match(errorPair).Value;
-					if (error.Length > 2) // make sure string isn't just a quoted empty string 
+					var payload = (ErrorPayload)new DataContractJsonSerializer(typeof(ErrorPayload)).ReadObject(stream);
+					if (payload?.Errors != null)
 					{
-						return error.Substring(1, error.Length - 2);
+						var message = string.Join(" ", payload.Errors
+							.Where(error => !string.IsNullOrWhiteSpace(error?.Message))
+							.Select(error => error.Message.Trim()));
+						if (message.Length > 0)
+						{
+							return message;
+						}
 					}
 				}
 			}
@@ -126,7 +133,21 @@ namespace SmartyStreets
 			{
 			}
 
-			return defaultErrorMessage;
+			return (defaultErrorMessage + " Body: " + (payloadString?.Trim() ?? "")).TrimEnd();
+		}
+
+		[DataContract]
+		private class ErrorPayload
+		{
+			[DataMember(Name = "errors", IsRequired = false)]
+			public List<ApiError> Errors { get; set; }
+		}
+
+		[DataContract]
+		private class ApiError
+		{
+			[DataMember(Name = "message", IsRequired = false)]
+			public string Message { get; set; }
 		}
 
 		public void Dispose()

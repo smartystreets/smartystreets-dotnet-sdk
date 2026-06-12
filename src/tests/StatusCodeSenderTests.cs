@@ -75,13 +75,43 @@ namespace SmartyStreets
 		}
 
 		[Test]
-		public void TestFallsBackToCannedMessageOn422WhenBodyUnusable()
+		public void TestJoinsMultipleApiErrorMessages()
+		{
+			var payload = Encoding.UTF8.GetBytes("{\"errors\":[{\"message\":\"First problem.\"},{\"message\":\"Second problem.\"}]}");
+			var sender = new StatusCodeSender(new MockSender(new Response(422, payload)));
+
+			var ex = Assert.Throws<UnprocessableEntityException>(() => sender.Send(new Request()));
+			Assert.AreEqual("First problem. Second problem.", ex.Message);
+		}
+
+		[Test]
+		public void TestFallbackAppendsBodyWhenErrorsCarryNoMessages()
+		{
+			var payload = Encoding.UTF8.GetBytes("{\"errors\":[]}");
+			var sender = new StatusCodeSender(new MockSender(new Response(422, payload)));
+
+			var ex = Assert.Throws<UnprocessableEntityException>(() => sender.Send(new Request()));
+			Assert.AreEqual("GET request lacked required fields. Body: {\"errors\":[]}", ex.Message);
+		}
+
+		[Test]
+		public void TestFallsBackAndAppendsBodyOn422WhenBodyUnusable()
 		{
 			var payload = Encoding.UTF8.GetBytes("not valid json with no message field");
 			var sender = new StatusCodeSender(new MockSender(new Response(422, payload)));
 
 			var ex = Assert.Throws<UnprocessableEntityException>(() => sender.Send(new Request()));
-			Assert.AreEqual("GET request lacked required fields.", ex.Message);
+			Assert.AreEqual("GET request lacked required fields. Body: not valid json with no message field", ex.Message);
+		}
+
+		[Test]
+		public void TestWhitespaceOnlyBodyYieldsEmptyBodyLabel()
+		{
+			var payload = Encoding.UTF8.GetBytes("   \n  ");
+			var sender = new StatusCodeSender(new MockSender(new Response(422, payload)));
+
+			var ex = Assert.Throws<UnprocessableEntityException>(() => sender.Send(new Request()));
+			Assert.AreEqual("GET request lacked required fields. Body:", ex.Message);
 		}
 
 		[Test]
@@ -90,7 +120,7 @@ namespace SmartyStreets
 			var sender = new StatusCodeSender(new MockSender(new Response(422, null)));
 
 			var ex = Assert.Throws<UnprocessableEntityException>(() => sender.Send(new Request()));
-			Assert.AreEqual("GET request lacked required fields.", ex.Message);
+			Assert.AreEqual("GET request lacked required fields. Body:", ex.Message);
 		}
 
 		[Test]
@@ -138,7 +168,7 @@ namespace SmartyStreets
 			var sender = new StatusCodeSender(new MockSender(new Response(statusCode, null)));
 
 			var ex = Assert.Throws<TException>(() => sender.Send(new Request()));
-			Assert.AreEqual(expectedMessage, ex.Message);
+			Assert.AreEqual(expectedMessage + " Body:", ex.Message);
 		}
 	}
 }
