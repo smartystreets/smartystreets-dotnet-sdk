@@ -48,11 +48,10 @@ namespace Examples
             try
             {
                 client.SendBusinessLookup(second);
-                Console.WriteLine($"  Call 2 (matching Etag): 200 — server did NOT honor the conditional. Results={second.GetResults()?.Length ?? 0}, Etag={Display(second.GetResponseEtag())}");
-            }
-            catch (NotModifiedException ex)
-            {
-                Console.WriteLine($"  Call 2 (matching Etag): 304 NotModifiedException — caller treats this as cache-valid. Refreshed Etag={Display(ex.ResponseEtag)}");
+                if (second.GetResults() == null)
+                    Console.WriteLine($"  Call 2 (matching Etag): 304 not modified — cache is still valid. Refreshed Etag={Display(second.GetResponseEtag())}");
+                else
+                    Console.WriteLine($"  Call 2 (matching Etag): 200 — server did NOT honor the conditional. Results={second.GetResults()?.Length ?? 0}, Etag={Display(second.GetResponseEtag())}");
             }
             catch (Exception ex)
             {
@@ -65,11 +64,10 @@ namespace Examples
             try
             {
                 client.SendBusinessLookup(third);
-                Console.WriteLine($"  Call 3 (mutated Etag): 200 as expected. Results={third.GetResults()?.Length ?? 0}, Etag={Display(third.GetResponseEtag())}");
-            }
-            catch (NotModifiedException)
-            {
-                Console.WriteLine("  Call 3 (mutated Etag): 304 — UNEXPECTED. Server treated a different Etag as matching.");
+                if (third.GetResults() == null)
+                    Console.WriteLine("  Call 3 (mutated Etag): 304 — UNEXPECTED. Server treated a different Etag as matching.");
+                else
+                    Console.WriteLine($"  Call 3 (mutated Etag): 200 as expected. Results={third.GetResults()?.Length ?? 0}, Etag={Display(third.GetResponseEtag())}");
             }
             catch (Exception ex)
             {
@@ -103,11 +101,10 @@ namespace Examples
             try
             {
                 client.SendBusinessDetailLookup(second);
-                Console.WriteLine($"  Call 2 (matching Etag): 200 — server did NOT honor the conditional. businessId={second.GetResult()?.BusinessId ?? "<null>"}, Etag={Display(second.GetResponseEtag())}");
-            }
-            catch (NotModifiedException ex)
-            {
-                Console.WriteLine($"  Call 2 (matching Etag): 304 NotModifiedException — caller treats this as cache-valid. Refreshed Etag={Display(ex.ResponseEtag)}");
+                if (second.GetResult() == null)
+                    Console.WriteLine($"  Call 2 (matching Etag): 304 not modified — cache is still valid. Refreshed Etag={Display(second.GetResponseEtag())}");
+                else
+                    Console.WriteLine($"  Call 2 (matching Etag): 200 — server did NOT honor the conditional. businessId={second.GetResult()?.BusinessId ?? "<null>"}, Etag={Display(second.GetResponseEtag())}");
             }
             catch (Exception ex)
             {
@@ -120,11 +117,10 @@ namespace Examples
             try
             {
                 client.SendBusinessDetailLookup(third);
-                Console.WriteLine($"  Call 3 (mutated Etag): 200 as expected. businessId={third.GetResult()?.BusinessId ?? "<null>"}, Etag={Display(third.GetResponseEtag())}");
-            }
-            catch (NotModifiedException)
-            {
-                Console.WriteLine("  Call 3 (mutated Etag): 304 — UNEXPECTED. Server treated a different Etag as matching.");
+                if (third.GetResult() == null)
+                    Console.WriteLine("  Call 3 (mutated Etag): 304 — UNEXPECTED. Server treated a different Etag as matching.");
+                else
+                    Console.WriteLine($"  Call 3 (mutated Etag): 200 as expected. businessId={third.GetResult()?.BusinessId ?? "<null>"}, Etag={Display(third.GetResponseEtag())}");
             }
             catch (Exception ex)
             {

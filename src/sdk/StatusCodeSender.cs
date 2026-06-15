@@ -30,11 +30,8 @@ namespace SmartyStreets
 			switch (response.StatusCode)
 			{
 				case 200:
-					return response;
 				case 304:
-					throw new NotModifiedException(
-						"Not Modified: The requested record has not been modified since the previous request with the Etag value.",
-						ExtractResponseEtag(response));
+					return response;
 				case 401:
 					throw new BadCredentialsException(
 						ExtractErrorMsgFromResponse(response,
@@ -93,18 +90,6 @@ namespace SmartyStreets
 						ExtractErrorMsgFromResponse(response,
 							"The server returned an unexpected HTTP status code: " + response.StatusCode));
 			}
-		}
-
-		private static string ExtractResponseEtag(Response response)
-		{
-			if (response.HeaderInfo == null)
-				return null;
-			foreach (var entry in response.HeaderInfo)
-			{
-				if (string.Equals(entry.Key, "Etag", StringComparison.OrdinalIgnoreCase))
-					return entry.Value;
-			}
-			return null;
 		}
 
 		private static string ExtractErrorMsgFromResponse(Response response, string defaultErrorMessage)

@@ -124,35 +124,16 @@ namespace SmartyStreets
 		}
 
 		[Test]
-		public void TestNotModifiedExceptionCarriesResponseEtag()
+		public void TestNotModifiedIsNotAnError()
 		{
 			var response = new Response(304, null);
 			response.HeaderInfo["Etag"] = "server-refreshed-etag";
 			var sender = new StatusCodeSender(new MockSender(response));
 
-			var ex = Assert.Throws<NotModifiedException>(() => sender.Send(new Request()));
-			Assert.AreEqual("server-refreshed-etag", ex.ResponseEtag);
-		}
+			var result = sender.Send(new Request());
 
-		[Test]
-		public void TestNotModifiedExceptionResponseEtagIsCaseInsensitive()
-		{
-			var response = new Response(304, null);
-			response.HeaderInfo["ETag"] = "case-insensitive-etag";
-			var sender = new StatusCodeSender(new MockSender(response));
-
-			var ex = Assert.Throws<NotModifiedException>(() => sender.Send(new Request()));
-			Assert.AreEqual("case-insensitive-etag", ex.ResponseEtag);
-		}
-
-		[Test]
-		public void TestNotModifiedExceptionResponseEtagNullWhenHeaderAbsent()
-		{
-			var response = new Response(304, null);
-			var sender = new StatusCodeSender(new MockSender(response));
-
-			var ex = Assert.Throws<NotModifiedException>(() => sender.Send(new Request()));
-			Assert.IsNull(ex.ResponseEtag);
+			Assert.AreEqual(304, result.StatusCode);
+			Assert.AreEqual("server-refreshed-etag", result.HeaderInfo["Etag"]);
 		}
 
 		private static async Task Send(int statusCode)

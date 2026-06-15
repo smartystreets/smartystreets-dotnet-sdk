@@ -469,7 +469,23 @@ namespace SmartyStreets.USEnrichmentApi
 			Assert.AreEqual("abc-123", this.capturingSender.Request.Headers["Etag"]);
 		}
 
-		//ETag response-capture tests (200 path; 304 path is owned by StatusCodeSenderTests since it throws upstream):
+		[Test]
+		public void Test304IsSuccessWithRefreshedEtagAndUntouchedResult()
+		{
+			var response = new Response(304, null);
+			response.HeaderInfo["Etag"] = "refreshed-etag";
+			var pipeline = new StatusCodeSender(new MockSender(response));
+			var client = new Client(pipeline, new FakeSerializer(null));
+
+			var lookup = new Business.Detail.Lookup("ABC");
+			lookup.SetRequestEtag("old-etag");
+			client.SendBusinessDetailLookup(lookup);
+
+			Assert.AreEqual("refreshed-etag", lookup.GetResponseEtag());
+			Assert.IsNull(lookup.GetResult());
+		}
+
+		//ETag response-capture tests (200 path):
 
 		[Test]
 		public void TestBusinessDetailCapturesResponseEtagOnLookup()
