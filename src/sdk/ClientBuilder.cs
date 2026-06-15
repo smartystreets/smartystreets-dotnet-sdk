@@ -33,6 +33,7 @@ namespace SmartyStreets
         private const string InternationalAutocompleteApiUrl = "https://international-autocomplete.api.smarty.com/v2/lookup";
         private const string InternationalPostalCodeApiUrl = "https://international-postal-code.api.smarty.com/lookup";
         private const string UsAutocompleteProApiUrl = "https://us-autocomplete-pro.api.smarty.com/lookup";
+        private const string UsAutocompleteApiUrl = "https://us-autocomplete.api.smarty.com/v2/lookup";
         private const string UsExtractApiUrl = "https://us-extract.api.smarty.com/";
         private const string UsStreetApiUrl = "https://us-street.api.smarty.com/street-address";
         private const string UsZipCodeApiUrl = "https://us-zipcode.api.smarty.com/lookup";
@@ -245,6 +246,12 @@ namespace SmartyStreets
         {
             this.EnsureURLPrefixNotNull(UsAutocompleteProApiUrl);
             return new USAutocompleteProApi.Client(this.BuildSender(), this.serializer);
+        }
+
+        public USAutocompleteApi.Client BuildUsAutocompleteApiClient()
+        {
+            this.EnsureURLPrefixNotNull(UsAutocompleteApiUrl);
+            return new USAutocompleteApi.Client(this.BuildSender(), this.serializer);
         }
 
         public USExtractApi.Client BuildUsExtractApiClient()
