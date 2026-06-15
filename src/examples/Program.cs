@@ -72,6 +72,9 @@ namespace Examples
                         USEnrichmentBusinessExample.Run();
                         USEnrichmentBusinessNameSearchExample.Run();
                         break;
+                    case "us_enrichment_business_search":
+                        USEnrichmentBusinessNameSearchExample.Run();
+                        break;
                     case "us_enrichment_etag":
                         USEnrichmentEtagExample.Run();
                         break;
