@@ -57,7 +57,11 @@ us_reverse_geo_api:
 us_street_api:
 	dotnet run --project $(EXAMPLES_PROJECT) -- us_street_single && \
 	dotnet run --project $(EXAMPLES_PROJECT) -- us_street_multiple && \
-	dotnet run --project $(EXAMPLES_PROJECT) -- us_street_component_analysis
+	dotnet run --project $(EXAMPLES_PROJECT) -- us_street_component_analysis && \
+	dotnet run --project $(EXAMPLES_PROJECT) -- us_street_match_strategy
+
+us_street_match_strategy_api:
+	dotnet run --project $(EXAMPLES_PROJECT) -- us_street_match_strategy
 
 us_street_iana_timezone_api:
 	dotnet run --project $(EXAMPLES_PROJECT) -- us_street_iana_timezone
@@ -70,11 +74,11 @@ us_zipcode_api:
 	dotnet run --project $(EXAMPLES_PROJECT) -- us_zipcode_multiple
 
 # Run all examples
-examples: international_autocomplete_api international_street_api international_postal_code_api us_autocomplete_pro_api us_enrichment_api us_extract_api us_reverse_geo_api us_street_api us_street_iana_timezone_api us_zipcode_api
+examples: international_autocomplete_api international_street_api international_postal_code_api us_autocomplete_pro_api us_enrichment_api us_extract_api us_reverse_geo_api us_street_api us_street_match_strategy_api us_street_iana_timezone_api us_zipcode_api
 
 ##########################################################
 release:
 	make publish
 
-.PHONY: clean compile test integrate package publish version release examples international_autocomplete_api international_street_api international_postal_code_api us_autocomplete_pro_api us_enrichment_api us_enrichment_etag_api us_extract_api us_reverse_geo_api us_street_api us_street_iana_timezone_api us_street_with_http_factory_api us_zipcode_api
+.PHONY: clean compile test integrate package publish version release examples international_autocomplete_api international_street_api international_postal_code_api us_autocomplete_pro_api us_enrichment_api us_enrichment_etag_api us_extract_api us_reverse_geo_api us_street_api us_street_match_strategy_api us_street_iana_timezone_api us_street_with_http_factory_api us_zipcode_api
 
