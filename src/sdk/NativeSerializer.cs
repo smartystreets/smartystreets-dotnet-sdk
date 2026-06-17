@@ -20,7 +20,7 @@
 
 		public T Deserialize<T>(Stream source) where T : class
 		{
-			if (source == null)
+			if (source == null || source.Length == 0)
 				return null;
 
 			var serializer = new DataContractJsonSerializer(typeof(T));
