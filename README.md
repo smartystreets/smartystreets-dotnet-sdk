@@ -4,6 +4,8 @@
 
 The official client libraries for accessing SmartyStreets APIs from C#, F#, Visual Basic, and other CLR-based languages.
 
+Compatible with .NET 8.0 and later.
+
 ---
 
 "Getting started with the SmartyStreets .NET SDK" (Click to play on YouTube)
