@@ -43,13 +43,46 @@ namespace SmartyStreets.USAutocomplete
 			lookup.PreferGeolocation = GeolocateType.CITY;
 			lookup.Selected = "selectedAddress";
 			lookup.Exclude = "excludedAddress";
-			lookup.Source = "all";
+			lookup.Source = SourceType.ALL;
 
 			client.Send(lookup);
 
 			Assert.AreEqual(
 				"http://localhost/?search=1&max_results=5&include_only_cities=city&include_only_states=state&exclude_states=excludedState&prefer_cities=preferCity&prefer_states=preferState&prefer_ratio=4&prefer_geolocation=city&selected=selectedAddress&exclude=excludedAddress&source=all",
 				this.capturingSender.Request.GetUrl());
+		}
+
+		[Test]
+		public void TestSourceNotIncludedWhenNotSet()
+		{
+			var client = new Client(this.sender, new FakeSerializer(null));
+			var lookup = new Lookup("test");
+
+			client.Send(lookup);
+
+			StringAssert.DoesNotContain("source", this.capturingSender.Request.GetUrl());
+		}
+
+		[Test]
+		public void TestSourceAll()
+		{
+			var client = new Client(this.sender, new FakeSerializer(null));
+			var lookup = new Lookup("test") { Source = SourceType.ALL };
+
+			client.Send(lookup);
+
+			Assert.AreEqual("http://localhost/?search=test&prefer_geolocation=city&source=all", this.capturingSender.Request.GetUrl());
+		}
+
+		[Test]
+		public void TestSourcePostal()
+		{
+			var client = new Client(this.sender, new FakeSerializer(null));
+			var lookup = new Lookup("test") { Source = SourceType.POSTAL };
+
+			client.Send(lookup);
+
+			Assert.AreEqual("http://localhost/?search=test&prefer_geolocation=city&source=postal", this.capturingSender.Request.GetUrl());
 		}
 
 		[Test]
