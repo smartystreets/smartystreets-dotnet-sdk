@@ -48,9 +48,6 @@ namespace Examples
                 // Send a lookup using the line below
                 results = client.SendSecondaryLookup(lookup);
             }
-            catch (NotModifiedException ex) {
-                Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record
-            }
             catch (Exception ex) {
                 Console.WriteLine(ex.Message + ex.StackTrace);
             }
@@ -105,9 +102,6 @@ namespace Examples
 
                 // Send a lookup using the line below
                 countResults = client.SendSecondaryCountLookup(countLookup);
-            }
-            catch (NotModifiedException ex) {
-                Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.Message + ex.StackTrace);

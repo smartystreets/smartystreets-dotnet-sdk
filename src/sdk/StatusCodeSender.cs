@@ -1,5 +1,9 @@
 ﻿using System;
-using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 
 namespace SmartyStreets
@@ -26,11 +30,8 @@ namespace SmartyStreets
 			switch (response.StatusCode)
 			{
 				case 200:
-					return response;
 				case 304:
-					throw new NotModifiedException(
-						"Not Modified: The requested record has not been modified since the previous request with the Etag value.",
-						ExtractResponseEtag(response));
+					return response;
 				case 401:
 					throw new BadCredentialsException(
 						ExtractErrorMsgFromResponse(response,
@@ -42,7 +43,7 @@ namespace SmartyStreets
 				case 403:
 					throw new ForbiddenException(
 						ExtractErrorMsgFromResponse(response,
-							"Because the international service is currently in a limited release phase, only approved accounts may access the service."));
+							"Forbidden: The request contained valid data and was understood by the server, but the server is refusing action."));
 				case 408:
 					throw new RequestTimeoutException(
 						ExtractErrorMsgFromResponse(response,
@@ -54,7 +55,7 @@ namespace SmartyStreets
 				case 400:
 					throw new BadRequestException(
 						ExtractErrorMsgFromResponse(response,
-							"Bad Request (Malformed Payload): A GET request lacked a street field or the request body of a POST request contained malformed JSON."));
+							"Bad Request (Malformed Payload): A GET request lacked a required field or the request body of a POST request contained malformed JSON."));
 				case 422:
 					throw new UnprocessableEntityException(
 						ExtractErrorMsgFromResponse(response,
@@ -68,51 +69,48 @@ namespace SmartyStreets
 						Int64.TryParse(retry, out retryVal);
 					}
 
-					var errorMsg = ExtractErrorMsgFromResponse(response, "When using public \"website key\" authentication, we restrict the number of requests coming from a given source over too short of a time.");
+					var errorMsg = ExtractErrorMsgFromResponse(response, "Too Many Requests: The rate limit for your account has been exceeded.");
 
 					throw new TooManyRequestsException(errorMsg, retryVal);
 				case 500:
-					throw new InternalServerErrorException("Internal Server Error.");
+					throw new InternalServerErrorException(
+						ExtractErrorMsgFromResponse(response, "Internal Server Error."));
 				case 502:
-					throw new BadGatewayException("Bad Gateway error.");
+					throw new BadGatewayException(
+						ExtractErrorMsgFromResponse(response, "Bad Gateway error."));
 				case 503:
-					throw new ServiceUnavailableException("Service Unavailable. Try again later.");
+					throw new ServiceUnavailableException(
+						ExtractErrorMsgFromResponse(response, "Service Unavailable. Try again later."));
 				case 504:
 					throw new GatewayTimeoutException(
-						"The upstream data provider did not respond in a timely fashion and the request failed. A serious, yet rare occurrence indeed.");
+						ExtractErrorMsgFromResponse(response,
+							"The upstream data provider did not respond in a timely fashion and the request failed. A serious, yet rare occurrence indeed."));
 				default:
-					return null;
+					throw new SmartyException(
+						ExtractErrorMsgFromResponse(response,
+							"The server returned an unexpected HTTP status code: " + response.StatusCode));
 			}
 		}
 
-		private static string ExtractResponseEtag(Response response)
+		private static string ExtractErrorMsgFromResponse(Response response, string defaultErrorMessage)
 		{
-			if (response.HeaderInfo == null)
-				return null;
-			foreach (var entry in response.HeaderInfo)
-			{
-				if (string.Equals(entry.Key, "Etag", StringComparison.OrdinalIgnoreCase))
-					return entry.Value;
-			}
-			return null;
-		}
-
-		private string ExtractErrorMsgFromResponse(Response response, string defaultErrorMessage)
-		{
+			string payloadString = null;
 			try
 			{
 				// do this in a try-catch to ensure any exception is caught.  Don't need to handle any error since we have a generic error message
-				var payloadString = System.Text.Encoding.UTF8.GetString(response.Payload);
-				var exp = new Regex("\"message\" *: *\"[^\"]*\""); // look for "message":"<some error text>"
-				var innerExp = new Regex("\"[^\"]*\""); // look for text that is included inside of double quotes
-				var matches = exp.Matches(payloadString);
-				foreach (Match match in matches)
+				payloadString = System.Text.Encoding.UTF8.GetString(response.Payload);
+				using (var stream = new MemoryStream(response.Payload))
 				{
-					string errorPair = match.Value.Substring(9); // skip over "message"
-					string error = innerExp.Match(errorPair).Value;
-					if (error.Length > 2) // make sure string isn't just a quoted empty string 
+					var payload = (ErrorPayload)new DataContractJsonSerializer(typeof(ErrorPayload)).ReadObject(stream);
+					if (payload?.Errors != null)
 					{
-						return error.Substring(1, error.Length - 2);
+						var message = string.Join(" ", payload.Errors
+							.Where(error => !string.IsNullOrWhiteSpace(error?.Message))
+							.Select(error => error.Message.Trim()));
+						if (message.Length > 0)
+						{
+							return message;
+						}
 					}
 				}
 			}
@@ -120,7 +118,21 @@ namespace SmartyStreets
 			{
 			}
 
-			return defaultErrorMessage;
+			return (defaultErrorMessage + " Body: " + (payloadString?.Trim() ?? "")).TrimEnd();
+		}
+
+		[DataContract]
+		private class ErrorPayload
+		{
+			[DataMember(Name = "errors", IsRequired = false)]
+			public List<ApiError> Errors { get; set; }
+		}
+
+		[DataContract]
+		private class ApiError
+		{
+			[DataMember(Name = "message", IsRequired = false)]
+			public string Message { get; set; }
 		}
 
 		public void Dispose()

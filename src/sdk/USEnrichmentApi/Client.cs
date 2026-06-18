@@ -197,6 +197,10 @@ namespace SmartyStreets.USEnrichmentApi
 						lookup.SetResponseEtag(entry.Value);
 				}
 			}
+			if (response.StatusCode == 304)
+			{
+				return;
+			}
 			if (response.Payload != null)
 			{
 				using (var payloadStream = new MemoryStream(response.Payload))

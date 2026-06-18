@@ -51,9 +51,6 @@ namespace Examples
                 // Send a lookup using the line below
                 results = client.SendPropertyPrincipalLookup(lookup); // more flexible call to set other lookup options
             }
-            catch (NotModifiedException ex) {
-                Console.WriteLine(ex.Message); // The Etag value provided represents the latest version of the requested record
-            }
             catch (Exception ex) {
                 Console.WriteLine(ex.Message + ex.StackTrace);
             }
