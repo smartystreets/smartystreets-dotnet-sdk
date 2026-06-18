@@ -26,9 +26,7 @@
 			// https://smartystreets.com/docs/us-street-api#input-fields
 
 			var lookup = new Lookup(40.111111, -111.111111);
-
-			//uncomment the line below to add a custom parameter
-			//lookup.AddCustomParameter("source", "all");
+			lookup.Source = SourceType.ALL;
 
 			try
 			{

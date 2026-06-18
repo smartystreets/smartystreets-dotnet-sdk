@@ -57,7 +57,7 @@ Module USAutocompleteProExample
         lookup.MaxResults = 5
         lookup.PreferGeolocation = GeolocateType.NONE
         lookup.PreferRatio = 4
-        lookup.Source = "all"
+        lookup.Source = SourceType.ALL
 
         Try
             client.Send(lookup)
