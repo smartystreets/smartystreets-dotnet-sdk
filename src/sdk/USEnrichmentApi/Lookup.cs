@@ -11,9 +11,10 @@ namespace SmartyStreets.USEnrichmentApi
         private string state;
         private string zipcode;
         private string features;
+        private string businessName;
 
-        public Lookup(string smartyKey = null, string datasetName = null, string dataSubsetName = null, string freeform = null, string street = null,
-        string city = null, string state = null, string zipcode = null, string features = null)
+        public Lookup(string smartyKey = null, string datasetName = null, string dataSubsetName = null, string freeform = null,
+        string street = null, string city = null, string state = null, string zipcode = null, string features = null, string businessName = null)
         {
             this.smartyKey = smartyKey;
             this.datasetName = datasetName;
@@ -24,6 +25,7 @@ namespace SmartyStreets.USEnrichmentApi
             this.state = state;
             this.zipcode = zipcode;
             this.features = features;
+            this.businessName = businessName;
         }
 
         public string GetSmartyKey()
@@ -71,6 +73,11 @@ namespace SmartyStreets.USEnrichmentApi
             return features;
         }
 
+        public string GetBusinessName()
+        {
+            return businessName;
+        }
+
         public void SetFeatures(string features)
         {
             this.features = features;
@@ -94,6 +101,11 @@ namespace SmartyStreets.USEnrichmentApi
         public void SetFreeform(string freeform)
         {
             this.freeform = freeform;
+        }
+
+        public void SetBusinessName(string businessName)
+        {
+            this.businessName = businessName;
         }
 
         public void SetStreet(string street)

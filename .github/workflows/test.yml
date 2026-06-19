@@ -1,16 +1,10 @@
-name: Publish NuGet Package
+name: Reusable Test
 
 on:
-  push:
-    tags:
-      - '**'
+  workflow_call:
 
 jobs:
   test:
-    uses: ./.github/workflows/test.yml
-
-  publish:
-    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -23,5 +17,8 @@ jobs:
             9.0.x
             10.0.x
 
-      - name: Publish
-        run: NUGET_KEY=${{ secrets.NUGET_API_KEY }} VERSION=${GITHUB_REF#refs/tags/} make release
+      - name: Build
+        run: make compile
+
+      - name: Test
+        run: make test

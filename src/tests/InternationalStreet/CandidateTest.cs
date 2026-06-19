@@ -13,13 +13,14 @@
 		{
 			const string responsePayload = "[{\"input_id\":\"1234\",\"organization\":\"1\",\"address1\":\"2\",\"address2\":\"3\"," +
 			                               "\"address3\":\"4\",\"address4\":\"5\",\"address5\":\"6\",\"address6\":\"7\",\"address7\":\"8\"," +
-			                               "\"address8\":\"9\",\"address9\":\"10\",\"address10\":\"11\",\"address11\":\"12\",\"address12\":\"13\"," +
+			                               "\"address8\":\"9\"," +
 			                               "\"components\":{\"country_iso_3\":\"14\",\"super_administrative_area\":\"15\"," +
-			                               "\"administrative_area\":\"16\",\"administrative_area_short\":\"16.1\",\"administrative_area_long\":\"16.2\"," +
+			                               "\"administrative_area\":\"16\",\"attention\":\"119\"," +
 			                               "\"sub_administrative_area\":\"17\",\"dependent_locality\":\"18\"," +
 			                               "\"dependent_locality_name\":\"19\",\"double_dependent_locality\":\"20\",\"locality\":\"21\"," +
 			                               "\"postal_code\":\"22\",\"postal_code_short\":\"23\",\"postal_code_extra\":\"24\"," +
 			                               "\"premise\":\"25\",\"premise_extra\":\"26\",\"premise_number\":\"27\",\"premise_number_prefix\":\"27.1\",\"premise_type\":\"28\"," +
+			                               "\"short_address_code\":\"120\",\"sub_building_leading_type\":\"121\",\"sub_building_block\":\"122\",\"sub_building_door\":\"123\",\"sub_building_staircase\":\"124\"," +
 			                               "\"thoroughfare\":\"29\",\"thoroughfare_predirection\":\"30\",\"thoroughfare_postdirection\":\"31\"," +
 			                               "\"thoroughfare_name\":\"32\",\"thoroughfare_trailing_type\":\"33\",\"thoroughfare_type\":\"34\"," +
 			                               "\"dependent_thoroughfare\":\"35\",\"dependent_thoroughfare_predirection\":\"36\"," +
@@ -36,14 +37,16 @@
 			                               "\"analysis\":{\"verification_status\":\"57\",\"address_precision\":\"58\",\"max_address_precision\":\"59\"," +
 										   "\"changes\":{\"organization\":\"60\",\"address1\":\"61\",\"address2\":\"62\",\"address3\":\"63\"," +
 			                               "\"address4\":\"64\",\"address5\":\"65\",\"address6\":\"66\",\"address7\":\"67\",\"address8\":\"68\"," +
-			                               "\"address9\":\"69\",\"address10\":\"70\",\"address11\":\"71\",\"address12\":\"72\",\"components\":{" +
+			                               "\"components\":{" +
 			                               "\"super_administrative_area\":\"73\"," +
-			                               "\"administrative_area\":\"74\",\"administrative_area_short\":\"74.1\",\"administrative_area_long\":\"74.2\"," +
+			                               "\"administrative_area\":\"74\",\"attention\":\"126\"," +
 			                               "\"sub_administrative_area\":\"75\"," +
 			                               "\"building\":\"76\",\"dependent_locality\":\"77\",\"dependent_locality_name\":\"78\"," +
 			                               "\"double_dependent_locality\":\"79\",\"country_iso_3\":\"80\",\"locality\":\"81\",\"postal_code\":\"82\"," +
 			                               "\"postal_code_short\":\"83\",\"postal_code_extra\":\"84\",\"premise\":\"85\",\"premise_extra\":\"86\"," +
-			                               "\"premise_number\":\"87\",\"premise_type\":\"88\",\"premise_number_prefix\":\"89\",\"thoroughfare\":\"90\"," +
+			                               "\"premise_number\":\"87\",\"premise_type\":\"88\",\"premise_number_prefix\":\"89\"," +
+			                               "\"short_address_code\":\"127\",\"sub_building_leading_type\":\"128\",\"sub_building_block\":\"129\",\"sub_building_door\":\"130\",\"sub_building_staircase\":\"131\"," +
+			                               "\"thoroughfare\":\"90\"," +
 			                               "\"thoroughfare_predirection\":\"91\",\"thoroughfare_postdirection\":\"92\",\"thoroughfare_name\":\"93\"," +
 			                               "\"thoroughfare_trailing_type\":\"94\",\"thoroughfare_type\":\"95\",\"dependent_thoroughfare\":\"96\"," +
 			                               "\"dependent_thoroughfare_predirection\":\"97\",\"dependent_thoroughfare_postdirection\":\"98\"," +
@@ -74,10 +77,6 @@
 			Assert.AreEqual("7", candidate.Address6);
 			Assert.AreEqual("8", candidate.Address7);
 			Assert.AreEqual("9", candidate.Address8);
-			Assert.AreEqual("10", candidate.Address9);
-			Assert.AreEqual("11", candidate.Address10);
-			Assert.AreEqual("12", candidate.Address11);
-			Assert.AreEqual("13", candidate.Address12);
 
 			#endregion
 
@@ -88,8 +87,7 @@
 			Assert.AreEqual("14", components.CountryIso3);
 			Assert.AreEqual("15", components.SuperAdministrativeArea);
 			Assert.AreEqual("16", components.AdministrativeArea);
-			Assert.AreEqual("16.1", components.AdministrativeAreaShort);
-			Assert.AreEqual("16.2", components.AdministrativeAreaLong);
+			Assert.AreEqual("119", components.Attention);
 			Assert.AreEqual("17", components.SubAdministrativeArea);
 			Assert.AreEqual("18", components.DependentLocality);
 			Assert.AreEqual("19", components.DependentLocalityName);
@@ -103,6 +101,11 @@
 			Assert.AreEqual("27", components.PremiseNumber);
 			Assert.AreEqual("27.1", components.PremiseNumberPrefix);
 			Assert.AreEqual("28", components.PremiseType);
+			Assert.AreEqual("120", components.ShortAddressCode);
+			Assert.AreEqual("121", components.SubBuildingLeadingType);
+			Assert.AreEqual("122", components.SubBuildingBlock);
+			Assert.AreEqual("123", components.SubBuildingDoor);
+			Assert.AreEqual("124", components.SubBuildingStaircase);
 			Assert.AreEqual("29", components.Thoroughfare);
 			Assert.AreEqual("30", components.ThoroughfarePredirection);
 			Assert.AreEqual("31", components.ThoroughfarePostdirection);
@@ -173,19 +176,14 @@
 			Assert.AreEqual("66", changes.Address6);
 			Assert.AreEqual("67", changes.Address7);
 			Assert.AreEqual("68", changes.Address8);
-			Assert.AreEqual("69", changes.Address9);
-			Assert.AreEqual("70", changes.Address10);
-			Assert.AreEqual("71", changes.Address11);
-			Assert.AreEqual("72", changes.Address12);
-			
+
 			#region [ Changes.Components ]
 
 			var ccomponents = changes.Components;
 			Assert.IsNotNull(ccomponents);
 			Assert.AreEqual("73", ccomponents.SuperAdministrativeArea);
 			Assert.AreEqual("74", ccomponents.AdministrativeArea);
-			Assert.AreEqual("74.1", ccomponents.AdministrativeAreaShort);
-			Assert.AreEqual("74.2", ccomponents.AdministrativeAreaLong);
+			Assert.AreEqual("126", ccomponents.Attention);
 			Assert.AreEqual("75", ccomponents.SubAdministrativeArea);
 			Assert.AreEqual("76", ccomponents.Building);
 			Assert.AreEqual("77", ccomponents.DependentLocality);
@@ -201,6 +199,11 @@
 			Assert.AreEqual("87", ccomponents.PremiseNumber);
 			Assert.AreEqual("88", ccomponents.PremiseType);
 			Assert.AreEqual("89", ccomponents.PremiseNumberPrefix);
+			Assert.AreEqual("127", ccomponents.ShortAddressCode);
+			Assert.AreEqual("128", ccomponents.SubBuildingLeadingType);
+			Assert.AreEqual("129", ccomponents.SubBuildingBlock);
+			Assert.AreEqual("130", ccomponents.SubBuildingDoor);
+			Assert.AreEqual("131", ccomponents.SubBuildingStaircase);
 			Assert.AreEqual("90", ccomponents.Thoroughfare);
 			Assert.AreEqual("91", ccomponents.ThoroughfarePredirection);
 			Assert.AreEqual("92", ccomponents.ThoroughfarePostdirection);

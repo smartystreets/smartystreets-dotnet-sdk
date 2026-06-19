@@ -37,18 +37,6 @@ namespace SmartyStreets.InternationalStreetApi
         [DataMember(Name = "address8")]
         public string Address8 { get; set; }
 
-        [DataMember(Name = "address9")]
-        public string Address9 { get; set; }
-
-        [DataMember(Name = "address10")]
-        public string Address10 { get; set; }
-
-        [DataMember(Name = "address11")]
-        public string Address11 { get; set; }
-
-        [DataMember(Name = "address12")]
-        public string Address12 { get; set; }
-        
         #endregion
     }
 }

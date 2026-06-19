@@ -13,6 +13,7 @@ Module USReverseGeoExample
     Sub USReverseGeoExample()
 
         Dim lookup As New Lookup(40.111111, -111.111111)
+        lookup.Source = SourceType.ALL
 
         Console.WriteLine("*******************************************************")
         Console.WriteLine()

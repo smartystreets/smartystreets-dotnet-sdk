@@ -41,6 +41,14 @@
 		}
 
 		[Test]
+		public void TestDeserializationOfEmptyStream()
+		{
+			var result = this.serializer.Deserialize<NativeSerializerTestObject>(new MemoryStream());
+
+			Assert.IsNull(result);
+		}
+
+		[Test]
 		public void TestDeserializationOfKnownType()
 		{
 			var expected = new NativeSerializerTestObject

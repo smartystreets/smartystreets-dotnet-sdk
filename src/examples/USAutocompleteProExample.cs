@@ -65,10 +65,7 @@
 			lookup.MaxResults = 5;
 			lookup.PreferGeolocation = GeolocateType.NONE;
 			lookup.PreferRatio = 4;
-			lookup.Source = "all";
-
-			//uncomment the below line to add a custom parameter
-			//lookup.AddCustomParameter("source", "all");
+			lookup.Source = SourceType.ALL;
 
             try
             {

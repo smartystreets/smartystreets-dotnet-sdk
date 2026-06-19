@@ -1,57 +1,58 @@
-﻿namespace Examples
+namespace Examples
 {
 	using System;
+	using System.Collections.Generic;
 	using System.IO;
-    using System.Net;
-    using SmartyStreets;
+	using SmartyStreets;
 	using SmartyStreets.USStreetApi;
 
 	internal static class USStreetLookupsWithMatchStrategyExamples
 	{
 		public static void Run()
 		{
-            // You don't have to store your keys in environment variables, but we recommend it.
-            var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
+			// You don't have to store your keys in environment variables, but we recommend it.
+			var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 
 			using var client = new ClientBuilder(new BasicAuthCredentials(authId, authToken)).BuildUsStreetApiClient();
 			var batch = new Batch();
-			
-			// Documentation for input fields can be found at:
-			// https://smartystreets.com/docs/us-street-api#input-fields
 
-			var addressWithStrictStrategy = new Lookup
+			// Each address is run through all three match strategies so you can compare how
+			// 'strict', 'enhanced', and 'invalid' each handle a valid, an invalid, and an
+			// ambiguous address.
+			//   - strict:   only returns candidates that are valid, mailable addresses.
+			//   - enhanced: returns a more comprehensive dataset (requires a US Core or Rooftop license).
+			//   - invalid:  most permissive; always returns at least one candidate (a best-guess standardization).
+			// Documentation for input fields: https://smartystreets.com/docs/us-street-api#input-fields
+			var addresses = new[]
 			{
-				Street = "691 W 1150 S",
-				City = "provo",
-				State = "utah",
-				MatchStrategy = Lookup.STRICT
+				new { Label = "valid (real, deliverable)",    Street = "1600 Amphitheatre Pkwy", City = "Mountain View", State = "CA", Zip = "94043" },
+				new { Label = "invalid (no such address)",    Street = "9999 W 1150 S",          City = "Provo",         State = "UT", Zip = "84601" },
+				new { Label = "ambiguous (missing ZIP/unit)", Street = "1 Rosedale St",          City = "Baltimore",     State = "MD", Zip = "" },
 			};
+			var strategies = new[] { Lookup.STRICT, Lookup.ENHANCED, Lookup.INVALID };
 
-			//uncomment the line below to add a custom parameter
-			//addressWithStrictStrategy.AddCustomParameter("city", "provo");
-
-			var addressWithEnhancedStrategy = new Lookup
-			{
-				Street = "693 W 1150 S",
-				City = "provo",
-				State = "utah",
-				MatchStrategy = Lookup.ENHANCED
-			};
-
-			var addressWithInvalidStrategy = new Lookup
-			{
-				Street = "9999 W 1150 S",
-				City = "provo",
-				State = "utah",
-				MatchStrategy = Lookup.INVALID
-			};
+			// parallel metadata for each lookup, in the order they are added to the batch
+			var cases = new List<(string Label, string Address, string Strategy)>();
 
 			try
 			{
-				batch.Add(addressWithStrictStrategy);
-				batch.Add(addressWithEnhancedStrategy);
-				batch.Add(addressWithInvalidStrategy);
+				foreach (var address in addresses)
+				{
+					foreach (var strategy in strategies)
+					{
+						batch.Add(new Lookup
+						{
+							Street = address.Street,
+							City = address.City,
+							State = address.State,
+							ZipCode = address.Zip,
+							MatchStrategy = strategy,
+							MaxCandidates = 10 // allow ambiguous addresses to return more than one match
+						});
+						cases.Add((address.Label, $"{address.Street}, {address.City}, {address.State}", strategy));
+					}
+				}
 
 				client.Send(batch);
 			}
@@ -72,35 +73,31 @@
 				return;
 			}
 
+			string lastAddress = null;
 			for (var i = 0; i < batch.Count; i++)
 			{
+				var (label, address, strategy) = cases[i];
+
+				if (address != lastAddress)
+				{
+					Console.WriteLine("\n" + new string('=', 70));
+					Console.WriteLine($" Address: {address}  [{label}]");
+					Console.WriteLine(new string('=', 70));
+					lastAddress = address;
+				}
+
 				var candidates = batch[i].Result;
+				Console.WriteLine($"\n--- '{strategy}' strategy ---");
 
 				if (candidates.Count == 0)
 				{
-					Console.WriteLine("Address " + i + " is invalid.\n");
+					Console.WriteLine("  0 candidates - no match returned under this strategy.");
 					continue;
 				}
 
-				Console.WriteLine("Address " + i + " has at least one candidate.\n If the match parameter is set to STRICT, the address is valid.\n Otherwise, check the Analysis output fields to see if the address is valid.");
-
+				Console.WriteLine($"  {candidates.Count} candidate(s):");
 				foreach (var candidate in candidates)
-				{
-					var components = candidate.Components;
-					var metadata = candidate.Metadata;
-
-					Console.Write("\nCandidate " + candidate.CandidateIndex);
-					var match = batch[i].MatchStrategy;
-					Console.Write(" with " + match + " strategy");
-					Console.WriteLine("\nDelivery line 1: " + candidate.DeliveryLine1);
-					Console.WriteLine("Last line:       " + candidate.LastLine);
-					Console.WriteLine("ZIP Code:        " + components.ZipCode + "-" + components.Plus4Code);
-					Console.WriteLine("County:          " + metadata.CountyName);
-					Console.WriteLine("Latitude:        " + metadata.Latitude);
-					Console.WriteLine("Longitude:       " + metadata.Longitude);
-				}
-
-				Console.WriteLine();
+					Console.WriteLine($"    [{candidate.CandidateIndex}] {candidate.DeliveryLine1}  {candidate.LastLine}");
 			}
 		}
 	}
