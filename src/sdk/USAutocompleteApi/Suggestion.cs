@@ -31,6 +31,9 @@ namespace SmartyStreets.USAutocompleteApi
 		public string ZIPCode { get; set; }
 
 		[DataMember(Name = "entries")]
-		public string Entries { get; set; }
+		public int Entries { get; set; }
+
+		[DataMember(Name = "source")]
+        public string Source { get; set; }
 	}
 }

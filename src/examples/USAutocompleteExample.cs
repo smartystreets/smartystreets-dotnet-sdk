@@ -23,7 +23,7 @@ namespace Examples
             using var client = new ClientBuilder(new BasicAuthCredentials(authId, authToken)).BuildUsAutocompleteApiClient();
 
 			var lookup = new Lookup("1042 W Center");
-			lookup.PreferGeolocation = "none";
+			lookup.PreferGeolocation = GeolocateType.NONE;
 
             try
             {
