@@ -29,7 +29,7 @@ namespace SmartyStreets.USAutocompleteApi
 		public double PreferRatio { get; set; }
 		public string PreferGeolocation { get; set; }
 		public string Selected { get; set; }
-		public string Exclude { get; set; }
+		public ArrayList Exclude { get; set; }
 		public string Source { get; set; }
 		public Dictionary<string, string> CustomParamDict = new Dictionary<string, string>{};
 
@@ -51,6 +51,7 @@ namespace SmartyStreets.USAutocompleteApi
 			this.PreferCities = new ArrayList();
 			this.PreferStates = new ArrayList();
 			this.PreferZIPCodes = new ArrayList();
+			this.Exclude = new ArrayList();
 			this.PreferRatio = PREFER_RATIO_DEFAULT;
 			this.PreferGeolocation = GeolocateType.CITY;
 		}
@@ -112,6 +113,11 @@ namespace SmartyStreets.USAutocompleteApi
 		{
 			this.PreferGeolocation = GeolocateType.NONE;
 			this.PreferZIPCodes.Add(zipcode);
+		}
+
+		public void AddExclude(string excludeType)
+		{
+			this.Exclude.Add(excludeType);
 		}
 
 		public void AddCustomParameter(string parameter, string value) {

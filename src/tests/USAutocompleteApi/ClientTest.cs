@@ -42,7 +42,7 @@ namespace SmartyStreets.USAutocomplete
 			lookup.PreferRatio = 4;
 			lookup.PreferGeolocation = GeolocateType.CITY;
 			lookup.Selected = "selectedAddress";
-			lookup.Exclude = "excludedAddress";
+			lookup.AddExclude("excludedAddress");
 			lookup.Source = SourceType.ALL;
 
 			client.Send(lookup);
@@ -91,11 +91,12 @@ namespace SmartyStreets.USAutocomplete
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.sender, serializer);
 			var lookup = new Lookup("1");
-			lookup.Exclude = "excludedAddress";
+			lookup.AddExclude("excludedAddress");
+			lookup.AddExclude("excludedAddress2");
 
 			client.Send(lookup);
 
-			Assert.AreEqual("http://localhost/?search=1&prefer_geolocation=city&exclude=excludedAddress", this.capturingSender.Request.GetUrl());
+			Assert.AreEqual("http://localhost/?search=1&prefer_geolocation=city&exclude=excludedAddress%2CexcludedAddress2", this.capturingSender.Request.GetUrl());
 		}
 	}
 }

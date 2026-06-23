@@ -63,7 +63,7 @@ namespace SmartyStreets.USAutocompleteApi
 			request.SetParameter("prefer_ratio", lookup.GetPreferRatioStringIfSet());
 			request.SetParameter("prefer_geolocation", lookup.PreferGeolocation);
 			request.SetParameter("selected", lookup.Selected);
-			request.SetParameter("exclude", lookup.Exclude);
+			request.SetParameter("exclude", BuildFilterString(lookup.Exclude, ","));
 			request.SetParameter("source", lookup.Source);
 
 			foreach (KeyValuePair<string, string> line in lookup.CustomParamDict) {
@@ -75,16 +75,21 @@ namespace SmartyStreets.USAutocompleteApi
 
 		private static string BuildFilterString(ICollection list)
 		{
+			return BuildFilterString(list, ";");
+		}
+
+		private static string BuildFilterString(ICollection list, string separator)
+		{
 			if (list.Count == 0)
 				return null;
 
 			var filterList = "";
 
 			foreach (string item in list)
-				filterList += item + ";";
+				filterList += item + separator;
 
-			if (filterList.EndsWith(";"))
-				filterList = filterList.Substring(0, filterList.Length - 1);
+			if (filterList.EndsWith(separator))
+				filterList = filterList.Substring(0, filterList.Length - separator.Length);
 
 			return filterList;
 		}
