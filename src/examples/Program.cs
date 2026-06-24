@@ -58,6 +58,9 @@ namespace Examples
                     case "us_autocomplete_pro":
                         USAutocompleteProExample.Run();
                         break;
+                    case "us_autocomplete":
+                        USAutocompleteExample.Run();
+                        break;
                     case "us_reverse_geo":
                         USReverseGeoExample.Run();
                         break;
@@ -96,6 +99,7 @@ namespace Examples
             InternationalPostalCodeExample.Run();
             USExtractExample.Run();
             USAutocompleteProExample.Run();
+            USAutocompleteExample.Run();
             USReverseGeoExample.Run();
             USEnrichmentPropertyExample.Run();
             USEnrichmentGeoReferenceExample.Run();
