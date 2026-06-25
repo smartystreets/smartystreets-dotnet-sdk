@@ -1,6 +1,9 @@
 ﻿namespace IntegrationTests
 {
 	using System;
+	using System.Net.Http;
+	using System.Threading;
+	using System.Threading.Tasks;
     using SmartyStreets;
 	using SmartyStreets.InternationalStreetApi;
 
@@ -23,6 +26,76 @@
 			TestUSZIPCodeRequestReturnsWithCorrectNumberOfResults(credentials);
 			TestReturnsCorrectNumberOfResultsViaProxy(credentials);
 			TestUsEnrichmentPropertyPrincipalRequestReturnsCorrectNumberOfResults(credentials);
+			TestNegotiatesHttp2ByDefaultAndHttp11WhenOptedOut(credentials);
+		}
+
+		// Verifies the protocol actually negotiated over the wire (not just what the SDK requested):
+		// HttpResponseMessage.Version reflects the negotiated HTTP version. We observe it by injecting
+		// an HttpClient whose DelegatingHandler records the response version after the live round-trip.
+		// Uses the same SMARTY_URL_US_STREET base URL as the other tests, since our staging
+		// environments also serve HTTP/2.
+		private static void TestNegotiatesHttp2ByDefaultAndHttp11WhenOptedOut(ICredentials credentials)
+		{
+			var baseUrl = Environment.GetEnvironmentVariable("SMARTY_URL_US_STREET");
+
+			var defaultHandler = new VersionRecordingHandler();
+			var defaultClient = new ClientBuilder(credentials)
+				.WithCustomBaseUrl(baseUrl)
+				.WithHttpClient(new HttpClient(defaultHandler))
+				.RetryAtMost(0)
+				.BuildUsStreetApiClient();
+			SendStreetLookup(defaultClient);
+			AssertVersion("HTTP2_DEFAULT", defaultHandler.LastResponseVersion, new Version(2, 0));
+
+			var optOutHandler = new VersionRecordingHandler();
+			var optOutClient = new ClientBuilder(credentials)
+				.WithCustomBaseUrl(baseUrl)
+				.WithHttpClient(new HttpClient(optOutHandler))
+				.WithoutHttp2()
+				.RetryAtMost(0)
+				.BuildUsStreetApiClient();
+			SendStreetLookup(optOutClient);
+			AssertVersion("HTTP11_OPTOUT", optOutHandler.LastResponseVersion, new Version(1, 1));
+		}
+
+		private static void SendStreetLookup(SmartyStreets.USStreetApi.Client client)
+		{
+			try
+			{
+				client.Send(new SmartyStreets.USStreetApi.Lookup("1 Rosedale, Baltimore, Maryland"));
+			}
+			catch (Exception)
+			{
+				// The negotiated version is recorded by the handler regardless of the SDK's
+				// status-code handling, so a non-2xx response does not invalidate the check.
+				Console.Write("");
+			}
+		}
+
+		private static void AssertVersion(string label, Version actual, Version expected)
+		{
+			if (Equals(actual, expected))
+				Console.Write(label + " - OK\n");
+			else
+				Console.Write(label + " - FAILED (Expected: HTTP/" + expected + ", Actual: HTTP/" +
+				              (actual?.ToString() ?? "none") + ")\n");
+		}
+
+		private sealed class VersionRecordingHandler : DelegatingHandler
+		{
+			public Version LastResponseVersion { get; private set; }
+
+			public VersionRecordingHandler() : base(new HttpClientHandler())
+			{
+			}
+
+			protected override async Task<HttpResponseMessage> SendAsync(
+				HttpRequestMessage request, CancellationToken cancellationToken)
+			{
+				var response = await base.SendAsync(request, cancellationToken);
+				LastResponseVersion = response.Version;
+				return response;
+			}
 		}
 
 		private static void TestInternationalStreetRequestReturnsWithCorrectNumberOfResults(ICredentials credentials)

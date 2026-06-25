@@ -153,6 +153,51 @@ namespace SmartyStreets
             Assert.That(url, Does.Contain("auth-token=test-token"));
         }
 
+        [Test]
+        public void TestDefaultsToHttp2()
+        {
+            var handler = new CapturingHandler();
+            var httpClient = new HttpClient(handler);
+            var client = new ClientBuilder("test-id", "test-token")
+                .WithHttpClient(httpClient)
+                .WithSerializer(new FakeSerializer(null))
+                .BuildUsStreetApiClient();
+
+            client.Send(new USStreetApi.Lookup("1 Rosedale"));
+
+            Assert.NotNull(handler.LastRequest);
+            Assert.AreEqual(HttpVersion.Version20, handler.LastRequest.Version);
+            Assert.AreEqual(HttpVersionPolicy.RequestVersionOrLower, handler.LastRequest.VersionPolicy);
+        }
+
+        [Test]
+        public void TestWithoutHttp2_ForcesHttp11()
+        {
+            var handler = new CapturingHandler();
+            var httpClient = new HttpClient(handler);
+            var client = new ClientBuilder("test-id", "test-token")
+                .WithHttpClient(httpClient)
+                .WithoutHttp2()
+                .WithSerializer(new FakeSerializer(null))
+                .BuildUsStreetApiClient();
+
+            client.Send(new USStreetApi.Lookup("1 Rosedale"));
+
+            Assert.NotNull(handler.LastRequest);
+            Assert.AreEqual(HttpVersion.Version11, handler.LastRequest.Version);
+        }
+
+        [Test]
+        public void TestWithoutHttp2_ThrowsWhenCombinedWithWithSender()
+        {
+            var builder = new ClientBuilder("test-id", "test-token")
+                .WithSender(new RequestCapturingSender())
+                .WithoutHttp2()
+                .WithSerializer(new FakeSerializer(null));
+
+            Assert.Throws<System.InvalidOperationException>(() => builder.BuildUsStreetApiClient());
+        }
+
         private sealed class CapturingHandler : HttpMessageHandler
         {
             public HttpRequestMessage LastRequest { get; private set; }

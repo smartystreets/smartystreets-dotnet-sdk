@@ -3,6 +3,7 @@
 namespace SmartyStreets
 {
     using System;
+    using System.Net;
     using System.Net.Http;
     using System.Security.Cryptography;
 
@@ -28,7 +29,8 @@ namespace SmartyStreets
         private Dictionary<string, AppendedHeader> appendHeaders;
         private List<string> licenses;
         private Dictionary<string, string> customQueries;
-        private bool logHttpRequestAndResponse; 
+        private bool logHttpRequestAndResponse;
+        private bool useHttp2;
         private const string InternationalStreetApiUrl = "https://international-street.api.smarty.com/verify";
         private const string InternationalAutocompleteApiUrl = "https://international-autocomplete.api.smarty.com/v2/lookup";
         private const string InternationalPostalCodeApiUrl = "https://international-postal-code.api.smarty.com/lookup";
@@ -49,6 +51,7 @@ namespace SmartyStreets
             this.customQueries = new Dictionary<string, string>();
             this.customHeaders = new Dictionary<string, string>();
             this.appendHeaders = new Dictionary<string, AppendedHeader>();
+            this.useHttp2 = true;
         }
 
         public ClientBuilder(ICredentials signer) : this()
@@ -199,6 +202,29 @@ namespace SmartyStreets
             return this;
         }
 
+        /// <summary>
+        ///     Forces HTTP/1.1 for all requests, opting out of the default HTTP/2 behavior.
+        ///     By default the SDK prefers HTTP/2 (sending each request with
+        ///     <see cref="HttpVersion.Version20"/> and a policy of
+        ///     <see cref="HttpVersionPolicy.RequestVersionOrLower"/>, which negotiates HTTP/2 via
+        ///     TLS ALPN and transparently falls back to HTTP/1.1), since Smarty's APIs support
+        ///     HTTP/2. Use this only if you need to pin requests to HTTP/1.1 (e.g. an
+        ///     intermediary proxy that mishandles HTTP/2).
+        /// </summary>
+        /// <remarks>
+        ///     Applies to the built-in transport and to a client supplied via
+        ///     <see cref="WithHttpClient"/> (the version is set on each request the SDK builds,
+        ///     overriding that client's <c>DefaultRequestVersion</c> without mutating the
+        ///     client). Cannot be combined with <see cref="WithSender"/>, since a custom sender
+        ///     constructs its own requests and controls its own HTTP version.
+        /// </remarks>
+        /// <returns>Returns 'this' to accommodate method chaining.</returns>
+        public ClientBuilder WithoutHttp2()
+        {
+            this.useHttp2 = false;
+            return this;
+        }
+
         public ClientBuilder WithCustomQuery(string key, string value)
         {
             this.customQueries.Add(key, value);
@@ -296,6 +322,7 @@ namespace SmartyStreets
                 var conflicts = new List<string>();
                 if (this.maxTimeout != TimeSpan.FromSeconds(10)) conflicts.Add("WithMaxTimeout()");
                 if (this.proxy != null) conflicts.Add("ViaProxy()");
+                if (!this.useHttp2) conflicts.Add("WithoutHttp2()");
                 if (conflicts.Count > 0)
                     throw new InvalidOperationException($"WithSender() cannot be combined with: {string.Join(", ", conflicts)}. These options only apply to the built-in HTTP transport.");
             }
@@ -310,7 +337,9 @@ namespace SmartyStreets
             }
 
             ISender sender = this.httpSender
-                ?? (this.httpClient != null ? new NativeSender(this.httpClient) : new NativeSender(this.maxTimeout, this.proxy));
+                ?? (this.httpClient != null
+                    ? new NativeSender(this.httpClient, this.useHttp2)
+                    : new NativeSender(this.maxTimeout, this.proxy, this.useHttp2));
             if (this.logHttpRequestAndResponse)
             {
                 sender.EnableLogging();
