@@ -15,6 +15,9 @@ namespace SmartyStreets.USAutocompleteApi
 		[DataMember(Name = "entry_id")]
 		public string EntryId { get; set; }
 
+		[DataMember(Name = "urbanization")]
+		public string Urbanization { get; set; }
+
 		[DataMember(Name = "street_line")]
 		public string Street { get; set; }
 
