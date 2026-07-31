@@ -45,7 +45,7 @@
 			    InputId = "1234",
 				Country = "0",
 				Geocode = true,
-				Language = LanguageMode.NATIVE,
+				Language = LanguageMode.Native,
 				Freeform = "1",
 				Address1 = "2",
 				Address2 = "3",
@@ -61,6 +61,36 @@
 			client.Send(lookup);
 
 			Assert.AreEqual(expectedUrl, this.capturingSender.Request.GetUrl());
+		}
+
+		[Test]
+		public void TestSendingLookupWithLanguageParsedFromMixedCaseValue()
+		{
+			var serializer = new FakeSerializer(null);
+			var client = new Client(this.sender, serializer);
+			var lookup = new Lookup
+			{
+				Country = "0",
+				Freeform = "1",
+				Language = LanguageModeExtensions.FromValue("Latin")
+			};
+
+			client.Send(lookup);
+
+			Assert.AreEqual("http://localhost/?country=0&language=latin&freeform=1", this.capturingSender.Request.GetUrl());
+		}
+
+		[Test]
+		public void TestLanguageModeParseResolvesMixedCase()
+		{
+			Assert.AreEqual(LanguageMode.Latin, LanguageModeExtensions.FromValue("Latin"));
+			Assert.AreEqual(LanguageMode.Native, LanguageModeExtensions.FromValue("NATIVE"));
+		}
+
+		[Test]
+		public void TestLanguageModeParseRejectsInvalidValue()
+		{
+			Assert.Throws<UnprocessableEntityException>(() => LanguageModeExtensions.FromValue("Klingon"));
 		}
 
 		[Test]
