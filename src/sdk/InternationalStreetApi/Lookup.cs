@@ -25,9 +25,9 @@
 		public string Country { get; set; }
 
 		/// <remarks>
-		///     May be set to LanguageMode.NATIVE or LanguageMode.LATIN
+		///     May be set to LanguageMode.Native or LanguageMode.Latin
 		/// </remarks>
-		public string Language { get; set; }
+		public LanguageMode? Language { get; set; }
 
 		/// <summary>
 		///     The entire address except the country, which should be input using the Country field.

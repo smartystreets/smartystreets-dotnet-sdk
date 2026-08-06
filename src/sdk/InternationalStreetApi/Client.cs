@@ -52,8 +52,8 @@
 			request.SetParameter("input_id", lookup.InputId);
 			request.SetParameter("country", lookup.Country);
 			request.SetParameter("geocode", lookup.Geocode ? lookup.Geocode.ToString().ToLower() : null);
-			if (lookup.Language != null)
-				request.SetParameter("language", lookup.Language);
+			if (lookup.Language.HasValue)
+				request.SetParameter("language", lookup.Language.Value.ToWireValue());
 			request.SetParameter("freeform", lookup.Freeform);
 			request.SetParameter("address1", lookup.Address1);
 			request.SetParameter("address2", lookup.Address2);
