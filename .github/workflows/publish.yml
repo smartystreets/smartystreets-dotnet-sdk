@@ -12,6 +12,9 @@ jobs:
   publish:
     needs: test
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # enable GitHub OIDC token issuance for this job
+      contents: read   # job-level permissions drop the defaults; checkout still needs this
     steps:
       - uses: actions/checkout@v6
 
@@ -23,5 +26,12 @@ jobs:
             9.0.x
             10.0.x
 
+      # Exchange this job's OIDC token for a NuGet API key that expires in 1 hour
+      - name: NuGet login (OIDC → temp API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
       - name: Publish
-        run: NUGET_KEY=${{ secrets.NUGET_API_KEY }} VERSION=${GITHUB_REF#refs/tags/} make release
+        run: NUGET_KEY=${{ steps.login.outputs.NUGET_API_KEY }} VERSION=${GITHUB_REF#refs/tags/} make release

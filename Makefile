@@ -28,7 +28,7 @@ package: clean
  		  /p:CustomVersion=${VERSION}
 
 publish: clean package
-	dotnet nuget push ../../$(WORKSPACE_DIR)/* --source nuget.org -k "${NUGET_KEY}" --skip-duplicate
+	dotnet nuget push ../../$(WORKSPACE_DIR)/* --source https://api.nuget.org/v3/index.json --api-key "${NUGET_KEY}" --skip-duplicate
 
 international_autocomplete_api:
 	dotnet run --project $(EXAMPLES_PROJECT) -- international_autocomplete
