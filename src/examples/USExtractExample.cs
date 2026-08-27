@@ -14,6 +14,8 @@
             var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 
+			// The US Extract API is POST-only and embedded keys are restricted to GET, so this
+			// API requires secret keys: https://www.smarty.com/docs/cloud/authentication
 			using var client = new ClientBuilder(new BasicAuthCredentials(authId, authToken)).BuildUsExtractApiClient();
 			var text = "Here is some text.\r\nMy address is 3785 Las Vegs Av." +
 			           "\r\nLos Vegas, Nevada." +

@@ -12,6 +12,8 @@ Module USZipCodeMultipleLookupsExample
 		Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
 		Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
 
+		' Batch requests are sent via HTTP POST. Embedded keys are restricted to GET, so
+		' batches require secret keys: https://www.smarty.com/docs/cloud/authentication
 		Dim client = New ClientBuilder(authID, authToken).BuildUsZipCodeApiClient()
 		Dim batch = New Batch()
 
