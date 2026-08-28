@@ -14,6 +14,8 @@
             var authId = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID");
 			var authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN");
 
+			// Batch requests are sent via HTTP POST. Embedded keys are restricted to GET, so
+			// batches require secret keys: https://www.smarty.com/docs/cloud/authentication
 			using var client = new ClientBuilder(new BasicAuthCredentials(authId, authToken)).BuildUsStreetApiClient();
 			var batch = new Batch();
 			

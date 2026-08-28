@@ -8,6 +8,8 @@ Module USExtractExample
     Dim authID = Environment.GetEnvironmentVariable("SMARTY_AUTH_ID")
     Dim authToken = Environment.GetEnvironmentVariable("SMARTY_AUTH_TOKEN")
 
+    ' The US Extract API is POST-only and embedded keys are restricted to GET, so this
+    ' API requires secret keys: https://www.smarty.com/docs/cloud/authentication
     Dim client = New ClientBuilder(authID, authToken).BuildUsExtractApiClient()
 
     Dim text = "Here is some text." + Environment.NewLine + "My address is 3785 Las Vegs Av." + Environment.NewLine +

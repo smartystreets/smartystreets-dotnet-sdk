@@ -66,6 +66,7 @@ Each API has its own namespace under `SmartyStreets.*Api/` with consistent struc
 **Credentials**: Three implementations of `ICredentials`:
 - `StaticCredentials` - auth-id/auth-token as query params (most common)
 - `SharedCredentials` - key + Referer header (browser/client-side)
+- Embedded/website keys are GET-only — not valid for batch (POST) requests or the US Extract API (POST-only): https://www.smarty.com/docs/cloud/authentication
 - `BasicAuthCredentials` - HTTP Basic auth header
 
 **Custom parameters**: All Lookup classes support `AddCustomParameter()` for forward-compatible extensibility without code changes.
