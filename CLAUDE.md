@@ -21,7 +21,7 @@ make international_street_api  # International Street API example
 
 ## Architecture Overview
 
-Compatible with .NET 8.0 and later.
+Compatible with .NET 8.0 and later. Also targets .NET Standard 2.0 for consumers on .NET Framework 4.6.1+ and other .NET Standard 2.0 platforms.
 
 This SDK uses a **decorator/pipeline pattern** for HTTP request handling. The `ClientBuilder` constructs a chain of `ISender` implementations that wrap each other:
 
@@ -42,7 +42,7 @@ The order of sender wrapping matters - it's constructed in `ClientBuilder.BuildS
 
 ## Project Structure
 
-- **src/sdk/** - Main library (multi-targets: net8.0)
+- **src/sdk/** - Main library (multi-targets: netstandard2.0, net8.0, net9.0, net10.0)
 - **src/tests/** - NUnit tests with mock implementations in `Mocks/`
 - **src/examples/** - Runnable C# examples
 - **src/integration/** - Integration tests

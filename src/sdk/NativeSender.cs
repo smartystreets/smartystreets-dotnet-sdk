@@ -118,8 +118,16 @@ namespace SmartyStreets
             // doesn't support HTTP/2. Setting the version explicitly (rather than relying on the
             // client's DefaultRequestVersion) keeps behavior deterministic, including for an
             // injected HttpClient.
+#if NETSTANDARD2_0
+            // netstandard2.0 exposes neither HttpVersion.Version20 nor HttpRequestMessage.VersionPolicy,
+            // so there is no way to request HTTP/2 *with* graceful downgrade. Requesting 2.0 outright
+            // would hard-fail against handlers that can't negotiate it (notably .NET Framework's), so
+            // this target always uses HTTP/1.1 and the useHttp2 flag is accepted but has no effect.
+            httpRequest.Version = HttpVersion.Version11;
+#else
             httpRequest.Version = this.useHttp2 ? HttpVersion.Version20 : HttpVersion.Version11;
             httpRequest.VersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
+#endif
 
             // Copy headers to the request (not DefaultRequestHeaders to avoid persistence issues)
             foreach (var item in request.Headers)

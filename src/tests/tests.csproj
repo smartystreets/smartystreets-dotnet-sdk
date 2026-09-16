@@ -2,11 +2,22 @@
   <PropertyGroup>
     <RootNamespace>SmartyStreets</RootNamespace>
     <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <!--
+      net472 is the only target that resolves the SDK's netstandard2.0 build, so it is what
+      covers NativeSender's NETSTANDARD2_0 branch. Running it needs .NET Framework (Windows)
+      or Mono, so it is added on Windows only; elsewhere `make test` is unaffected.
+    -->
+    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net472;net8.0;net9.0;net10.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\sdk\sdk.csproj" />
   </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
+    <!-- .NET Framework does not include System.Net.Http in the default assembly set. -->
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
     <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
