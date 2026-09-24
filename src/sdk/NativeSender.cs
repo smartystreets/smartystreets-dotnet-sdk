@@ -149,15 +149,15 @@ namespace SmartyStreets
                 httpRequest.Headers.UserAgent.ParseAdd(UserAgent);
             }
 
-            HttpResponseMessage response = await client.SendAsync(httpRequest);
+            HttpResponseMessage response = await client.SendAsync(httpRequest).ConfigureAwait(false);
 
             if (this.logHttpRequestAndResponse)
             {
-                await PrintRequestAndResponse(response);
+                await PrintRequestAndResponse(response).ConfigureAwait(false);
             }
             
             var statusCode = (int)response.StatusCode;
-            var payload = await response.Content.ReadAsByteArrayAsync();
+            var payload = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
 
             var retVal = new Response(statusCode, payload);
             // retrieve the etag header for enrichment api 
@@ -216,7 +216,7 @@ namespace SmartyStreets
                 Console.WriteLine($"  {header.Key}: {string.Join(", ", header.Value)}");
             }
             Console.WriteLine("Content: ");
-            var requestContent = await response.Content.ReadAsStringAsync();
+            var requestContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             Console.WriteLine(requestContent);
             Console.WriteLine();
             Console.WriteLine("HTTP Response: ");
@@ -232,7 +232,7 @@ namespace SmartyStreets
                 Console.WriteLine($"  {header.Key}: {string.Join(", ", header.Value)}");
             }
             Console.WriteLine("Content: ");
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             Console.Write(responseContent);
             Console.WriteLine();
         }

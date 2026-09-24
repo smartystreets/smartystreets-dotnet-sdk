@@ -40,7 +40,7 @@ namespace SmartyStreets
                     request.SetHeader(entry.Key, entry.Value.Value);
             }
 
-            return await this.inner.SendAsync(request);
+            return await this.inner.SendAsync(request).ConfigureAwait(false);
         }
 
         public void Dispose()

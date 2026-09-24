@@ -61,7 +61,7 @@ namespace SmartyStreets
 			this.pendingSleepMs = 0;
 			for (var attempts = 0; BackOff(attempts); attempts++)
 			{
-				var response = await this.TrySend(request, attempts);
+				var response = await this.TrySend(request, attempts).ConfigureAwait(false);
 				if (response != null)
 					return response;
 			}
@@ -73,7 +73,7 @@ namespace SmartyStreets
 		{
 			try
 			{
-				return await this.inner.SendAsync(request);
+				return await this.inner.SendAsync(request).ConfigureAwait(false);
 			}
 			catch (TooManyRequestsException e)
 			{

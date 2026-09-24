@@ -26,7 +26,7 @@ namespace SmartyStreets
             {
                 request.SetParameter(query.Key, query.Value);
             }
-            return await this.inner.SendAsync(request);
+            return await this.inner.SendAsync(request).ConfigureAwait(false);
         }
 
         public void Dispose()

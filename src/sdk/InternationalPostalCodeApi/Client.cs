@@ -33,7 +33,7 @@ namespace SmartyStreets.InternationalPostalCodeApi
 
 			var request = BuildRequest(lookup);
 
-			var response = await this.sender.SendAsync(request);
+			var response = await this.sender.SendAsync(request).ConfigureAwait(false);
 
 			using (var payloadStream = new MemoryStream(response.Payload))
 			{

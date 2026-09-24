@@ -25,7 +25,7 @@ namespace SmartyStreets
 
 		public async Task<Response> SendAsync(Request request)
 		{
-			var response = await this.inner.SendAsync(request);
+			var response = await this.inner.SendAsync(request).ConfigureAwait(false);
 
 			switch (response.StatusCode)
 			{

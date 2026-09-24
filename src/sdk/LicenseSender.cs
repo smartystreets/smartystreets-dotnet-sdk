@@ -24,7 +24,7 @@ namespace SmartyStreets
         public async Task<Response> SendAsync(Request request)
         {
             request.SetParameter("license", String.Join(",", this.licenses.ToArray()));
-            return await this.inner.SendAsync(request);
+            return await this.inner.SendAsync(request).ConfigureAwait(false);
         }
 
         public void Dispose()
