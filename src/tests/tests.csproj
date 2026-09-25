@@ -3,11 +3,14 @@
     <RootNamespace>SmartyStreets</RootNamespace>
     <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
     <!--
-      net472 is the only target that resolves the SDK's netstandard2.0 build, so it is what
-      covers NativeSender's NETSTANDARD2_0 branch. Running it needs .NET Framework (Windows)
-      or Mono, so it is added on Windows only; elsewhere `make test` is unaffected.
+      net8.0+ targets resolve the SDK's net8.0+ builds, so only an older target covers the
+      netstandard2.0 build (including NativeSender's NETSTANDARD2_0 branch). net472 needs
+      .NET Framework (Windows) or Mono, so it is added on Windows only; elsewhere `make test`
+      is unaffected. `make test-netstandard` runs net6.0 in Docker instead (NetStandardCheck).
     -->
     <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net472;net8.0;net9.0;net10.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(NetStandardCheck)' == 'true'">net6.0</TargetFrameworks>
+    <CheckEolTargetFramework Condition="'$(NetStandardCheck)' == 'true'">false</CheckEolTargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\sdk\sdk.csproj" />

@@ -153,14 +153,14 @@ namespace SmartyStreets
             Assert.That(url, Does.Contain("auth-token=test-token"));
         }
 
-#if NETFRAMEWORK
+#if !NET8_0_OR_GREATER
         /// <summary>
-        ///     .NET Framework resolves the SDK's netstandard2.0 build, which cannot express
-        ///     "prefer HTTP/2 but fall back" (no HttpVersionPolicy) and therefore pins HTTP/1.1.
-        ///     This is the only test target that exercises NativeSender's NETSTANDARD2_0 branch.
+        ///     Targets below net8.0 (net472, and net6.0 via `make test-netstandard`) resolve the SDK's
+        ///     netstandard2.0 build, which cannot express "prefer HTTP/2 but fall back" (no
+        ///     HttpVersionPolicy) and therefore pins HTTP/1.1.
         /// </summary>
         [Test]
-        public void TestDefaultsToHttp11OnNetFramework()
+        public void TestDefaultsToHttp11OnNetStandardBuild()
         {
             var handler = new CapturingHandler();
             var httpClient = new HttpClient(handler);

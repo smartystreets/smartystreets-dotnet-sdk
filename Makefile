@@ -17,6 +17,11 @@ compile: clean
 test:
 	dotnet test "$(TEST_FILE)"
 
+# Runs the unit tests against the netstandard2.0 build on .NET 6 in Docker.
+test-netstandard:
+	docker build -f Dockerfile.netstandard -t smartystreets-dotnet-sdk-netstandard .
+	docker run --rm smartystreets-dotnet-sdk-netstandard
+
 integrate:
 	dotnet run --project "src/integration/integration.csproj"
 
@@ -86,5 +91,5 @@ examples: international_autocomplete_api international_street_api international_
 release:
 	make publish
 
-.PHONY: clean compile test integrate package publish version release examples international_autocomplete_api international_street_api international_postal_code_api us_autocomplete_pro_api us_autocomplete_api us_enrichment_api us_enrichment_business_search_api us_enrichment_etag_api us_extract_api us_reverse_geo_api us_street_api us_street_match_strategy_api us_street_iana_timezone_api us_street_with_http_factory_api us_zipcode_api
+.PHONY: clean compile test test-netstandard integrate package publish version release examples international_autocomplete_api international_street_api international_postal_code_api us_autocomplete_pro_api us_autocomplete_api us_enrichment_api us_enrichment_business_search_api us_enrichment_etag_api us_extract_api us_reverse_geo_api us_street_api us_street_match_strategy_api us_street_iana_timezone_api us_street_with_http_factory_api us_zipcode_api
 
