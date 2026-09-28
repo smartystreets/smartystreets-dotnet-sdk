@@ -26,6 +26,7 @@
 		public bool Geolocation { get; set; }
 		public string Locality { get; set; }
 		public string PostalCode { get; set; }
+		public LanguageMode? Language { get; set; }
 		public Dictionary<string, string> CustomParamDict = new Dictionary<string, string>{};
 
 		#endregion
