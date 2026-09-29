@@ -22,7 +22,7 @@ namespace SmartyStreets
 		public async Task<Response> SendAsync(Request request)
 		{
 			this.signer.Sign(request);
-			return await this.inner.SendAsync(request);
+			return await this.inner.SendAsync(request).ConfigureAwait(false);
 		}
 
 		public void Dispose()

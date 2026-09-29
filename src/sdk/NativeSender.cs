@@ -118,8 +118,16 @@ namespace SmartyStreets
             // doesn't support HTTP/2. Setting the version explicitly (rather than relying on the
             // client's DefaultRequestVersion) keeps behavior deterministic, including for an
             // injected HttpClient.
+#if NETSTANDARD2_0
+            // netstandard2.0 exposes neither HttpVersion.Version20 nor HttpRequestMessage.VersionPolicy,
+            // so there is no way to request HTTP/2 *with* graceful downgrade. Requesting 2.0 outright
+            // would hard-fail against handlers that can't negotiate it (notably .NET Framework's), so
+            // this target always uses HTTP/1.1 and the useHttp2 flag is accepted but has no effect.
+            httpRequest.Version = HttpVersion.Version11;
+#else
             httpRequest.Version = this.useHttp2 ? HttpVersion.Version20 : HttpVersion.Version11;
             httpRequest.VersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
+#endif
 
             // Copy headers to the request (not DefaultRequestHeaders to avoid persistence issues)
             foreach (var item in request.Headers)
@@ -141,15 +149,15 @@ namespace SmartyStreets
                 httpRequest.Headers.UserAgent.ParseAdd(UserAgent);
             }
 
-            HttpResponseMessage response = await client.SendAsync(httpRequest);
+            HttpResponseMessage response = await client.SendAsync(httpRequest).ConfigureAwait(false);
 
             if (this.logHttpRequestAndResponse)
             {
-                await PrintRequestAndResponse(response);
+                await PrintRequestAndResponse(response).ConfigureAwait(false);
             }
             
             var statusCode = (int)response.StatusCode;
-            var payload = await response.Content.ReadAsByteArrayAsync();
+            var payload = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
 
             var retVal = new Response(statusCode, payload);
             // retrieve the etag header for enrichment api 
@@ -208,7 +216,7 @@ namespace SmartyStreets
                 Console.WriteLine($"  {header.Key}: {string.Join(", ", header.Value)}");
             }
             Console.WriteLine("Content: ");
-            var requestContent = await response.Content.ReadAsStringAsync();
+            var requestContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             Console.WriteLine(requestContent);
             Console.WriteLine();
             Console.WriteLine("HTTP Response: ");
@@ -224,7 +232,7 @@ namespace SmartyStreets
                 Console.WriteLine($"  {header.Key}: {string.Join(", ", header.Value)}");
             }
             Console.WriteLine("Content: ");
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             Console.Write(responseContent);
             Console.WriteLine();
         }

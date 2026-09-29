@@ -1,0 +1,15 @@
+# Runs the unit tests on .NET 6, which resolves the SDK's netstandard2.0 build (the SDK's
+# nearest compatible target), so the tests exercise the same assembly .NET Framework and
+# other netstandard2.0 consumers load. Usage: make test-netstandard
+FROM mcr.microsoft.com/dotnet/sdk:10.0
+
+# The 10.0 SDK builds the SDK's targets; the .NET 6 runtime runs the net6.0 test host.
+COPY --from=mcr.microsoft.com/dotnet/runtime:6.0 /usr/share/dotnet/shared/Microsoft.NETCore.App /usr/share/dotnet/shared/Microsoft.NETCore.App
+
+WORKDIR /code
+COPY . .
+RUN find . -type d \( -name bin -o -name obj \) -prune -exec rm -rf {} +
+
+# Listing the SDK's build output afterward shows which target the tests actually used.
+CMD dotnet test src/tests/tests.csproj -p:NetStandardCheck=true \
+    && echo "SDK targets built for the tests:" && ls src/sdk/bin/Debug

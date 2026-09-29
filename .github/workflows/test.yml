@@ -22,3 +22,22 @@ jobs:
 
       - name: Test
         run: make test
+
+  # net472 is the only target that resolves the SDK's netstandard2.0 build, so this job is
+  # what covers NativeSender's NETSTANDARD2_0 branch. It needs .NET Framework, hence Windows.
+  # Windows runners have no `make`, so it calls dotnet directly.
+  test-netframework:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
+
+      - name: Test (net472 against the netstandard2.0 build)
+        run: dotnet test src/tests/tests.csproj -f net472

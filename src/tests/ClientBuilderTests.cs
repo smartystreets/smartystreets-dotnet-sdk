@@ -153,6 +153,28 @@ namespace SmartyStreets
             Assert.That(url, Does.Contain("auth-token=test-token"));
         }
 
+#if !NET8_0_OR_GREATER
+        /// <summary>
+        ///     Targets below net8.0 (net472, and net6.0 via `make test-netstandard`) resolve the SDK's
+        ///     netstandard2.0 build, which cannot express "prefer HTTP/2 but fall back" (no
+        ///     HttpVersionPolicy) and therefore pins HTTP/1.1.
+        /// </summary>
+        [Test]
+        public void TestDefaultsToHttp11OnNetStandardBuild()
+        {
+            var handler = new CapturingHandler();
+            var httpClient = new HttpClient(handler);
+            var client = new ClientBuilder("test-id", "test-token")
+                .WithHttpClient(httpClient)
+                .WithSerializer(new FakeSerializer(null))
+                .BuildUsStreetApiClient();
+
+            client.Send(new USStreetApi.Lookup("1 Rosedale"));
+
+            Assert.NotNull(handler.LastRequest);
+            Assert.AreEqual(HttpVersion.Version11, handler.LastRequest.Version);
+        }
+#else
         [Test]
         public void TestDefaultsToHttp2()
         {
@@ -169,6 +191,7 @@ namespace SmartyStreets
             Assert.AreEqual(HttpVersion.Version20, handler.LastRequest.Version);
             Assert.AreEqual(HttpVersionPolicy.RequestVersionOrLower, handler.LastRequest.VersionPolicy);
         }
+#endif
 
         [Test]
         public void TestWithoutHttp2_ForcesHttp11()

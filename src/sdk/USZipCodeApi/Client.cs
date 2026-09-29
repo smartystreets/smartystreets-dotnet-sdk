@@ -32,7 +32,7 @@
 			if (lookup == null)
 				throw new ArgumentNullException("lookup");
 
-			await SendAsync(new Batch { lookup });
+			await SendAsync(new Batch { lookup }).ConfigureAwait(false);
 		}
 		
 		/// <summary>
@@ -56,7 +56,7 @@
 				request.Payload = batch.Serialize(this.serializer);
 			}
 
-			var response = await this.sender.SendAsync(request);
+			var response = await this.sender.SendAsync(request).ConfigureAwait(false);
 
 			var payloadStream = new MemoryStream(response.Payload);
 

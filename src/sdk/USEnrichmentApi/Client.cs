@@ -25,7 +25,7 @@ namespace SmartyStreets.USEnrichmentApi
 		public async Task<Property.Principal.Result[]> SendPropertyPrincipalLookupAsync(string smartyKey)
 		{
 			Property.Principal.Lookup lookup = new Property.Principal.Lookup(smartyKey);
-			await SendAsync(lookup);
+			await SendAsync(lookup).ConfigureAwait(false);
 			return lookup.GetResults();
 		}
 		
@@ -36,7 +36,7 @@ namespace SmartyStreets.USEnrichmentApi
 
 		public async Task<Property.Principal.Result[]> SendPropertyPrincipalLookupAsync(Property.Principal.Lookup lookup)
 		{
-			await SendAsync(lookup);
+			await SendAsync(lookup).ConfigureAwait(false);
 			return lookup.GetResults();
 		}
 		
@@ -48,7 +48,7 @@ namespace SmartyStreets.USEnrichmentApi
 		public async Task<GeoReference.Result[]> SendGeoReferenceLookupAsync(string smartyKey)
 		{
 			GeoReference.Lookup lookup = new GeoReference.Lookup(smartyKey);
-			await SendAsync(lookup);
+			await SendAsync(lookup).ConfigureAwait(false);
 			return lookup.GetResults();
 		}
 		
@@ -59,7 +59,7 @@ namespace SmartyStreets.USEnrichmentApi
 
 		public async Task<GeoReference.Result[]> SendGeoReferenceLookupAsync(GeoReference.Lookup lookup)
 		{
-			await SendAsync(lookup);
+			await SendAsync(lookup).ConfigureAwait(false);
 			return lookup.GetResults();
 		}
 		
@@ -71,7 +71,7 @@ namespace SmartyStreets.USEnrichmentApi
 		public async Task<Secondary.Result[]> SendSecondaryLookupAsync(string smartyKey)
 		{
 			Secondary.Lookup lookup = new Secondary.Lookup(smartyKey);
-			await SendAsync(lookup);
+			await SendAsync(lookup).ConfigureAwait(false);
 			return lookup.GetResults();
 		}
 		
@@ -82,7 +82,7 @@ namespace SmartyStreets.USEnrichmentApi
 
 		public async Task<Secondary.Result[]> SendSecondaryLookupAsync(Secondary.Lookup lookup)
 		{
-			await SendAsync(lookup);
+			await SendAsync(lookup).ConfigureAwait(false);
 			return lookup.GetResults();
 		}
 		
@@ -94,7 +94,7 @@ namespace SmartyStreets.USEnrichmentApi
 		public async Task<Secondary.Count.Result[]> SendSecondaryCountLookupAsync(string smartyKey)
 		{
 			Secondary.Count.Lookup lookup = new Secondary.Count.Lookup(smartyKey);
-			await SendAsync(lookup);
+			await SendAsync(lookup).ConfigureAwait(false);
 			return lookup.GetResults();
 		}
 		
@@ -105,7 +105,7 @@ namespace SmartyStreets.USEnrichmentApi
 
 		public async Task<Secondary.Count.Result[]> SendSecondaryCountLookupAsync(Secondary.Count.Lookup lookup)
 		{
-			await SendAsync(lookup);
+			await SendAsync(lookup).ConfigureAwait(false);
 			return lookup.GetResults();
 		}
 		
@@ -116,7 +116,7 @@ namespace SmartyStreets.USEnrichmentApi
 
 		public async Task<byte[]> SendUniversalLookupAsync(Universal.Lookup lookup)
 		{
-			await SendAsync(lookup);
+			await SendAsync(lookup).ConfigureAwait(false);
 			return lookup.GetResults();
 		}
 
@@ -128,7 +128,7 @@ namespace SmartyStreets.USEnrichmentApi
 		public async Task<Business.Summary.Result[]> SendBusinessLookupAsync(string smartyKey)
 		{
 			Business.Summary.Lookup lookup = new Business.Summary.Lookup(smartyKey);
-			await SendAsync(lookup);
+			await SendAsync(lookup).ConfigureAwait(false);
 			return lookup.GetResults();
 		}
 
@@ -139,7 +139,7 @@ namespace SmartyStreets.USEnrichmentApi
 
 		public async Task<Business.Summary.Result[]> SendBusinessLookupAsync(Business.Summary.Lookup lookup)
 		{
-			await SendAsync(lookup);
+			await SendAsync(lookup).ConfigureAwait(false);
 			return lookup.GetResults();
 		}
 
@@ -151,7 +151,7 @@ namespace SmartyStreets.USEnrichmentApi
 		public async Task<Business.Detail.Result> SendBusinessDetailLookupAsync(string businessId)
 		{
 			Business.Detail.Lookup lookup = new Business.Detail.Lookup(businessId);
-			await SendBusinessDetailAsync(lookup);
+			await SendBusinessDetailAsync(lookup).ConfigureAwait(false);
 			return lookup.GetResult();
 		}
 
@@ -162,7 +162,7 @@ namespace SmartyStreets.USEnrichmentApi
 
 		public async Task<Business.Detail.Result> SendBusinessDetailLookupAsync(Business.Detail.Lookup lookup)
 		{
-			await SendBusinessDetailAsync(lookup);
+			await SendBusinessDetailAsync(lookup).ConfigureAwait(false);
 			return lookup.GetResult();
 		}
 
@@ -175,7 +175,7 @@ namespace SmartyStreets.USEnrichmentApi
 			request.SetUrlComponents("/business/" + Uri.EscapeDataString(lookup.GetBusinessId()));
 			ApplyCommonRequestFields(request, lookup);
 
-			await DispatchAsync(request, lookup);
+			await DispatchAsync(request, lookup).ConfigureAwait(false);
 		}
 
 		private async Task SendAsync(Lookup lookup)
@@ -183,12 +183,12 @@ namespace SmartyStreets.USEnrichmentApi
 			if (lookup == null || (string.IsNullOrWhiteSpace(lookup.GetSmartyKey()) && string.IsNullOrWhiteSpace(lookup.GetStreet()) && string.IsNullOrWhiteSpace(lookup.GetFreeform()) && string.IsNullOrWhiteSpace(lookup.GetBusinessName())))
 				throw new SmartyStreets.SmartyException("Lookup requires one of 'smartyKey', 'street', 'freeform', or 'businessName' to be set");
 			Request request = BuildRequest(lookup);
-			await DispatchAsync(request, lookup);
+			await DispatchAsync(request, lookup).ConfigureAwait(false);
 		}
 
 		private async Task DispatchAsync(Request request, EnrichmentLookupBase lookup)
 		{
-			Response response = await this.sender.SendAsync(request);
+			Response response = await this.sender.SendAsync(request).ConfigureAwait(false);
 			if (response.HeaderInfo != null)
 			{
 				foreach (var entry in response.HeaderInfo)
