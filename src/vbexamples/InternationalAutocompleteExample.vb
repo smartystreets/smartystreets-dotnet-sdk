@@ -15,6 +15,7 @@ Module InternationalAutocompleteExample
         With lookup
             .Country = "FRA"
             .Locality = "Paris"
+            .Language = LanguageMode.Native
         End With
 
         Console.WriteLine("*******************************************************")

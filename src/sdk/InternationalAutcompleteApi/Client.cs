@@ -67,6 +67,8 @@
 				request.SetParameter("geolocation", "on");
 			request.SetParameter("include_only_locality", lookup.Locality);
 			request.SetParameter("include_only_postal_code", lookup.PostalCode);
+			if (lookup.Language.HasValue)
+				request.SetParameter("language", lookup.Language.Value.ToWireValue());
 
 			foreach (KeyValuePair<string, string> line in lookup.CustomParamDict) {
 				request.SetParameter(line.Key, line.Value);

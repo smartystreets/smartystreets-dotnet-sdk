@@ -94,6 +94,18 @@
 		}
 
 		[Test]
+		public void TestSendingLookupWithNoLanguage()
+		{
+			var serializer = new FakeSerializer(null);
+			var client = new Client(this.sender, serializer);
+			var lookup = new Lookup("freeform", "USA");
+
+			client.Send(lookup);
+
+			Assert.That(this.capturingSender.Request.GetUrl(), Does.Not.Contain("language="));
+		}
+
+		[Test]
 		public void TestEmptyLookupRejected()
 		{
 			var crashSender = new MockCrashingSender();

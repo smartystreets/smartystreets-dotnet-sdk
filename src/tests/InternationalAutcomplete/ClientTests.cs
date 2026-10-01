@@ -130,6 +130,45 @@
 
 		#endregion
 
+		#region [ Language Mode ]
+
+		[Test]
+		public void TestSendingSingleLookupWithLanguage()
+		{
+			var serializer = new FakeSerializer(new byte[0]);
+			var client = new Client(this.urlSender, serializer);
+			var lookup = new Lookup("1") { Country = "2", Language = LanguageMode.Native };
+			client.Send(lookup);
+			Assert.AreEqual(
+				"http://localhost/lookup?search=1&country=2&max_results=10&max_group_results=100&language=native",
+				this.capturingSender.Request.GetUrl());
+		}
+
+		[Test]
+		public void TestSendingSingleLookupWithNoLanguage()
+		{
+			var serializer = new FakeSerializer(new byte[0]);
+			var client = new Client(this.urlSender, serializer);
+			var lookup = new Lookup("1") { Country = "2" };
+			client.Send(lookup);
+			Assert.That(this.capturingSender.Request.GetUrl(), Does.Not.Contain("language="));
+		}
+
+		[Test]
+		public void TestLanguageModeParseResolvesMixedCase()
+		{
+			Assert.AreEqual(LanguageMode.Latin, LanguageModeExtensions.FromValue("Latin"));
+			Assert.AreEqual(LanguageMode.Native, LanguageModeExtensions.FromValue("NATIVE"));
+		}
+
+		[Test]
+		public void TestLanguageModeParseRejectsInvalidValue()
+		{
+			Assert.Throws<UnprocessableEntityException>(() => LanguageModeExtensions.FromValue("Klingon"));
+		}
+
+		#endregion
+
 		#region [ Response Handling ]
 
 		[Test]
