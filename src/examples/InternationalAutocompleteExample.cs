@@ -26,6 +26,7 @@ namespace Examples
 				Locality = "Paris",
 				MaxGroupResults = 5,
 				Geolocation = true,
+				Language = LanguageMode.Native,
 			};
 
 			//uncomment the line below to add a custom parameter
