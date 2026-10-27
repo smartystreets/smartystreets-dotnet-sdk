@@ -39,6 +39,9 @@ namespace SmartyStreets.InternationalPostalCodeApi
 		[DataMember(Name = "double_dependent_locality")]
 		public string DoubleDependentLocality { get; set; }
 
+		[DataMember(Name = "thoroughfare")]
+		public string Thoroughfare { get; set; }
+
 		[DataMember(Name = "postal_code")]
 		public string PostalCode { get; set; }
 

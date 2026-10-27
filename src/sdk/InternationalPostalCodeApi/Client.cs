@@ -2,6 +2,7 @@ namespace SmartyStreets.InternationalPostalCodeApi
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Globalization;
 	using System.IO;
 	using System.Threading.Tasks;
 
@@ -54,9 +55,13 @@ namespace SmartyStreets.InternationalPostalCodeApi
 
 			request.SetParameter("input_id", lookup.InputId);
 			request.SetParameter("country", lookup.Country);
+			if (lookup.Language.HasValue)
+				request.SetParameter("language", lookup.Language.Value.ToWireValue());
 			request.SetParameter("locality", lookup.Locality);
 			request.SetParameter("administrative_area", lookup.AdministrativeArea);
 			request.SetParameter("postal_code", lookup.PostalCode);
+			if (lookup.MaxResults > 0)
+				request.SetParameter("max_results", lookup.MaxResults.ToString(CultureInfo.InvariantCulture));
 
 			foreach (KeyValuePair<string, string> line in lookup.CustomParamDict)
 			{

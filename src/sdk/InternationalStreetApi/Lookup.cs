@@ -43,6 +43,12 @@
 		public string AdministrativeArea { get; set; }
 		public string PostalCode { get; set; }
 		public string Features { get; set; }
+
+		/// <remarks>
+		///     Only sent when greater than zero.
+		/// </remarks>
+		public int MaxResults { get; set; }
+
 		public Dictionary<string, string> CustomParamDict = new Dictionary<string, string>{};
 
 		#endregion

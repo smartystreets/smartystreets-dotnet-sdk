@@ -18,9 +18,20 @@ namespace SmartyStreets.InternationalPostalCodeApi
 
 		public string InputId { get; set; }
 		public string Country { get; set; }
+
+		/// <remarks>
+		///     May be set to LanguageMode.Native or LanguageMode.Latin
+		/// </remarks>
+		public LanguageMode? Language { get; set; }
+
 		public string Locality { get; set; }
 		public string AdministrativeArea { get; set; }
 		public string PostalCode { get; set; }
+
+		/// <remarks>
+		///     Only sent when greater than zero.
+		/// </remarks>
+		public int MaxResults { get; set; }
 		public Dictionary<string, string> CustomParamDict = new Dictionary<string, string>{};
 
 		#endregion
