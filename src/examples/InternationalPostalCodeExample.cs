@@ -25,7 +25,9 @@ namespace Examples
 				Locality = "Sao Paulo",
 				AdministrativeArea = "SP",
 				Country = "Brazil",
-				PostalCode = "02516"
+				PostalCode = "02516",
+				// Language = LanguageMode.Native, // Optional: Native or Latin
+				// MaxResults = 10 // Optional: limits the number of candidates returned
 			};
 
 			//uncomment the line below to add a custom parameter
@@ -67,6 +69,7 @@ namespace Examples
 				Display(candidate.Locality);
 				Display(candidate.DependentLocality);
 				Display(candidate.DoubleDependentLocality);
+				Display(candidate.Thoroughfare);
 				Display(candidate.SubAdministrativeArea);
 				Display(candidate.AdministrativeArea);
 				Display(candidate.SuperAdministrativeArea);

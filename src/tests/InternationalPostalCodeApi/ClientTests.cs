@@ -71,7 +71,8 @@ namespace SmartyStreets.InternationalPostalCodeApi
 				""administrative_area"": ""4"",
 				""sub_administrative_area"": ""5"",
 				""super_administrative_area"": ""6"",
-				""postal_code"": ""7""
+				""postal_code"": ""7"",
+				""thoroughfare"": ""8""
 			}]");
 			var response = new Response(200, responsePayload);
 			var mockSender = new MockSender(response);
@@ -90,6 +91,7 @@ namespace SmartyStreets.InternationalPostalCodeApi
 			Assert.AreEqual("5", candidate.SubAdministrativeArea);
 			Assert.AreEqual("6", candidate.SuperAdministrativeArea);
 			Assert.AreEqual("7", candidate.PostalCode);
+			Assert.AreEqual("8", candidate.Thoroughfare);
 		}
 
 		[Test]
@@ -101,19 +103,79 @@ namespace SmartyStreets.InternationalPostalCodeApi
 			{
 				InputId = "1234",
 				Country = "CAN",
+				Language = LanguageMode.Native,
 				Locality = "Toronto",
 				AdministrativeArea = "ON",
-				PostalCode = "M5H 2N2"
+				PostalCode = "M5H 2N2",
+				MaxResults = 25
 			};
 
 			client.Send(lookup);
 
-			var url = this.capturingSender.Request.GetUrl();
-			Assert.IsTrue(url.Contains("input_id=1234"));
-			Assert.IsTrue(url.Contains("country=CAN"));
-			Assert.IsTrue(url.Contains("locality=Toronto"));
-			Assert.IsTrue(url.Contains("administrative_area=ON"));
-			Assert.IsTrue(url.Contains("postal_code=M5H%202N2"));
+			Assert.AreEqual("http://localhost/lookup?input_id=1234&country=CAN&language=native&locality=Toronto" +
+			                "&administrative_area=ON&postal_code=M5H%202N2&max_results=25",
+				this.capturingSender.Request.GetUrl());
+		}
+
+		[Test]
+		public void TestSendingLookupWithLatinLanguage()
+		{
+			var client = new Client(this.sender, new FakeSerializer(null));
+			var lookup = new Lookup { Country = "CAN", Language = LanguageMode.Latin };
+
+			client.Send(lookup);
+
+			Assert.AreEqual("http://localhost/lookup?country=CAN&language=latin", this.capturingSender.Request.GetUrl());
+		}
+
+		[Test]
+		public void TestSendingLookupWithLanguageParsedFromMixedCaseValue()
+		{
+			var client = new Client(this.sender, new FakeSerializer(null));
+			var lookup = new Lookup { Country = "CAN", Language = LanguageModeExtensions.FromValue("NATIVE") };
+
+			client.Send(lookup);
+
+			Assert.AreEqual("http://localhost/lookup?country=CAN&language=native", this.capturingSender.Request.GetUrl());
+		}
+
+		[Test]
+		public void TestSendingLookupWithNoLanguage()
+		{
+			var client = new Client(this.sender, new FakeSerializer(null));
+			var lookup = new Lookup { Country = "CAN" };
+
+			client.Send(lookup);
+
+			Assert.That(this.capturingSender.Request.GetUrl(), Does.Not.Contain("language="));
+		}
+
+		[Test]
+		public void TestLanguageModeParseRejectsInvalidValue()
+		{
+			Assert.Throws<UnprocessableEntityException>(() => LanguageModeExtensions.FromValue("Klingon"));
+		}
+
+		[Test]
+		public void TestSendingLookupWithMaxResults()
+		{
+			var client = new Client(this.sender, new FakeSerializer(null));
+			var lookup = new Lookup { Country = "CAN", MaxResults = 1000 };
+
+			client.Send(lookup);
+
+			Assert.AreEqual("http://localhost/lookup?country=CAN&max_results=1000", this.capturingSender.Request.GetUrl());
+		}
+
+		[Test]
+		public void TestSendingLookupWithNoMaxResults()
+		{
+			var client = new Client(this.sender, new FakeSerializer(null));
+			var lookup = new Lookup { Country = "CAN" };
+
+			client.Send(lookup);
+
+			Assert.That(this.capturingSender.Request.GetUrl(), Does.Not.Contain("max_results="));
 		}
 
 		[Test]

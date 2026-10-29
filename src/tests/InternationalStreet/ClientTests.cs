@@ -37,7 +37,8 @@
 		public void TestSendingSingleFullyPopulatedLookup()
 		{
 			const string expectedUrl = "http://localhost/?input_id=1234&country=0&geocode=true&language=native&freeform=1" +
-			                           "&address1=2&address2=3&address3=4&address4=5&organization=6&locality=7&administrative_area=8&postal_code=9&features=10";
+			                           "&address1=2&address2=3&address3=4&address4=5&organization=6&locality=7&administrative_area=8&postal_code=9&features=10" +
+			                           "&max_results=10";
 			var serializer = new FakeSerializer(null);
 			var client = new Client(this.sender, serializer);
 			var lookup = new Lookup
@@ -55,7 +56,8 @@
 				Locality = "7",
 				AdministrativeArea = "8",
 				PostalCode = "9",
-				Features = "10"
+				Features = "10",
+				MaxResults = 10
 			};
 
 			client.Send(lookup);
@@ -103,6 +105,30 @@
 			client.Send(lookup);
 
 			Assert.That(this.capturingSender.Request.GetUrl(), Does.Not.Contain("language="));
+		}
+
+		[Test]
+		public void TestSendingLookupWithMaxResults()
+		{
+			var serializer = new FakeSerializer(null);
+			var client = new Client(this.sender, serializer);
+			var lookup = new Lookup("freeform", "USA") { MaxResults = 10 };
+
+			client.Send(lookup);
+
+			Assert.AreEqual("http://localhost/?country=USA&freeform=freeform&max_results=10", this.capturingSender.Request.GetUrl());
+		}
+
+		[Test]
+		public void TestSendingLookupWithNoMaxResults()
+		{
+			var serializer = new FakeSerializer(null);
+			var client = new Client(this.sender, serializer);
+			var lookup = new Lookup("freeform", "USA");
+
+			client.Send(lookup);
+
+			Assert.That(this.capturingSender.Request.GetUrl(), Does.Not.Contain("max_results="));
 		}
 
 		[Test]
